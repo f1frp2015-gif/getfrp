@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GetFRP
 
-## Getting Started
+GetFRP is the independent English procurement platform for sourcing FRP and
+composite materials, equipment, tooling, molds, and finished products from
+China.
 
-First, run the development server:
+## Canonical mapping
+
+| Layer | Canonical target |
+| --- | --- |
+| Local | `/Users/ori/Projects/getfrp` |
+| GitHub | `f1frp2015-gif/getfrp` |
+| Production branch | `main` |
+| Vercel | `f1composite/getfrp` |
+| Domain | `https://getfrp.com` |
+
+This repository is independent from `f1frp2015-gif/f1frp`. GetFRP production
+must always be reproducible from this repository's `main` branch.
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The standalone defaults are English/GetFRP even when the public variables are
+not set, but local database and API credentials still belong in `.env.local`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Validation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm lint
+pnpm exec tsc --noEmit
+NEXT_PUBLIC_SITE_URL=https://getfrp.com \
+NEXT_PUBLIC_LOCALES=en \
+NEXT_PUBLIC_DEFAULT_LOCALE=en \
+pnpm build
+```
 
-## Learn More
+## Delivery
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use a short-lived task branch and pull request. Vercel creates the preview;
+merging a validated PR to `main` creates the production deployment. Direct
+`vercel --prod` is reserved for emergencies and must be reconciled to Git in
+the same work session.
