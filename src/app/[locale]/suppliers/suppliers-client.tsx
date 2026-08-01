@@ -169,18 +169,42 @@ export function SuppliersClient({
   suppliers,
   categories,
   provinces,
+  initialSearch = "",
+  initialCategory = "",
+  initialRegion = "",
+  initialCertification = "",
+  initialProfileStatus = "",
 }: {
   suppliers: SerializedSupplier[];
   categories: Opt[];
   provinces: string[];
+  initialSearch?: string;
+  initialCategory?: string;
+  initialRegion?: string;
+  initialCertification?: string;
+  initialProfileStatus?: string;
 }) {
   const t = useTranslations("Suppliers");
 
-  const [search, setSearch] = useState("");
-  const [cat, setCat] = useState("all");
-  const [region, setRegion] = useState<string>(ALL_REGIONS_TOKEN);
-  const [certification, setCertification] = useState("all");
-  const [profileStatus, setProfileStatus] = useState("all");
+  const [search, setSearch] = useState(initialSearch);
+  const [cat, setCat] = useState(() =>
+    categories.some((category) => category.id === initialCategory)
+      ? initialCategory
+      : "all",
+  );
+  const [region, setRegion] = useState<string>(() =>
+    provinces.includes(initialRegion) ? initialRegion : ALL_REGIONS_TOKEN,
+  );
+  const [certification, setCertification] = useState(() =>
+    CERTIFICATION_FILTERS.some((item) => item.id === initialCertification)
+      ? initialCertification
+      : "all",
+  );
+  const [profileStatus, setProfileStatus] = useState(() =>
+    initialProfileStatus === "published" || initialProfileStatus === "verified"
+      ? initialProfileStatus
+      : "all",
+  );
   const [page, setPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
@@ -219,6 +243,29 @@ export function SuppliersClient({
 
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (search.trim()) params.set("q", search.trim());
+    else params.delete("q");
+    if (cat !== "all") params.set("category", cat);
+    else params.delete("category");
+    if (region !== ALL_REGIONS_TOKEN) params.set("region", region);
+    else params.delete("region");
+    if (certification !== "all") {
+      params.set("certification", certification);
+    } else {
+      params.delete("certification");
+    }
+    if (profileStatus !== "all") params.set("profile", profileStatus);
+    else params.delete("profile");
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`,
+    );
+  }, [search, cat, region, certification, profileStatus]);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();

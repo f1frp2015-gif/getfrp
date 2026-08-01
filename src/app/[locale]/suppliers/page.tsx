@@ -57,11 +57,21 @@ export async function generateMetadata({
 
 export default async function SuppliersPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { locale } = await params;
+  const [{ locale }, sp] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
+
+  const firstParam = (value: string | string[] | undefined) =>
+    Array.isArray(value) ? value[0] ?? "" : value ?? "";
+  const initialSearch = firstParam(sp.q).slice(0, 200);
+  const initialCategory = firstParam(sp.category);
+  const initialRegion = firstParam(sp.region);
+  const initialCertification = firstParam(sp.certification);
+  const initialProfileStatus = firstParam(sp.profile);
 
   const t = await getTranslations("Suppliers");
 
@@ -211,6 +221,11 @@ export default async function SuppliersPage({
 
       <SuppliersClient
         suppliers={serialized}
+        initialSearch={initialSearch}
+        initialCategory={initialCategory}
+        initialRegion={initialRegion}
+        initialCertification={initialCertification}
+        initialProfileStatus={initialProfileStatus}
         categories={supplierCategories.map((category) => ({
           id: category.id,
           name: category.nameEn,

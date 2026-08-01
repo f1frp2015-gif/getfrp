@@ -51,28 +51,31 @@ export function CookieBanner() {
       aria-label="Cookie consent"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-background/95 backdrop-blur"
     >
-      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-6">
-        <p className="flex-1 text-[13px] leading-relaxed text-muted-foreground">
-          We use essential cookies to keep this site running, plus optional
-          analytics (Vercel Web Analytics, Google) to understand how visitors
-          use it. See our{" "}
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-3 py-2.5 sm:flex-row sm:items-center sm:gap-6 sm:px-6 sm:py-3">
+        <p className="flex-1 text-[11px] leading-4 text-muted-foreground sm:text-[12px] sm:leading-5">
+          <span className="sm:hidden">
+            Optional analytics help us improve. {" "}
+          </span>
+          <span className="hidden sm:inline">
+            We use essential cookies to keep this site running, plus optional
+            analytics to understand how visitors use it.{" "}
+          </span>
           <Link href={"/privacy" as never} className="underline hover:text-foreground">
             Privacy Policy
           </Link>
-          .
         </p>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="grid shrink-0 grid-cols-2 gap-2 sm:flex sm:items-center">
           <button
             type="button"
             onClick={() => dismiss("declined")}
-            className="rounded-md border border-border px-3 py-1.5 text-xs transition-colors hover:bg-muted"
+            className="h-8 whitespace-nowrap rounded-md border border-border px-3 text-[11px] transition-colors hover:bg-muted"
           >
             Decline optional
           </button>
           <button
             type="button"
             onClick={() => dismiss("accepted")}
-            className="rounded-md bg-foreground px-3 py-1.5 text-xs text-background transition-colors hover:bg-foreground/90"
+            className="h-8 whitespace-nowrap rounded-md bg-foreground px-3 text-[11px] text-background transition-colors hover:bg-foreground/90"
           >
             Accept all
           </button>

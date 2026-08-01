@@ -55,11 +55,10 @@ export async function generateMetadata({
   return {
     ...base,
     title: {
-      absolute:
-        "China FRP Supply Chain — Verified Factories, QA & Export | getfrp",
+      absolute: "Find FRP Products & Suppliers in China | getfrp",
     },
     description:
-      "Source FRP materials, profiles and finished composite parts through a verified China factory network with standards mapping, pre-shipment QA and one accountable export desk.",
+      "Search FRP products and qualified composite suppliers in China by product category, manufacturing process or specification with AI-assisted matching.",
   };
 }
 

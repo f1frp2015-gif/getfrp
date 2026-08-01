@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -57,16 +57,25 @@ const COMPARE_MAX = 4;
 export function MaterialsClient({
   materials,
   categories,
+  initialSearch = "",
+  initialCategory = "all",
 }: {
   materials: SerializedMaterial[];
   categories: Category[];
+  initialSearch?: string;
+  initialCategory?: string;
 }) {
   const t = useTranslations("Materials");
   const tp = useTranslations("Materials.props");
   const catLabel = (category: Category) => category.name;
 
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [search, setSearch] = useState(initialSearch);
+  const [activeCategory, setActiveCategory] = useState(() =>
+    initialCategory === "all" ||
+    categories.some((category) => category.id === initialCategory)
+      ? initialCategory
+      : "all",
+  );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
 
@@ -96,6 +105,20 @@ export function MaterialsClient({
       return matchesSearch && matchesCategory;
     });
   }, [materials, search, activeCategory]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (search.trim()) params.set("q", search.trim());
+    else params.delete("q");
+    if (activeCategory !== "all") params.set("category", activeCategory);
+    else params.delete("category");
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`,
+    );
+  }, [search, activeCategory]);
 
   const { visible: visibleFiltered, remaining, expand } = useProgressiveList(filtered, 50);
 

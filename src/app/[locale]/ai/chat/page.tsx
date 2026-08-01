@@ -32,11 +32,19 @@ export default async function AiChatPage({
   const sp = await searchParams;
   setRequestLocale(locale);
   const raw = sp.q;
-  const initialQuery = Array.isArray(raw) ? raw[0] : raw;
+  const rawScope = Array.isArray(sp.scope) ? sp.scope[0] : sp.scope;
+  const query = Array.isArray(raw) ? raw[0] : raw;
+  const initialQuery = query
+    ? rawScope === "products"
+      ? `Search for FRP products matching this requirement: ${query}`
+      : rawScope === "suppliers"
+        ? `Find and compare Chinese FRP suppliers matching this requirement: ${query}`
+        : query
+    : undefined;
 
   return (
     <AiAssistantClient
-      initialQuery={initialQuery ?? undefined}
+      initialQuery={initialQuery}
       availableModels={listAvailableChatModels()}
     />
   );
