@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,11 +28,11 @@ export type SerializedStandard = {
   category: string;
   process: string[];
   year: string;
-  status: "现行" | "废止" | "即将实施";
+  status: "Active" | "Withdrawn" | "Upcoming" | string;
   description: string;
 };
 
-type CountryFilter = { id: string; name: string; nameEn?: string; flag?: string };
+type CountryFilter = { id: string; name: string; flag?: string };
 
 const COUNTRY_CODE: Record<string, string> = {
   all: "ALL",
@@ -42,8 +42,8 @@ const COUNTRY_CODE: Record<string, string> = {
   EU: "EU",
   DE: "DE",
 };
-type CategoryOption = { id: string; name: string; nameEn?: string };
-type ProcessTag = { id: string; name: string; nameEn?: string };
+type CategoryOption = { id: string; name: string };
+type ProcessTag = { id: string; name: string };
 
 export function StandardsClient({
   standards,
@@ -57,10 +57,7 @@ export function StandardsClient({
   processTagOptions: ProcessTag[];
 }) {
   const t = useTranslations("Standards");
-  const locale = useLocale();
-  const isEn = locale === "en";
-  const optLabel = (o: { name: string; nameEn?: string }) =>
-    isEn && o.nameEn ? o.nameEn : o.name;
+  const optLabel = (option: { name: string }) => option.name;
   const [search, setSearch] = useState("");
   const [activeCountry, setActiveCountry] = useState("all");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -108,7 +105,7 @@ export function StandardsClient({
   const summary = useMemo(() => {
     const countries = new Set(standards.map((s) => s.countryCode).filter(Boolean));
     const cats = new Set(standards.map((s) => s.category).filter(Boolean));
-    const active = standards.filter((s) => s.status === "现行").length;
+    const active = standards.filter((s) => s.status === "Active").length;
     return {
       total: standards.length,
       countries: countries.size,
@@ -121,7 +118,7 @@ export function StandardsClient({
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold">
-          {isEn ? "FRP & Composite Standards Cross Reference" : t("h1")}
+          FRP &amp; Composite Standards Cross Reference
         </h1>
         <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
       </div>
@@ -246,11 +243,11 @@ export function StandardsClient({
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {isEn && std.titleEn ? std.titleEn : std.title}
+                        {std.title}
                       </div>
                       {std.titleEn && std.title !== std.titleEn && (
                         <div className="mt-0.5 line-clamp-1 text-[11px] text-muted-foreground">
-                          {isEn ? std.title : std.titleEn}
+                          {std.titleEn !== std.title ? std.titleEn : ""}
                         </div>
                       )}
                     </TableCell>
@@ -289,18 +286,10 @@ export function StandardsClient({
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Badge
-                        variant={std.status === "现行" ? "default" : "secondary"}
+                        variant={std.status === "Active" ? "default" : "secondary"}
                         className="text-[10px]"
                       >
-                        {isEn
-                          ? std.status === "现行"
-                            ? "Active"
-                            : std.status === "废止"
-                              ? "Withdrawn"
-                              : std.status === "即将实施"
-                                ? "Upcoming"
-                                : std.status
-                          : std.status}
+                        {std.status}
                       </Badge>
                     </TableCell>
                   </TableRow>
@@ -318,7 +307,7 @@ export function StandardsClient({
           {remaining > 0 && (
             <div className="mt-6 flex justify-center border-t pt-4">
               <Button variant="outline" onClick={expand}>
-                {isEn ? `Show ${remaining} more` : `展开剩余 ${remaining} 条`}
+                Show {remaining} more
               </Button>
             </div>
           )}

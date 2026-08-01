@@ -28,14 +28,17 @@ export function AiFollowups({
   onAsk: (text: string) => void;
   disabled?: boolean;
 }) {
-  const [items, setItems] = useState<string[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<{
+    assistantMessageId: string;
+    items: string[];
+  } | null>(null);
+  const items =
+    result?.assistantMessageId === assistantMessageId ? result.items : null;
+  const loading = Boolean(question && answer && items === null);
 
   useEffect(() => {
     let cancelled = false;
-    setItems(null);
     if (!question || !answer) return;
-    setLoading(true);
     fetch("/api/followups", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -44,14 +47,11 @@ export function AiFollowups({
       .then((r) => r.ok ? r.json() : { questions: [] })
       .then((j: { questions?: string[] }) => {
         if (cancelled) return;
-        setItems(j.questions ?? []);
+        setResult({ assistantMessageId, items: j.questions ?? [] });
       })
       .catch(() => {
         if (cancelled) return;
-        setItems([]);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        setResult({ assistantMessageId, items: [] });
       });
     return () => {
       cancelled = true;
@@ -64,7 +64,7 @@ export function AiFollowups({
       <div className="mt-5 border-t border-border/50 pt-4">
         <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
           <Sparkles size={11} />
-          {locale === "en" ? "Related" : "相关问题"}
+          Related
         </div>
         <div className="space-y-2">
           {[0, 1, 2].map((i) => (
@@ -84,7 +84,7 @@ export function AiFollowups({
     <div className="mt-5 border-t border-border/50 pt-4">
       <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
         <Sparkles size={11} />
-        {locale === "en" ? "Related" : "相关问题"}
+        Related
       </div>
       <div className="space-y-1.5">
         {items.map((q) => (

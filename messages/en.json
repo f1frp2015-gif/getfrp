@@ -162,7 +162,7 @@
   },
   "LanguageSwitcher": {
     "label": "Language",
-    "zh": "中文",
+    "zh": "Mandarin",
     "en": "English"
   },
   "AI": {
@@ -499,6 +499,7 @@
     "pageStatus": "Page {page} of {total}",
     "noResults": "No suppliers match your filters. Try adjusting the criteria.",
     "verified": "Verified",
+    "sponsoredVerified": "Sponsored · Verified Supplier",
     "established": "Est. {year}",
     "companySize": "Company size",
     "annualRevenue": "Annual revenue",

@@ -3,7 +3,6 @@ import { alternates } from "@/lib/seo";
 import {
   Grid3x3,
   Pill,
-  FlaskConical,
   Atom,
   Infinity as InfinityIcon,
   Sparkles,
@@ -174,7 +173,7 @@ export default async function MatrixPage({
                         <Link
                           href={`/matrix/${combo}` as never}
                           className={`flex h-14 items-center justify-center text-base transition-colors ${cls}`}
-                          aria-label={`${f.name} × ${r.name}`}
+                          aria-label={`${f.nameEn} × ${r.nameEn}`}
                         >
                           <span className="font-mono text-[14px]">{icon}</span>
                         </Link>

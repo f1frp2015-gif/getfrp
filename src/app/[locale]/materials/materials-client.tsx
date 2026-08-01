@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -38,7 +38,7 @@ export type SerializedMaterial = {
   description: string;
 };
 
-type Category = { id: string; name: string; nameEn?: string; iconKey: string; count?: number };
+type Category = { id: string; name: string; iconKey: string; count?: number };
 
 const PROP_KEYS = [
   "density",
@@ -63,9 +63,7 @@ export function MaterialsClient({
 }) {
   const t = useTranslations("Materials");
   const tp = useTranslations("Materials.props");
-  const locale = useLocale();
-  const isEn = locale === "en";
-  const catLabel = (c: Category) => (isEn && c.nameEn ? c.nameEn : c.name);
+  const catLabel = (category: Category) => category.name;
 
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -221,13 +219,8 @@ export function MaterialsClient({
                       </TableCell>
                       <TableCell>
                         <div className="font-medium">
-                          {isEn && m.nameEn ? m.nameEn : m.name}
+                          {m.name}
                         </div>
-                        {m.nameEn && m.name !== m.nameEn && (
-                          <div className="text-xs text-muted-foreground">
-                            {isEn ? m.name : m.nameEn}
-                          </div>
-                        )}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <Badge variant="outline" className="text-xs">
@@ -276,7 +269,7 @@ export function MaterialsClient({
           {remaining > 0 && (
             <div className="mt-6 flex justify-center border-t pt-4">
               <Button variant="outline" onClick={expand}>
-                {isEn ? `Show ${remaining} more` : `展开剩余 ${remaining} 条`}
+                Show {remaining} more
               </Button>
             </div>
           )}
@@ -287,8 +280,7 @@ export function MaterialsClient({
         {t("rowHint", { shown: filtered.length, total: materials.length })}
       </div>
 
-      {isEn && (
-        <section className="mt-10 rounded-xl border border-border/70 bg-muted/20 p-6 sm:p-8">
+      <section className="mt-10 rounded-xl border border-border/70 bg-muted/20 p-6 sm:p-8">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             FROM DATA TO SUPPLIER
           </div>
@@ -313,8 +305,7 @@ export function MaterialsClient({
               </Link>
             </div>
           </div>
-        </section>
-      )}
+      </section>
 
       {selectedIds.length > 0 && (
         <div className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-full border bg-background/95 px-4 py-2 shadow-lg backdrop-blur">
@@ -358,7 +349,7 @@ export function MaterialsClient({
                     {compareItems.map((m) => (
                       <TableHead key={m.id} className="min-w-[180px]">
                         <div className="font-semibold">
-                          {isEn && m.nameEn ? m.nameEn : m.name}
+                          {m.name}
                         </div>
                         <div className="text-xs font-normal text-muted-foreground">
                           {m.brand} {m.model}

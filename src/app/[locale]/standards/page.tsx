@@ -46,21 +46,18 @@ export default async function StandardsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const isEn = locale === "en";
 
-  // EN 侧只展示已有英文标题的标准, 避免页面回退到中文 → Google 把页面归到 zh
+  // The English catalog only exposes standards with an English title.
   const rows = await (async () => {
     try {
       return await db
         .select()
         .from(standardsTable)
         .where(
-          isEn
-            ? and(
-                isNotNull(standardsTable.titleEn),
-                ne(standardsTable.titleEn, ""),
-              )
-            : undefined,
+          and(
+            isNotNull(standardsTable.titleEn),
+            ne(standardsTable.titleEn, ""),
+          ),
         )
         .orderBy(asc(standardsTable.countryCode), asc(standardsTable.code));
     } catch {
@@ -73,18 +70,17 @@ export default async function StandardsPage({
   const serializedFromDb: SerializedStandard[] = rows.map((r) => ({
     id: r.id,
     code: r.code,
-    title: isEn ? r.titleEn ?? "" : r.title,
+    title: r.titleEn ?? "",
     titleEn: r.titleEn ?? "",
-    country: isEn ? r.countryEn ?? "" : r.country ?? "",
+    country: r.countryEn ?? "",
     countryCode: r.countryCode ?? "",
-    category: isEn ? r.categoryEn ?? "" : r.category ?? "",
-    process: (isEn ? r.processEn ?? [] : r.process ?? []) as string[],
+    category: r.categoryEn ?? "",
+    process: (r.processEn ?? []) as string[],
     year: r.year ?? "",
-    status: ((isEn ? r.statusEn ?? r.status : r.status) ?? "现行") as SerializedStandard["status"],
-    description: isEn ? r.descriptionEn ?? "" : r.description ?? "",
+    status: (r.statusEn?.trim() || "Active") as SerializedStandard["status"],
+    description: r.descriptionEn ?? "",
   }));
-  const serialized: SerializedStandard[] = isEn
-    ? Array.from(
+  const serialized: SerializedStandard[] = Array.from(
         new Map<string, SerializedStandard>([
           ...GB_STANDARDS_EN.map(
             (standard) =>
@@ -100,7 +96,7 @@ export default async function StandardsPage({
                   category: standard.category,
                   process: ["general"] as string[],
                   year: standard.year,
-                  status: "现行" as const,
+                  status: "Active" as const,
                   description: standard.descriptionEn,
                 },
               ] as const,
@@ -111,13 +107,11 @@ export default async function StandardsPage({
         (a, b) =>
           a.countryCode.localeCompare(b.countryCode) ||
           a.code.localeCompare(b.code),
-      )
-    : serializedFromDb;
+      );
 
   return (
     <>
-      {isEn && (
-        <section className="border-b border-border/80 bg-muted/15">
+      <section className="border-b border-border/80 bg-muted/15">
           <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-14">
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               GB ↔ ASTM ↔ ISO ↔ EN
@@ -163,13 +157,21 @@ export default async function StandardsPage({
               <Link href="/rfq" className="rounded-md bg-foreground px-4 py-2 text-background hover:bg-foreground/90">Submit a standards-led RFQ →</Link>
             </div>
           </div>
-        </section>
-      )}
+      </section>
       <StandardsClient
         standards={serialized}
-        countryFilters={countryFilters}
-        standardCategories={standardCategories}
-        processTagOptions={processTagOptions}
+        countryFilters={countryFilters.map((option) => ({
+          id: option.id,
+          name: option.nameEn || option.id.toUpperCase(),
+        }))}
+        standardCategories={standardCategories.map((option) => ({
+          id: option.id,
+          name: option.nameEn || option.id,
+        }))}
+        processTagOptions={processTagOptions.map((option) => ({
+          id: option.id,
+          name: option.nameEn || option.id,
+        }))}
       />
     </>
   );

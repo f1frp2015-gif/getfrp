@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { or, ilike, desc, sql, eq } from "drizzle-orm";
+import { or, ilike, desc, sql } from "drizzle-orm";
 import {
-  Beaker,
   BookOpen,
-  ShieldCheck,
-  Building2,
-  FlaskConical,
-  Sparkles,
   ArrowRight,
   ChevronRight,
 } from "lucide-react";
@@ -37,8 +32,6 @@ import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import {
   PlatformHero,
-  PlatformCard,
-  PlatformCardGrid,
   PlatformSectionHeading,
 } from "@/components/platform-card";
 import { Badge } from "@/components/ui/badge";
@@ -78,11 +71,10 @@ async function searchMaterials(fiber: Fiber, resin: Resin, limit = 12) {
     return await db
       .select({
         id: materialsTable.id,
-        name: materialsTable.name,
-        nameEn: materialsTable.nameEn,
+        name: materialsTable.nameEn,
         category: materialsTable.category,
-        subCategory: materialsTable.subCategory,
-        brand: materialsTable.brand,
+        subCategory: materialsTable.subCategoryEn,
+        brand: materialsTable.brandEn,
       })
       .from(materialsTable)
       .where(
@@ -107,9 +99,9 @@ async function searchFormulas(fiber: Fiber, resin: Resin, limit = 12) {
     return await db
       .select({
         id: formulasTable.id,
-        name: formulasTable.name,
-        process: formulasTable.process,
-        application: formulasTable.application,
+        name: formulasTable.nameEn,
+        process: formulasTable.processEn,
+        application: formulasTable.applicationEn,
       })
       .from(formulasTable)
       .where(keywordOr(null, [...fiber.keywords, ...resin.keywords], cols))
@@ -126,10 +118,9 @@ async function searchPapers(fiber: Fiber, resin: Resin, limit = 12) {
       .select({
         id: papersTable.id,
         slug: papersTable.slug,
-        title: papersTable.title,
         titleEn: papersTable.titleEn,
         year: papersTable.year,
-        journal: papersTable.journal,
+        journal: papersTable.journalEn,
         hasCommentary: sql<boolean>`${papersTable.commentary} IS NOT NULL`,
       })
       .from(papersTable)
@@ -157,11 +148,10 @@ async function searchPatents(fiber: Fiber, resin: Resin, limit = 12) {
       .select({
         id: patentsTable.id,
         slug: patentsTable.slug,
-        title: patentsTable.title,
         titleEn: patentsTable.titleEn,
         countryCode: patentsTable.countryCode,
         status: patentsTable.status,
-        applicant: patentsTable.applicant,
+        applicant: patentsTable.applicantEn,
       })
       .from(patentsTable)
       .where(
@@ -379,7 +369,7 @@ export default async function ComboPage({
           <div className="grid gap-2 md:grid-cols-2">
             {materials.map((m) => (
               <Link
-                key={m.id}
+                key={encodeURIComponent(m.id)}
                 href={`/materials/${encodeURIComponent(m.id)}` as never}
                 className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
               >
@@ -458,9 +448,7 @@ export default async function ComboPage({
                     </Badge>
                   )}
                 </div>
-                <div className="line-clamp-2 font-medium">
-                  {locale === "en" && p.titleEn ? p.titleEn : p.title}
-                </div>
+                <div className="line-clamp-2 font-medium">{p.titleEn}</div>
                 {p.journal && (
                   <div className="mt-1 text-xs text-muted-foreground line-clamp-1">
                     {p.journal}
@@ -495,9 +483,7 @@ export default async function ComboPage({
                     </Badge>
                   )}
                 </div>
-                <div className="line-clamp-2 font-medium">
-                  {locale === "en" && p.titleEn ? p.titleEn : p.title}
-                </div>
+                <div className="line-clamp-2 font-medium">{p.titleEn}</div>
                 {p.applicant && (
                   <div className="mt-1 text-xs text-muted-foreground line-clamp-1">
                     {p.applicant}

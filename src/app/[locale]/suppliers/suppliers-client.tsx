@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Check, ExternalLink, GitCompareArrows, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SaveButton } from "@/components/save-button";
@@ -24,7 +24,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { provincesEn } from "@/lib/data/suppliers";
 import { cn } from "@/lib/utils";
 
 export type SerializedSupplier = {
@@ -45,9 +44,10 @@ export type SerializedSupplier = {
   scaleTier: string | null;
   employeeCount: string | null;
   annualRevenue: string | null;
+  sponsored: boolean;
 };
 
-type Opt = { id: string; name: string; nameEn?: string };
+type Opt = { id: string; name: string };
 type PaginationItem = number | "start-ellipsis" | "end-ellipsis";
 
 const ALL_REGIONS_TOKEN = "__all__";
@@ -175,10 +175,6 @@ export function SuppliersClient({
   provinces: string[];
 }) {
   const t = useTranslations("Suppliers");
-  const locale = useLocale();
-  const isEn = locale === "en";
-  const optLabel = (option: Opt) =>
-    isEn && option.nameEn ? option.nameEn : option.name;
 
   const [search, setSearch] = useState("");
   const [cat, setCat] = useState("all");
@@ -313,7 +309,7 @@ export function SuppliersClient({
 
   const getCatName = (id: string) => {
     const category = categories.find((item) => item.id === id);
-    return category ? optLabel(category) : id;
+    return category ? category.name : id;
   };
 
   const getScaleLabel = (tier: string | null) => {
@@ -370,7 +366,7 @@ export function SuppliersClient({
                 setPage(1);
               }}
             >
-              {optLabel(category)}
+              {category.name}
               {catStats[category.id] ? ` (${catStats[category.id]})` : ""}
             </Badge>
           ))}
@@ -397,13 +393,13 @@ export function SuppliersClient({
                 setPage(1);
               }}
             >
-              {isEn ? (provincesEn[province] ?? province) : province}
+              {province}
             </Badge>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-3 pt-1">
           <label className="flex items-center gap-2 text-sm font-medium">
-            {isEn ? "Certification" : "认证"}
+            Certification
             <select
               value={certification}
               onChange={(event) => {
@@ -413,7 +409,7 @@ export function SuppliersClient({
               className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
             >
               <option value="all">
-                {isEn ? "Any certification" : "全部认证"}
+                Any certification
               </option>
               {CERTIFICATION_FILTERS.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -423,7 +419,7 @@ export function SuppliersClient({
             </select>
           </label>
           <label className="flex items-center gap-2 text-sm font-medium">
-            {isEn ? "Profile status" : "档案状态"}
+            Profile status
             <select
               value={profileStatus}
               onChange={(event) => {
@@ -433,13 +429,13 @@ export function SuppliersClient({
               className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
             >
               <option value="all">
-                {isEn ? "All records" : "全部档案"}
+                All records
               </option>
               <option value="published">
-                {isEn ? "Company profile available" : "有企业主页"}
+                Company profile available
               </option>
               <option value="verified">
-                {isEn ? "Verified business" : "已认证企业"}
+                Verified business
               </option>
             </select>
           </label>
@@ -509,11 +505,16 @@ export function SuppliersClient({
                             {supplier.location || t("notDisclosed")}
                           </div>
                         </div>
-                        {supplier.verified && (
-                          <Badge variant="signal" className="shrink-0">
-                            {t("verified")}
-                          </Badge>
-                        )}
+                        <div className="flex shrink-0 flex-col items-end gap-1">
+                          {supplier.sponsored && supplier.verified && (
+                            <Badge className="border border-amber-300 bg-amber-50 text-amber-900 shadow-none hover:bg-amber-50">
+                              {t("sponsoredVerified")}
+                            </Badge>
+                          )}
+                          {supplier.verified && !supplier.sponsored && (
+                            <Badge variant="signal">{t("verified")}</Badge>
+                          )}
+                        </div>
                       </div>
 
                       <div className="mt-3 grid grid-cols-2 gap-y-3 sm:grid-cols-4 sm:gap-y-0">
@@ -774,6 +775,11 @@ export function SuppliersClient({
                             <div className="line-clamp-2 font-semibold text-foreground">
                               {supplier.name}
                             </div>
+                            {supplier.sponsored && supplier.verified && (
+                              <Badge className="mt-1 border border-amber-300 bg-amber-50 text-amber-900 shadow-none hover:bg-amber-50">
+                                {t("sponsoredVerified")}
+                              </Badge>
+                            )}
                             <button
                               type="button"
                               onClick={() => toggleSelect(supplier.id)}

@@ -47,6 +47,28 @@ import {
 export const revalidate = 3600;
 export const dynamicParams = true;
 
+const EXTRA_PROVINCES_EN: Record<string, string> = {
+  "\u91cd\u5e86": "Chongqing",
+  "\u5c71\u897f": "Shanxi",
+  "\u5409\u6797": "Jilin",
+  "\u5185\u8499\u53e4": "Inner Mongolia",
+  "\u9752\u6d77": "Qinghai",
+  "\u6c5f\u897f": "Jiangxi",
+  "\u9655\u897f": "Shaanxi",
+  "\u4e91\u5357": "Yunnan",
+  "\u65b0\u7586": "Xinjiang",
+  "\u8d35\u5dde": "Guizhou",
+  "\u9ed1\u9f99\u6c5f": "Heilongjiang",
+  "\u5e7f\u897f": "Guangxi",
+  "\u6d77\u5357": "Hainan",
+  "\u7518\u8083": "Gansu",
+};
+
+function englishProvince(province: string | null): string {
+  if (!province) return "China";
+  return provincesEn[province] ?? EXTRA_PROVINCES_EN[province] ?? "China";
+}
+
 export function generateStaticParams() {
   return [...SUPPLIER_CATEGORY_SLUGS, ...SUPPLIER_REGION_SLUGS].map((id) => ({ id }));
 }
@@ -91,67 +113,61 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
   }
 });
 
-function categoryLabel(category: string | null, isEn: boolean): string {
-  const labels: Record<string, [string, string]> = {
-    manufacturer: ["复合材料产品供应商", "Composite product supplier"],
-    fiber: ["纤维供应商", "Fiber supplier"],
-    resin: ["树脂供应商", "Resin supplier"],
-    additive: ["助剂供应商", "Additives supplier"],
-    equipment: ["设备供应商", "Equipment supplier"],
-    mold: ["模具制造商", "Mold maker"],
-    tooling: ["工装与检测装备", "Tooling / NDT equipment"],
-    service: ["检测与认证服务", "Testing / certification service"],
+function categoryLabel(category: string | null): string {
+  const labels: Record<string, string> = {
+    manufacturer: "Composite product supplier",
+    fiber: "Fiber supplier",
+    resin: "Resin supplier",
+    additive: "Additives supplier",
+    equipment: "Equipment supplier",
+    mold: "Mold maker",
+    tooling: "Tooling / NDT equipment",
+    service: "Testing / certification service",
   };
   const value = category ? labels[category] : undefined;
-  return value ? value[isEn ? 1 : 0] : category ?? (isEn ? "Supplier" : "供应商");
+  return value ?? category ?? "Supplier";
 }
 
-function renderSupplierProfile(profile: SupplierProfile, locale: string) {
+function renderSupplierProfile(profile: SupplierProfile) {
   const { supplier, enterprise } = profile;
-  const isEn = locale === "en";
   const isVerified = Boolean(supplier.verified && enterprise);
+  const isSponsored = supplier.id === "sup-yaoyi";
   const isClaimed = Boolean(enterprise);
-  const name = (isEn ? supplier.nameEn : supplier.name) ?? supplier.name;
-  const legalName = enterprise?.name ?? supplier.nameEn ?? supplier.name;
-  const description =
-    (isEn ? supplier.descriptionEn : supplier.description) ??
-    supplier.description ??
-    enterprise?.description ??
-    "";
-  const location =
-    (isEn ? supplier.locationEn : supplier.location) ??
-    supplier.location ??
-    [enterprise?.city, enterprise?.province].filter(Boolean).join(", ");
-  const products = ((isEn ? supplier.productsEn : supplier.products) ?? supplier.products ?? []) as string[];
-  const processes = ((isEn ? supplier.processListEn : supplier.processList) ?? supplier.processList ?? []) as string[];
-  const certifications = ((isEn ? supplier.certificationsEn : supplier.certifications) ?? supplier.certifications ?? []) as string[];
+  const name = supplier.nameEn ?? "Supplier";
+  const legalName =
+    supplier.id === "sup-yaoyi"
+      ? "Chongqing Yaoyi New Material Technology Co., Ltd."
+      : supplier.nameEn ?? name;
+  const description = supplier.descriptionEn ?? "";
+  const location = supplier.locationEn ?? "China";
+  const products = (supplier.productsEn ?? []) as string[];
+  const processes = (supplier.processListEn ?? []) as string[];
+  const certifications = (supplier.certificationsEn ?? []) as string[];
   const productsServicesSummary =
-    (isEn
-      ? supplier.productsServicesSummaryEn
-      : supplier.productsServicesSummary) ??
-    supplier.productsServicesSummary ??
-    description;
-  const ecatalogs = supplier.ecatalogs ?? [];
+    supplier.productsServicesSummaryEn ?? description;
+  const ecatalogs = (supplier.ecatalogs ?? []).filter(
+    (catalog) => Boolean(catalog.titleEn?.trim()),
+  );
   const website = supplier.website ?? enterprise?.website ?? null;
   const logo = supplier.logo ?? enterprise?.logo ?? null;
   const contactEmail = supplier.contactEmail ?? enterprise?.contactEmail ?? null;
   const contactPhone = supplier.contactPhone ?? enterprise?.contactPhone ?? null;
-  const address = supplier.address ?? enterprise?.address ?? null;
+  const address = null;
   const phoneHref = contactPhone
     ? `tel:${contactPhone.trim().startsWith("+") ? contactPhone.replace(/[^\d+]/g, "") : `+86${contactPhone.replace(/\D/g, "")}`}`
     : null;
   const pageUrl = `${CURRENT_SITE_URL}/suppliers/${supplier.id}`;
   const profileKind = isVerified
-    ? isEn ? "verified company profile" : "已认证企业主页"
+    ? "verified company profile"
     : isClaimed
-      ? isEn ? "claimed company profile" : "已认领企业主页"
-      : isEn ? "public company profile" : "公开企业档案";
+      ? "claimed company profile"
+      : "public company profile";
   const profileJsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     url: pageUrl,
     name: `${name} — ${profileKind}`,
-    inLanguage: isEn ? "en" : "zh-CN",
+    inLanguage: "en",
     mainEntity: {
       "@type": "Organization",
       "@id": `${pageUrl}#organization`,
@@ -179,7 +195,7 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
             name: `${name} eCatalog`,
             itemListElement: ecatalogs.map((catalog) => ({
               "@type": "CreativeWork",
-              name: (isEn ? catalog.titleEn : catalog.title) ?? catalog.title,
+              name: catalog.titleEn ?? "Product catalog",
               url: catalog.url,
               encodingFormat: catalog.format ?? "application/pdf",
             })),
@@ -188,8 +204,7 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
     },
   };
 
-  const labels = isEn
-    ? {
+  const labels = {
         home: "Home",
         suppliers: "Suppliers",
         eyebrow: isVerified ? "VERIFIED COMPANY PROFILE" : isClaimed ? "CLAIMED COMPANY PROFILE" : "PUBLIC COMPANY PROFILE",
@@ -225,43 +240,6 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
         note: isVerified
           ? "The verified badge covers the business identity and official-domain association. It does not certify every product, standard or performance claim."
           : "Company, product and certification statements are attributed to the official website and have not been independently audited by GetFRP.",
-      }
-    : {
-        home: "首页",
-        suppliers: "供应商目录",
-        eyebrow: isVerified ? "已认证企业主页" : isClaimed ? "已认领企业主页" : "公开企业档案",
-        verified: isVerified ? "企业身份已审核" : isClaimed ? "企业已认领" : "公开档案 · 尚未认领",
-        legal: "法律主体",
-        established: isVerified ? "法律主体成立年份" : "开始制造年份（企业自述）",
-        location: "所在地",
-        category: "企业类型",
-        about: "企业简介",
-        products: "产品与供应范围",
-        processes: "能力与服务",
-        certifications: isVerified ? "有文件佐证的认证" : "企业官网公开的认证",
-        noCerts: "本档案暂未列出企业级认证。",
-        productsServices: "产品与服务总结",
-        ecatalog: "电子样本",
-        ecatalogSub: "企业官网公开的产品目录、网页目录与技术资料。",
-        openCatalog: "打开样本",
-        contact: isVerified ? "企业官方联系方式" : "企业公开联系方式",
-        contactSupplier: isVerified ? "通过平台联系企业" : "通过 GetFRP 发送询盘",
-        website: "访问企业官网",
-        verification: isVerified ? "复材站核验范围" : "档案状态",
-        verifyItems: isVerified
-          ? [
-              "该企业身份已关联至审核通过的企业记录。",
-              "企业官网与公司域名联系方式已完成匹配。",
-              "产品与认证主张仍须逐份文件审核。",
-            ]
-          : [
-              "GetFRP 根据该企业官方网站整理本档案。",
-              "官网、企业域名邮箱与电话作为公开联系信息展示。",
-              "该企业尚未认领本档案，也未完成 GetFRP 企业身份认证。",
-            ],
-        note: isVerified
-          ? "认证标识仅覆盖企业身份与官网关联，不代表对每项产品、标准或性能主张的认证。"
-          : "公司、产品与认证表述均注明来源于企业官网，GetFRP 尚未进行独立审计。",
       };
 
   return (
@@ -308,7 +286,13 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
                   </div>
                   <div className="mt-3 flex flex-wrap items-center gap-3">
                     <h1 className="text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">{name}</h1>
-                    <Badge variant={isVerified ? "default" : "outline"} className="gap-1.5"><ShieldCheck size={13} />{labels.verified}</Badge>
+                    {isSponsored && isVerified ? (
+                      <Badge className="gap-1.5 border border-amber-300 bg-amber-50 text-amber-900 shadow-none hover:bg-amber-50">
+                        <ShieldCheck size={13} /> Sponsored · Verified Supplier
+                      </Badge>
+                    ) : (
+                      <Badge variant={isVerified ? "default" : "outline"} className="gap-1.5"><ShieldCheck size={13} />{labels.verified}</Badge>
+                    )}
                   </div>
                   <div className="mt-2 text-sm text-muted-foreground">{legalName}{location ? ` · ${location}` : ""}</div>
                 </div>
@@ -369,7 +353,7 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
           <div className="rounded-xl border border-border/70 bg-background p-5"><Building2 size={18} /><div className="mt-3 text-xs text-muted-foreground">{labels.legal}</div><div className="mt-1 text-sm font-semibold">{legalName}</div></div>
           <div className="rounded-xl border border-border/70 bg-background p-5"><CalendarDays size={18} /><div className="mt-3 text-xs text-muted-foreground">{labels.established}</div><div className="mt-1 text-sm font-semibold">{supplier.established ?? "—"}</div></div>
           <div className="rounded-xl border border-border/70 bg-background p-5"><MapPin size={18} /><div className="mt-3 text-xs text-muted-foreground">{labels.location}</div><div className="mt-1 text-sm font-semibold">{location || "China"}</div></div>
-          <div className="rounded-xl border border-border/70 bg-background p-5"><Factory size={18} /><div className="mt-3 text-xs text-muted-foreground">{labels.category}</div><div className="mt-1 text-sm font-semibold">{categoryLabel(supplier.category, isEn)}</div></div>
+          <div className="rounded-xl border border-border/70 bg-background p-5"><Factory size={18} /><div className="mt-3 text-xs text-muted-foreground">{labels.category}</div><div className="mt-1 text-sm font-semibold">{categoryLabel(supplier.category)}</div></div>
         </div>
       </section>
 
@@ -393,8 +377,8 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
               {ecatalogs.length > 0 ? (
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   {ecatalogs.map((catalog) => {
-                    const catalogTitle = (isEn ? catalog.titleEn : catalog.title) ?? catalog.title;
-                    const catalogDescription = (isEn ? catalog.descriptionEn : catalog.description) ?? catalog.description;
+                    const catalogTitle = catalog.titleEn ?? "Product catalog";
+                    const catalogDescription = catalog.descriptionEn;
                     return (
                       <a
                         key={catalog.url}
@@ -415,7 +399,7 @@ function renderSupplierProfile(profile: SupplierProfile, locale: string) {
                   })}
                 </div>
               ) : (
-                <p className="mt-4 text-sm text-muted-foreground">{isEn ? "No eCatalog has been published yet." : "企业暂未发布电子样本。"}</p>
+                <p className="mt-4 text-sm text-muted-foreground">No eCatalog has been published yet.</p>
               )}
             </div>
           </div>
@@ -615,17 +599,11 @@ export async function generateMetadata({
       alternates: alternates(`/suppliers/${id}`),
     };
   }
-  const supplierName =
-    (locale === "en" ? profile.supplier.nameEn : profile.supplier.name) ??
-    profile.supplier.name;
+  const supplierName = profile.supplier.nameEn ?? "Supplier";
   const description =
-    (locale === "en" ? profile.supplier.descriptionEn : profile.supplier.description) ??
-    profile.supplier.description ??
-    `${supplierName} supplier profile.`;
+    profile.supplier.descriptionEn ?? `${supplierName} supplier profile.`;
   const isVerifiedProfile = Boolean(profile.supplier.verified && profile.enterprise);
-  const title = locale === "en"
-    ? `${supplierName} — ${isVerifiedProfile ? "Verified" : "Public"} FRP Supplier Profile | getfrp`
-    : `${supplierName}｜${isVerifiedProfile ? "已认证复材企业主页" : "公开复材企业档案"}`;
+  const title = `${supplierName} — ${isVerifiedProfile ? "Verified" : "Public"} FRP Supplier Profile | getfrp`;
   return {
     title: { absolute: title },
     description,
@@ -827,7 +805,7 @@ export default async function SupplierCategoryPageRoute({
   if (!category) {
     const profile = await loadSupplierProfile(id);
     if (!profile) notFound();
-    return renderSupplierProfile(profile, locale);
+    return renderSupplierProfile(profile);
   }
   if (locale !== "en") notFound();
 
@@ -836,7 +814,7 @@ export default async function SupplierCategoryPageRoute({
   const provinceCounts = new Map<string, number>();
   for (const row of network) {
     if (!row.province) continue;
-    const label = provincesEn[row.province] ?? row.province;
+    const label = englishProvince(row.province);
     provinceCounts.set(label, (provinceCounts.get(label) ?? 0) + 1);
   }
   const provinces = [...provinceCounts.entries()].sort((a, b) => b[1] - a[1]);
@@ -1079,7 +1057,7 @@ export default async function SupplierCategoryPageRoute({
                     </div>
                     <div className="mt-5 flex items-center gap-2 text-sm font-medium">
                       <MapPin size={14} />
-                      {provincesEn[row.province ?? ""] ?? row.province ?? "China"}
+                      {englishProvince(row.province)}
                     </div>
                     <div className="mt-2 text-base font-semibold">
                       {row.nameEn ?? row.name}
@@ -1184,7 +1162,7 @@ export default async function SupplierCategoryPageRoute({
               <div className="mt-4 flex flex-wrap gap-2">
                 {relatedMaterials.map((material) => (
                   <Link
-                    key={material.id}
+                    key={encodeURIComponent(material.id)}
                     href={`/materials/${encodeURIComponent(material.id)}` as never}
                     className="rounded-md border border-border bg-background px-3 py-2 text-xs hover:border-foreground/50"
                   >

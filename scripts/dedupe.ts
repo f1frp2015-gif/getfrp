@@ -3,6 +3,8 @@ import { db } from "../src/lib/db";
 
 const APPLY = process.argv.includes("--apply");
 const RESET_MATERIALS = process.argv.includes("--reset-materials");
+const readRow = (value: unknown): Record<string, unknown> =>
+  value as Record<string, unknown>;
 
 async function run() {
   console.log(APPLY ? "🧹 APPLY mode — will delete duplicates" : "👀 DRY-RUN — no writes");
@@ -35,12 +37,12 @@ async function run() {
       WHERE brand IS NOT NULL AND model IS NOT NULL
     ) t WHERE rn > 1
   `);
-  console.log(`\n📦 materials: ${(mTotal.rows[0] as any).n} 条`);
-  console.log(`   (brand, model, sub_category) 重复组样例:`);
+  console.log(`\n📦 materials: ${readRow(mTotal.rows[0]).n} records`);
+  console.log(`   Duplicate (brand, model, sub_category) examples:`);
   for (const r of mDupes.rows.slice(0, 5)) {
-    console.log(`     • ${(r as any).brand} / ${(r as any).model} / ${(r as any).sub_category}  × ${(r as any).n}`);
+    console.log(`     • ${readRow(r).brand} / ${readRow(r).model} / ${readRow(r).sub_category}  × ${readRow(r).n}`);
   }
-  console.log(`   预计删除 ${(mDupeCount.rows[0] as any).n} 条重复`);
+  console.log(`   Estimated duplicates: ${readRow(mDupeCount.rows[0]).n}`);
 
   if (APPLY) {
     // Prefer deterministic (newer) rows — keep created_at DESC within partition
@@ -56,7 +58,7 @@ async function run() {
         ) t WHERE rn > 1
       )
     `);
-    console.log(`   ✅ 已删除 ${res.rowCount ?? 0} 条`);
+    console.log(`   ✅ Deleted ${res.rowCount ?? 0} records`);
   }
 
   // ───────────────────────── FORMULAS
@@ -78,12 +80,12 @@ async function run() {
       FROM formulas
     ) t WHERE rn > 1
   `);
-  console.log(`\n🧪 formulas: ${(fTotal.rows[0] as any).n} 条`);
-  console.log(`   (name, process_id) 重复组样例:`);
+  console.log(`\n🧪 formulas: ${readRow(fTotal.rows[0]).n} records`);
+  console.log(`   Duplicate (name, process_id) examples:`);
   for (const r of fDupes.rows.slice(0, 5)) {
-    console.log(`     • ${(r as any).name} / ${(r as any).process_id}  × ${(r as any).n}`);
+    console.log(`     • ${readRow(r).name} / ${readRow(r).process_id}  × ${readRow(r).n}`);
   }
-  console.log(`   预计删除 ${(fDupeCount.rows[0] as any).n} 条重复`);
+  console.log(`   Estimated duplicates: ${readRow(fDupeCount.rows[0]).n}`);
 
   if (APPLY) {
     const res = await db.execute(sql`
@@ -97,7 +99,7 @@ async function run() {
         ) t WHERE rn > 1
       )
     `);
-    console.log(`   ✅ 已删除 ${res.rowCount ?? 0} 条`);
+    console.log(`   ✅ Deleted ${res.rowCount ?? 0} records`);
   }
 
   // ───────────────────────── STANDARDS
@@ -116,12 +118,12 @@ async function run() {
       FROM standards
     ) t WHERE rn > 1
   `);
-  console.log(`\n📋 standards: ${(sTotal.rows[0] as any).n} 条`);
-  console.log(`   code 重复组样例:`);
+  console.log(`\n📋 standards: ${readRow(sTotal.rows[0]).n} records`);
+  console.log(`   Duplicate code examples:`);
   for (const r of sDupes.rows.slice(0, 5)) {
-    console.log(`     • ${(r as any).code}  × ${(r as any).n}`);
+    console.log(`     • ${readRow(r).code}  × ${readRow(r).n}`);
   }
-  console.log(`   预计删除 ${(sDupeCount.rows[0] as any).n} 条重复`);
+  console.log(`   Estimated duplicates: ${readRow(sDupeCount.rows[0]).n}`);
 
   if (APPLY) {
     const res = await db.execute(sql`
@@ -132,7 +134,7 @@ async function run() {
         ) t WHERE rn > 1
       )
     `);
-    console.log(`   ✅ 已删除 ${res.rowCount ?? 0} 条`);
+    console.log(`   ✅ Deleted ${res.rowCount ?? 0} records`);
   }
 
   // ───────────────────────── SUPPLIERS
@@ -154,12 +156,12 @@ async function run() {
       FROM supplier_listings
     ) t WHERE rn > 1
   `);
-  console.log(`\n🏭 supplier_listings: ${(supTotal.rows[0] as any).n} 条`);
-  console.log(`   (name, province) 重复组样例:`);
+  console.log(`\n🏭 supplier_listings: ${readRow(supTotal.rows[0]).n} records`);
+  console.log(`   Duplicate (name, province) examples:`);
   for (const r of supDupes.rows.slice(0, 5)) {
-    console.log(`     • ${(r as any).name} / ${(r as any).province}  × ${(r as any).n}`);
+    console.log(`     • ${readRow(r).name} / ${readRow(r).province}  × ${readRow(r).n}`);
   }
-  console.log(`   预计删除 ${(supDupeCount.rows[0] as any).n} 条重复`);
+  console.log(`   Estimated duplicates: ${readRow(supDupeCount.rows[0]).n}`);
 
   if (APPLY) {
     // Prefer verified + longer curated IDs (sup-xxx) over short legacy ids (s1-s6)
@@ -174,7 +176,7 @@ async function run() {
         ) t WHERE rn > 1
       )
     `);
-    console.log(`   ✅ 已删除 ${res.rowCount ?? 0} 条`);
+    console.log(`   ✅ Deleted ${res.rowCount ?? 0} records`);
   }
 
   // ───────────────────────── ARTICLES
@@ -193,12 +195,12 @@ async function run() {
       FROM articles
     ) t WHERE rn > 1
   `);
-  console.log(`\n📰 articles: ${(aTotal.rows[0] as any).n} 条`);
-  console.log(`   标题重复组样例:`);
+  console.log(`\n📰 articles: ${readRow(aTotal.rows[0]).n} records`);
+  console.log(`   Duplicate title examples:`);
   for (const r of aDupes.rows.slice(0, 5)) {
-    console.log(`     • ${(r as any).title}  × ${(r as any).n}`);
+    console.log(`     • ${readRow(r).title}  × ${readRow(r).n}`);
   }
-  console.log(`   预计删除 ${(aDupeCount.rows[0] as any).n} 条重复`);
+  console.log(`   Estimated duplicates: ${readRow(aDupeCount.rows[0]).n}`);
 
   if (APPLY) {
     const res = await db.execute(sql`
@@ -209,11 +211,11 @@ async function run() {
         ) t WHERE rn > 1
       )
     `);
-    console.log(`   ✅ 已删除 ${res.rowCount ?? 0} 条`);
+    console.log(`   ✅ Deleted ${res.rowCount ?? 0} records`);
   }
 
   console.log("\n" + "=".repeat(60));
-  console.log(APPLY ? "🎉 去重完成" : "ℹ️  加 --apply 执行实际删除");
+  console.log(APPLY ? "🎉 Deduplication complete" : "ℹ️  Add --apply to delete duplicates");
 }
 
 run()

@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
-<title>FRP 门窗 U 值计算器 | 复材站</title>
-<meta name="description" content="按 EN ISO 10077-1 计算 FRP/铝/PVC/木门窗整窗传热系数 Uw，对照中/欧/美/加节能标准合规判定。">
+<title>FRP Window U-Value Calculator | getfrp</title>
+<meta name="description" content="Calculate whole-window Uw under EN ISO 10077-1 for FRP, aluminum, PVC and timber frames, then compare representative regional energy limits.">
 <style>
   :root{
     --ink:#1b1b1b; --muted:#6b7280; --line:#e6e7e9; --bg:#fff; --soft:#f7f7f8;
@@ -73,142 +73,142 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>FRP 门窗 U 值计算器</h1>
-    <p>按 EN ISO 10077-1 计算整窗传热系数 Uw · 中/欧/美/加节能标准合规</p>
+    <h1>FRP Window U-Value Calculator</h1>
+    <p>Whole-window Uw calculation under EN ISO 10077-1 · representative energy-code comparisons</p>
   </header>
 
   <div class="card">
-    <p class="card-t">门窗配置</p>
+    <p class="card-t">Window Configuration</p>
     <div class="grid g2">
       <div class="field">
-        <label class="f">框料系统</label>
+        <label class="f">Frame System</label>
         <select id="frame"></select>
         <span class="hint" id="frame-hint"></span>
       </div>
       <div class="field">
-        <label class="f">玻璃配置</label>
+        <label class="f">Glazing Configuration</label>
         <select id="glass"></select>
         <span class="hint" id="glass-hint"></span>
       </div>
     </div>
     <div class="grid g2">
       <div class="field">
-        <label class="f">间隔条</label>
+        <label class="f">Spacer</label>
         <select id="spacer"></select>
         <span class="hint" id="spacer-hint"></span>
       </div>
       <div class="field">
-        <label class="f">开启方式</label>
+        <label class="f">Opening Type</label>
         <select id="wintype"></select>
         <span class="hint" id="wintype-hint"></span>
       </div>
     </div>
     <div class="field">
-      <label class="f">洞口尺寸 (mm)</label>
+      <label class="f">Rough Opening (mm)</label>
       <div class="sizebox">
-        <div class="col"><input type="number" id="w" value="1200" min="200" max="4000" step="50"><span class="hint">宽 W</span></div>
+        <div class="col"><input type="number" id="w" value="1200" min="200" max="4000" step="50"><span class="hint">Width W</span></div>
         <span class="x">×</span>
-        <div class="col"><input type="number" id="h" value="1400" min="200" max="4000" step="50"><span class="hint">高 H</span></div>
+        <div class="col"><input type="number" id="h" value="1400" min="200" max="4000" step="50"><span class="hint">Height H</span></div>
       </div>
     </div>
     <div class="formula">
       <b>EN ISO 10077-1：</b>
       U<sub>w</sub> = (A<sub>g</sub>·U<sub>g</sub> + A<sub>f</sub>·U<sub>f</sub> + l<sub>g</sub>·Ψ<sub>g</sub>) / (A<sub>g</sub> + A<sub>f</sub>)<br>
-      <span style="opacity:.75">GB 50189 / GB 50176（中）· EN ISO 10077 / EPBD（欧）· IECC / ENERGY STAR（美）· CSA A440（加）</span>
+      <span style="opacity:.75">GB 50189 / GB 50176 (China) · EN ISO 10077 / EPBD (Europe) · IECC / ENERGY STAR (US) · CSA A440 (Canada)</span>
     </div>
   </div>
 
   <div id="result"></div>
 
   <div class="card">
-    <h3 class="sec">框料系统 U<sub>f</sub> 对比</h3>
-    <p class="sub">框料本身的传热系数决定窗的"底子"——FRP 拉挤型材低导热、免隔热条。</p>
+    <h3 class="sec">Frame-System U<sub>f</sub> Comparison</h3>
+    <p class="sub">Frame transmittance sets the thermal baseline. Pultruded FRP has low conductivity and does not require a thermal-break strip.</p>
     <div class="scroll">
       <table>
-        <thead><tr><th>框料系统</th><th>U<sub>f</sub></th><th>厚度</th><th>面宽</th><th>隔热说明</th></tr></thead>
+        <thead><tr><th>Frame System</th><th>U<sub>f</sub></th><th>Depth</th><th>Face Width</th><th>Thermal Note</th></tr></thead>
         <tbody id="frame-table"></tbody>
       </table>
     </div>
   </div>
 
   <details>
-    <summary>各国门窗节能标准 Uw 限值对照</summary>
+    <summary>Representative Window-Energy Uw Limits</summary>
     <div class="inner">
       <div class="scroll">
         <table>
-          <thead><tr><th>地区</th><th>标准</th><th>气候区</th><th>限值</th><th>备注</th></tr></thead>
+          <thead><tr><th>Region</th><th>Standard</th><th>Climate Zone</th><th>Limit</th><th>Notes</th></tr></thead>
           <tbody id="std-table"></tbody>
         </table>
       </div>
-      <p class="disc">数据为各标准代表性限值，仅供方案阶段参考；实际项目须以现行版本规范、当地节能审查与 NFRC/PHI 等认证测试结果为准。SHGC（太阳得热系数）在夏热地区同为关键指标，本表未列。</p>
+      <p class="disc">These are representative limits for concept-stage comparison. Use the current local code, energy review and applicable NFRC or PHI test results for an actual project. SHGC is also critical in cooling-dominated climates and is not included here.</p>
     </div>
   </details>
 
   <footer>
-    复材站 · FRP 工程工具 &nbsp;|&nbsp; <a href="https://f1frp.com">f1frp.com</a>
+    getfrp · FRP Engineering Tools &nbsp;|&nbsp; <a href="https://getfrp.com">getfrp.com</a>
   </footer>
 </div>
 
 <script>
 "use strict";
 var FRAMES=[
-  {id:"frp-65",label:"FRP 65系列 (65mm, 2腔)",Uf:1.4,depth:65,fw:54,grp:"frp"},
-  {id:"frp-70",label:"FRP 70系列 (70mm, 3腔)",Uf:1.2,depth:70,fw:58,grp:"frp"},
-  {id:"frp-80",label:"FRP 80系列 (80mm, 3腔)",Uf:1.0,depth:80,fw:65,grp:"frp"},
-  {id:"frp-90",label:"FRP 90系列 (90mm, 3腔)",Uf:0.85,depth:90,fw:72,grp:"frp"},
-  {id:"alu-no-break",label:"铝合金（无隔热条）",Uf:5.9,depth:65,fw:50,grp:"o"},
-  {id:"alu-break",label:"铝合金（PA隔热条）",Uf:3.2,depth:70,fw:55,grp:"o"},
-  {id:"pvc-multi",label:"PVC多腔型",Uf:1.5,depth:70,fw:62,grp:"o"},
-  {id:"pvc-steel",label:"PVC钢衬型",Uf:1.8,depth:70,fw:65,grp:"o"},
-  {id:"timber",label:"木材（软木, 68mm）",Uf:1.4,depth:75,fw:65,grp:"o"}
+  {id:"frp-65",label:"FRP 65 series (65 mm, 2 chambers)",Uf:1.4,depth:65,fw:54,grp:"frp"},
+  {id:"frp-70",label:"FRP 70 series (70 mm, 3 chambers)",Uf:1.2,depth:70,fw:58,grp:"frp"},
+  {id:"frp-80",label:"FRP 80 series (80 mm, 3 chambers)",Uf:1.0,depth:80,fw:65,grp:"frp"},
+  {id:"frp-90",label:"FRP 90 series (90 mm, 3 chambers)",Uf:0.85,depth:90,fw:72,grp:"frp"},
+  {id:"alu-no-break",label:"Aluminum (no thermal break)",Uf:5.9,depth:65,fw:50,grp:"o"},
+  {id:"alu-break",label:"Aluminum (PA thermal break)",Uf:3.2,depth:70,fw:55,grp:"o"},
+  {id:"pvc-multi",label:"Multi-chamber PVC",Uf:1.5,depth:70,fw:62,grp:"o"},
+  {id:"pvc-steel",label:"Steel-reinforced PVC",Uf:1.8,depth:70,fw:65,grp:"o"},
+  {id:"timber",label:"Softwood (68 mm)",Uf:1.4,depth:75,fw:65,grp:"o"}
 ];
 var GLASS=[
-  {id:"dg-air",label:"双层 — 4/12Air/4",Ug:2.8,th:20,grp:"dg"},
-  {id:"dg-ar",label:"双层 — 4/16Ar/4 Low-E",Ug:1.1,th:24,grp:"dg"},
-  {id:"dg-ar-6",label:"双层 — 6/20Ar/6 Low-E",Ug:1.0,th:32,grp:"dg"},
-  {id:"tg-ar",label:"三层 — 4/14Ar/4/14Ar/4 双Low-E",Ug:0.6,th:40,grp:"tg"},
-  {id:"tg-kr",label:"三层 — 4/12Kr/4/12Kr/4 双Low-E",Ug:0.5,th:36,grp:"tg"},
-  {id:"tg-ar-wide",label:"三层 — 4/18Ar/4/18Ar/4 双Low-E",Ug:0.55,th:48,grp:"tg"},
-  {id:"qg-kr",label:"四层 — 3/12Kr×3 三Low-E",Ug:0.3,th:48,grp:"qg"}
+  {id:"dg-air",label:"Double glazing — 4/12Air/4",Ug:2.8,th:20,grp:"dg"},
+  {id:"dg-ar",label:"Double glazing — 4/16Ar/4 Low-E",Ug:1.1,th:24,grp:"dg"},
+  {id:"dg-ar-6",label:"Double glazing — 6/20Ar/6 Low-E",Ug:1.0,th:32,grp:"dg"},
+  {id:"tg-ar",label:"Triple glazing — 4/14Ar/4/14Ar/4 dual Low-E",Ug:0.6,th:40,grp:"tg"},
+  {id:"tg-kr",label:"Triple glazing — 4/12Kr/4/12Kr/4 dual Low-E",Ug:0.5,th:36,grp:"tg"},
+  {id:"tg-ar-wide",label:"Triple glazing — 4/18Ar/4/18Ar/4 dual Low-E",Ug:0.55,th:48,grp:"tg"},
+  {id:"qg-kr",label:"Quadruple glazing — 3/12Kr×3 triple Low-E",Ug:0.3,th:48,grp:"qg"}
 ];
 var SPACERS=[
-  {id:"alu",label:"铝间隔条",psi:0.08},
-  {id:"steel",label:"钢间隔条",psi:0.06},
-  {id:"warm-basic",label:"暖边间隔条（标准）",psi:0.04},
-  {id:"warm-premium",label:"暖边间隔条（高端/TGI/Swisspacer）",psi:0.03}
+  {id:"alu",label:"Aluminum spacer",psi:0.08},
+  {id:"steel",label:"Steel spacer",psi:0.06},
+  {id:"warm-basic",label:"Standard warm-edge spacer",psi:0.04},
+  {id:"warm-premium",label:"Premium warm-edge spacer (TGI/Swisspacer)",psi:0.03}
 ];
 var WINTYPES=[
-  {id:"fixed",label:"固定窗",sw:0},
-  {id:"casement",label:"平开窗 / 内倒窗",sw:58},
-  {id:"sliding",label:"推拉门",sw:70},
-  {id:"entrance",label:"入户门（带玻璃）",sw:85}
+  {id:"fixed",label:"Fixed window",sw:0},
+  {id:"casement",label:"Casement / tilt-and-turn window",sw:58},
+  {id:"sliding",label:"Sliding door",sw:70},
+  {id:"entrance",label:"Glazed entrance door",sw:85}
 ];
 var COMPLIANCE=[
-  {r:"🇨🇳 中国",l:"严寒地区（哈尔滨）",max:1.50},
-  {r:"🇨🇳 中国",l:"寒冷地区（北京）",max:2.00},
-  {r:"🇨🇳 中国",l:"夏热冬冷（上海）",max:2.30},
-  {r:"🇨🇳 中国",l:"夏热冬暖（广州）",max:3.00},
-  {r:"🇪🇺 欧洲",l:"被动房",max:0.80},
-  {r:"🇪🇺 欧洲",l:"近零能耗指令",max:1.30},
-  {r:"🇺🇸 美国",l:"ENERGY STAR 北方",max:1.70},
-  {r:"🇨🇦 加拿大",l:"A区（最冷）",max:1.20}
+  {r:"🇨🇳 China",l:"Severe-cold zone (Harbin)",max:1.50},
+  {r:"🇨🇳 China",l:"Cold zone (Beijing)",max:2.00},
+  {r:"🇨🇳 China",l:"Hot-summer/cold-winter zone (Shanghai)",max:2.30},
+  {r:"🇨🇳 China",l:"Hot-summer/warm-winter zone (Guangzhou)",max:3.00},
+  {r:"🇪🇺 Europe",l:"Passive House",max:0.80},
+  {r:"🇪🇺 Europe",l:"Nearly zero-energy target",max:1.30},
+  {r:"🇺🇸 United States",l:"ENERGY STAR Northern",max:1.70},
+  {r:"🇨🇦 Canada",l:"Zone A (coldest)",max:1.20}
 ];
 var STANDARDS=[
-  ["中国","GB 50189-2015","严寒地区（哈尔滨）","≤ 1.50","公建；住宅按GB 50176"],
-  ["中国","GB 50189-2015","寒冷地区（北京）","≤ 2.00","公共建筑"],
-  ["中国","GB 50189-2015","夏热冬冷（上海）","≤ 2.30","公建；同时限制SHGC"],
-  ["中国","GB 50189-2015","夏热冬暖（广州）","≤ 3.00","公建；SHGC为主控"],
-  ["中国","GB 50176-2016","住宅（严寒）","≤ 1.50","民用建筑热工设计规范"],
-  ["中国","GB 50176-2016","住宅（寒冷）","≤ 2.00","民用建筑热工设计规范"],
-  ["中国","GB/T 8484-2020","测试方法","—","门窗热工性能测试标准"],
-  ["欧洲","EN ISO 10077-1","被动房高端","≤ 0.80","PHI认证；含安装"],
-  ["欧洲","EN ISO 10077-1","被动房经典","≤ 0.85","PHI认证"],
-  ["欧洲","EPBD 2024","近零能耗（中欧）","≤ 1.30","各成员国有差异"],
-  ["美国","IECC 2024","4区（纽约）","≤ 1.99","NFRC测试"],
-  ["美国","IECC 2024","7-8区（阿拉斯加）","≤ 1.70","极寒区"],
-  ["美国","ENERGY STAR v7.0","北方区","≤ 1.70","NFRC测试；最严格"],
-  ["加拿大","CSA A440/NEB","A区（最冷）","≤ 1.20","通常需三层玻璃"],
-  ["加拿大","CSA A440/NEB","C区（最暖）","≤ 1.60","温哥华/安省南部"]
+  ["China","GB 50189-2015","Severe-cold zone (Harbin)","≤ 1.50","Public buildings; residential buildings use GB 50176"],
+  ["China","GB 50189-2015","Cold zone (Beijing)","≤ 2.00","Public buildings"],
+  ["China","GB 50189-2015","Hot-summer/cold-winter zone (Shanghai)","≤ 2.30","Public buildings; SHGC also limited"],
+  ["China","GB 50189-2015","Hot-summer/warm-winter zone (Guangzhou)","≤ 3.00","Public buildings; SHGC governs"],
+  ["China","GB 50176-2016","Residential, severe cold","≤ 1.50","Thermal design for civil buildings"],
+  ["China","GB 50176-2016","Residential, cold","≤ 2.00","Thermal design for civil buildings"],
+  ["China","GB/T 8484-2020","Test method","—","Window and door thermal-performance test"],
+  ["Europe","EN ISO 10077-1","Premium Passive House","≤ 0.80","PHI certification; installation included"],
+  ["Europe","EN ISO 10077-1","Classic Passive House","≤ 0.85","PHI certification"],
+  ["Europe","EPBD 2024","Nearly zero-energy, Central Europe","≤ 1.30","Member-state requirements vary"],
+  ["United States","IECC 2024","Zone 4 (New York)","≤ 1.99","NFRC testing"],
+  ["United States","IECC 2024","Zones 7–8 (Alaska)","≤ 1.70","Very-cold climate"],
+  ["United States","ENERGY STAR v7.0","Northern zone","≤ 1.70","NFRC testing; strictest tier"],
+  ["Canada","CSA A440/NEB","Zone A (coldest)","≤ 1.20","Triple glazing normally required"],
+  ["Canada","CSA A440/NEB","Zone C (warmest)","≤ 1.60","Vancouver / southern Ontario"]
 ];
 
 function $(id){return document.getElementById(id);}
@@ -221,8 +221,8 @@ function optGroups(arr,groups){
 }
 function plain(arr){return arr.map(function(o){return '<option value="'+o.id+'">'+o.label+'</option>';}).join("");}
 
-$("frame").innerHTML=optGroups(FRAMES,[{k:"frp",label:"FRP 复合材料"},{k:"o",label:"对比材料"}]);
-$("glass").innerHTML=optGroups(GLASS,[{k:"dg",label:"双层中空"},{k:"tg",label:"三层中空"},{k:"qg",label:"四层中空"}]);
+$("frame").innerHTML=optGroups(FRAMES,[{k:"frp",label:"FRP composites"},{k:"o",label:"Comparison materials"}]);
+$("glass").innerHTML=optGroups(GLASS,[{k:"dg",label:"Double glazing"},{k:"tg",label:"Triple glazing"},{k:"qg",label:"Quadruple glazing"}]);
 $("spacer").innerHTML=plain(SPACERS);
 $("wintype").innerHTML=plain(WINTYPES);
 $("frame").value="frp-70"; $("glass").value="tg-ar"; $("spacer").value="warm-basic"; $("wintype").value="casement";
@@ -236,8 +236,8 @@ function calcUw(width,height,faceWidth,Uf,Ug,psi,sashWidth){
   return {Uw:Math.round(Uw*1000)/1000,Ag:Ag,Af:Af,glassRatio:Math.round(Ag/Aw*100),lg:lg};
 }
 function ratingLabel(u){
-  if(u<=0.8)return"被动房高端级"; if(u<=1.0)return"被动房级"; if(u<=1.3)return"近零能耗级";
-  if(u<=1.8)return"节能达标"; if(u<=2.5)return"基础级"; return"不达标";
+  if(u<=0.8)return"Premium Passive House"; if(u<=1.0)return"Passive House"; if(u<=1.3)return"Nearly zero energy";
+  if(u<=1.8)return"Energy-code target"; if(u<=2.5)return"Baseline"; return"Below target";
 }
 function ratingColor(u){
   if(u<=1.0)return{c:"#059669",bg:"#ecfdf5",bd:"#a7f3d0"};
@@ -247,11 +247,11 @@ function ratingColor(u){
   return{c:"#dc2626",bg:"#fef2f2",bd:"#fecaca"};
 }
 function breakNote(f){
-  if(f.grp==="frp"||f.id==="timber")return"材料低导热，免隔热条";
-  if(f.id==="alu-break")return"依赖 PA 隔热条";
-  if(f.id==="pvc-steel")return"钢衬形成热桥";
-  if(f.id==="pvc-multi")return"多腔保温好但刚度偏低";
-  return"金属高导热，热桥严重";
+  if(f.grp==="frp"||f.id==="timber")return"Low-conductivity material; no thermal break required";
+  if(f.id==="alu-break")return"Depends on a PA thermal-break strip";
+  if(f.id==="pvc-steel")return"Steel reinforcement creates a thermal bridge";
+  if(f.id==="pvc-multi")return"Good multi-chamber insulation with lower stiffness";
+  return"High-conductivity metal with a significant thermal bridge";
 }
 
 function render(){
@@ -261,16 +261,16 @@ function render(){
   var w=WINTYPES.find(function(x){return x.id===$("wintype").value;});
   var width=Math.max(200,+$("w").value), height=Math.max(200,+$("h").value);
 
-  $("frame-hint").innerHTML="U<sub>f</sub> = "+f.Uf+" W/m²K · 面宽 "+f.fw+" mm";
+  $("frame-hint").innerHTML="U<sub>f</sub> = "+f.Uf+" W/m²K · face width "+f.fw+" mm";
   $("glass-hint").innerHTML="U<sub>g</sub> = "+g.Ug+" W/m²K · "+g.th+" mm";
   $("spacer-hint").innerHTML="Ψ<sub>g</sub> = "+s.psi+" W/mK";
-  $("wintype-hint").textContent="框扇遮挡 "+w.sw+" mm"+(w.sw===0?"（无开启扇）":"");
+  $("wintype-hint").textContent="Frame/sash obstruction "+w.sw+" mm"+(w.sw===0?" (no opening sash)":"");
 
   var res=calcUw(width,height,f.fw,f.Uf,g.Ug,s.psi,w.sw);
   var base=calcUw(width,height,50,5.9,g.Ug,0.08,0);
 
   if(!res){
-    $("result").innerHTML='<div class="card"><div class="err">框料尺寸超过洞口，玻璃面积不足，请增大洞口或更换更窄的框扇方案。</div></div>';
+    $("result").innerHTML='<div class="card"><div class="err">The frame exceeds the opening and leaves insufficient glazing area. Increase the opening or select a narrower frame/sash system.</div></div>';
     return;
   }
   var col=ratingColor(res.Uw);
@@ -278,28 +278,28 @@ function render(){
 
   var html='<div class="card">';
   html+='<div class="result-big" style="background:'+col.bg+';border-color:'+col.bd+'">';
-  html+='<div class="lab">整窗传热系数 U<sub>w</sub></div>';
+  html+='<div class="lab">Whole-window thermal transmittance U<sub>w</sub></div>';
   html+='<div class="num" style="color:'+col.c+'">'+res.Uw.toFixed(2)+'</div>';
   html+='<div class="unit">W/m²K</div>';
   html+='<span class="badge" style="color:'+col.c+';background:#fff">'+ratingLabel(res.Uw)+'</span>';
   html+='</div>';
 
   html+='<div style="height:14px"></div><dl>';
-  html+='<div class="r"><dt>玻璃面积 A<sub>g</sub></dt><dd>'+res.Ag.toFixed(2)+' m²</dd></div>';
-  html+='<div class="r"><dt>框面积 A<sub>f</sub></dt><dd>'+res.Af.toFixed(2)+' m²</dd></div>';
-  html+='<div class="r"><dt>玻璃占比</dt><dd>'+res.glassRatio+'%</dd></div>';
-  html+='<div class="r"><dt>玻璃边缘周长 l<sub>g</sub></dt><dd>'+res.lg.toFixed(2)+' m</dd></div>';
-  html+='<div class="r top"><dt>框料 U<sub>f</sub></dt><dd>'+f.Uf+' W/m²K</dd></div>';
-  html+='<div class="r"><dt>玻璃 U<sub>g</sub></dt><dd>'+g.Ug+' W/m²K</dd></div>';
-  html+='<div class="r"><dt>间隔条 Ψ<sub>g</sub></dt><dd>'+s.psi+' W/mK</dd></div>';
+  html+='<div class="r"><dt>Glazing area A<sub>g</sub></dt><dd>'+res.Ag.toFixed(2)+' m²</dd></div>';
+  html+='<div class="r"><dt>Frame area A<sub>f</sub></dt><dd>'+res.Af.toFixed(2)+' m²</dd></div>';
+  html+='<div class="r"><dt>Glazing ratio</dt><dd>'+res.glassRatio+'%</dd></div>';
+  html+='<div class="r"><dt>Glazing edge length l<sub>g</sub></dt><dd>'+res.lg.toFixed(2)+' m</dd></div>';
+  html+='<div class="r top"><dt>Frame U<sub>f</sub></dt><dd>'+f.Uf+' W/m²K</dd></div>';
+  html+='<div class="r"><dt>Glazing U<sub>g</sub></dt><dd>'+g.Ug+' W/m²K</dd></div>';
+  html+='<div class="r"><dt>Spacer Ψ<sub>g</sub></dt><dd>'+s.psi+' W/mK</dd></div>';
   html+='</dl></div>';
 
   if(base&&imp>0){
-    html+='<div class="card"><div class="vs"><div class="lab">对比普通铝合金窗</div>';
-    html+='<p>相同尺寸与玻璃下，普通铝合金（无隔热条）整窗约 <b>'+base.Uw.toFixed(2)+' W/m²K</b>；本方案降低约 <b>'+imp+'%</b>，显著减少冷桥与结露风险。</p></div></div>';
+    html+='<div class="card"><div class="vs"><div class="lab">Comparison with a standard aluminum window</div>';
+    html+='<p>At the same size and glazing, a non-thermally-broken aluminum window is approximately <b>'+base.Uw.toFixed(2)+' W/m²K</b>. This option is about <b>'+imp+'%</b> lower, reducing thermal-bridge and condensation risk.</p></div></div>';
   }
 
-  html+='<div class="card"><p class="card-t">各国标准合规判定</p><div class="cmp">';
+  html+='<div class="card"><p class="card-t">Representative code comparison</p><div class="cmp">';
   COMPLIANCE.forEach(function(c){
     var pass=res.Uw<=c.max;
     html+='<div class="row"><span class="lbl">'+c.r+' '+c.l+'</span><span class="v '+(pass?"pass":"no")+'">≤ '+c.max.toFixed(2)+(pass?' ✓':'')+'</span></div>';
@@ -308,11 +308,11 @@ function render(){
   $("result").innerHTML=html;
 }
 
-// 框料对比表
+// Frame comparison table
 $("frame-table").innerHTML=FRAMES.map(function(f){
   return '<tr class="'+(f.grp==="frp"?"frp":"")+'"><td>'+f.label+'</td><td>'+f.Uf+'</td><td>'+f.depth+'</td><td>'+f.fw+'</td><td>'+breakNote(f)+'</td></tr>';
 }).join("");
-// 标准对照表
+// Standards comparison table
 $("std-table").innerHTML=STANDARDS.map(function(r){
   return '<tr><td class="nowrap">'+r[0]+'</td><td class="nowrap">'+r[1]+'</td><td>'+r[2]+'</td><td class="nowrap">'+r[3]+'</td><td>'+r[4]+'</td></tr>';
 }).join("");

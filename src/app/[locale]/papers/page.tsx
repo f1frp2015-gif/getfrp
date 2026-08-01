@@ -34,23 +34,17 @@ export default async function PapersPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const isEn = locale === "en";
   const rows = await db
     .select({
       id: papersTable.id,
       slug: papersTable.slug,
-      title: papersTable.title,
       titleEn: papersTable.titleEn,
       authors: papersTable.authors,
-      affiliation: papersTable.affiliation,
       affiliationEn: papersTable.affiliationEn,
-      journal: papersTable.journal,
       journalEn: papersTable.journalEn,
       year: papersTable.year,
       doi: papersTable.doi,
-      keywords: papersTable.keywords,
       keywordsEn: papersTable.keywordsEn,
-      category: papersTable.category,
       categoryEn: papersTable.categoryEn,
       language: papersTable.language,
       citationCount: papersTable.citationCount,
@@ -59,35 +53,44 @@ export default async function PapersPage({
     })
     .from(papersTable)
     .where(
-      // EN 侧仅展示英文标题已存在、且 URL slug 为 ASCII 的论文,
-      // 否则页面回退到中文 → 整站语言信号紊乱, GSC 收录率受损
-      isEn
-        ? and(
-            isNotNull(papersTable.titleEn),
-            ne(papersTable.titleEn, ""),
-            sql`COALESCE(${papersTable.slug}, ${papersTable.id}) ~ '^[\\x00-\\x7F]+$'`,
-          )
-        : undefined,
+      // English records require both a translated title and an ASCII route.
+      and(
+        isNotNull(papersTable.titleEn),
+        ne(papersTable.titleEn, ""),
+        sql`COALESCE(${papersTable.slug}, ${papersTable.id}) ~ '^[\\x00-\\x7F]+$'`,
+      ),
     )
     .orderBy(desc(papersTable.year), desc(papersTable.citationCount));
 
   const serialized: SerializedPaper[] = rows.map((r) => ({
     id: r.slug ?? r.id,
-    title: isEn ? r.titleEn ?? "" : r.title,
+    title: r.titleEn ?? "",
     titleEn: r.titleEn ?? "",
-    authors: (r.authors ?? []) as string[],
-    affiliation: isEn ? r.affiliationEn ?? "" : r.affiliation ?? "",
-    journal: isEn ? r.journalEn ?? "" : r.journal ?? "",
+    authors: (r.authors ?? []).filter(
+      (author): author is string =>
+        typeof author === "string" && !/[\u3400-\u9fff]/u.test(author),
+    ),
+    affiliation: r.affiliationEn ?? "",
+    journal: r.journalEn ?? "",
     year: r.year ?? null,
     doi: r.doi ?? "",
-    keywords: (isEn ? r.keywordsEn ?? [] : r.keywords ?? []) as string[],
-    category: isEn ? r.categoryEn ?? "" : r.category ?? "",
+    keywords: (r.keywordsEn ?? []).filter(
+      (keyword): keyword is string =>
+        typeof keyword === "string" && !/[\u3400-\u9fff]/u.test(keyword),
+    ),
+    category: r.categoryEn ?? "",
     language: (r.language as "zh" | "en" | null) ?? null,
     citationCount: r.citationCount ?? 0,
     sourceUrl: r.sourceUrl ?? "",
   }));
 
   return (
-    <PapersClient papers={serialized} categories={paperCategories} />
+    <PapersClient
+      papers={serialized}
+      categories={paperCategories.map((option) => ({
+        id: option.id,
+        name: option.nameEn || option.id,
+      }))}
+    />
   );
 }

@@ -49,11 +49,8 @@ export async function generateMetadata({
   const { locale, id: rawId } = await params;
   const id = safeDecode(rawId);
   const std = await loadStandard(id);
-  const seed = locale === "en" ? getGbStandardEn(id) : undefined;
-  const isEn = locale === "en";
-  const titleText = isEn
-    ? std?.titleEn?.trim() || seed?.titleEn
-    : std?.title;
+  const seed = getGbStandardEn(id);
+  const titleText = std?.titleEn?.trim() || seed?.titleEn;
   if (!titleText || (!std && !seed)) {
     const t = await getTranslations({ locale, namespace: "Standards" });
     return {
@@ -64,17 +61,16 @@ export async function generateMetadata({
 
   const code = std?.code ?? seed?.code ?? id;
   const standardId = std?.id ?? seed?.id ?? id;
-  const descText = isEn
-    ? std?.descriptionEn?.trim() ||
-      seed?.descriptionEn ||
-      `${code} — ${titleText}`
-    : std?.description ?? `${code} — ${titleText}`;
+  const descText =
+    std?.descriptionEn?.trim() ||
+    seed?.descriptionEn ||
+    `${code} — ${titleText}`;
 
   // English standards with only a code/title stay noindex. The ten curated GB
   // records have substantive English descriptions and are therefore eligible
   // for indexing even before section-level translations are added.
   let thinContent = false;
-  if (isEn && descText.trim().length < 80 && std) {
+  if (descText.trim().length < 80 && std) {
     const [{ n } = { n: 0 }] = await db
       .select({ n: sql<number>`count(*)::int` })
       .from(standardSectionsTable)
@@ -111,10 +107,9 @@ export default async function StandardDetailPage({
   const t = await getTranslations({ locale, namespace: "Standards" });
 
   const std = await loadStandard(id);
-  const seed = locale === "en" ? getGbStandardEn(id) : undefined;
+  const seed = getGbStandardEn(id);
   if (!std && !seed) notFound();
-  if (locale !== "en" && !std) notFound();
-  if (locale === "en" && !(std?.titleEn?.trim() || seed?.titleEn)) notFound();
+  if (!(std?.titleEn?.trim() || seed?.titleEn)) notFound();
 
   const sections = std
     ? await db
@@ -124,51 +119,35 @@ export default async function StandardDetailPage({
         .orderBy(asc(standardSectionsTable.sortOrder))
     : [];
 
-  const isEn = locale === "en";
   const standardId = std?.id ?? seed?.id ?? id;
   const code = std?.code ?? seed?.code ?? id;
-  const title = isEn
-    ? std?.titleEn?.trim() || seed?.titleEn || ""
-    : std?.title ?? "";
+  const title = std?.titleEn?.trim() || seed?.titleEn || "";
   const payload = {
     id: standardId,
     code,
     title,
     titleEn: std?.titleEn?.trim() || seed?.titleEn || "",
-    country: isEn
-      ? std?.countryEn?.trim() || seed?.countryEn || "China"
-      : std?.country ?? "",
+    country: std?.countryEn?.trim() || seed?.countryEn || "China",
     countryCode: std?.countryCode ?? seed?.countryCode ?? "",
-    category: isEn
-      ? std?.categoryEn?.trim() || seed?.categoryEn || ""
-      : std?.category ?? "",
-    process: (isEn
-      ? std?.processEn?.length
-        ? std.processEn
-        : seed?.processEn ?? []
-      : std?.process ?? []) as string[],
+    category: std?.categoryEn?.trim() || seed?.categoryEn || "",
+    process: (std?.processEn?.length
+      ? std.processEn
+      : seed?.processEn ?? []) as string[],
     year: std?.year ?? seed?.year ?? "",
-    status: isEn
-      ? std?.statusEn?.trim() || seed?.statusEn || std?.status || "Active"
-      : std?.status ?? "现行",
-    description: isEn
-      ? std?.descriptionEn?.trim() || seed?.descriptionEn || ""
-      : std?.description ?? "",
+    status: std?.statusEn?.trim() || seed?.statusEn || "Active",
+    description: std?.descriptionEn?.trim() || seed?.descriptionEn || "",
     sections: sections
-      .filter((section) =>
-        isEn
-          ? (section.titleEn && section.titleEn.trim()) ||
-            (section.bodyEn && section.bodyEn.trim())
-          : true,
+      .filter(
+        (section) =>
+          (section.titleEn && section.titleEn.trim()) ||
+          (section.bodyEn && section.bodyEn.trim()),
       )
       .map((section) => ({
         id: section.id,
         chapterNo: section.chapterNo,
-        title: isEn ? section.titleEn ?? "" : section.title,
-        body: isEn ? section.bodyEn ?? "" : section.body,
-        keyPoints: (isEn
-          ? section.keyPointsEn ?? []
-          : section.keyPoints ?? []) as string[],
+        title: section.titleEn ?? "",
+        body: section.bodyEn ?? "",
+        keyPoints: (section.keyPointsEn ?? []) as string[],
       })),
   };
 
@@ -176,7 +155,7 @@ export default async function StandardDetailPage({
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       <BreadcrumbJsonLd
         items={[
-          { name: locale === "en" ? "Home" : "首页", url: `${CURRENT_SITE_URL}/` },
+          { name: "Home", url: `${CURRENT_SITE_URL}/` },
           { name: t("detail.breadcrumb"), url: `${CURRENT_SITE_URL}/standards` },
           { name: code, url: `${CURRENT_SITE_URL}/standards/${standardId}` },
         ]}
@@ -190,16 +169,11 @@ export default async function StandardDetailPage({
           <span>{code}</span>
         </div>
         <AskAiButton
-          prompt={
-            locale === "en"
-              ? `Explain ${code}${title ? ` — ${title}` : ""}. What ASTM / ISO / EN standards does it map to? Which test methods does it cover? When does an overseas buyer need to ask for it?`
-              : `${code}${title ? ` — ${title}` : ""} 的核心要点、对应的国际标准（ASTM/ISO/EN）、测试方法和使用场景。`
-          }
+          prompt={`Explain ${code}${title ? ` — ${title}` : ""}. What ASTM / ISO / EN standards does it map to? Which test methods does it cover? When does an overseas buyer need to ask for it?`}
         />
       </div>
       <StandardDetailClient standard={payload} />
-      {isEn && (
-        <section className="mx-auto mt-10 max-w-5xl border-t border-border/70 pt-10">
+      <section className="mx-auto mt-10 max-w-5xl border-t border-border/70 pt-10">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             PROCUREMENT CONTEXT
           </div>
@@ -245,8 +219,7 @@ export default async function StandardDetailPage({
               China sourcing guide →
             </Link>
           </div>
-        </section>
-      )}
+      </section>
     </div>
   );
 }

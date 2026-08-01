@@ -34,7 +34,22 @@ export default async function NewsPage({
         <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
       </div>
 
-      <NewsClient newsList={newsList} categories={newsCategories} />
+      <NewsClient
+        newsList={newsList.map((item) => ({
+          id: item.id,
+          slug: item.slug,
+          title: item.titleEn,
+          summary: item.summaryEn,
+          category: item.category,
+          date: item.date,
+          readTime: item.readTimeEn,
+          hot: item.hot,
+        }))}
+        categories={newsCategories.map((category) => ({
+          id: category.id,
+          name: category.nameEn,
+        }))}
+      />
 
       <div className="mt-12 rounded-lg border bg-muted/30 p-8 text-center">
         <h3 className="text-lg font-semibold">{t("subscribeTitle")}</h3>

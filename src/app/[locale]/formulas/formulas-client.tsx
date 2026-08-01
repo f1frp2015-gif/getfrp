@@ -2,7 +2,7 @@
 
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@/components/icon";
 import { Card, CardContent } from "@/components/ui/card";
@@ -61,7 +61,7 @@ export type SerializedFormula = {
   categoryEn: string;
   application: string;
   applicationEn: string;
-  difficulty: "入门" | "中级" | "高级";
+  difficulty: "beginner" | "intermediate" | "advanced";
   description: string;
   descriptionEn: string;
   resinSystem: FormulaIngredient[];
@@ -75,18 +75,16 @@ export type SerializedFormula = {
   safetyNotesEn: string[];
 };
 
-type FilterOption = { id: string; name: string; nameEn?: string; iconKey?: string };
+type FilterOption = { id: string; name: string; iconKey?: string };
 
 function DifficultyBadge({ level }: { level: string }) {
   const t = useTranslations("Formulas");
-  // Map Chinese DB values to translation keys
-  const key =
-    level === "入门" ? "beginner" : level === "中级" ? "intermediate" : "advanced";
+  const key = level === "beginner" ? "beginner" : level === "intermediate" ? "intermediate" : "advanced";
   const label = t(`difficulty.${key}`);
   const cls =
-    level === "入门"
+    level === "beginner"
       ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-      : level === "中级"
+      : level === "intermediate"
         ? "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
         : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300";
   return (
@@ -110,8 +108,6 @@ function IngredientTable({
   materialMap: Record<string, string>;
 }) {
   const t = useTranslations("Formulas");
-  const locale = useLocale();
-  const isEn = locale === "en";
   if (!items || items.length === 0) return null;
   return (
     <div>
@@ -132,10 +128,10 @@ function IngredientTable({
           <TableBody>
             {items.map((item, i) => {
               const matId = materialMap[item.name];
-              const dispName = isEn ? item.nameEn ?? "" : item.name;
-              const dispRole = isEn ? item.roleEn ?? "" : item.role;
-              const dispAmount = isEn ? item.amountEn ?? "" : item.amount;
-              const dispNote = isEn ? item.noteEn ?? "" : item.note;
+              const dispName = item.name;
+              const dispRole = item.role;
+              const dispAmount = item.amount;
+              const dispNote = item.note;
               return (
                 <TableRow key={i}>
                   <TableCell className="font-medium">
@@ -179,14 +175,12 @@ function FormulaDetail({
   materialMap: Record<string, string>;
 }) {
   const t = useTranslations("Formulas");
-  const locale = useLocale();
-  const isEn = locale === "en";
-  const tips = isEn ? formula.tipsEn ?? [] : formula.tips;
-  const safetyNotes = isEn ? formula.safetyNotesEn ?? [] : formula.safetyNotes;
+  const tips = formula.tips;
+  const safetyNotes = formula.safetyNotes;
   return (
     <div className="space-y-5 pb-2">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        {isEn ? formula.descriptionEn ?? "" : formula.description}
+        {formula.description}
       </p>
 
       <IngredientTable title={t("sectionResin")} num={1} items={formula.resinSystem} amountHead={t("colAmount")} materialMap={materialMap} />
@@ -203,8 +197,8 @@ function FormulaDetail({
             <div className="space-y-1.5">
               {formula.processing.map((p, i) => (
                 <div key={i} className="flex items-start justify-between gap-2 rounded-md bg-muted/50 px-3 py-2">
-                  <span className="text-xs text-muted-foreground">{isEn ? p.nameEn ?? "" : p.name}</span>
-                  <span className="shrink-0 text-right text-xs font-medium">{isEn ? p.valueEn ?? "" : p.value}</span>
+                  <span className="text-xs text-muted-foreground">{p.name}</span>
+                  <span className="shrink-0 text-right text-xs font-medium">{p.value}</span>
                 </div>
               ))}
             </div>
@@ -220,9 +214,9 @@ function FormulaDetail({
             <div className="space-y-1.5">
               {formula.properties.map((p, i) => (
                 <div key={i} className="flex items-start justify-between gap-2 rounded-md bg-muted/50 px-3 py-2">
-                  <span className="text-xs text-muted-foreground">{isEn ? p.nameEn ?? "" : p.name}</span>
+                  <span className="text-xs text-muted-foreground">{p.name}</span>
                   <div className="shrink-0 text-right">
-                    <span className="text-xs font-medium">{isEn ? p.valueEn ?? "" : p.value}</span>
+                    <span className="text-xs font-medium">{p.value}</span>
                     {p.standard && <span className="ml-1 text-[10px] text-muted-foreground">({p.standard})</span>}
                   </div>
                 </div>
@@ -282,14 +276,7 @@ export function FormulasClient({
   ingredientMaterialMap: Record<string, string>;
 }) {
   const t = useTranslations("Formulas");
-  const locale = useLocale();
-  const isEn = locale === "en";
-  // getfrp.com (en): only surface formulas that have an English name, so the
-  // list / groups / stats never render Chinese. Untranslated rows are hidden
-  // until backfilled (translate-all-zh.ts).
-  const displayFormulas = isEn
-    ? formulas.filter((f) => f.nameEn && f.nameEn.trim())
-    : formulas;
+  const displayFormulas = formulas.filter((formula) => formula.name.trim());
   const [search, setSearch] = useState("");
   const [activeProcess, setActiveProcess] = useState("all");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -301,20 +288,26 @@ export function FormulasClient({
     if (typeof window === "undefined") return;
     const raw = window.location.hash.slice(1);
     if (!raw) return;
-    const targetId = decodeURIComponent(raw);
+    const targetId = raw;
     const match = formulas.find((f) => f.id === targetId);
     if (!match) return;
-    // Reset filters so the item is never hidden.
-    setSearch("");
-    setActiveProcess("all");
-    setActiveCategory("all");
-    setOpenItems([targetId]);
-    // Let the DOM update before scrolling.
-    const t = setTimeout(() => {
-      const el = document.getElementById(targetId);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    const openTimer = window.setTimeout(() => {
+      // Reset filters so a deep-linked formula is never hidden.
+      setSearch("");
+      setActiveProcess("all");
+      setActiveCategory("all");
+      setOpenItems([targetId]);
+    }, 0);
+    const scrollTimer = window.setTimeout(() => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }, 250);
-    return () => clearTimeout(t);
+    return () => {
+      window.clearTimeout(openTimer);
+      window.clearTimeout(scrollTimer);
+    };
   }, [formulas]);
 
   const filtered = useMemo(() => {
@@ -338,15 +331,15 @@ export function FormulasClient({
 
   const groupedByProcess = useMemo(() => {
     return filtered.reduce<Record<string, SerializedFormula[]>>((acc, f) => {
-      const proc = isEn ? f.processEn ?? "" : f.process;
-      const key = proc || (isEn ? "Ungrouped" : "未分组");
+      const proc = f.process;
+      const key = proc || "Ungrouped";
       (acc[key] ||= []).push(f);
       return acc;
     }, {});
-  }, [filtered, isEn]);
+  }, [filtered]);
 
-  const beginners = displayFormulas.filter((f) => f.difficulty === "入门").length;
-  const advanced = displayFormulas.filter((f) => f.difficulty === "高级").length;
+  const beginners = displayFormulas.filter((f) => f.difficulty === "beginner").length;
+  const advanced = displayFormulas.filter((f) => f.difficulty === "advanced").length;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -380,7 +373,7 @@ export function FormulasClient({
               onClick={() => setActiveProcess(p.id)}
             >
               {p.iconKey && <Icon name={p.iconKey} size={12} />}
-              {isEn && p.nameEn ? p.nameEn : p.name}
+              {p.name}
             </Badge>
           ))}
         </div>
@@ -394,7 +387,7 @@ export function FormulasClient({
               className="cursor-pointer px-2.5 py-1 text-xs"
               onClick={() => setActiveCategory(c.id)}
             >
-              {isEn && c.nameEn ? c.nameEn : c.name}
+              {c.name}
             </Badge>
           ))}
         </div>
@@ -405,7 +398,7 @@ export function FormulasClient({
           <h2 className="mb-4 flex items-center gap-2 text-xl font-bold">
             {(() => {
               const k = processFilters.find(
-                (p) => p.name === processName || p.nameEn === processName,
+                (p) => p.name === processName,
               )?.iconKey;
               return k ? <Icon name={k} size={20} className="text-muted-foreground" /> : null;
             })()}
@@ -427,14 +420,14 @@ export function FormulasClient({
               >
                 <AccordionTrigger className="py-4">
                   <div className="flex flex-1 flex-col items-start gap-1.5 pr-4 text-left sm:flex-row sm:items-center sm:gap-3">
-                    <span className="font-semibold">{isEn ? f.nameEn ?? "" : f.name}</span>
+                    <span className="font-semibold">{f.name}</span>
                     <div className="flex flex-wrap gap-1.5">
                       <DifficultyBadge level={f.difficulty} />
                       {(() => {
-                        const app = isEn ? f.applicationEn ?? "" : f.application;
+                        const app = f.application;
                         return app ? (
                           <Badge variant="outline" className="text-[10px]">
-                            {app.split(isEn ? "," : "、")[0]}
+                            {app.split(",")[0]}
                           </Badge>
                         ) : null;
                       })()}
@@ -442,9 +435,7 @@ export function FormulasClient({
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  {/* 仅展开时渲染详情:Accordion 的 Panel 是 keepMounted,若无条件渲染
-                      会把全部 ~115 个配方详情塞进 SSR DOM(2.7MB),低端手机解析/水合卡死。
-                      数据已在 props,展开即时渲染,无需请求。 */}
+                  {/* Render details only for open panels to keep the hydrated DOM small. */}
                   {openItems.includes(f.id) && (
                     <>
                       <Separator className="mb-5" />

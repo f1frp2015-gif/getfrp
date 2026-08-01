@@ -6,16 +6,12 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Providers } from "@/components/providers";
-import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { AiChatWidget } from "@/components/ai-chat";
 import { CookieBanner } from "@/components/cookie-banner";
 import { ConsentedGoogleAnalytics } from "@/components/consented-google-analytics";
 
-// Vercel client tracking 请求 vitals.vercel-insights.com，国内 ECS 上会被墙拖慢首屏 →
-// 仅在 AI_PROFILE !== 'domestic'（即海外 Vercel 侧）启用
-const isDomestic = process.env.AI_PROFILE === "domestic";
 import { JsonLd } from "@/components/json-ld";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
@@ -83,7 +79,7 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale === "zh" ? "zh_CN" : "en_US",
+      locale: "en_US",
       siteName: brand,
       // og:title / og:url / og:description are intentionally NOT set as layout
       // defaults. In this Next build a child `openGraph` REPLACES the parent
@@ -115,8 +111,7 @@ export async function generateMetadata({
     // alternates intentionally NOT set here — see comment above the
     // generateMetadata return. Each page sets path-aware canonical +
     // hreflang via @/lib/seo.alternates(path).
-    // 站长平台验证 meta:build-time NEXT_PUBLIC_* → GitHub Variable(与 ICP 同机制)。
-    // 给值即设 GH Variable + 重建上线,无需 SSH。验证码本为公开 meta,无泄露风险。
+    // Search-engine verification values are public build-time metadata.
     other: {
       "mobile-web-app-capable": "yes",
       "apple-mobile-web-app-capable": "yes",
@@ -158,7 +153,7 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: "Site" });
   const brand = t("name");
   const description = t("description");
-  const htmlLang = locale === "zh" ? "zh-CN" : "en";
+  const htmlLang = "en";
 
   return (
     <html
@@ -174,38 +169,21 @@ export default async function LocaleLayout({
                 "@type": "Organization",
                 "@id": `${siteUrl}/#organization`,
                 name: brand,
-                // Keep the two platform identities separate. getfrp is run by
-                // the getfrp team and has no Yaoyi legal-entity affiliation.
-                alternateName:
-                  locale === "en" ? ["getfrp"] : ["f1frp", t("name")],
+                alternateName: ["getfrp"],
                 url: siteUrl,
                 logo: `${siteUrl}/og-icon.png`,
                 description,
-                ...(locale === "zh"
-                  ? {
-                      foundingDate: "2015",
-                      address: {
-                        "@type": "PostalAddress",
-                        addressCountry: "CN",
-                        addressRegion: "Chongqing",
-                      },
-                    }
-                  : {}),
                 // sameAs: real, verifiable profiles about the org. Only entries
                 // that actually resolve are emitted — dead/bogus links read as
                 // schema spam and hurt. Add stronger commercial-authority profiles
-                // here as they're created (each must point to a live page about
-                // this org): 知乎机构号 / 百度百科词条 / 1688 店铺 / LinkedIn.
-                ...(locale === "zh"
-                  ? { sameAs: ["https://github.com/f1frp2015-gif"] }
-                  : {}),
+                // Add only verified, live organization profiles to sameAs.
                 // Single contact: technical service hotline. Same on both
                 // deploys. Buyers who want a human go through /rfq first.
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "technical support",
                   email: CONTACT.email,
-                  availableLanguage: ["en", "zh-CN"],
+                  availableLanguage: ["en"],
                 },
               },
               {
@@ -236,26 +214,11 @@ export default async function LocaleLayout({
             <CookieBanner />
           </Providers>
         </NextIntlClientProvider>
-        {!isDomestic && <SpeedInsights />}
-        {!isDomestic && <Analytics />}
-        {!isDomestic && (
-          <ConsentedGoogleAnalytics
-            measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-          />
-        )}
-        {locale === "zh" && (
-          <Script id="baidu-push" strategy="afterInteractive">
-            {`(function(){
-  var bp=document.createElement('script');
-  var curProtocol=window.location.protocol.split(':')[0];
-  bp.src = curProtocol==='https'
-    ? 'https://zz.bdstatic.com/linksubmit/push.js'
-    : 'http://push.zhanzhang.baidu.com/push.js';
-  var s=document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(bp,s);
-})();`}
-          </Script>
-        )}
+        <SpeedInsights />
+        <Analytics />
+        <ConsentedGoogleAnalytics
+          measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+        />
       </body>
     </html>
   );

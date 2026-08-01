@@ -561,7 +561,6 @@ export default async function SourceFromChinaPage({
                 <tr key={r.gb} className="border-t border-border/70 align-top">
                   <td className="p-3">
                     <div className="font-semibold">{r.topicEn}</div>
-                    <div className="mt-0.5 text-[11px] text-muted-foreground">{r.topic}</div>
                   </td>
                   <td className="p-3">
                     <div className="font-mono text-xs font-semibold">{r.gb}</div>
