@@ -30,9 +30,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (commit only the safe template)
 .env*
-!deploy/.env.production.example
+!.env.example
 
 # vercel
 .vercel
@@ -43,9 +43,6 @@ next-env.d.ts
 
 # claude code local settings (per-machine permission overrides)
 .claude/settings.local.json
-
-# Local build artifact for ECS deploy
-deploy/dist/
 
 # Drizzle migrations are not used (we use db:push)
 drizzle/

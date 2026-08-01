@@ -1,7 +1,8 @@
 {
-  "name": "f1frp",
+  "name": "getfrp",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
     "dev": "next dev",
     "prebuild": "tsx scripts/build-llms-txt.ts && tsx scripts/seo-check.ts --strict",

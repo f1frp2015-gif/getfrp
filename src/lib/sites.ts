@@ -1,16 +1,17 @@
-// 单一来源：双轨网站配对 + 当前部署侧识别。
+// GetFRP standalone site identity and cross-site alternate mapping.
 // 用途：robots.txt / sitemap.xml / hreflang / canonical 都从这里读。
 //
 // 关键不变量：
 //   f1frp.com  —— zh-only，部署在阿里云 ECS（国内）
 //   getfrp.com —— en-only，部署在 Vercel（海外）
 //
-// 同一份代码，按 NEXT_PUBLIC_SITE_URL 区分当前部署在哪一侧。
+// This repository defaults to GetFRP. Explicit environment overrides remain
+// available for cross-site validation, but production must use SITE_EN.
 
 export const SITE_ZH = "https://f1frp.com";
 export const SITE_EN = "https://getfrp.com";
 
-const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() ?? SITE_ZH;
+const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() ?? SITE_EN;
 // 去尾斜线
 const normalized = raw.endsWith("/") ? raw.slice(0, -1) : raw;
 
