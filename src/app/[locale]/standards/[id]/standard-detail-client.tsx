@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState, useEffect } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { Badge } from "@/components/ui/badge";
@@ -113,17 +113,6 @@ export function StandardDetailClient({
 }
 
 function StandardHeader({ standard }: { standard: StandardPayload }) {
-  const locale = useLocale();
-  const isEn = locale === "en";
-  const statusLabel = isEn
-    ? standard.status === "现行"
-      ? "Active"
-      : standard.status === "废止"
-        ? "Withdrawn"
-        : standard.status === "即将实施"
-          ? "Upcoming"
-          : standard.status
-    : standard.status;
   return (
     <Card>
       <CardContent className="space-y-3 p-4">
@@ -131,11 +120,11 @@ function StandardHeader({ standard }: { standard: StandardPayload }) {
           {standard.code}
         </div>
         <h1 className="text-base font-bold leading-snug">
-          {isEn && standard.titleEn ? standard.titleEn : standard.title}
+          {standard.title}
         </h1>
-        {standard.titleEn && (
+        {standard.titleEn && standard.titleEn !== standard.title && (
           <p className="text-[11px] leading-snug text-muted-foreground">
-            {isEn ? standard.title : standard.titleEn}
+            {standard.titleEn}
           </p>
         )}
         <div className="flex flex-wrap gap-1">
@@ -150,10 +139,10 @@ function StandardHeader({ standard }: { standard: StandardPayload }) {
             </Badge>
           )}
           <Badge
-            variant={standard.status === "现行" ? "default" : "secondary"}
+            variant={standard.status === "Active" ? "default" : "secondary"}
             className="text-[10px]"
           >
-            {statusLabel}
+            {standard.status}
           </Badge>
         </div>
         {standard.description && (

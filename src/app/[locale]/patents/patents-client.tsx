@@ -31,24 +31,21 @@ export type SerializedPatent = {
   abstract: string;
 };
 
-type Opt = { id: string; name: string; nameEn?: string };
+type Opt = { id: string; name: string };
 
 export function PatentsClient({
   patents,
   categories,
   countries,
   statusLabels,
-  locale,
 }: {
   patents: SerializedPatent[];
   categories: Opt[];
   countries: Opt[];
   statusLabels: Record<SerializedPatent["status"], string>;
-  locale: string;
 }) {
   const t = useTranslations("Patents");
-  const isEn = locale === "en";
-  const optLabel = (o: Opt) => (isEn && o.nameEn ? o.nameEn : o.name);
+  const optLabel = (option: Opt) => option.name;
   const [search, setSearch] = useState("");
   const [cat, setCat] = useState("all");
   const [country, setCountry] = useState("all");
@@ -240,11 +237,11 @@ export function PatentsClient({
                   )}
                 </div>
                 <h2 className="mt-2 text-base font-semibold leading-snug">
-                  {isEn && p.titleEn ? p.titleEn : p.title}
+                  {p.title}
                 </h2>
-                {((isEn && p.titleEn && p.title !== p.titleEn) || (!isEn && p.titleEn)) && (
+                {p.titleEn && p.titleEn !== p.title && (
                   <p className="mt-0.5 text-xs leading-snug text-muted-foreground">
-                    {isEn ? p.title : p.titleEn}
+                    {p.titleEn}
                   </p>
                 )}
                 <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
@@ -280,7 +277,7 @@ export function PatentsClient({
         {remaining > 0 && (
           <div className="mt-2 flex justify-center">
             <Button variant="outline" onClick={expand}>
-              {isEn ? `Show ${remaining} more` : `展开剩余 ${remaining} 条`}
+              Show {remaining} more
             </Button>
           </div>
         )}

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
 
 const COOKIE_KEY = "cookie-consent-v1";
 
@@ -25,12 +24,13 @@ function writeConsent(value: Consent) {
 }
 
 export function CookieBanner() {
-  const locale = useLocale();
-  const en = locale === "en";
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    if (readConsent() === null) setShown(true);
+    const timer = window.setTimeout(() => {
+      if (readConsent() === null) setShown(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   if (!shown) return null;
@@ -48,31 +48,18 @@ export function CookieBanner() {
     <div
       role="dialog"
       aria-live="polite"
-      aria-label={en ? "Cookie consent" : "Cookie 设置"}
+      aria-label="Cookie consent"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-background/95 backdrop-blur"
     >
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-6">
         <p className="flex-1 text-[13px] leading-relaxed text-muted-foreground">
-          {en ? (
-            <>
-              We use essential cookies to keep this site running, plus
-              optional analytics (Vercel Web Analytics, Google) to understand
-              how visitors use it. See our{" "}
-              <Link href={"/privacy" as never} className="underline hover:text-foreground">
-                Privacy Policy
-              </Link>
-              .
-            </>
-          ) : (
-            <>
-              本站使用必要 Cookie 维持基本功能，并可选启用 Vercel Web Analytics
-              与 Google 分析以了解访问情况。详见
-              <Link href={"/privacy" as never} className="underline hover:text-foreground">
-                隐私政策
-              </Link>
-              。
-            </>
-          )}
+          We use essential cookies to keep this site running, plus optional
+          analytics (Vercel Web Analytics, Google) to understand how visitors
+          use it. See our{" "}
+          <Link href={"/privacy" as never} className="underline hover:text-foreground">
+            Privacy Policy
+          </Link>
+          .
         </p>
         <div className="flex shrink-0 items-center gap-2">
           <button
@@ -80,14 +67,14 @@ export function CookieBanner() {
             onClick={() => dismiss("declined")}
             className="rounded-md border border-border px-3 py-1.5 text-xs transition-colors hover:bg-muted"
           >
-            {en ? "Decline optional" : "仅必要"}
+            Decline optional
           </button>
           <button
             type="button"
             onClick={() => dismiss("accepted")}
             className="rounded-md bg-foreground px-3 py-1.5 text-xs text-background transition-colors hover:bg-foreground/90"
           >
-            {en ? "Accept all" : "接受全部"}
+            Accept all
           </button>
         </div>
       </div>

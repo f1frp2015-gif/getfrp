@@ -38,15 +38,13 @@ export default async function MaterialsPage({
   setRequestLocale(locale);
   const isEn = locale === "en";
 
-  // getfrp.com 是英文站. 缺英文名的物料一律不展示, 否则页面会回退到中文 →
-  // Google 把页面归类为 zh-CN, 与 f1frp.com 形成"重复, Google 选择了不同规范"。
-  // 含非 ASCII 字符的 id 在线上 /materials/[id] 直接 404, 也一并过滤。
+  // The English catalog requires translated names and ASCII-safe route IDs.
   const rows = await db
     .select()
     .from(materialsTable)
     .where(
       and(
-        // UGC 产品默认 pending,公开列表只显 verified(含全部官方策展)
+        // Public results include verified submissions and curated records.
         eq(materialsTable.status, "verified"),
         isEn
           ? and(
@@ -83,7 +81,6 @@ export default async function MaterialsPage({
       item: {
         "@type": "Product",
         name: isEn ? r.nameEn ?? r.name : r.name,
-        alternateName: isEn ? r.name : r.nameEn ?? undefined,
         description: isEn ? r.descriptionEn ?? undefined : r.description ?? undefined,
         url: `${CURRENT_SITE_URL}/materials/${encodeURIComponent(r.id)}`,
         brand: (isEn ? r.brandEn : r.brand)
@@ -93,7 +90,7 @@ export default async function MaterialsPage({
     })),
   };
 
-  // EN 侧已经在 SQL 层过滤掉缺英文的行, 此处不再向中文字段 fallback。
+  // Do not fall back to source-language fields after the SQL filter.
   const serialized = publicRows.map((r) => ({
     id: r.id,
     name: isEn ? r.nameEn ?? "" : r.name,
@@ -110,7 +107,15 @@ export default async function MaterialsPage({
   return (
     <>
       <JsonLd data={materialsItemListJsonLd} />
-      <MaterialsClient materials={serialized} categories={materialCategories} />
+      <MaterialsClient
+        materials={serialized}
+        categories={materialCategories.map((category) => ({
+          id: category.id,
+          name: category.nameEn ?? category.id,
+          iconKey: category.iconKey,
+          count: category.count,
+        }))}
+      />
     </>
   );
 }

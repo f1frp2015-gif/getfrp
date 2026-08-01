@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { enterprises, supplierListings } from "@/lib/db/schema";
-import { supplierCategories, provinces } from "@/lib/data/suppliers";
+import { supplierCategories } from "@/lib/data/suppliers";
 import { SuppliersClient, type SerializedSupplier } from "./suppliers-client";
 import { JsonLd } from "@/components/json-ld";
 import { AskAiButton } from "@/components/ask-ai-button";
@@ -16,6 +16,19 @@ import { ArrowRight } from "lucide-react";
 export const revalidate = 3600;
 
 const PINNED_SUPPLIER_ID = "sup-yaoyi";
+const SUPPLIER_PROVINCES_EN = [
+  "Jiangsu",
+  "Zhejiang",
+  "Shandong",
+  "Hebei",
+  "Guangdong",
+  "Sichuan",
+  "Hubei",
+  "Anhui",
+  "Henan",
+  "Shanghai",
+  "Chongqing",
+];
 
 export async function generateMetadata({
   params,
@@ -52,9 +65,6 @@ export default async function SuppliersPage({
 
   const t = await getTranslations("Suppliers");
 
-  // Both domains expose the complete public directory. English rows fall back
-  // to the existing Chinese fields until the supplier's English profile is
-  // backfilled, so no supplier is hidden from discovery or search.
   const isEn = locale === "en";
   const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
   const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
@@ -105,8 +115,8 @@ export default async function SuppliersPage({
       position: i + 1,
       item: {
         "@type": "LocalBusiness",
-        name: (isEn ? s.nameEn : s.name) ?? s.name,
-        description: (isEn ? s.descriptionEn : s.description) ?? undefined,
+        name: isEn ? s.nameEn ?? "" : s.name,
+        description: isEn ? s.descriptionEn ?? undefined : s.description ?? undefined,
         address: (isEn ? s.locationEn : s.location)
           ? {
               "@type": "PostalAddress",
@@ -126,19 +136,17 @@ export default async function SuppliersPage({
     const fields = companyFields.get(s.id);
     return {
       id: s.id,
-      name: (isEn ? s.nameEn : s.name) ?? s.name,
+      name: isEn ? s.nameEn ?? "" : s.name,
       category: s.category ?? "",
-      location: (isEn ? s.locationEn : s.location) ?? s.location ?? "",
+      location: isEn ? s.locationEn ?? "" : s.location ?? "",
       established: s.established ?? null,
       description:
-        (isEn ? s.descriptionEn : s.description) ?? s.description ?? "",
-      products: ((isEn ? s.productsEn : s.products) ?? s.products ?? []) as string[],
-      processList: ((isEn ? s.processListEn : s.processList) ??
-        s.processList ??
-        []) as string[],
-      certifications: ((isEn ? s.certificationsEn : s.certifications) ??
-        s.certifications ??
-        []) as string[],
+        isEn ? s.descriptionEn ?? "" : s.description ?? "",
+      products: (isEn ? s.productsEn ?? [] : s.products ?? []) as string[],
+      processList: (isEn ? s.processListEn ?? [] : s.processList ?? []) as string[],
+      certifications: (isEn
+        ? s.certificationsEn ?? []
+        : s.certifications ?? []) as string[],
       verified: Boolean(s.verified),
       profilePublished: Boolean(s.profilePublished),
       enterpriseId: s.enterpriseId ?? null,
@@ -147,6 +155,7 @@ export default async function SuppliersPage({
       scaleTier: s.scaleTier ?? null,
       employeeCount: fields?.employeeCount ?? null,
       annualRevenue: fields?.annualRevenue ?? null,
+      sponsored: s.id === PINNED_SUPPLIER_ID,
     };
   });
 
@@ -160,32 +169,16 @@ export default async function SuppliersPage({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <AskAiButton
-            prompt={
-              isEn
-                ? `Match me a verified Chinese supplier. I'm looking for [fiber type / product category] with [certification, e.g. CE, ISO 9001, EN 13706] and approximate volume [MOQ]. Suggest 3-5 candidates ranked by scale tier and certification fit.`
-                : `按工况帮我匹配 3-5 家国内复材供应商：[纤维/树脂/产品品类]、需要[认证]、年用量[数量]。按规模与匹配度排序。`
-            }
-            label={isEn ? "Ask AI to match a supplier" : "AI 智能匹配供应商"}
+            prompt={`Match me a verified Chinese supplier. I'm looking for [fiber type / product category] with [certification, e.g. CE, ISO 9001, EN 13706] and approximate volume [MOQ]. Suggest 3-5 candidates ranked by scale tier and certification fit.`}
+            label="Ask AI to match a supplier"
           />
-          {/* getfrp（en）侧无会员/收费体系，海外买家走 /rfq 给 sourcing desk；
-              dashboard/enterprise 仅对 zh 侧的中国工厂开放 */}
-          {isEn ? (
-            <Link href={"/rfq" as never} className={buttonVariants()}>
-              Submit an RFQ
-            </Link>
-          ) : (
-            <Link
-              href={"/dashboard/enterprise" as "/dashboard"}
-              className={buttonVariants()}
-            >
-              {t("ctaFreeList")}
-            </Link>
-          )}
+          <Link href={"/rfq" as never} className={buttonVariants()}>
+            Submit an RFQ
+          </Link>
         </div>
       </div>
 
-      {isEn && (
-        <section id="product-categories" className="mb-10 scroll-mt-20 border-y border-border/70 py-8">
+      <section id="product-categories" className="mb-10 scroll-mt-20 border-y border-border/70 py-8">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
@@ -214,56 +207,37 @@ export default async function SuppliersPage({
               </Link>
             ))}
           </div>
-        </section>
-      )}
+      </section>
 
       <SuppliersClient
         suppliers={serialized}
-        categories={supplierCategories}
-        provinces={provinces.slice(0, 12)}
+        categories={supplierCategories.map((category) => ({
+          id: category.id,
+          name: category.nameEn,
+        }))}
+        provinces={SUPPLIER_PROVINCES_EN}
       />
 
       <div className="mt-10 rounded-lg border bg-muted/30 p-8 text-center">
         <h3 className="text-xl font-bold">
-          {isEn ? "Ready to source?" : t("ctaBoxTitle")}
+          Ready to source?
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          {isEn
-            ? "Email tech support with what you need. First reply within 24 hours, no account required."
-            : t("ctaBoxSub")}
+          Email tech support with what you need. First reply within 24 hours, no account required.
         </p>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-          {isEn ? (
-            <>
-              <Link
-                href={"/rfq" as never}
-                className={buttonVariants({ size: "lg" })}
-              >
-                Submit an RFQ
-              </Link>
-              <a
-                href="mailto:f1frp2015@gmail.com"
-                className={buttonVariants({ size: "lg", variant: "outline" })}
-              >
-                Email tech support
-              </a>
-            </>
-          ) : (
-            <>
-              <Link
-                href={"/dashboard/enterprise" as "/dashboard"}
-                className={buttonVariants({ size: "lg" })}
-              >
-                {t("ctaFreeEnroll")}
-              </Link>
-              <a
-                href="mailto:f1frp2015@gmail.com?subject=%E4%BE%9B%E5%BA%94%E5%95%86%E5%85%A5%E9%A9%BB%E5%92%A8%E8%AF%A2"
-                className={buttonVariants({ size: "lg", variant: "outline" })}
-              >
-                联系咨询
-              </a>
-            </>
-          )}
+          <Link
+            href={"/rfq" as never}
+            className={buttonVariants({ size: "lg" })}
+          >
+            Submit an RFQ
+          </Link>
+          <a
+            href="mailto:f1frp2015@gmail.com"
+            className={buttonVariants({ size: "lg", variant: "outline" })}
+          >
+            Email tech support
+          </a>
         </div>
       </div>
     </div>

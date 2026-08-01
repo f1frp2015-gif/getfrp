@@ -80,26 +80,29 @@ export default async function FormulasPage({
   ]);
 
   const index = buildMaterialIndex(materialRows);
-  // Build a flat ingredient-name → material-id map for all ingredients across formulas
+  // Build an English ingredient-name to ASCII material-route map.
   const nameToMaterialId: Record<string, string> = {};
   for (const f of rows) {
-    const lists = [f.resinSystem, f.reinforcement, f.auxiliaries].filter(
-      Boolean
-    ) as Array<Array<{ name: string }>>;
-    for (const list of lists) {
-      for (const item of list) {
-        if (!item?.name || nameToMaterialId[item.name]) continue;
-        const m = matchIngredient(item.name, index);
-        if (m) nameToMaterialId[item.name] = m.id;
+    const listPairs = [
+      [f.resinSystem, f.resinSystemEn],
+      [f.reinforcement, f.reinforcementEn],
+      [f.auxiliaries, f.auxiliariesEn],
+    ] as Array<[unknown[] | null, unknown[] | null]>;
+    for (const [sourceList, englishList] of listPairs) {
+      const sources = (sourceList ?? []) as Array<{ name?: string }>;
+      const translations = (englishList ?? []) as Array<{ name?: string }>;
+      for (const [itemIndex, item] of sources.entries()) {
+        const englishName = translations[itemIndex]?.name?.trim();
+        if (!item?.name || !englishName || nameToMaterialId[englishName]) continue;
+        const material = matchIngredient(item.name, index);
+        if (material) {
+          nameToMaterialId[englishName] = encodeURIComponent(material.id);
+        }
       }
     }
   }
 
-  // Merge zh + en versions of nested arrays so the client's `item.nameEn`
-  // lookup resolves to translated values when present.
-  // Translator produces _en arrays whose items carry the SAME keys
-  // (name/role/amount/note/value) but with English values — copy them
-  // into nameEn/roleEn/amountEn/noteEn/valueEn slots.
+  // Serialize translated nested fields only; source-language rows stay server-side.
   const mergeIngredients = (
     zh: unknown[] | null | undefined,
     en: unknown[] | null | undefined,
@@ -108,15 +111,19 @@ export default async function FormulasPage({
     const enArr = (en ?? []) as Array<Record<string, unknown>>;
     return zhArr.map((row, i) => {
       const e = enArr[i] ?? {};
+      const name = String((e.name ?? row.nameEn ?? "") as string);
+      const role = String((e.role ?? row.roleEn ?? "") as string);
+      const amount = String((e.amount ?? row.amountEn ?? "") as string);
+      const note = e.note ? String(e.note) : (row.noteEn as string | undefined);
       return {
-        name: String(row.name ?? ""),
-        nameEn: String((e.name ?? row.nameEn ?? "") as string),
-        role: String(row.role ?? ""),
-        roleEn: String((e.role ?? row.roleEn ?? "") as string),
-        amount: String(row.amount ?? ""),
-        amountEn: String((e.amount ?? row.amountEn ?? "") as string),
-        note: row.note ? String(row.note) : undefined,
-        noteEn: e.note ? String(e.note) : (row.noteEn as string | undefined),
+        name,
+        nameEn: name,
+        role,
+        roleEn: role,
+        amount,
+        amountEn: amount,
+        note,
+        noteEn: note,
       };
     }) as SerializedFormula["resinSystem"];
   };
@@ -128,13 +135,16 @@ export default async function FormulasPage({
     const enArr = (en ?? []) as Array<Record<string, unknown>>;
     return zhArr.map((row, i) => {
       const e = enArr[i] ?? {};
+      const name = String((e.name ?? row.nameEn ?? "") as string);
+      const value = String((e.value ?? row.valueEn ?? "") as string);
+      const note = e.note ? String(e.note) : (row.noteEn as string | undefined);
       return {
-        name: String(row.name ?? ""),
-        nameEn: String((e.name ?? row.nameEn ?? "") as string),
-        value: String(row.value ?? ""),
-        valueEn: String((e.value ?? row.valueEn ?? "") as string),
-        note: row.note ? String(row.note) : undefined,
-        noteEn: e.note ? String(e.note) : (row.noteEn as string | undefined),
+        name,
+        nameEn: name,
+        value,
+        valueEn: value,
+        note,
+        noteEn: note,
       };
     }) as SerializedFormula["processing"];
   };
@@ -146,40 +156,50 @@ export default async function FormulasPage({
     const enArr = (en ?? []) as Array<Record<string, unknown>>;
     return zhArr.map((row, i) => {
       const e = enArr[i] ?? {};
+      const name = String((e.name ?? row.nameEn ?? "") as string);
+      const value = String((e.value ?? row.valueEn ?? "") as string);
+      const note = e.note ? String(e.note) : (row.noteEn as string | undefined);
       return {
-        name: String(row.name ?? ""),
-        nameEn: String((e.name ?? row.nameEn ?? "") as string),
-        value: String(row.value ?? ""),
-        valueEn: String((e.value ?? row.valueEn ?? "") as string),
+        name,
+        nameEn: name,
+        value,
+        valueEn: value,
         standard: row.standard ? String(row.standard) : undefined,
-        note: row.note ? String(row.note) : undefined,
-        noteEn: e.note ? String(e.note) : (row.noteEn as string | undefined),
+        note,
+        noteEn: note,
       };
     }) as SerializedFormula["properties"];
   };
 
-  const serialized: SerializedFormula[] = rows.map((r) => ({
-    id: r.id,
-    name: r.name,
+  const serialized: SerializedFormula[] = rows
+    .filter((row) => Boolean(row.nameEn?.trim()))
+    .map((r) => ({
+    id: encodeURIComponent(r.id),
+    name: r.nameEn ?? "",
     nameEn: r.nameEn ?? "",
     processId: r.processId ?? "",
-    process: r.process ?? "",
+    process: r.processEn ?? "",
     processEn: r.processEn ?? "",
     category: r.category ?? "",
     categoryEn: r.category ?? "",
-    application: r.application ?? "",
+    application: r.applicationEn ?? "",
     applicationEn: r.applicationEn ?? "",
-    difficulty: (r.difficulty ?? "入门") as SerializedFormula["difficulty"],
-    description: r.description ?? "",
+    difficulty:
+      r.difficulty === "\u9ad8\u7ea7"
+        ? "advanced"
+        : r.difficulty === "\u4e2d\u7ea7"
+          ? "intermediate"
+          : "beginner",
+    description: r.descriptionEn ?? "",
     descriptionEn: r.descriptionEn ?? "",
     resinSystem: mergeIngredients(r.resinSystem as unknown[] | null, r.resinSystemEn as unknown[] | null),
     reinforcement: mergeIngredients(r.reinforcement as unknown[] | null, r.reinforcementEn as unknown[] | null),
     auxiliaries: mergeIngredients(r.auxiliaries as unknown[] | null, r.auxiliariesEn as unknown[] | null),
     processing: mergeProcessing(r.processing as unknown[] | null, r.processingEn as unknown[] | null),
     properties: mergeProperties(r.properties as unknown[] | null, r.propertiesEn as unknown[] | null),
-    tips: (r.tips ?? []) as string[],
+    tips: (r.tipsEn ?? []) as string[],
     tipsEn: (r.tipsEn ?? []) as string[],
-    safetyNotes: (r.safetyNotes ?? []) as string[],
+    safetyNotes: (r.safetyNotesEn ?? []) as string[],
     safetyNotesEn: (r.safetyNotesEn ?? []) as string[],
   }));
 
@@ -263,8 +283,15 @@ export default async function FormulasPage({
   return (
     <FormulasClient
       formulas={serialized}
-      processFilters={processFilters}
-      categoryFilters={categoryFilters}
+      processFilters={processFilters.map((option) => ({
+        id: option.id,
+        name: option.nameEn || option.id,
+        iconKey: option.iconKey,
+      }))}
+      categoryFilters={categoryFilters.map((option) => ({
+        id: option.id,
+        name: option.nameEn || option.id,
+      }))}
       ingredientMaterialMap={nameToMaterialId}
     />
   );

@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -44,17 +43,14 @@ export default async function TechPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Tech" });
-  const isEn = locale === "en";
-
-  // 静态数据 source of truth — DB processes 表是其副本，无额外字段
+  // Static data is the source of truth; the database processes table mirrors it.
   const rows = [...processesData].sort((a, b) => a.id.localeCompare(b.id));
 
-  const inLanguage = locale === "en" ? "en" : "zh-CN";
   const techItemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     url: `https://f1frp.com/${locale}/tech`,
-    inLanguage,
+    inLanguage: "en",
     name: t("h1"),
     numberOfItems: rows.length,
     itemListElement: rows.map((p, i) => ({
@@ -62,9 +58,8 @@ export default async function TechPage({
       position: i + 1,
       item: {
         "@type": "Thing",
-        name: isEn ? p.nameEn : p.name,
-        alternateName: isEn ? p.name : p.nameEn,
-        description: isEn ? p.descriptionEn : p.description,
+        name: p.nameEn,
+        description: p.descriptionEn,
         url: `https://f1frp.com/${locale}/tech#${p.id}`,
       },
     })),
@@ -86,17 +81,13 @@ export default async function TechPage({
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {rows.map((p) => {
-            const applications = isEn ? p.applicationsEn : p.applications;
-            const primaryName = isEn ? p.nameEn : p.name;
-            const altName = isEn ? p.name : p.nameEn;
-            const desc = isEn ? p.descriptionEn : p.description;
+            const applications = p.applicationsEn;
+            const primaryName = p.nameEn;
+            const desc = p.descriptionEn;
             return (
               <Card key={p.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="text-base">{primaryName}</CardTitle>
-                  {altName && (
-                    <CardDescription className="text-xs">{altName}</CardDescription>
-                  )}
                 </CardHeader>
                 <CardContent className="flex-1">
                   {desc && (
@@ -121,23 +112,17 @@ export default async function TechPage({
           <h3 className="mb-4 text-lg font-semibold">{t("processDetailTitle")}</h3>
           <Accordion className="w-full">
             {rows.map((p) => {
-              const advantages = isEn ? p.advantagesEn : p.advantages;
-              const disadvantages = isEn ? p.disadvantagesEn : p.disadvantages;
-              const applications = isEn ? p.applicationsEn : p.applications;
-              const keyParameters = isEn ? p.keyParametersEn : p.keyParameters;
-              const primaryName = isEn ? p.nameEn : p.name;
-              const altName = isEn ? p.name : p.nameEn;
-              const desc = isEn ? p.descriptionEn : p.description;
+              const advantages = p.advantagesEn;
+              const disadvantages = p.disadvantagesEn;
+              const applications = p.applicationsEn;
+              const keyParameters = p.keyParametersEn;
+              const primaryName = p.nameEn;
+              const desc = p.descriptionEn;
               return (
                 <AccordionItem key={p.id} value={p.id}>
                   <AccordionTrigger className="text-left">
                     <div>
                       <span className="font-semibold">{primaryName}</span>
-                      {altName && (
-                        <span className="ml-2 text-sm text-muted-foreground">
-                          {altName}
-                        </span>
-                      )}
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
