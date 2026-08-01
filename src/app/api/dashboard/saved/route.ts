@@ -23,6 +23,35 @@ async function requireUserId() {
   return getSessionUid();
 }
 
+export async function GET(req: Request) {
+  const uid = await requireUserId();
+  if (!uid) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+  const url = new URL(req.url);
+  const sourceType = url.searchParams.get("sourceType");
+  if (!sourceType || !VALID_SOURCES.includes(sourceType as SourceType)) {
+    return NextResponse.json({ error: "invalid sourceType" }, { status: 400 });
+  }
+
+  try {
+    const items = await db
+      .select({ sourceId: savedItems.sourceId })
+      .from(savedItems)
+      .where(
+        and(
+          eq(savedItems.userId, uid),
+          eq(savedItems.sourceType, sourceType as SourceType),
+        ),
+      );
+    return NextResponse.json({ items });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "query failed" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(req: Request) {
   const uid = await requireUserId();
   if (!uid) return NextResponse.json({ error: "unauthorized" }, { status: 401 });

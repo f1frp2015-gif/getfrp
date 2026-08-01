@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { desc, asc, sql } from "drizzle-orm";
+import { desc, asc, eq, sql } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { supplierListings } from "@/lib/db/schema";
+import { enterprises, supplierListings } from "@/lib/db/schema";
 import { supplierCategories, provinces } from "@/lib/data/suppliers";
 import { SuppliersClient, type SerializedSupplier } from "./suppliers-client";
 import { JsonLd } from "@/components/json-ld";
@@ -56,21 +56,41 @@ export default async function SuppliersPage({
   // to the existing Chinese fields until the supplier's English profile is
   // backfilled, so no supplier is hidden from discovery or search.
   const isEn = locale === "en";
-  const baseQuery = db.select().from(supplierListings);
   const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
   const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
-  const rows = await baseQuery.orderBy(
-    // F1 stays permanently first. Published company profiles follow as one
-    // contiguous group, then the remaining directory-only records.
-    desc(pinnedRank),
-    desc(supplierListings.profilePublished),
-    desc(supplierListings.verified),
-    desc(supplierListings.brandPriority),
-    desc(tierRank),
-    desc(supplierListings.viewCount),
-    asc(supplierListings.name),
+  const joinedRows = await db
+    .select({
+      supplier: supplierListings,
+      enterpriseLogo: enterprises.logo,
+      enterpriseWebsite: enterprises.website,
+      employeeCount: enterprises.employeeCount,
+      annualRevenue: enterprises.annualRevenue,
+    })
+    .from(supplierListings)
+    .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
+    .orderBy(
+      // F1 stays permanently first. Published company profiles follow as one
+      // contiguous group, then the remaining directory-only records.
+      desc(pinnedRank),
+      desc(supplierListings.profilePublished),
+      desc(supplierListings.verified),
+      desc(supplierListings.brandPriority),
+      desc(tierRank),
+      desc(supplierListings.viewCount),
+      asc(supplierListings.name),
+    );
+  const rows = joinedRows.map((row) => row.supplier);
+  const companyFields = new Map(
+    joinedRows.map((row) => [
+      row.supplier.id,
+      {
+        logo: row.supplier.logo ?? row.enterpriseLogo ?? null,
+        website: row.supplier.website ?? row.enterpriseWebsite ?? null,
+        employeeCount: row.employeeCount ?? null,
+        annualRevenue: row.annualRevenue ?? null,
+      },
+    ]),
   );
-
   const inLanguage = isEn ? "en" : "zh-CN";
   const top20Verified = rows.filter((s) => s.verified).slice(0, 20);
   const suppliersItemListJsonLd = {
@@ -102,21 +122,33 @@ export default async function SuppliersPage({
     })),
   };
 
-  const serialized: SerializedSupplier[] = rows.map((s) => ({
-    id: s.id,
-    name: (isEn ? s.nameEn : s.name) ?? s.name,
-    category: s.category ?? "",
-    location: (isEn ? s.locationEn : s.location) ?? s.location ?? "",
-    established: s.established ?? null,
-    description: (isEn ? s.descriptionEn : s.description) ?? s.description ?? "",
-    products: ((isEn ? s.productsEn : s.products) ?? s.products ?? []) as string[],
-    processList: ((isEn ? s.processListEn : s.processList) ?? s.processList ?? []) as string[],
-    certifications: ((isEn ? s.certificationsEn : s.certifications) ?? s.certifications ?? []) as string[],
-    verified: Boolean(s.verified),
-    profilePublished: Boolean(s.profilePublished),
-    enterpriseId: s.enterpriseId ?? null,
-    website: s.website ?? null,
-  }));
+  const serialized: SerializedSupplier[] = rows.map((s) => {
+    const fields = companyFields.get(s.id);
+    return {
+      id: s.id,
+      name: (isEn ? s.nameEn : s.name) ?? s.name,
+      category: s.category ?? "",
+      location: (isEn ? s.locationEn : s.location) ?? s.location ?? "",
+      established: s.established ?? null,
+      description:
+        (isEn ? s.descriptionEn : s.description) ?? s.description ?? "",
+      products: ((isEn ? s.productsEn : s.products) ?? s.products ?? []) as string[],
+      processList: ((isEn ? s.processListEn : s.processList) ??
+        s.processList ??
+        []) as string[],
+      certifications: ((isEn ? s.certificationsEn : s.certifications) ??
+        s.certifications ??
+        []) as string[],
+      verified: Boolean(s.verified),
+      profilePublished: Boolean(s.profilePublished),
+      enterpriseId: s.enterpriseId ?? null,
+      website: fields?.website ?? null,
+      logo: fields?.logo ?? null,
+      scaleTier: s.scaleTier ?? null,
+      employeeCount: fields?.employeeCount ?? null,
+      annualRevenue: fields?.annualRevenue ?? null,
+    };
+  });
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
