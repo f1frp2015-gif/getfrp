@@ -18,7 +18,7 @@ const isEnSide = normalized === SITE_EN;
 
 const EN_LLMS = `# getfrp.com — FRP & Composite Suppliers China Directory
 
-> getfrp organizes a public directory of Chinese FRP supplier records into eight product-focused supply networks. Overseas engineers can search supplier names, products, processes, production clusters and standards evidence, then use a plain-English assistant or structured RFQ.
+> getfrp is a structured FRP product and supplier database. Overseas engineers can compare product specifications, materials, processes and standards, follow explicit links to capable Chinese suppliers, then use a plain-English assistant or structured RFQ.
 
 ## Audience
 Overseas FRP procurement, composites engineers, and product designers sourcing from China — primary markets: US, DE, FR, GB, IT, ES, NL, PL, AU, CA.
@@ -27,28 +27,28 @@ Overseas FRP procurement, composites engineers, and product designers sourcing f
 
 ### AI sourcing assistant
 - [AI service overview](https://getfrp.com/ai): how specification extraction, data retrieval, supplier matching and human RFQ escalation work.
-- [Open the assistant](https://getfrp.com/ai/chat): interactive, noindex application over the supplier, material and standards graph.
+- [Open the assistant](https://getfrp.com/ai/chat): interactive, noindex application over the product, supplier and standards graph.
+
+### Structured product catalog
+- [Products](https://getfrp.com/products): canonical product families with structured materials, processes, applications, standards, specifications and buying checks.
+- [FRP grating](https://getfrp.com/products/frp-grating): structured product record linked to matched manufacturers.
+- [Pultruded profiles](https://getfrp.com/products/pultruded-profiles): profile specifications, standards and supplier relationships.
+- [Fiberglass sheet](https://getfrp.com/products/fiberglass-sheet): sheet and panel product structures linked to capable suppliers.
+- [FRP rebar](https://getfrp.com/products/frp-rebar): reinforcement specifications and manufacturer relationships.
+- [FRP pipe](https://getfrp.com/products/frp-pipe): pipe and process-equipment product structure.
+- [SMC / BMC](https://getfrp.com/products/smc-bmc): molded-component product and supplier records.
+- [Resin & gelcoat](https://getfrp.com/products/resin-gelcoat): resin-system product and supplier records.
+- [Fiber & glass](https://getfrp.com/products/fiber-glass): fiber-reinforcement product and supplier records.
 
 ### Verified supplier registry
 - [Directory overview](https://getfrp.com/suppliers): public, searchable supplier records with company, product, process and region filters.
-- [FRP grating](https://getfrp.com/suppliers/frp-grating): 38 verified factory records.
-- [Pultruded profiles](https://getfrp.com/suppliers/pultruded-profiles): 29 verified factory records.
-- [Fiberglass sheet](https://getfrp.com/suppliers/fiberglass-sheet): 19 verified factory records.
-- [FRP rebar](https://getfrp.com/suppliers/frp-rebar): 15 verified factory records.
-- [FRP pipe](https://getfrp.com/suppliers/frp-pipe): 12 verified factory records.
-- [SMC / BMC](https://getfrp.com/suppliers/smc-bmc): 15 verified factory records.
-- [Resin & gelcoat](https://getfrp.com/suppliers/resin-gelcoat): 28 verified factory records.
-- [Fiber & glass](https://getfrp.com/suppliers/fiber-glass): 51 verified factory records.
+- Supplier pages link back to their structured products; product pages list every matched supplier relationship.
 
 ### Standards crosswalk (GB ⇄ ASTM ⇄ ISO ⇄ EN ⇄ DIN)
 - [Standards](https://getfrp.com/standards): cross-mapped composites standards. Find the GB equivalent of ASTM D3039, the ISO equivalent of EN 13706, etc. Chapter-level structured content.
 
-### Material database
-- [Materials](https://getfrp.com/materials): commercial resin / fiber / core / part-grade brands and SKU-level specs. Glass, carbon, basalt, aramid, bio-based fibers; vinyl ester, epoxy, polyester, phenolic resins.
-
-### Papers and patents
+### Supporting evidence
 - [Papers](https://getfrp.com/papers): FRP academic literature with bilingual metadata.
-- [Patents](https://getfrp.com/patents): composite materials patents covering CN / US / EP / PCT.
 
 ### Sourcing playbook
 - [Source from China](https://getfrp.com/source-from-china): 6-step playbook covering supplier discovery, RFQ, sampling, QA, payment, and logistics.
@@ -64,7 +64,7 @@ Overseas FRP procurement, composites engineers, and product designers sourcing f
 
 ## Crawler policy
 - robots.txt allows GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User, Google-Extended, Applebot-Extended, MistralAI-User, CCBot, Amazonbot, plus Googlebot / Bingbot / DuckDuckBot.
-- Indexable pages provide relevant JSON-LD such as Organization, WebSite, CollectionPage, Service, FAQPage, Article, ScholarlyArticle and Product.
+- Indexable pages provide relevant JSON-LD such as Organization, WebSite, CollectionPage, Service, FAQPage, ScholarlyArticle and Product.
 
 ## Language
 primary: en (en-US default, mapped to en-GB / en-AU / en-CA)

@@ -12,7 +12,6 @@ import {
 import { JsonLd } from "@/components/json-ld";
 import { SupplierCategoryCardImage } from "@/components/supplier-category-card-image";
 import { Link } from "@/i18n/navigation";
-import { newsList } from "@/lib/data/news";
 
 import { HomeMarketplaceSearch } from "./home-marketplace-search";
 
@@ -91,14 +90,6 @@ const CATEGORY_LINKS = [
   ["Glass fiber", "fiber-glass"],
 ] as const;
 
-const INSIGHT_LABELS: Record<string, string> = {
-  industry: "Market",
-  policy: "Standards",
-  tech: "Technology",
-  company: "Company",
-  expo: "Events",
-};
-
 function SectionIntro({
   eyebrow,
   title,
@@ -124,8 +115,6 @@ function SectionIntro({
 }
 
 export async function HomePageEnglish() {
-  const insights = newsList.slice(0, 3);
-
   return (
     <>
       <JsonLd
@@ -217,7 +206,7 @@ export async function HomePageEnglish() {
               body="Popular product families with established China factory clusters, repeatable specifications and export-ready supply routes."
             />
             <Link
-              href="/suppliers#product-categories"
+              href="/products"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
             >
               View all products <ArrowRight size={14} />
@@ -228,7 +217,7 @@ export async function HomePageEnglish() {
             {FEATURED_PRODUCTS.map((product) => (
               <Link
                 key={product.slug}
-                href={`/suppliers/${product.slug}` as "/suppliers/[id]"}
+                href={`/products/${product.slug}` as never}
                 className="group overflow-hidden rounded-xl border border-[#d8e1e4] bg-white transition-all hover:-translate-y-0.5 hover:border-[#96bbb6] hover:shadow-lg"
               >
                 <SupplierCategoryCardImage slug={product.slug} />
@@ -312,7 +301,7 @@ export async function HomePageEnglish() {
                 {CATEGORY_LINKS.map(([label, slug]) => (
                   <Link
                     key={slug}
-                    href={`/suppliers/${slug}` as "/suppliers/[id]"}
+                    href={`/products/${slug}` as never}
                     className="group flex min-h-20 flex-col justify-between rounded-lg border border-[#e0e7e9] bg-[#fbfcfc] p-3.5 transition-colors hover:border-[#9cc1bc] hover:bg-[#f1f8f7]"
                   >
                     <Search size={14} className="text-[#6f858d] group-hover:text-[#0a756f]" />
@@ -331,42 +320,58 @@ export async function HomePageEnglish() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
-              eyebrow="Insights"
-              title="What sourcing teams need to know now."
-              body="Short, practical updates on composite markets, standards, manufacturing technology and China supply."
+              eyebrow="Connected data model"
+              title="Products and suppliers, linked in both directions."
+              body="The catalog separates reusable product specifications from company records, then connects them with explicit capability and evidence relationships."
             />
             <Link
-              href="/articles"
+              href="/products"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
             >
-              Read all insights <ArrowRight size={14} />
+              Explore product data <ArrowRight size={14} />
             </Link>
           </div>
 
           <div className="mt-9 grid gap-4 lg:grid-cols-3">
-            {insights.map((insight, index) => (
+            {[
+              {
+                label: "01 · PRODUCT",
+                title: "One structured specification",
+                body: "Materials, processes, applications, standards, specification fields and buying checks live on the product—not in duplicated supplier copy.",
+                href: "/products" as const,
+                cta: "Browse products",
+              },
+              {
+                label: "02 · SUPPLIER",
+                title: "One company capability record",
+                body: "Legal identity, location, processes, certification evidence, export readiness and contact data remain attached to the supplier.",
+                href: "/suppliers" as const,
+                cta: "Browse suppliers",
+              },
+              {
+                label: "03 · RELATIONSHIP",
+                title: "A verified connection",
+                body: "MOQ, lead time, customization, supplier product name and evidence belong to the supplier-product relationship and can be reviewed independently.",
+                href: "/rfq" as const,
+                cta: "Verify by RFQ",
+              },
+            ].map((item) => (
               <Link
-                key={insight.slug}
-                href={`/articles/${insight.slug}` as "/articles/[slug]"}
-                className="group flex min-h-72 flex-col rounded-xl border border-[#d9e2e5] p-6 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+                key={item.label}
+                href={item.href}
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] p-6 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <span className="rounded-full bg-[#eaf4f2] px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-[#0a756f]">
-                    {INSIGHT_LABELS[insight.category] ?? insight.category}
-                  </span>
-                  <span className="font-mono text-[10px] text-[#85959c]">0{index + 1}</span>
+                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                  {item.label}
                 </div>
                 <h3 className="mt-7 text-xl font-semibold leading-snug tracking-[-0.025em] text-[#102d3b] group-hover:text-[#0a756f]">
-                  {insight.titleEn}
+                  {item.title}
                 </h3>
-                <p className="mt-3 line-clamp-3 text-[13px] leading-6 text-[#697b83]">
-                  {insight.summaryEn}
+                <p className="mt-3 text-[13px] leading-6 text-[#697b83]">
+                  {item.body}
                 </p>
-                <div className="mt-auto flex items-center justify-between border-t border-[#e4eaec] pt-4 text-[10px] text-[#7d8d94]">
-                  <span>{insight.date}</span>
-                  <span className="inline-flex items-center gap-1 font-semibold text-[#31505c] group-hover:text-[#0a756f]">
-                    {insight.readTimeEn} read <ArrowUpRight size={12} />
-                  </span>
+                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#31505c] group-hover:text-[#0a756f]">
+                  {item.cta} <ArrowUpRight size={12} className="ml-1 inline" />
                 </div>
               </Link>
             ))}

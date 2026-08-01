@@ -8,7 +8,7 @@ import { Logo } from "@/components/logo";
 
 const navigation = [
   { href: "/suppliers", label: "Suppliers" },
-  { href: "/suppliers#product-categories", label: "Products" },
+  { href: "/products", label: "Products" },
   { href: "/standards", label: "Standards" },
   { href: "/source-from-china", label: "Sourcing process" },
   { href: "/ai", label: "Ask AI" },
