@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { and, desc, eq, isNotNull, ne } from "drizzle-orm";
+import { and, asc, desc, eq, isNotNull, ne, sql } from "drizzle-orm";
 import { cache } from "react";
 import {
   ArrowRight,
@@ -34,7 +34,7 @@ import {
   supplierMatchesCategory,
   type SupplierCategoryPage,
 } from "@/lib/data/supplier-category-pages";
-import { provincesEn } from "@/lib/data/suppliers";
+import { provincesEn, supplierCategories } from "@/lib/data/suppliers";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -43,6 +43,10 @@ import {
   SUPPLIER_REGION_SLUGS,
   type SupplierRegionPage,
 } from "@/lib/data/supplier-region-pages";
+import {
+  SuppliersClient,
+  type SerializedSupplier,
+} from "../suppliers-client";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -73,21 +77,56 @@ export function generateStaticParams() {
   return [...SUPPLIER_CATEGORY_SLUGS, ...SUPPLIER_REGION_SLUGS].map((id) => ({ id }));
 }
 
-type NetworkRow = {
-  id: string;
-  name: string;
-  nameEn: string | null;
-  verified: boolean | null;
+type NetworkRow = SerializedSupplier & {
   province: string | null;
-  category: string | null;
-  productsEn: string[] | null;
-  capabilities: string[] | null;
-  processListEn: string[] | null;
-  certificationsEn: string[] | null;
-  scaleTier: string | null;
   exportReady: boolean;
-  profilePublished: boolean;
 };
+
+type JoinedNetworkRow = {
+  supplier: typeof supplierListings.$inferSelect;
+  enterpriseLogo: string | null;
+  enterpriseWebsite: string | null;
+  employeeCount: string | null;
+  annualRevenue: string | null;
+};
+
+const PINNED_SUPPLIER_ID = "sup-yaoyi";
+const DIRECTORY_CATEGORIES = supplierCategories.map((category) => ({
+  id: category.id,
+  name: category.nameEn,
+}));
+
+function serializeNetworkRow(row: JoinedNetworkRow): NetworkRow {
+  const supplier = row.supplier;
+  return {
+    id: supplier.id,
+    name: supplier.nameEn ?? "",
+    category: supplier.category ?? "",
+    location: supplier.locationEn ?? "",
+    established: supplier.established ?? null,
+    description: supplier.descriptionEn ?? "",
+    products: (supplier.productsEn ?? []) as string[],
+    processList: (supplier.processListEn ?? []) as string[],
+    certifications: (supplier.certificationsEn ?? []) as string[],
+    verified: Boolean(supplier.verified),
+    profilePublished: Boolean(supplier.profilePublished),
+    enterpriseId: supplier.enterpriseId ?? null,
+    website: supplier.website ?? row.enterpriseWebsite ?? null,
+    logo: supplier.logo ?? row.enterpriseLogo ?? null,
+    scaleTier: supplier.scaleTier ?? null,
+    employeeCount: row.employeeCount ?? null,
+    annualRevenue: row.annualRevenue ?? null,
+    sponsored: supplier.id === PINNED_SUPPLIER_ID,
+    province: supplier.province ?? null,
+    exportReady: Boolean(supplier.exportReady),
+  };
+}
+
+function directoryProvinces(rows: NetworkRow[]): string[] {
+  return Array.from(
+    new Set(rows.map((row) => englishProvince(row.province)).filter(Boolean)),
+  ).sort((a, b) => a.localeCompare(b));
+}
 
 type SupplierProfile = {
   supplier: typeof supplierListings.$inferSelect;
@@ -426,30 +465,30 @@ async function loadCategoryNetwork(
   category: SupplierCategoryPage,
 ): Promise<NetworkRow[]> {
   try {
+    const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
+    const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
     const rows = await db
       .select({
-        id: supplierListings.id,
-        name: supplierListings.name,
-        nameEn: supplierListings.nameEn,
-        verified: supplierListings.verified,
-        province: supplierListings.province,
-        category: supplierListings.category,
-        productsEn: supplierListings.productsEn,
-        capabilities: supplierListings.capabilities,
-        processListEn: supplierListings.processListEn,
-        certificationsEn: supplierListings.certificationsEn,
-        scaleTier: supplierListings.scaleTier,
-        exportReady: supplierListings.exportReady,
-        profilePublished: supplierListings.profilePublished,
+        supplier: supplierListings,
+        enterpriseLogo: enterprises.logo,
+        enterpriseWebsite: enterprises.website,
+        employeeCount: enterprises.employeeCount,
+        annualRevenue: enterprises.annualRevenue,
       })
       .from(supplierListings)
+      .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
       .orderBy(
+        desc(pinnedRank),
+        desc(supplierListings.profilePublished),
         desc(supplierListings.verified),
-        desc(supplierListings.exportReady),
         desc(supplierListings.brandPriority),
+        desc(tierRank),
         desc(supplierListings.viewCount),
+        asc(supplierListings.name),
       );
-    return rows.filter((row) => supplierMatchesCategory(category, row));
+    return rows
+      .filter((row) => supplierMatchesCategory(category, row.supplier))
+      .map(serializeNetworkRow);
   } catch {
     return [];
   }
@@ -458,26 +497,11 @@ async function loadCategoryNetwork(
 function normalizedCerts(row: NetworkRow): string[] {
   return Array.from(
     new Set(
-      (row.certificationsEn ?? [])
+      row.certifications
         .map((cert) => cert.trim())
         .filter(Boolean),
     ),
   );
-}
-
-function scaleLabel(tier: string | null): string {
-  switch (tier) {
-    case "XL":
-      return "Major scale";
-    case "L":
-      return "Large scale";
-    case "M":
-      return "Mid scale";
-    case "S":
-      return "Specialist scale";
-    default:
-      return "Scale under review";
-  }
 }
 
 const CATEGORY_SEO_TITLES: Record<string, string> = {
@@ -617,34 +641,29 @@ export async function generateMetadata({
 
 async function loadRegionNetwork(region: SupplierRegionPage): Promise<NetworkRow[]> {
   try {
-    return await db
+    const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
+    const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
+    const rows = await db
       .select({
-        id: supplierListings.id,
-        name: supplierListings.name,
-        nameEn: supplierListings.nameEn,
-        verified: supplierListings.verified,
-        province: supplierListings.province,
-        category: supplierListings.category,
-        productsEn: supplierListings.productsEn,
-        capabilities: supplierListings.capabilities,
-        processListEn: supplierListings.processListEn,
-        certificationsEn: supplierListings.certificationsEn,
-        scaleTier: supplierListings.scaleTier,
-        exportReady: supplierListings.exportReady,
-        profilePublished: supplierListings.profilePublished,
+        supplier: supplierListings,
+        enterpriseLogo: enterprises.logo,
+        enterpriseWebsite: enterprises.website,
+        employeeCount: enterprises.employeeCount,
+        annualRevenue: enterprises.annualRevenue,
       })
       .from(supplierListings)
-      .where(
-        and(
-          eq(supplierListings.province, region.provinceToken),
-        ),
-      )
+      .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
+      .where(eq(supplierListings.province, region.provinceToken))
       .orderBy(
+        desc(pinnedRank),
+        desc(supplierListings.profilePublished),
         desc(supplierListings.verified),
-        desc(supplierListings.exportReady),
         desc(supplierListings.brandPriority),
+        desc(tierRank),
         desc(supplierListings.viewCount),
+        asc(supplierListings.name),
       );
+    return rows.map(serializeNetworkRow);
   } catch {
     return [];
   }
@@ -655,7 +674,6 @@ async function renderRegionPage(region: SupplierRegionPage) {
   const provinceCount = network.length;
   const certCount = network.filter((row) => normalizedCerts(row).length > 0).length;
   const exportReadyCount = network.filter((row) => row.exportReady).length;
-  const featured = network;
   const pageUrl = `${CURRENT_SITE_URL}/suppliers/${region.slug}`;
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -755,25 +773,19 @@ async function renderRegionPage(region: SupplierRegionPage) {
       </section>
 
       <section className="border-b border-border/80">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">PUBLIC NETWORK COMPOSITION</div>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">Capability records in the {region.name} cluster</h2>
-          {featured.length > 0 ? <div className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{featured.map((row, index) => {
-            const products = [...(row.capabilities ?? []), ...(row.productsEn ?? [])].filter(Boolean).slice(0, 4);
-            const certs = normalizedCerts(row).slice(0, 3);
-            return <article key={row.id} className="rounded-xl border border-border/70 bg-background p-6">
-              <div className="flex items-center justify-between gap-3"><Badge variant="outline">{row.verified ? "Verified" : "Public"} {region.slug.slice(0, 3).toUpperCase()}-{String(index + 1).padStart(3, "0")}</Badge>{row.exportReady && <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Export-ready</span>}</div>
-              <div className="mt-5 text-base font-semibold">{row.nameEn ?? row.name}</div>
-              <div className="mt-2 flex items-center gap-2 text-sm font-medium"><MapPin size={14} />{region.name}, China</div>
-              <div className="mt-2 text-xs text-muted-foreground">{scaleLabel(row.scaleTier)}</div>
-              {products.length > 0 && <div className="mt-4 flex flex-wrap gap-1.5">{products.map((product) => <span key={product} className="rounded-md bg-muted px-2 py-1 text-[11px] text-muted-foreground">{product}</span>)}</div>}
-              <div className="mt-4 border-t border-border/60 pt-4 text-[12px] leading-relaxed text-muted-foreground">{certs.length > 0 ? `Documents on file: ${certs.join(" · ")}` : "Product evidence reviewed during RFQ matching."}</div>
-              <div className="mt-4 flex flex-wrap gap-3 text-xs font-medium">
-                {row.profilePublished && <Link href={`/suppliers/${row.id}` as "/suppliers/[id]"} className="underline underline-offset-4">View company profile</Link>}
-                <Link href={(row.profilePublished ? `/rfq?supplier=${encodeURIComponent(row.id)}` : `/rfq?product=${encodeURIComponent(products[0] ?? region.name)}`) as never} className="underline underline-offset-4">Send inquiry</Link>
-              </div>
-            </article>;
-          })}</div> : <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">Live capability cards are refreshed against the public network when a specification is submitted.</p>}
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            Search and compare every matched company in the same one-supplier-per-row directory used across GetFRP. Company scale, products, website, verification and profile status remain visible.
+          </p>
+          <div className="mt-8">
+            <SuppliersClient
+              suppliers={network}
+              categories={DIRECTORY_CATEGORIES}
+              provinces={directoryProvinces(network)}
+            />
+          </div>
         </div>
       </section>
 
@@ -824,7 +836,6 @@ export default async function SupplierCategoryPageRoute({
     (row) => normalizedCerts(row).length > 0,
   ).length;
   const exportReadyCount = network.filter((row) => row.exportReady).length;
-  const featured = network;
 
   const pageUrl = `${CURRENT_SITE_URL}/suppliers/${category.slug}`;
   const faqJsonLd = {
@@ -1018,7 +1029,7 @@ export default async function SupplierCategoryPageRoute({
       </section>
 
       <section className="border-b border-border/80">
-        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             NETWORK COMPOSITION
           </div>
@@ -1026,85 +1037,18 @@ export default async function SupplierCategoryPageRoute({
             Public supplier profiles from the composite network
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-            These cards expose supplier names, production location and capability
-            evidence for first-pass comparison. Verification status remains
-            visible so buyers can distinguish public records from records checked
-            by the sourcing team.
+            Search and compare every matched company in the same one-supplier-per-row
+            directory used across GetFRP. Company scale, products, website,
+            verification and profile status remain visible.
           </p>
 
-          {featured.length > 0 ? (
-            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {featured.map((row, index) => {
-                const products = [
-                  ...(row.capabilities ?? []),
-                  ...(row.productsEn ?? []),
-                ].filter(Boolean).slice(0, 4);
-                const certs = normalizedCerts(row).slice(0, 4);
-                return (
-                  <article
-                    key={row.id}
-                    className="rounded-xl border border-border/70 bg-background p-6"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <Badge variant="outline">
-                        {row.verified ? "Verified" : "Public"} #{category.slug.slice(0, 3).toUpperCase()}-{String(index + 1).padStart(3, "0")}
-                      </Badge>
-                      {row.exportReady && (
-                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                          Export-ready
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-5 flex items-center gap-2 text-sm font-medium">
-                      <MapPin size={14} />
-                      {englishProvince(row.province)}
-                    </div>
-                    <div className="mt-2 text-base font-semibold">
-                      {row.nameEn ?? row.name}
-                    </div>
-                    <div className="mt-2 text-xs text-muted-foreground">
-                      {scaleLabel(row.scaleTier)}
-                    </div>
-                    {products.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {products.map((product) => (
-                          <span key={product} className="rounded-md bg-muted px-2 py-1 text-[11px] text-muted-foreground">
-                            {product}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <div className="mt-4 border-t border-border/60 pt-4 text-[12px] leading-relaxed text-muted-foreground">
-                      {certs.length > 0
-                        ? `Documents on file: ${certs.join(" · ")}`
-                        : "Product evidence reviewed during RFQ matching."}
-                    </div>
-                    <div className="mt-4 flex flex-wrap gap-3 text-xs font-medium">
-                      {row.profilePublished && (
-                        <Link href={`/suppliers/${row.id}` as "/suppliers/[id]"} className="underline underline-offset-4">
-                          View company profile
-                        </Link>
-                      )}
-                      <Link
-                        href={(row.profilePublished
-                          ? `/rfq?supplier=${encodeURIComponent(row.id)}&product=${encodeURIComponent(category.shortName)}`
-                          : `/rfq?product=${encodeURIComponent(category.shortName)}&category=${category.match.businessTypes.includes("manufacturer") ? "finished" : "raw"}`) as never}
-                        className="underline underline-offset-4"
-                      >
-                        Send inquiry
-                      </Link>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="mt-8 rounded-xl border border-dashed border-border/70 bg-muted/20 p-6 text-sm leading-relaxed text-muted-foreground">
-              Live capability cards are being refreshed. The public records and
-              sourcing specification above remain available; submit
-              an RFQ to receive a current evidence-based shortlist.
-            </div>
-          )}
+          <div className="mt-8">
+            <SuppliersClient
+              suppliers={network}
+              categories={DIRECTORY_CATEGORIES}
+              provinces={directoryProvinces(network)}
+            />
+          </div>
         </div>
       </section>
 
