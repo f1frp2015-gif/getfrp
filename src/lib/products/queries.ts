@@ -121,7 +121,10 @@ export async function loadProductBySlug(slug: string): Promise<CatalogProduct | 
       .from(products)
       .where(and(eq(products.slug, slug), eq(products.status, "published")))
       .limit(1);
-    return product ?? null;
+    // The build-resilient database client returns an empty result set when a
+    // preview build cannot reach its database. Keep known product detail pages
+    // available from the committed seed records instead of prerendering a 404.
+    return product ?? seedProduct(slug);
   } catch {
     return seedProduct(slug);
   }
