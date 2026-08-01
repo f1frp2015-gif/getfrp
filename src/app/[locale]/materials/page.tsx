@@ -31,12 +31,23 @@ export async function generateMetadata({
 
 export default async function MaterialsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { locale } = await params;
+  const [{ locale }, sp] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
   const isEn = locale === "en";
+  const firstParam = (value: string | string[] | undefined) =>
+    Array.isArray(value) ? value[0] ?? "" : value ?? "";
+  const initialSearch = firstParam(sp.q).slice(0, 200);
+  const requestedCategory = firstParam(sp.category);
+  const initialCategory = materialCategories.some(
+    (category) => category.id === requestedCategory,
+  )
+    ? requestedCategory
+    : "all";
 
   // The English catalog requires translated names and ASCII-safe route IDs.
   const rows = await db
@@ -109,6 +120,8 @@ export default async function MaterialsPage({
       <JsonLd data={materialsItemListJsonLd} />
       <MaterialsClient
         materials={serialized}
+        initialSearch={initialSearch}
+        initialCategory={initialCategory}
         categories={materialCategories.map((category) => ({
           id: category.id,
           name: category.nameEn ?? category.id,
