@@ -5,12 +5,7 @@ import { ilike, or, sql, desc } from "drizzle-orm";
 import {
   Atom,
   Factory,
-  Sparkles,
   Layers,
-  FlaskConical,
-  BookOpen,
-  ShieldCheck,
-  Database,
   Globe,
 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -47,10 +42,9 @@ export async function generateMetadata({
   const fiber = findFiber(slug);
   if (!fiber) return { title: "Not found" };
   const t = await getTranslations({ locale, namespace: "Fibers" });
-  const name = locale === "en" ? fiber.nameEn : fiber.name;
   return {
-    title: t("metaTitle", { name }),
-    description: t("metaDescription", { name }),
+    title: t("metaTitle", { name: fiber.nameEn }),
+    description: t("metaDescription", { name: fiber.nameEn }),
     alternates: alternates(`/fibers/${slug}`),
   };
 }
@@ -118,8 +112,7 @@ async function topPapers(keywords: string[], limit = 6) {
     .select({
       id: papersTable.id,
       slug: papersTable.slug,
-      title: papersTable.title,
-      titleEn: papersTable.titleEn,
+      title: papersTable.titleEn,
       year: papersTable.year,
       hasCommentary: sql<boolean>`${papersTable.commentary} IS NOT NULL`,
     })
@@ -140,10 +133,8 @@ async function topPatents(keywords: string[], limit = 6) {
     .select({
       id: patentsTable.id,
       slug: patentsTable.slug,
-      title: patentsTable.title,
-      titleEn: patentsTable.titleEn,
+      title: patentsTable.titleEn,
       countryCode: patentsTable.countryCode,
-      applicant: patentsTable.applicant,
     })
     .from(patentsTable)
     .where(or(...ors))
@@ -175,8 +166,6 @@ export default async function FiberDetailPage({
     topPatents(fiber.keywords),
   ]);
 
-  const name = locale === "en" ? fiber.nameEn : fiber.name;
-
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <nav className="mb-6 text-xs text-muted-foreground">
@@ -188,12 +177,12 @@ export default async function FiberDetailPage({
           {t("breadcrumbFibers")}
         </Link>
         <span className="mx-1.5">/</span>
-        <span>{name}</span>
+        <span>{fiber.nameEn}</span>
       </nav>
 
       <PlatformHero
-        eyebrow={`${fiber.mono} · ${fiber.grades}`}
-        title={name}
+        eyebrow={`${fiber.mono} · ${fiber.gradesEn ?? fiber.grades}`}
+        title={fiber.nameEn}
         description={tf("lead")}
       />
 
@@ -270,7 +259,7 @@ export default async function FiberDetailPage({
                 <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                   {r.acronym}
                 </span>
-                <span>{locale === "en" ? r.nameEn : r.name}</span>
+                <span>{r.nameEn}</span>
                 <span className="text-muted-foreground/40 transition-all group-hover:translate-x-0.5 group-hover:text-foreground">
                   →
                 </span>
@@ -338,7 +327,7 @@ export default async function FiberDetailPage({
                   )}
                 </div>
                 <div className="line-clamp-2 font-medium">
-                  {locale === "en" && p.titleEn ? p.titleEn : p.title}
+                  {p.title}
                 </div>
               </Link>
             ))}
@@ -373,13 +362,8 @@ export default async function FiberDetailPage({
                   )}
                 </div>
                 <div className="line-clamp-2 font-medium">
-                  {locale === "en" && p.titleEn ? p.titleEn : p.title}
+                  {p.title}
                 </div>
-                {p.applicant && (
-                  <div className="mt-1 text-xs text-muted-foreground line-clamp-1">
-                    {p.applicant}
-                  </div>
-                )}
               </Link>
             ))}
           </div>
