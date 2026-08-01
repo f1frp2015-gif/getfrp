@@ -30,13 +30,13 @@ import {
 } from "@/lib/db/schema";
 import {
   getSupplierCategoryPage,
-  SUPPLIER_CATEGORY_SLUGS,
   supplierMatchesCategory,
   type SupplierCategoryPage,
 } from "@/lib/data/supplier-category-pages";
 import { provincesEn, supplierCategories } from "@/lib/data/suppliers";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { loadProductsForSupplier } from "@/lib/products/queries";
 import {
   getSupplierRegionByName,
   getSupplierRegionPage,
@@ -74,7 +74,7 @@ function englishProvince(province: string | null): string {
 }
 
 export function generateStaticParams() {
-  return [...SUPPLIER_CATEGORY_SLUGS, ...SUPPLIER_REGION_SLUGS].map((id) => ({ id }));
+  return SUPPLIER_REGION_SLUGS.map((id) => ({ id }));
 }
 
 type NetworkRow = SerializedSupplier & {
@@ -167,7 +167,7 @@ function categoryLabel(category: string | null): string {
   return value ?? category ?? "Supplier";
 }
 
-function renderSupplierProfile(profile: SupplierProfile) {
+async function renderSupplierProfile(profile: SupplierProfile) {
   const { supplier, enterprise } = profile;
   const isVerified = Boolean(supplier.verified && enterprise);
   const isSponsored = supplier.id === "sup-yaoyi";
@@ -179,7 +179,8 @@ function renderSupplierProfile(profile: SupplierProfile) {
       : supplier.nameEn ?? name;
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
-  const products = (supplier.productsEn ?? []) as string[];
+  const productNames = (supplier.productsEn ?? []) as string[];
+  const structuredProducts = await loadProductsForSupplier(supplier);
   const processes = (supplier.processListEn ?? []) as string[];
   const certifications = (supplier.certificationsEn ?? []) as string[];
   const productsServicesSummary =
@@ -227,19 +228,28 @@ function renderSupplierProfile(profile: SupplierProfile) {
             addressCountry: "CN",
           }
         : undefined,
-      knowsAbout: products,
-      hasOfferCatalog: ecatalogs.length
+      knowsAbout: productNames,
+      hasOfferCatalog: structuredProducts.length
         ? {
             "@type": "OfferCatalog",
-            name: `${name} eCatalog`,
-            itemListElement: ecatalogs.map((catalog) => ({
-              "@type": "CreativeWork",
-              name: catalog.titleEn ?? "Product catalog",
-              url: catalog.url,
-              encodingFormat: catalog.format ?? "application/pdf",
+            name: `${name} product range`,
+            itemListElement: structuredProducts.map((product) => ({
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Product",
+                "@id": `${CURRENT_SITE_URL}/products/${product.slug}#product`,
+                name: product.nameEn,
+                url: `${CURRENT_SITE_URL}/products/${product.slug}`,
+              },
             })),
           }
         : undefined,
+      subjectOf: ecatalogs.map((catalog) => ({
+        "@type": "CreativeWork",
+        name: catalog.titleEn ?? "Product catalog",
+        url: catalog.url,
+        encodingFormat: catalog.format ?? "application/pdf",
+      })),
     },
   };
 
@@ -404,7 +414,26 @@ function renderSupplierProfile(profile: SupplierProfile) {
               <h2 className="text-xl font-semibold">{labels.productsServices}</h2>
               <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{productsServicesSummary}</p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
-                <div><h3 className="text-sm font-semibold">{labels.products}</h3><div className="mt-3 flex flex-wrap gap-2">{products.map((item) => <Badge key={item} variant="outline" className="px-3 py-1.5">{item}</Badge>)}</div></div>
+                <div>
+                  <h3 className="text-sm font-semibold">{labels.products}</h3>
+                  <div className="mt-3 grid gap-2">
+                    {structuredProducts.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug}` as never}
+                        className="flex items-center justify-between rounded-lg border border-border/70 px-3 py-2.5 text-sm font-medium hover:border-foreground/40"
+                      >
+                        {product.shortName ?? product.nameEn}
+                        <ArrowRight size={14} />
+                      </Link>
+                    ))}
+                  </div>
+                  {productNames.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {productNames.map((item) => <Badge key={item} variant="outline" className="px-3 py-1.5">{item}</Badge>)}
+                    </div>
+                  )}
+                </div>
                 <div><h3 className="text-sm font-semibold">{labels.processes}</h3><div className="mt-3 flex flex-wrap gap-2">{processes.map((item) => <Badge key={item} variant="secondary" className="px-3 py-1.5">{item}</Badge>)}</div></div>
               </div>
             </div>
@@ -757,7 +786,7 @@ async function renderRegionPage(region: SupplierRegionPage) {
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">Move from province to product specification</h2>
           <div className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {region.categoryFocus.map((focus) => (
-              <Link key={focus.slug} href={`/suppliers/${focus.slug}` as "/suppliers/[id]"} className="rounded-xl border border-border/70 bg-background p-5 transition-colors hover:border-foreground/40">
+              <Link key={focus.slug} href={`/products/${focus.slug}` as never} className="rounded-xl border border-border/70 bg-background p-5 transition-colors hover:border-foreground/40">
                 <div className="flex items-center justify-between gap-2"><span className="font-semibold">{focus.label}</span><ArrowRight size={15} /></div>
                 <p className="mt-3 text-[13px] leading-relaxed text-muted-foreground">{focus.note}</p>
                 <span className="mt-4 inline-block text-xs underline underline-offset-4">View public network</span>
@@ -767,7 +796,7 @@ async function renderRegionPage(region: SupplierRegionPage) {
           <div className="mt-8 flex flex-wrap gap-3 text-sm">
             <Link href="/standards" className="rounded-md border border-border px-4 py-2 hover:bg-background">GB ↔ ASTM ↔ ISO ↔ EN crosswalk</Link>
             <Link href="/source-from-china" className="rounded-md border border-border px-4 py-2 hover:bg-background">China sourcing playbook</Link>
-            <Link href="/materials" className="rounded-md border border-border px-4 py-2 hover:bg-background">Browse material specifications</Link>
+            <Link href="/products" className="rounded-md border border-border px-4 py-2 hover:bg-background">Browse product specifications</Link>
           </div>
         </div>
       </section>
@@ -817,7 +846,7 @@ export default async function SupplierCategoryPageRoute({
   if (!category) {
     const profile = await loadSupplierProfile(id);
     if (!profile) notFound();
-    return renderSupplierProfile(profile);
+    return await renderSupplierProfile(profile);
   }
   if (locale !== "en") notFound();
 

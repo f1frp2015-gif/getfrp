@@ -1,19 +1,17 @@
 {
   "Site": {
     "name": "getfrp",
-    "tagline": "China's FRP supply chain, AI-native export",
-    "description": "AI-native FRP sourcing across China's supply chain: public supplier profiles, raw materials to pultrusions, GB ⇄ ASTM ⇄ EN standards mapped, RFQ to delivery."
+    "tagline": "FRP products and suppliers from China",
+    "description": "Structured product and supplier database for FRP sourcing from China: compare specifications, factory capability, evidence, standards and RFQ-ready relationships."
   },
   "Nav": {
-    "materials": "Materials",
+    "products": "Products",
     "formulas": "Formulas",
     "standards": "Standards",
     "papers": "Papers",
-    "patents": "Patents",
     "suppliers": "Suppliers",
     "tech": "Tech",
     "downloads": "Downloads",
-    "articles": "Insights",
     "supplyLib": "Suppliers",
     "techLib": "Tech",
     "infoLib": "Insights",

@@ -209,7 +209,7 @@ export default async function StandardDetailPage({
             {SUPPLIER_CATEGORY_PAGES.map((category) => (
               <Link
                 key={category.slug}
-                href={`/suppliers/${category.slug}` as "/suppliers/[id]"}
+                href={`/products/${category.slug}` as never}
                 className="rounded-md border border-border px-3 py-2 text-xs hover:bg-muted"
               >
                 {category.shortName} suppliers

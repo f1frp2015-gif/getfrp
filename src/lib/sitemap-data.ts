@@ -7,23 +7,20 @@
 // next/dist/build/.../resolve-route-data.js) — so we render the XML ourselves.
 //
 // Invariants preserved from the single-file version:
-//   - EN deploy (getfrp.com) only lists ASCII paths with English content
-//     (non-ASCII /materials/[id] etc. 404 on Vercel and tank index coverage).
-//   - Thin papers/patents (abstract < 80 chars) are excluded on EN.
+//   - EN deploy (getfrp.com) only lists ASCII paths with English content.
+//   - Thin papers (abstract < 80 chars) are excluded on EN.
 //   - Cross-domain hreflang (zh ⇄ en) on every URL.
 // Changed on purpose:
 //   - The old 1,000 / 2,000 / 500 row caps are lifted to the 50k sitemap
-//     ceiling so the full corpus (≈3.7k papers, 4.3k materials, …) gets crawled.
+//     ceiling so the full supporting corpus gets crawled.
 
 import type { MetadataRoute } from "next";
 import { and, desc, eq, isNotNull, ne } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
-  articles,
   standards,
   papers,
-  patents,
-  materials,
+  products,
   supplierListings,
 } from "@/lib/db/schema";
 import { CURRENT_SITE_URL, ACTIVE_LOCALE, crossSiteUrls } from "@/lib/sites";
@@ -31,21 +28,15 @@ import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
 import { baikeTopicSlugs } from "@/lib/data/baike-topics";
 import { allComboSlugs } from "@/lib/data/matrix";
 import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
-import { SUPPLIER_CATEGORY_SLUGS } from "@/lib/data/supplier-category-pages";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
-import {
-  dedupeEnglishMaterials,
-  isIndexableEnglishMaterial,
-} from "@/lib/material-publication";
+import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 
 export type SitemapType =
   | "core"
   | "formulas"
-  | "materials"
+  | "products"
   | "papers"
-  | "patents"
   | "standards"
-  | "articles"
   | "suppliers"
   | "sourcing"
   | "baike";
@@ -101,10 +92,9 @@ type StaticRoute = {
 
 const staticRoutes: StaticRoute[] = [
   { path: "/", changeFrequency: "daily", priority: 1.0 },
-  { path: "/materials", changeFrequency: "weekly", priority: 0.6 },
+  { path: "/products", changeFrequency: "weekly", priority: 0.95 },
   { path: "/standards", changeFrequency: "weekly", priority: 0.8 },
   { path: "/papers", changeFrequency: "daily", priority: 0.8 },
-  { path: "/patents", changeFrequency: "weekly", priority: 0.7 },
   { path: "/suppliers", changeFrequency: "daily", priority: 0.9 },
   { path: "/tech", changeFrequency: "weekly", priority: 0.7 },
   { path: "/fibers", changeFrequency: "monthly", priority: 0.7 },
@@ -186,29 +176,25 @@ export async function buildSitemapEntries(
         },
       ];
 
-    case "materials": {
+    case "products": {
       const rows = (await safeFetch(() =>
         db
           .select({
-            id: materials.id,
-            status: materials.status,
-            category: materials.category,
-            nameEn: materials.nameEn,
-            brandEn: materials.brandEn,
-            modelEn: materials.modelEn,
-            descriptionEn: materials.descriptionEn,
-            propertiesEn: materials.propertiesEn,
-            applicationsEn: materials.applicationsEn,
-            updatedAt: materials.updatedAt,
+            slug: products.slug,
+            updatedAt: products.updatedAt,
           })
-          .from(materials)
+          .from(products)
+          .where(eq(products.status, "published"))
           .limit(MAX_PER_SITEMAP),
-      ));
-      const publishedRows = isEn
-        ? dedupeEnglishMaterials(rows.filter(isIndexableEnglishMaterial))
-        : rows.filter((row) => row.status === "verified");
-      return publishedRows.map((r) =>
-        toEntry(`/materials/${r.id}`, r.updatedAt, 0.45, now),
+      )) as Array<{ slug: string; updatedAt: Date | null }>;
+      const publishedRows = rows.length > 0
+        ? rows
+        : PRODUCT_SEED_RECORDS.map((product) => ({
+            slug: product.slug,
+            updatedAt: now,
+          }));
+      return publishedRows.map((row) =>
+        toEntry(`/products/${row.slug}`, row.updatedAt, 0.85, now),
       );
     }
 
@@ -244,38 +230,6 @@ export async function buildSitemapEntries(
         .map((r) => toEntry(`/papers/${r.urlSlug}`, r.updatedAt, 0.6, now));
     }
 
-    case "patents": {
-      const rows = (await safeFetch(() =>
-        db
-          .select({
-            id: patents.id,
-            slug: patents.slug,
-            titleEn: patents.titleEn,
-            abstractEn: patents.abstractEn,
-            updatedAt: patents.updatedAt,
-          })
-          .from(patents)
-          .orderBy(desc(patents.updatedAt))
-          .limit(MAX_PER_SITEMAP),
-      )) as Array<{
-        id: string;
-        slug: string | null;
-        titleEn: string | null;
-        abstractEn: string | null;
-        updatedAt: Date | null;
-      }>;
-      return rows
-        .map((r) => ({ urlSlug: r.slug ?? r.id, ...r }))
-        .filter((r) =>
-          isEn
-            ? isAsciiPath(r.urlSlug) &&
-              (r.titleEn ?? "").trim() !== "" &&
-              (r.abstractEn ?? "").trim().length >= MIN_ABSTRACT_LEN
-            : true,
-        )
-        .map((r) => toEntry(`/patents/${r.urlSlug}`, r.updatedAt, 0.6, now));
-    }
-
     case "standards": {
       const rows = (await safeFetch(() =>
         db
@@ -302,54 +256,12 @@ export async function buildSitemapEntries(
       ];
     }
 
-    case "articles": {
-      const rows = (await safeFetch(() =>
-        db
-          .select({ slug: articles.slug, updatedAt: articles.updatedAt })
-          .from(articles)
-          .where(
-            isEn
-              ? and(
-                  eq(articles.forEn, true),
-                  isNotNull(articles.publishedAt),
-                  isNotNull(articles.titleEn),
-                  ne(articles.titleEn, ""),
-                )
-              : and(
-                  eq(articles.forZh, true),
-                  isNotNull(articles.publishedAt),
-                ),
-          )
-          .orderBy(desc(articles.publishedAt))
-          .limit(MAX_PER_SITEMAP),
-      )) as Array<{ slug: string; updatedAt: Date | null }>;
-      // The EN archive intentionally remains noindex until three complete
-      // articles are live. Do not leak that noindex hub through core.xml.
-      // Once the publishing threshold is met, put the hub and detail URLs in
-      // this child sitemap together. A completely empty ZH archive is omitted
-      // by the same rule.
-      if (rows.length === 0 || (isEn && rows.length < 3)) return [];
-      const articleEntries = rows
-        .filter((r) => (isEn ? isAsciiPath(r.slug) : true))
-        .map((r) => toEntry(`/articles/${r.slug}`, r.updatedAt, 0.6, now));
-      return [
-        {
-          url: urlFor("/articles"),
-          lastModified: rows[0]?.updatedAt ?? now,
-          changeFrequency: "daily",
-          priority: 0.8,
-          alternates: alternatesFor("/articles"),
-        },
-        ...articleEntries,
-      ];
-    }
-
     case "suppliers": {
       // Only claimed + verified businesses receive individual public profile
       // URLs. Unclaimed directory records remain discoverable on /suppliers
       // without creating thin or misleading company pages.
       const networkEntries = isEn
-        ? [...SUPPLIER_CATEGORY_SLUGS, ...SUPPLIER_REGION_SLUGS].map((slug) => ({
+        ? SUPPLIER_REGION_SLUGS.map((slug) => ({
           ...toEntry(`/suppliers/${slug}`, now, 0.85, now),
           alternates: enOnlyAlternatesFor(`/suppliers/${slug}`),
           changeFrequency: "weekly" as const,
@@ -413,34 +325,16 @@ export function childSitemapTypes(): SitemapType[] {
   const base: SitemapType[] = [
     "core",
     "formulas",
-    "materials",
+    "products",
     "papers",
-    "patents",
     "standards",
-    "articles",
     "suppliers",
   ];
   return ACTIVE_LOCALE === "en" ? [...base, "sourcing"] : [...base, "baike"];
 }
 
-// Empty XML files waste crawl budget and create misleading Search Console
-// coverage reports. Articles and patents are content-gated on the EN deploy,
-// so omit their child sitemap from the INDEX until at least one indexable URL
-// exists. Keep the child routes themselves available: once content qualifies,
-// the next sitemap-index revalidation adds them back automatically.
 export async function indexedChildSitemapTypes(): Promise<SitemapType[]> {
-  const configured = childSitemapTypes();
-  const conditional: SitemapType[] = ["articles", "patents"];
-  const availability = await Promise.all(
-    conditional.map(async (type) => ({
-      type,
-      hasEntries: (await buildSitemapEntries(type)).length > 0,
-    })),
-  );
-  const empty = new Set(
-    availability.filter(({ hasEntries }) => !hasEntries).map(({ type }) => type),
-  );
-  return configured.filter((type) => !empty.has(type));
+  return childSitemapTypes();
 }
 
 // ── XML serializers (Next can't emit <sitemapindex>; match its <urlset>) ───

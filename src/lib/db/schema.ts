@@ -616,6 +616,111 @@ export const supplierListings = pgTable(
 );
 
 // ═══════════════════════════════════════════
+// Product catalog — canonical product families exposed on getfrp.com
+//
+// A product is deliberately independent from a supplier. The same canonical
+// product family can be offered by many suppliers, while a supplier can offer
+// many products. Supplier-specific commercial and evidence fields live on the
+// junction table below instead of being flattened into JSON string arrays.
+// ═══════════════════════════════════════════
+
+export type ProductSpecification = {
+  field: string;
+  typicalRange: string;
+  sourcingNote: string;
+};
+
+export type ProductFaq = {
+  question: string;
+  answer: string;
+};
+
+export const products = pgTable(
+  "products",
+  {
+    id: varchar("id", { length: 100 }).primaryKey(),
+    slug: varchar("slug", { length: 120 }).notNull().unique(),
+    name: varchar("name", { length: 200 }).notNull(),
+    nameEn: varchar("name_en", { length: 200 }).notNull(),
+    shortName: varchar("short_name", { length: 120 }),
+    category: varchar("category", { length: 80 }).notNull(),
+    summary: text("summary").notNull(),
+    description: text("description"),
+    overview: jsonb("overview").$type<string[]>().default([]).notNull(),
+    materials: jsonb("materials").$type<string[]>().default([]).notNull(),
+    manufacturingProcesses: jsonb("manufacturing_processes")
+      .$type<string[]>()
+      .default([])
+      .notNull(),
+    applications: jsonb("applications").$type<string[]>().default([]).notNull(),
+    standards: jsonb("standards").$type<string[]>().default([]).notNull(),
+    specifications: jsonb("specifications")
+      .$type<ProductSpecification[]>()
+      .default([])
+      .notNull(),
+    buyingChecks: jsonb("buying_checks").$type<string[]>().default([]).notNull(),
+    faqs: jsonb("faqs").$type<ProductFaq[]>().default([]).notNull(),
+    searchTerms: jsonb("search_terms").$type<string[]>().default([]).notNull(),
+    imageUrl: text("image_url"),
+    imageAlt: text("image_alt"),
+    status: varchar("status", { length: 20 }).default("draft").notNull(),
+    source: varchar("source", { length: 32 }).default("getfrp").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("products_category_idx").on(table.category),
+    index("products_status_idx").on(table.status),
+    index("products_name_en_idx").on(table.nameEn),
+  ],
+);
+
+export const supplierProducts = pgTable(
+  "supplier_products",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    supplierListingId: varchar("supplier_listing_id", { length: 50 })
+      .notNull()
+      .references(() => supplierListings.id, { onDelete: "cascade" }),
+    productId: varchar("product_id", { length: 100 })
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    relationshipType: varchar("relationship_type", { length: 32 })
+      .default("manufacturer")
+      .notNull(),
+    supplierProductName: varchar("supplier_product_name", { length: 200 }),
+    supplierSku: varchar("supplier_sku", { length: 120 }),
+    isPrimary: boolean("is_primary").default(false).notNull(),
+    isVerified: boolean("is_verified").default(false).notNull(),
+    customAvailable: boolean("custom_available").default(false).notNull(),
+    moq: integer("moq"),
+    moqUnit: varchar("moq_unit", { length: 24 }),
+    leadTimeDays: integer("lead_time_days"),
+    specificationOverrides: jsonb("specification_overrides")
+      .$type<Record<string, string>>()
+      .default({})
+      .notNull(),
+    evidence: jsonb("evidence").$type<{
+      sourceType?: string;
+      sourceUrl?: string;
+      reviewedAt?: string;
+      note?: string;
+    }>(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("supplier_products_supplier_product_uniq").on(
+      table.supplierListingId,
+      table.productId,
+    ),
+    index("supplier_products_supplier_idx").on(table.supplierListingId),
+    index("supplier_products_product_idx").on(table.productId),
+    index("supplier_products_verified_idx").on(table.isVerified),
+  ],
+);
+
+// ═══════════════════════════════════════════
 // Supplier claims — 企业认领申请
 // ═══════════════════════════════════════════
 

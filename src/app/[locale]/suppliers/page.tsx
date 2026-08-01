@@ -206,7 +206,7 @@ export default async function SuppliersPage({
             {SUPPLIER_CATEGORY_PAGES.map((category) => (
               <Link
                 key={category.slug}
-                href={`/suppliers/${category.slug}` as "/suppliers/[id]"}
+                href={`/products/${category.slug}` as never}
                 className="group flex min-h-28 flex-col justify-between bg-background p-4 transition-colors hover:bg-muted/40"
               >
                 <span className="font-semibold">{category.shortName}</span>

@@ -14,6 +14,17 @@ const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
 ];
 
+const legacyProductSlugs = [
+  "frp-grating",
+  "pultruded-profiles",
+  "fiberglass-sheet",
+  "frp-rebar",
+  "frp-pipe",
+  "smc-bmc",
+  "resin-gelcoat",
+  "fiber-glass",
+];
+
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./messages/**/*.json"],
@@ -23,12 +34,30 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["ali-oss"],
   async redirects() {
     return [
-      { source: "/downloads", destination: "/materials", statusCode: 301 },
+      { source: "/downloads", destination: "/products", statusCode: 301 },
       {
         source: "/en/downloads",
-        destination: "/en/materials",
+        destination: "/en/products",
         statusCode: 301,
       },
+      { source: "/materials/:path*", destination: "/products", statusCode: 301 },
+      { source: "/en/materials/:path*", destination: "/en/products", statusCode: 301 },
+      { source: "/patents/:path*", destination: "/products", statusCode: 301 },
+      { source: "/en/patents/:path*", destination: "/en/products", statusCode: 301 },
+      { source: "/articles/:path*", destination: "/products", statusCode: 301 },
+      { source: "/en/articles/:path*", destination: "/en/products", statusCode: 301 },
+      ...legacyProductSlugs.flatMap((slug) => [
+        {
+          source: `/suppliers/${slug}`,
+          destination: `/products/${slug}`,
+          statusCode: 301 as const,
+        },
+        {
+          source: `/en/suppliers/${slug}`,
+          destination: `/en/products/${slug}`,
+          statusCode: 301 as const,
+        },
+      ]),
       { source: "/factories", destination: "/suppliers", statusCode: 301 },
       {
         source: "/en/factories",

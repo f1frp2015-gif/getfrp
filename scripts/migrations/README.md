@@ -28,3 +28,4 @@ psql "$DATABASE_URL" -f scripts/migrations/0001_factory_product.sql
 | File | Adds | Notes |
 |---|---|---|
 | `0001_factory_product.sql` | `factory_waitlist` + `factory_inquiries` + `factory_inquiry_drafts` tables, plus 4 enums | S2 AI 询盘助手 product MVP. Additive only — safe to apply on live DB. |
+| `0002_supplier_product_core.sql` | `products` + `supplier_products` tables and indexes | Canonical product catalog plus explicit many-to-many supplier relationships. Additive; legacy content remains archived. |
