@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { papers, articles, materials } from "@/lib/db/schema";
+import { articles, materials } from "@/lib/db/schema";
 import { and, desc, eq, gte } from "drizzle-orm";
-import { CURRENT_SITE_URL } from "@/lib/sites";
-import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,18 +26,9 @@ function htmlEscape(s: string): string {
 }
 
 function buildHtml(
-  recentPapers: Array<{ id: string; title: string; commentary: string | null; createdAt: Date }>,
   recentArticles: Array<{ id: string; slug: string; title: string; excerpt: string | null; createdAt: Date }>,
   recentMaterials: Array<{ id: string; name: string; description: string | null; createdAt: Date }>
 ): string {
-  const BASE = CURRENT_SITE_URL;
-
-  function paperRow(p: typeof recentPapers[0]) {
-    return `<li style="margin-bottom:12px">
-      <a href="${BASE}/papers/${htmlEscape(p.id)}" style="color:#2563eb;font-weight:600">${htmlEscape(p.title)}</a>
-    </li>`;
-  }
-
   function articleRow(a: typeof recentArticles[0]) {
     return `<li style="margin-bottom:12px">
       <span style="font-weight:600">${htmlEscape(a.title)}</span>
@@ -59,12 +48,7 @@ function buildHtml(
   <h1 style="color:#1e293b;font-size:22px;margin-bottom:4px">GetFRP Weekly</h1>
   <p style="color:#64748b;font-size:13px;margin-bottom:24px">getfrp.com · Fiber-reinforced composites sourcing digest</p>
 
-  <h2 style="font-size:16px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:6px">New Papers</h2>
-  <ul style="padding-left:18px;margin-top:12px">
-    ${recentPapers.map(paperRow).join("")}
-  </ul>
-
-  <h2 style="font-size:16px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:6px;margin-top:24px">Industry News</h2>
+  <h2 style="font-size:16px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:6px">Industry News</h2>
   <ul style="padding-left:18px;margin-top:12px">
     ${recentArticles.map(articleRow).join("")}
   </ul>
@@ -109,14 +93,7 @@ export async function GET(req: Request) {
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   // Query last 7 days of content
-  const [recentPaperRows, recentArticles, recentMaterials, paperRouteIndex] = await Promise.all([
-    db
-      .select({ id: papers.id, title: papers.title, commentary: papers.commentary, createdAt: papers.createdAt })
-      .from(papers)
-      .where(gte(papers.createdAt, sevenDaysAgo))
-      .orderBy(desc(papers.createdAt))
-      .limit(5),
-
+  const [recentArticles, recentMaterials] = await Promise.all([
     db
       .select({ id: articles.id, slug: articles.slug, title: articles.title, excerpt: articles.excerpt, createdAt: articles.createdAt })
       .from(articles)
@@ -130,18 +107,13 @@ export async function GET(req: Request) {
       .where(and(gte(materials.createdAt, sevenDaysAgo), eq(materials.status, "verified")))
       .orderBy(desc(materials.createdAt))
       .limit(3),
-    getPaperRouteIndex(),
   ]);
-  const recentPapers = recentPaperRows.map((paper) => ({
-    ...paper,
-    id: paperRouteIndex.canonicalById.get(paper.id) ?? paper.id,
-  }));
 
-  if (!recentPapers.length && !recentArticles.length && !recentMaterials.length) {
+  if (!recentArticles.length && !recentMaterials.length) {
     return NextResponse.json({ skipped: true, reason: "No new content in the last 7 days" });
   }
 
-  const html = buildHtml(recentPapers, recentArticles, recentMaterials);
+  const html = buildHtml(recentArticles, recentMaterials);
   const subject = `GetFRP Weekly — ${new Date().toISOString().slice(0, 10)}`;
 
   // Send via Resend HTTP API
@@ -167,7 +139,6 @@ export async function GET(req: Request) {
     ok: sendRes.ok,
     status: sendRes.status,
     recipients: allRecipients,
-    paperCount: recentPapers.length,
     articleCount: recentArticles.length,
     materialCount: recentMaterials.length,
     resend: sendData,

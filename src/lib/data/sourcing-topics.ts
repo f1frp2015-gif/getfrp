@@ -134,7 +134,7 @@ export const sourcingTopics: SourcingTopic[] = [
     ],
     related: [
       { label: "Pultruded FRP profiles and manufacturers", href: "/products/pultruded-profiles" },
-      { label: "Standards crosswalk (GB ⇄ ASTM ⇄ EN)", href: "/standards" },
+      { label: "Standards crosswalk (GB ⇄ ASTM ⇄ EN)", href: "/sourcing/gb-vs-astm-frp" },
       { label: "Sourcing playbook (RFQ → delivery)", href: "/source-from-china" },
     ],
     supplierFilter: { category: "manufacturer" },
@@ -217,7 +217,7 @@ export const sourcingTopics: SourcingTopic[] = [
     ],
     related: [
       { label: "Verified manufacturer directory", href: "/suppliers" },
-      { label: "Standards database (GB ⇄ ASTM ⇄ ISO ⇄ EN)", href: "/standards" },
+      { label: "Standards sourcing guide (GB ⇄ ASTM ⇄ ISO ⇄ EN)", href: "/sourcing/gb-vs-astm-frp" },
       { label: "Sourcing playbook (RFQ → delivery)", href: "/source-from-china" },
     ],
     supplierFilter: { category: "manufacturer" },
@@ -300,7 +300,7 @@ export const sourcingTopics: SourcingTopic[] = [
     ],
     related: [
       { label: "China FRP import tariffs, AD/CVD & Section 301", href: "/sourcing/china-frp-import-tariffs" },
-      { label: "Standards & test method crosswalk", href: "/standards" },
+      { label: "Standards & test method crosswalk", href: "/sourcing/gb-vs-astm-frp" },
       { label: "Verified Chinese FRP suppliers", href: "/suppliers" },
     ],
   },
@@ -390,7 +390,7 @@ export const sourcingTopics: SourcingTopic[] = [
       },
     ],
     related: [
-      { label: "Standards database", href: "/standards" },
+      { label: "China sourcing process", href: "/source-from-china#standards" },
       { label: "Verified suppliers by category", href: "/source-from-china" },
       { label: "Process wiki & calculators", href: "/tech" },
     ],

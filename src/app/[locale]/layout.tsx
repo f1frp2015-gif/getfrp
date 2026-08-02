@@ -54,7 +54,7 @@ export async function generateMetadata({
 
   // canonical URLs are NOT set in the layout's default metadata
   // anymore. The old code set canonical to siteUrl (root) for every page,
-  // which told Google that /about, /materials/{id}, /papers/{id} etc.
+  // which told Google that /about, /materials/{id}, and other detail routes.
   // were all duplicates of the homepage — devastating for indexing.
   // Each page now sets its own canonical via @/lib/seo
   // (path-aware). og:title / og:url / og:description are likewise NO LONGER

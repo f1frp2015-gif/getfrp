@@ -7,35 +7,32 @@
 // next/dist/build/.../resolve-route-data.js) — so we render the XML ourselves.
 //
 // Invariants preserved from the single-file version:
-//   - EN deploy (getfrp.com) only lists ASCII paths with English content.
-//   - Thin papers (abstract < 80 chars) are excluded on EN.
+//   - EN deploy (getfrp.com) only lists English public content.
 //   - GetFRP is English-only and emits no cross-domain hreflang.
 // Changed on purpose:
 //   - The old 1,000 / 2,000 / 500 row caps are lifted to the 50k sitemap
 //     ceiling so the full supporting corpus gets crawled.
 
 import type { MetadataRoute } from "next";
-import { desc, eq, isNotNull } from "drizzle-orm";
+import { and, eq, isNotNull, ne } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
-  standards,
-  papers,
   products,
   supplierListings,
 } from "@/lib/db/schema";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
-import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
-import { buildCanonicalPaperSlugMap } from "@/lib/paper-urls";
+import {
+  supplierDirectoryPageCount,
+  supplierDirectoryPath,
+} from "@/lib/supplier-directory";
 
 export type SitemapType =
   | "core"
   | "products"
-  | "papers"
-  | "standards"
   | "suppliers"
   | "sourcing"
   | "resources"
@@ -45,12 +42,6 @@ export type SitemapType =
 // A single sitemap file may hold at most 50,000 URLs. Every table is well
 // under that, so one child sitemap per type is sufficient.
 const MAX_PER_SITEMAP = 50000;
-// Google thin-content heuristic; below this an abstract triggers noindex and
-// exclusion from the EN sitemap to avoid wasting crawl budget.
-const MIN_ABSTRACT_LEN = 80;
-
-const isAsciiPath = (s: string) => /^[\x00-\x7F]+$/.test(s);
-
 async function safeFetch<T>(fn: () => Promise<T>): Promise<T | []> {
   try {
     return await fn();
@@ -72,8 +63,6 @@ export type StaticRoute = {
 export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/", changeFrequency: "daily", priority: 1.0 },
   { path: "/products", changeFrequency: "weekly", priority: 0.95 },
-  { path: "/standards", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/papers", changeFrequency: "daily", priority: 0.8 },
   { path: "/suppliers", changeFrequency: "daily", priority: 0.9 },
   { path: "/ai", changeFrequency: "monthly", priority: 0.7 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
@@ -163,67 +152,6 @@ export async function buildSitemapEntries(
       );
     }
 
-    case "papers": {
-      const rows = (await safeFetch(() =>
-        db
-          .select({
-            id: papers.id,
-            slug: papers.slug,
-            titleEn: papers.titleEn,
-            year: papers.year,
-            abstractEn: papers.abstractEn,
-            updatedAt: papers.updatedAt,
-          })
-          .from(papers)
-          .orderBy(desc(papers.updatedAt))
-          .limit(MAX_PER_SITEMAP),
-      )) as Array<{
-        id: string;
-        slug: string | null;
-        titleEn: string | null;
-        year: number | null;
-        abstractEn: string | null;
-        updatedAt: Date | null;
-      }>;
-      const canonicalById = buildCanonicalPaperSlugMap(rows);
-      return rows
-        .map((r) => ({ urlSlug: canonicalById.get(r.id) ?? r.id, ...r }))
-        .filter((r) =>
-          isEn
-            ? isAsciiPath(r.urlSlug) &&
-              (r.titleEn ?? "").trim() !== "" &&
-              (r.abstractEn ?? "").trim().length >= MIN_ABSTRACT_LEN
-            : true,
-        )
-        .map((r) => toEntry(`/papers/${r.urlSlug}`, r.updatedAt, 0.6, now));
-    }
-
-    case "standards": {
-      const rows = (await safeFetch(() =>
-        db
-          .select({
-            id: standards.id,
-            titleEn: standards.titleEn,
-            updatedAt: standards.updatedAt,
-          })
-          .from(standards)
-          .limit(MAX_PER_SITEMAP),
-      )) as Array<{ id: string; titleEn: string | null; updatedAt: Date | null }>;
-      const entries = rows
-        .filter((r) =>
-          isEn ? isAsciiPath(r.id) && (r.titleEn ?? "").trim() !== "" : true,
-        )
-        .map((r) => toEntry(`/standards/${r.id}`, r.updatedAt, 0.7, now));
-      if (!isEn) return entries;
-      const seen = new Set(entries.map((entry) => entry.url));
-      return [
-        ...entries,
-        ...GB_STANDARDS_EN.map((standard) =>
-          toEntry(`/standards/${standard.id}`, now, 0.7, now),
-        ).filter((entry) => !seen.has(entry.url)),
-      ];
-    }
-
     case "suppliers": {
       const networkEntries = SUPPLIER_REGION_SLUGS.map((slug) => ({
           ...toEntry(`/suppliers/${slug}`, now, 0.85, now),
@@ -238,14 +166,25 @@ export async function buildSitemapEntries(
           })
           .from(supplierListings)
           .where(
-            isNotNull(supplierListings.slug),
+            and(
+              isNotNull(supplierListings.slug),
+              isNotNull(supplierListings.nameEn),
+              ne(supplierListings.nameEn, ""),
+            ),
           )
           .limit(MAX_PER_SITEMAP),
       )) as Array<{ slug: string | null; nameEn: string | null; updatedAt: Date | null }>;
       const companyEntries = rows
         .filter((r): r is typeof r & { slug: string } => Boolean(r.slug && (r.nameEn ?? "").trim()))
         .map((r) => toEntry(`/suppliers/${r.slug}`, r.updatedAt, 0.7, now));
-      return [...networkEntries, ...companyEntries];
+      const directoryEntries = Array.from(
+        { length: supplierDirectoryPageCount(companyEntries.length) },
+        (_, index) => ({
+          ...toEntry(supplierDirectoryPath(index + 1), now, 0.75, now),
+          changeFrequency: "weekly" as const,
+        }),
+      );
+      return [...networkEntries, ...directoryEntries, ...companyEntries];
     }
 
     case "sourcing": {
@@ -289,8 +228,6 @@ export function childSitemapTypes(): SitemapType[] {
     "core",
     "products",
     "suppliers",
-    "standards",
-    "papers",
   ];
   return [...base, "sourcing", "resources", "data", "tools"];
 }

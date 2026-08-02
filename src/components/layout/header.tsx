@@ -9,7 +9,7 @@ import { Logo } from "@/components/logo";
 const navigation = [
   { href: "/suppliers", label: "Suppliers" },
   { href: "/products", label: "Products" },
-  { href: "/standards", label: "Standards" },
+  { href: "/tools", label: "Tools" },
   { href: "/source-from-china", label: "Sourcing process" },
   { href: "/ai", label: "Ask AI" },
 ] as const;

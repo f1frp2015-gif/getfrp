@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { alternates } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { ilike, or, sql, desc } from "drizzle-orm";
 import {
   Atom,
   Factory,
@@ -10,8 +9,6 @@ import {
 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { db } from "@/lib/db";
-import { papers as papersTable } from "@/lib/db/schema";
 import {
   PlatformHero,
   PlatformCard,
@@ -22,7 +19,6 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { FIBERS, RESINS, PROCESSES, findFiber } from "@/lib/data/matrix";
 import { FIBER_DETAIL } from "@/lib/data/fibers-detail";
-import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const revalidate = 600;
 
@@ -46,45 +42,6 @@ export async function generateMetadata({
   };
 }
 
-async function countPapers(keywords: string[]): Promise<number> {
-  try {
-    const ors = keywords
-      .slice(0, 4)
-      .flatMap((k) => [
-        ilike(papersTable.title, `%${k}%`),
-        ilike(papersTable.titleEn, `%${k}%`),
-      ]);
-    const [r] = await db
-      .select({ c: sql<number>`count(*)::int` })
-      .from(papersTable)
-      .where(or(...ors));
-    return r.c ?? 0;
-  } catch {
-    return 0;
-  }
-}
-
-async function topPapers(keywords: string[], limit = 6) {
-  const ors = keywords
-    .slice(0, 4)
-    .flatMap((k) => [
-      ilike(papersTable.title, `%${k}%`),
-      ilike(papersTable.titleEn, `%${k}%`),
-    ]);
-  return db
-    .select({
-      id: papersTable.id,
-      slug: papersTable.slug,
-      title: papersTable.titleEn,
-      year: papersTable.year,
-      hasCommentary: sql<boolean>`${papersTable.commentary} IS NOT NULL`,
-    })
-    .from(papersTable)
-    .where(or(...ors))
-    .orderBy(desc(papersTable.createdAt))
-    .limit(limit);
-}
-
 export default async function FiberDetailPage({
   params,
 }: {
@@ -100,12 +57,6 @@ export default async function FiberDetailPage({
   const t = await getTranslations("Fibers");
   const tf = await getTranslations(`Fibers.${slug}`);
   const tp = await getTranslations("Fibers.props");
-
-  const [pCount, papers, paperRouteIndex] = await Promise.all([
-    countPapers(fiber.keywords),
-    topPapers(fiber.keywords),
-    getPaperRouteIndex(),
-  ]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
@@ -127,15 +78,7 @@ export default async function FiberDetailPage({
         description={tf("lead")}
       />
 
-      {/* Live stats */}
-      <div className="mb-12 grid gap-3 sm:grid-cols-3">
-        <Link
-          href="/papers"
-          className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
-        >
-          <div className="text-2xl font-bold tabular-nums">{pCount.toLocaleString()}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statPapers")}</div>
-        </Link>
+      <div className="mb-12 grid gap-3 sm:grid-cols-2">
         <Link
           href={`/products?q=${encodeURIComponent(fiber.nameEn)}` as never}
           className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
@@ -243,48 +186,6 @@ export default async function FiberDetailPage({
           </PlatformCard>
         </PlatformCardGrid>
       </section>
-
-      {/* Live papers */}
-      {papers.length > 0 && (
-        <section className="mb-12">
-          <PlatformSectionHeading eyebrow="LIVE · PAPERS" title={t("papersTitle")} />
-          <div className="grid gap-2 md:grid-cols-2">
-            {papers.map((p) => (
-              <Link
-                key={p.id}
-                href={`/papers/${encodeURIComponent(
-                  paperRouteIndex.canonicalById.get(p.id) ?? p.id,
-                )}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1 flex flex-wrap items-center gap-1.5">
-                  {p.year && (
-                    <Badge variant="outline" className="text-[10px]">
-                      {p.year}
-                    </Badge>
-                  )}
-                  {p.hasCommentary && (
-                    <Badge variant="signal" className="text-[10px]">
-                      {t("badgeCommentary")}
-                    </Badge>
-                  )}
-                </div>
-                <div className="line-clamp-2 font-medium">
-                  {p.title}
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-4">
-            <Link
-              href="/papers"
-              className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
-            >
-              {t("viewAll")} →
-            </Link>
-          </div>
-        </section>
-      )}
 
       {/* AI CTA */}
       <section className="mt-12 rounded-lg border bg-muted/30 p-8 text-center">

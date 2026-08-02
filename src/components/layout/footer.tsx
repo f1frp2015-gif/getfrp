@@ -28,8 +28,8 @@ export function Footer() {
             <Link href="/products" className="transition-colors hover:text-[#0b8179]">
               Products
             </Link>
-            <Link href="/standards" className="transition-colors hover:text-[#0b8179]">
-              Standards
+            <Link href="/suppliers/directory/1" className="transition-colors hover:text-[#0b8179]">
+              Supplier directory
             </Link>
             <Link href="/source-from-china" className="transition-colors hover:text-[#0b8179]">
               Sourcing process

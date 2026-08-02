@@ -85,7 +85,6 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: s.id,
       title: `${s.code} ${s.title}`,
       content: [s.title, ...parts].join("\n"),
-      url: `/standards/${s.id}`,
       metadata: { country: s.countryCode, category: s.category },
     });
   }
@@ -108,7 +107,7 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: p.id,
       title: p.title,
       content: [p.title, p.titleEn ?? "", ...parts].filter(Boolean).join("\n"),
-      url: `/papers/${p.slug ?? p.id}`,
+      url: p.sourceUrl ?? undefined,
       metadata: { doi: p.doi, year: p.year },
     });
   }

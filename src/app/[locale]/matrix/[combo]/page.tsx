@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { or, ilike, desc, sql } from "drizzle-orm";
+import { or, ilike } from "drizzle-orm";
 import {
   BookOpen,
   ArrowRight,
@@ -9,10 +9,7 @@ import {
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
-import {
-  formulas as formulasTable,
-  papers as papersTable,
-} from "@/lib/db/schema";
+import { formulas as formulasTable } from "@/lib/db/schema";
 import {
   parseCombo,
   findFiber,
@@ -34,7 +31,6 @@ import {
 } from "@/components/platform-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const revalidate = 600;
 
@@ -76,36 +72,6 @@ async function searchFormulas(fiber: Fiber, resin: Resin, limit = 12) {
       })
       .from(formulasTable)
       .where(keywordOr(null, [...fiber.keywords, ...resin.keywords], cols))
-      .limit(limit);
-  } catch {
-    return [];
-  }
-}
-
-async function searchPapers(fiber: Fiber, resin: Resin, limit = 12) {
-  const kws = [...fiber.keywords, ...resin.keywords];
-  try {
-    return await db
-      .select({
-        id: papersTable.id,
-        slug: papersTable.slug,
-        titleEn: papersTable.titleEn,
-        year: papersTable.year,
-        journal: papersTable.journalEn,
-        hasCommentary: sql<boolean>`${papersTable.commentary} IS NOT NULL`,
-      })
-      .from(papersTable)
-      .where(
-        or(
-          ...kws
-            .slice(0, 4)
-            .flatMap((k) => [
-              ilike(papersTable.title, `%${k}%`),
-              ilike(papersTable.titleEn, `%${k}%`),
-            ])
-        )
-      )
-      .orderBy(desc(papersTable.createdAt))
       .limit(limit);
   } catch {
     return [];
@@ -158,11 +124,7 @@ export default async function ComboPage({
   // Use namespace Matrix.Combo so keys stay colocated with the parent Matrix page.
   const t = await getTranslations({ locale, namespace: "Platform.Matrix.Combo" });
 
-  const [formulas, papers, paperRouteIndex] = await Promise.all([
-    searchFormulas(fiber, resin),
-    searchPapers(fiber, resin),
-    getPaperRouteIndex(),
-  ]);
+  const formulas = await searchFormulas(fiber, resin);
 
   const fiberName = locale === "en" ? fiber.nameEn : fiber.name;
   const resinName = locale === "en" ? resin.nameEn : resin.name;
@@ -259,14 +221,10 @@ export default async function ComboPage({
       </section>
 
       {/* Live stats from DB */}
-      <div className="mb-10 grid grid-cols-2 gap-3">
+      <div className="mb-10">
         <div className="rounded-lg border bg-background p-4 text-center">
           <div className="text-2xl font-bold tabular-nums">{formulas.length}</div>
           <div className="mt-1 text-xs text-muted-foreground">{t("statFormulas")}</div>
-        </div>
-        <div className="rounded-lg border bg-background p-4 text-center">
-          <div className="text-2xl font-bold tabular-nums">{papers.length}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statPapers")}</div>
         </div>
       </div>
 
@@ -343,45 +301,7 @@ export default async function ComboPage({
         </section>
       )}
 
-      {/* Papers */}
-      {papers.length > 0 && (
-        <section className="mb-12">
-          <PlatformSectionHeading eyebrow="PAPERS" title={t("paperTitle")} />
-          <div className="grid gap-2 md:grid-cols-2">
-            {papers.map((p) => (
-              <Link
-                key={p.id}
-                href={`/papers/${encodeURIComponent(
-                  paperRouteIndex.canonicalById.get(p.id) ?? p.id,
-                )}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1 flex flex-wrap items-center gap-1.5">
-                  {p.year && (
-                    <Badge variant="outline" className="text-[10px]">
-                      {p.year}
-                    </Badge>
-                  )}
-                  {p.hasCommentary && (
-                    <Badge variant="signal" className="text-[10px]">
-                      {t("badgeCommentary")}
-                    </Badge>
-                  )}
-                </div>
-                <div className="line-clamp-2 font-medium">{p.titleEn}</div>
-                {p.journal && (
-                  <div className="mt-1 text-xs text-muted-foreground line-clamp-1">
-                    {p.journal}
-                  </div>
-                )}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Empty state if no DB hits at all */}
-      {formulas.length === 0 && papers.length === 0 && (
+      {formulas.length === 0 && (
           <section className="rounded-lg border bg-muted/30 p-10 text-center">
             <p className="text-sm text-muted-foreground">
               {t("emptyBody", { name: displayName })}

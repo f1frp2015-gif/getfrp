@@ -8,8 +8,8 @@
 - [Source from China](https://getfrp.com/source-from-china): RFQ, sampling, QA, payment, export and logistics playbook.
 - [RFQ](https://getfrp.com/rfq): one controlled request for supplier matching and evidence review.
 - [Technical references](https://getfrp.com/technical): FRP properties, density and engineering guidance.
-- [Standards](https://getfrp.com/standards): GB, ASTM, ISO, EN and DIN composites standards crosswalk.
-- [Papers](https://getfrp.com/papers): English FRP research metadata and abstracts.
+- [Standards sourcing guide](https://getfrp.com/sourcing/gb-vs-astm-frp): how to compare GB, ASTM, ISO and EN test methods in an RFQ.
+- [Crawlable supplier index](https://getfrp.com/suppliers/directory/1): paginated access to every public supplier profile.
 
 ## Product coverage
 - FRP grating

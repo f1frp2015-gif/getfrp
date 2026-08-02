@@ -4,12 +4,9 @@ import { db } from "@/lib/db";
 import { papers, patents } from "@/lib/db/schema";
 import { fetchCrossRef, fetchOpenAlex, fetchPatentsView } from "@/lib/ingest/sources";
 import { ingestPaper, ingestPatent } from "@/lib/ingest";
-import { fanOutSearchPush } from "@/lib/ingest/search-push";
-import { notifyTelegram } from "@/lib/ingest/telegram-notify";
 import { embedNewRecords } from "@/lib/ingest/embed-records";
 import { isCompositeRelevant } from "@/lib/ingest/relevance";
 import { refreshDemandDigest } from "@/lib/ingest/demand-digest";
-import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
   paperQueryPool,
   patentQueryPool,
@@ -177,22 +174,6 @@ export async function GET(req: Request) {
     );
   }
 
-  // Fan out new English URLs to GetFRP's search discovery integrations.
-  // Each engine no-ops when its credentials are absent.
-  const pushUrls = results.papers.inserted.map(
-    (id) => `${CURRENT_SITE_URL}/papers/${id}`,
-  );
-  const searchPush = await fanOutSearchPush(pushUrls);
-
-  // Telegram channel notify — no-ops when env vars are absent.
-  await notifyTelegram([
-    ...results.papers.inserted.map((id) => ({
-      title: id,
-      url: `${CURRENT_SITE_URL}/papers/${id}`,
-      kind: "paper" as const,
-    })),
-  ]);
-
   // Live-embed the newly-ingested papers/patents into knowledge_chunks, and
   // refresh the demand digest — so fresh literature + market demand are
   // RAG-citable the same day (no manual embed-corpus run). Non-blocking.
@@ -216,7 +197,6 @@ export async function GET(req: Request) {
     ok: true,
     day: today.toISOString().slice(0, 10),
     target: DAILY_TARGET,
-    searchPush,
     embed,
     demand,
     ...results,

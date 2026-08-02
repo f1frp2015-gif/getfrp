@@ -24,7 +24,7 @@ function paperChunk(p: typeof papers.$inferSelect): KbChunk {
     sourceId: p.id,
     title: p.title,
     content: [p.title, p.titleEn ?? "", ...parts].filter(Boolean).join("\n"),
-    url: `/papers/${p.slug ?? p.id}`,
+    url: p.sourceUrl ?? null,
     metadata: { doi: p.doi, year: p.year },
   };
 }
