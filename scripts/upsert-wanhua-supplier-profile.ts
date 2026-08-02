@@ -47,6 +47,7 @@ async function main() {
       verified: supplierListings.verified,
       profilePublished: supplierListings.profilePublished,
       website: supplierListings.website,
+      logo: supplierListings.logo,
       enterpriseId: supplierListings.enterpriseId,
       ecatalogs: supplierListings.ecatalogs,
     })
@@ -74,6 +75,7 @@ async function main() {
     profile.verified ||
     profile.enterpriseId ||
     profile.website !== WANHUA_SUPPLIER_PROFILE.website ||
+    profile.logo !== WANHUA_SUPPLIER_PROFILE.logo ||
     !profile.ecatalogs?.length ||
     relationship?.productId !== WANHUA_PRODUCT_ID ||
     relationship.isVerified

@@ -199,6 +199,9 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   );
   const website = supplier.website ?? enterprise?.website ?? null;
   const logo = supplier.logo ?? enterprise?.logo ?? null;
+  const structuredLogo = logo
+    ? new URL(logo, CURRENT_SITE_URL).toString()
+    : null;
   const contactEmail = supplier.contactEmail ?? enterprise?.contactEmail ?? null;
   const contactPhone = supplier.contactPhone ?? enterprise?.contactPhone ?? null;
   const address = supplier.address ?? null;
@@ -224,7 +227,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       legalName,
       url: website ?? pageUrl,
       sameAs: website ? [website] : undefined,
-      logo: logo ?? undefined,
+      logo: structuredLogo ?? undefined,
       foundingDate: supplier.established ? String(supplier.established) : undefined,
       description,
       email: contactEmail ?? undefined,
