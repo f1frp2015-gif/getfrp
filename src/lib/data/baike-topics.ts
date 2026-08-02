@@ -174,7 +174,7 @@ export const baikeTopics: BaikeTopic[] = [
       },
     ],
     evidence: [
-      { label: "拉挤工艺专题", href: "/pultrusion" },
+      { label: "拉挤型材产品与供应商", href: "/products/pultruded-profiles" },
       { label: "HP-RTM 专题", href: "/hp-rtm" },
       { label: "玻璃纤维 × 不饱和聚酯(拉挤常用)", href: "/matrix/glass-upr" },
       { label: "玻璃纤维 × 乙烯基酯", href: "/matrix/glass-ver" },

@@ -3,16 +3,14 @@ import { sql, desc, or, ilike } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
-import {
-  papers as papersTable,
-  patents as patentsTable,
-} from "@/lib/db/schema";
+import { papers as papersTable } from "@/lib/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { JsonLd } from "@/components/json-ld";
 import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { alternates } from "@/lib/seo";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const revalidate = 600;
 
@@ -57,34 +55,6 @@ async function fetchPapers(limit = 40) {
     .limit(limit);
 }
 
-async function fetchPatents(limit = 40) {
-  const ors = KEYWORDS.flatMap((k) => [
-    ilike(patentsTable.title, `%${k}%`),
-    ilike(patentsTable.titleEn, `%${k}%`),
-    ilike(patentsTable.abstract, `%${k}%`),
-  ]);
-  return db
-    .select({
-      id: patentsTable.id,
-      slug: patentsTable.slug,
-      title: patentsTable.title,
-      titleEn: patentsTable.titleEn,
-      country: patentsTable.country,
-      countryCode: patentsTable.countryCode,
-      publicationNo: patentsTable.publicationNo,
-      filingDate: patentsTable.filingDate,
-      applicant: patentsTable.applicant,
-      applicantEn: patentsTable.applicantEn,
-      category: patentsTable.category,
-      categoryEn: patentsTable.categoryEn,
-      status: patentsTable.status,
-    })
-    .from(patentsTable)
-    .where(or(...ors))
-    .orderBy(desc(patentsTable.filingDate))
-    .limit(limit);
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -108,20 +78,17 @@ export default async function HpRtmPage({
   setRequestLocale(locale);
   const t = await getTranslations("HpRtm");
 
-  const [papersAll, patentsAll] = await Promise.all([fetchPapers(40), fetchPatents(40)]);
+  const papersAll = await fetchPapers(40);
 
   // getfrp.com (en): drop records lacking an English title so the page never
-  // renders Chinese-only papers/patents.
+  // renders Chinese-only papers.
   const isEn = locale === "en";
   const papers = isEn
     ? papersAll.filter((p) => p.titleEn && p.titleEn.trim())
     : papersAll;
-  const patents = isEn
-    ? patentsAll.filter((p) => p.titleEn && p.titleEn.trim())
-    : patentsAll;
 
   const inLanguage = locale === "en" ? "en" : "zh-CN";
-  const url = `https://f1frp.com/${locale === "zh" ? "" : `${locale}/`}hp-rtm`;
+  const url = `${CURRENT_SITE_URL}/hp-rtm`;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
@@ -162,8 +129,10 @@ export default async function HpRtmPage({
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold tabular-nums">{patents.length}</div>
-            <div className="mt-1 text-xs text-muted-foreground">{t("statPatents")}</div>
+            <div className="text-sm font-semibold">Molded FRP products</div>
+            <Link href="/products/smc-bmc" className="mt-2 inline-block text-xs text-primary hover:underline">
+              Compare specifications →
+            </Link>
           </CardContent>
         </Card>
         <Card>
@@ -176,10 +145,12 @@ export default async function HpRtmPage({
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold tabular-nums">
-              {new Set(patents.map((p) => p.countryCode).filter(Boolean)).size}
+            <div className="text-sm font-semibold">
+              Supplier network
             </div>
-            <div className="mt-1 text-xs text-muted-foreground">{t("statCountries")}</div>
+            <Link href="/suppliers" className="mt-2 inline-block text-xs text-primary hover:underline">
+              Find manufacturers →
+            </Link>
           </CardContent>
         </Card>
       </div>
@@ -241,71 +212,6 @@ export default async function HpRtmPage({
                 {(isEn ? p.journalEn : p.journal) && (
                   <div className="mt-1.5 text-xs text-muted-foreground line-clamp-1">
                     {isEn ? p.journalEn : p.journal}
-                  </div>
-                )}
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section className="mb-12">
-        <div className="mb-4 flex items-end justify-between border-b border-border/70 pb-3">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              {t("patentsLabel")}
-            </div>
-            <h2 className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl">
-              {t("patentsTitle")}
-            </h2>
-          </div>
-          <Link
-            href="/patents"
-            className="group inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {t("viewAll")}
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </Link>
-        </div>
-
-        {patents.length === 0 ? (
-          <p className="py-12 text-center text-sm text-muted-foreground">{t("empty")}</p>
-        ) : (
-          <div className="grid gap-3 md:grid-cols-2">
-            {patents.map((p) => (
-              <Link
-                key={p.id}
-                href={`/patents/${encodeURIComponent(p.slug ?? p.id)}` as never}
-                className="block rounded-md border bg-background p-4 transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
-                  {p.countryCode && (
-                    <Badge variant="outline" className="font-mono text-[10px]">
-                      {p.countryCode}
-                    </Badge>
-                  )}
-                  {p.status === "granted" && (
-                    <Badge variant="signal" className="text-[10px]">
-                      {t("badgeGranted")}
-                    </Badge>
-                  )}
-                  {(isEn ? p.categoryEn : p.category) && (
-                    <Badge variant="outline" className="text-[10px]">
-                      {isEn ? p.categoryEn : p.category}
-                    </Badge>
-                  )}
-                  {p.publicationNo && (
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {p.publicationNo}
-                    </span>
-                  )}
-                </div>
-                <div className="text-sm font-medium leading-snug line-clamp-2">
-                  {locale === "en" && p.titleEn ? p.titleEn : p.title}
-                </div>
-                {(isEn ? p.applicantEn : p.applicant) && (
-                  <div className="mt-1.5 text-xs text-muted-foreground line-clamp-1">
-                    {isEn ? p.applicantEn : p.applicant}
                   </div>
                 )}
               </Link>

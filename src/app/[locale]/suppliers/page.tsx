@@ -40,8 +40,7 @@ export async function generateMetadata({
   if (locale === "en") {
     return {
       title: {
-        absolute:
-          "FRP & Composite Suppliers China — Manufacturer Directory | getfrp",
+        absolute: "FRP Manufacturers & Suppliers in China | getfrp",
       },
       description:
         "Browse public China FRP supplier profiles by grating, pultruded profile, fiberglass sheet, rebar, pipe, SMC/BMC, resin and fiber capability.",
@@ -125,6 +124,9 @@ export default async function SuppliersPage({
       position: i + 1,
       item: {
         "@type": "LocalBusiness",
+        "@id": s.profilePublished
+          ? `${CURRENT_SITE_URL}/suppliers/${s.id}#organization`
+          : `${CURRENT_SITE_URL}/suppliers#${s.id}`,
         name: isEn ? s.nameEn ?? "" : s.name,
         description: isEn ? s.descriptionEn ?? undefined : s.description ?? undefined,
         address: (isEn ? s.locationEn : s.location)
@@ -174,7 +176,11 @@ export default async function SuppliersPage({
       <JsonLd data={suppliersItemListJsonLd} />
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("pageDirectoryTitle")}</h1>
+          <h1 className="text-3xl font-bold">
+            {isEn
+              ? "FRP & Composite Manufacturers and Suppliers in China"
+              : t("pageDirectoryTitle")}
+          </h1>
           <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

@@ -41,7 +41,7 @@ export function Header() {
               className={`relative px-2.5 py-1.5 text-[13px] transition-colors ${
                 isActive(item.href)
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
             >
               {item.label}

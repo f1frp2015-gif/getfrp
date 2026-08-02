@@ -102,14 +102,14 @@ export default async function SavedPage({
             <Bookmark size={24} strokeWidth={1.5} className="mx-auto text-muted-foreground" />
             <p className="mt-3 text-sm text-muted-foreground">{t("empty")}</p>
             <div className="mt-4 flex flex-wrap justify-center gap-3 text-[12px]">
-              <Link href="/materials" className="text-primary hover:underline">
-                /materials
+              <Link href="/products" className="text-primary hover:underline">
+                /products
               </Link>
               <Link href="/papers" className="text-primary hover:underline">
                 /papers
               </Link>
-              <Link href="/patents" className="text-primary hover:underline">
-                /patents
+              <Link href="/suppliers" className="text-primary hover:underline">
+                /suppliers
               </Link>
               <Link href="/formulas" className="text-primary hover:underline">
                 /formulas

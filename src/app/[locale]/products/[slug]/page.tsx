@@ -27,6 +27,13 @@ import { CURRENT_SITE_URL } from "@/lib/sites";
 export const revalidate = 3600;
 export const dynamicParams = true;
 
+const SOURCING_GUIDE_BY_PRODUCT: Record<string, string> = {
+  "frp-grating": "/sourcing/frp-grating",
+  "frp-rebar": "/sourcing/frp-rebar",
+  "pultruded-profiles": "/sourcing/pultruded-profiles",
+  "frp-pipe": "/sourcing/frp-piping",
+};
+
 export function generateStaticParams() {
   return PRODUCT_SEED_RECORDS.map((product) => ({ slug: product.slug }));
 }
@@ -39,7 +46,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await loadProductBySlug(slug);
   if (!product) return { robots: { index: false, follow: false } };
-  const title = `${product.nameEn} from China — Products & Suppliers | getfrp`;
+  const title = `${product.nameEn} Manufacturers & Suppliers in China | getfrp`;
   return {
     title: { absolute: title },
     description: product.summary,
@@ -62,7 +69,7 @@ export default async function ProductDetailPage({
   if (!product) notFound();
   const suppliers = await loadSuppliersForProduct(product);
   const pageUrl = `${CURRENT_SITE_URL}/products/${product.slug}`;
-  const publishedProfiles = suppliers.filter((supplier) => supplier.profilePublished);
+  const sourcingGuideHref = SOURCING_GUIDE_BY_PRODUCT[product.slug];
 
   return (
     <main>
@@ -89,11 +96,15 @@ export default async function ProductDetailPage({
               value,
             })),
           ],
-          manufacturer: publishedProfiles.map((supplier) => ({
+          manufacturer: suppliers.map((supplier) => ({
             "@type": "Organization",
-            "@id": `${CURRENT_SITE_URL}/suppliers/${supplier.id}#organization`,
+            "@id": supplier.profilePublished
+              ? `${CURRENT_SITE_URL}/suppliers/${supplier.id}#organization`
+              : `${CURRENT_SITE_URL}/suppliers#${supplier.id}`,
             name: supplier.name,
-            url: `${CURRENT_SITE_URL}/suppliers/${supplier.id}`,
+            url: supplier.profilePublished
+              ? `${CURRENT_SITE_URL}/suppliers/${supplier.id}`
+              : `${CURRENT_SITE_URL}/suppliers#${supplier.id}`,
           })),
         }}
       />
@@ -144,6 +155,14 @@ export default async function ProductDetailPage({
                 <a href="#suppliers" className={buttonVariants({ size: "lg", variant: "outline" })}>
                   Compare {suppliers.length} suppliers
                 </a>
+                {sourcingGuideHref && (
+                  <Link
+                    href={sourcingGuideHref as never}
+                    className={buttonVariants({ size: "lg", variant: "ghost" })}
+                  >
+                    Read the China sourcing guide
+                  </Link>
+                )}
               </div>
             </div>
             {product.imageUrl && (

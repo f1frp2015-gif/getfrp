@@ -34,6 +34,17 @@ const TOPIC_SHAPE: Record<string, FrpShape> = {
   "frp-piping": "tube",
 };
 
+// Product guides answer procurement questions; product pages own the
+// transactional manufacturer/specification intent. Link them explicitly so
+// crawlers and buyers can move between the two without keyword ambiguity.
+const TOPIC_PRODUCT_HREF: Record<string, string> = {
+  "frp-grating": "/products/frp-grating",
+  "frp-rebar": "/products/frp-rebar",
+  "pultruded-profiles": "/products/pultruded-profiles",
+  "frp-cable-tray": "/products/pultruded-profiles",
+  "frp-piping": "/products/frp-pipe",
+};
+
 export function generateStaticParams() {
   // EN-only routes — skip pre-rendering on the zh deploy.
   if (process.env.NEXT_PUBLIC_LOCALES === "zh") return [];
@@ -81,6 +92,7 @@ export default async function SourcingTopicPage({
 
   const url = `${CURRENT_SITE_URL}/sourcing/${t.slug}`;
   const supplierFilterHref = buildSupplierFilterHref(t);
+  const productHref = TOPIC_PRODUCT_HREF[t.slug];
   const shape = TOPIC_SHAPE[t.slug];
 
   const articleSchema = {
@@ -255,7 +267,26 @@ export default async function SourcingTopicPage({
       </div>
 
       {/* ─────────── Inline CTAs ─────────── */}
-      <section className="mt-16 grid gap-3 sm:grid-cols-2">
+      <section className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {productHref && (
+          <Link
+            href={productHref as never}
+            className="group flex items-center justify-between gap-4 border border-border/70 bg-background p-5 transition-colors hover:border-foreground"
+          >
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                PRODUCT DATABASE
+              </div>
+              <div className="mt-1 text-sm font-semibold tracking-tight">
+                Compare specifications and manufacturers
+              </div>
+            </div>
+            <ChevronRight
+              size={16}
+              className="text-muted-foreground transition-transform group-hover:translate-x-0.5"
+            />
+          </Link>
+        )}
         {supplierFilterHref && (
           <Link
             href={supplierFilterHref as never}

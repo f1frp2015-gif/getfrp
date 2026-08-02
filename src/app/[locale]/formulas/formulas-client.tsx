@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
@@ -135,18 +134,14 @@ function IngredientTable({
               return (
                 <TableRow key={i}>
                   <TableCell className="font-medium">
-                    {matId ? (
-                      <Link
-                        href={`/materials/${matId}` as "/materials/[id]"}
-                        className="inline-flex items-center gap-1 text-primary hover:underline"
-                        title={t("viewMaterial")}
-                      >
-                        {dispName}
-                        <span className="text-[10px] opacity-60">↗</span>
-                      </Link>
-                    ) : (
-                      dispName
-                    )}
+                    <span className="inline-flex items-center gap-2">
+                      {dispName}
+                      {matId && (
+                        <span className="rounded bg-muted px-1.5 py-0.5 text-[9px] font-normal uppercase tracking-wide text-muted-foreground">
+                          specified
+                        </span>
+                      )}
+                    </span>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className="text-[10px]">

@@ -53,7 +53,10 @@ export default async function PultrusionQuotePage({ params }: Props) {
       <PageBreadcrumbs
         homeLabel={t("breadcrumb.home")}
         trail={[
-          { label: t("breadcrumb.pultrusion"), href: "/pultrusion" },
+          {
+            label: t("breadcrumb.pultrusion"),
+            href: "/products/pultruded-profiles",
+          },
           { label: t("breadcrumb.quote"), href: "/pultrusion/quote" },
         ]}
       />

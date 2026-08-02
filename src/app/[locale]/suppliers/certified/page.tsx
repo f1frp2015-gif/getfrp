@@ -26,6 +26,9 @@ export async function generateMetadata({
     title: t("metaTitle"),
     description: t("subtitle"),
     alternates: alternates("/suppliers/certified"),
+    // Keep the empty/early-stage directory out of search results until it has
+    // enough reviewed supplier entities to satisfy the page promise.
+    robots: { index: false, follow: true },
   };
 }
 

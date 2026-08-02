@@ -11,11 +11,7 @@ import {
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
-import {
-  materials as materialsTable,
-  papers as papersTable,
-  patents as patentsTable,
-} from "@/lib/db/schema";
+import { papers as papersTable } from "@/lib/db/schema";
 import {
   PlatformHero,
   PlatformCard,
@@ -49,22 +45,6 @@ export async function generateMetadata({
   };
 }
 
-async function countMaterials(keywords: string[]): Promise<number> {
-  try {
-    const ors = keywords.flatMap((k) => [
-      ilike(materialsTable.name, `%${k}%`),
-      ilike(materialsTable.nameEn, `%${k}%`),
-    ]);
-    const [r] = await db
-      .select({ c: sql<number>`count(*)::int` })
-      .from(materialsTable)
-      .where(or(...ors));
-    return r.c ?? 0;
-  } catch {
-    return 0;
-  }
-}
-
 async function countPapers(keywords: string[]): Promise<number> {
   try {
     const ors = keywords
@@ -76,24 +56,6 @@ async function countPapers(keywords: string[]): Promise<number> {
     const [r] = await db
       .select({ c: sql<number>`count(*)::int` })
       .from(papersTable)
-      .where(or(...ors));
-    return r.c ?? 0;
-  } catch {
-    return 0;
-  }
-}
-
-async function countPatents(keywords: string[]): Promise<number> {
-  try {
-    const ors = keywords
-      .slice(0, 4)
-      .flatMap((k) => [
-        ilike(patentsTable.title, `%${k}%`),
-        ilike(patentsTable.titleEn, `%${k}%`),
-      ]);
-    const [r] = await db
-      .select({ c: sql<number>`count(*)::int` })
-      .from(patentsTable)
       .where(or(...ors));
     return r.c ?? 0;
   } catch {
@@ -122,26 +84,6 @@ async function topPapers(keywords: string[], limit = 6) {
     .limit(limit);
 }
 
-async function topPatents(keywords: string[], limit = 6) {
-  const ors = keywords
-    .slice(0, 4)
-    .flatMap((k) => [
-      ilike(patentsTable.title, `%${k}%`),
-      ilike(patentsTable.titleEn, `%${k}%`),
-    ]);
-  return db
-    .select({
-      id: patentsTable.id,
-      slug: patentsTable.slug,
-      title: patentsTable.titleEn,
-      countryCode: patentsTable.countryCode,
-    })
-    .from(patentsTable)
-    .where(or(...ors))
-    .orderBy(desc(patentsTable.createdAt))
-    .limit(limit);
-}
-
 export default async function FiberDetailPage({
   params,
 }: {
@@ -158,12 +100,9 @@ export default async function FiberDetailPage({
   const tf = await getTranslations(`Fibers.${slug}`);
   const tp = await getTranslations("Fibers.props");
 
-  const [mCount, pCount, ptCount, papers, patents] = await Promise.all([
-    countMaterials(fiber.keywords),
+  const [pCount, papers] = await Promise.all([
     countPapers(fiber.keywords),
-    countPatents(fiber.keywords),
     topPapers(fiber.keywords),
-    topPatents(fiber.keywords),
   ]);
 
   return (
@@ -187,14 +126,7 @@ export default async function FiberDetailPage({
       />
 
       {/* Live stats */}
-      <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <Link
-          href={`/materials?category=fiber-yarn` as never}
-          className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
-        >
-          <div className="text-2xl font-bold tabular-nums">{mCount.toLocaleString()}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statMaterials")}</div>
-        </Link>
+      <div className="mb-12 grid gap-3 sm:grid-cols-3">
         <Link
           href="/papers"
           className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
@@ -203,11 +135,18 @@ export default async function FiberDetailPage({
           <div className="mt-1 text-xs text-muted-foreground">{t("statPapers")}</div>
         </Link>
         <Link
-          href="/patents"
+          href={`/products?q=${encodeURIComponent(fiber.nameEn)}` as never}
           className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
         >
-          <div className="text-2xl font-bold tabular-nums">{ptCount.toLocaleString()}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statPatents")}</div>
+          <div className="text-sm font-semibold">FRP products</div>
+          <div className="mt-1 text-xs text-muted-foreground">Compare specifications</div>
+        </Link>
+        <Link
+          href={`/suppliers?q=${encodeURIComponent(fiber.nameEn)}` as never}
+          className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
+        >
+          <div className="text-sm font-semibold">FRP suppliers</div>
+          <div className="mt-1 text-xs text-muted-foreground">Search capabilities</div>
         </Link>
       </div>
 
@@ -335,41 +274,6 @@ export default async function FiberDetailPage({
           <div className="mt-4">
             <Link
               href="/papers"
-              className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
-            >
-              {t("viewAll")} →
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* Live patents */}
-      {patents.length > 0 && (
-        <section className="mb-12">
-          <PlatformSectionHeading eyebrow="LIVE · PATENTS" title={t("patentsTitle")} />
-          <div className="grid gap-2 md:grid-cols-2">
-            {patents.map((p) => (
-              <Link
-                key={p.id}
-                href={`/patents/${encodeURIComponent(p.slug ?? p.id)}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1 flex flex-wrap items-center gap-1.5">
-                  {p.countryCode && (
-                    <Badge variant="outline" className="font-mono text-[10px]">
-                      {p.countryCode}
-                    </Badge>
-                  )}
-                </div>
-                <div className="line-clamp-2 font-medium">
-                  {p.title}
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-4">
-            <Link
-              href="/patents"
               className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
             >
               {t("viewAll")} →

@@ -116,9 +116,9 @@ export default async function StandardsPage({
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               GB ↔ ASTM ↔ ISO ↔ EN
             </div>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
               FRP &amp; Composite Standards Cross Reference
-            </h2>
+            </h1>
             <div className="mt-5 max-w-4xl space-y-4 text-[15px] leading-7 text-muted-foreground">
               <p>
                 Chinese FRP quotations often name a GB or GB/T test method while

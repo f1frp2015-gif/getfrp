@@ -26,7 +26,6 @@ import {
 import { CURRENT_SITE_URL, ACTIVE_LOCALE, crossSiteUrls } from "@/lib/sites";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
 import { baikeTopicSlugs } from "@/lib/data/baike-topics";
-import { allComboSlugs } from "@/lib/data/matrix";
 import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
@@ -142,17 +141,10 @@ function coreEntries(now: Date): MetadataRoute.Sitemap {
         : alternatesFor(r.path, r.zhOnly),
     }));
 
-  // /matrix/[combo] — 55 canonical fiber×resin pages, bilingual (both deploys).
-  // Newly added to the sitemap; previously SSR-only and invisible to crawlers.
-  const comboEntries = allComboSlugs().map((combo) => ({
-    url: urlFor(`/matrix/${combo}`),
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-    alternates: alternatesFor(`/matrix/${combo}`),
-  }));
-
-  return [...staticEntries, ...comboEntries];
+  // Matrix combinations are supporting engineering tools, not primary search
+  // landing pages. Keep the hub discoverable, but exclude the 55 templated
+  // combinations until each has unique product/supplier evidence.
+  return staticEntries;
 }
 
 export async function buildSitemapEntries(
@@ -324,11 +316,11 @@ export async function buildSitemapEntries(
 export function childSitemapTypes(): SitemapType[] {
   const base: SitemapType[] = [
     "core",
-    "formulas",
     "products",
-    "papers",
-    "standards",
     "suppliers",
+    "standards",
+    "papers",
+    "formulas",
   ];
   return ACTIVE_LOCALE === "en" ? [...base, "sourcing"] : [...base, "baike"];
 }

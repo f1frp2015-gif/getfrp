@@ -436,7 +436,7 @@ export default async function HomePage({
               </p>
             </div>
             <Link
-              href={"/pultrusion" as never}
+              href={"/products/pultruded-profiles" as never}
               className={buttonVariants({ size: "default", variant: "default" }) + " self-start"}
             >
               {t("pultrusionCta")}
@@ -523,7 +523,7 @@ export default async function HomePage({
             <div className="lg:col-span-3">
               <SectionHeading
                 title={t("insightsTitle")}
-                href="/articles"
+                href="/news"
                 label={t("insightsLabel")}
                 viewAll={t("viewAll")}
               />
@@ -532,7 +532,7 @@ export default async function HomePage({
                   {newsList.slice(0, 8).map((n) => (
                     <li key={n.id}>
                       <Link
-                        href="/articles"
+                        href="/news"
                         className="flex h-[54px] items-center gap-4 bg-card px-4 transition-colors hover:bg-muted/40"
                       >
                         <span className="shrink-0 pt-0.5 font-mono text-[11px] tracking-tight text-muted-foreground">
@@ -729,7 +729,7 @@ function SectionHeading({
       </div>
       {href && viewAll && (
         <Link
-          href={href as "/trade" | "/articles"}
+          href={href as "/trade" | "/news"}
           className="group inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
         >
           {viewAll}

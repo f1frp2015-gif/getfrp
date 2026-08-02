@@ -11,15 +11,13 @@ const SCOPE_CONFIG = {
   products: {
     label: "Products",
     Icon: Boxes,
-    placeholder:
-      "Describe the FRP product, material, process or specification you need",
+    placeholder: "Search FRP products or specifications",
     examples: ["vinyl ester grating", "pultruded structural profiles"],
   },
   suppliers: {
     label: "Suppliers",
     Icon: Building2,
-    placeholder:
-      "Describe the factory capability, certification or location you need",
+    placeholder: "Search FRP manufacturers by region",
     examples: ["ISO 9001 pultrusion factory", "filament winding supplier"],
   },
 } as const;
@@ -125,7 +123,7 @@ export function HomeMarketplaceSearch() {
             </button>
           ))}
         </div>
-        <div className="min-w-0 font-mono text-[8px] text-[#7b8e96] sm:max-w-[46%] sm:text-[9px]">
+        <div className="hidden min-w-0 font-mono text-[9px] text-[#667b84] sm:block sm:max-w-[46%]">
           <span className="mr-1.5 text-[#0a756f]">SHAREABLE URL</span>
           <span className="break-all">{parameterizedUrl}</span>
         </div>

@@ -10,7 +10,7 @@ const baseDisallow = [
 ];
 
 // 海外侧(getfrp.com)仅屏蔽不存在的中文业务路径。/formulas 有完整
-// 英文页面；/articles 在内容不足时会自行输出 noindex。两者都必须允许
+// English pages remain crawlable unless an individual route explicitly emits noindex.
 // 搜索引擎抓取，否则无法读取页面级索引指令。
 const enExtraDisallow = [
   "/pricing",

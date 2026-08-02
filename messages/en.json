@@ -475,17 +475,17 @@
   },
   "Suppliers": {
     "pageTitle": "Suppliers",
-    "pageDirectoryTitle": "Supplier Directory",
-    "pageDescription": "Public composite supplier directory — searchable by company, product, process and region.",
+    "pageDirectoryTitle": "FRP Manufacturers & Suppliers in China",
+    "pageDescription": "Public China FRP manufacturer and supplier directory, searchable by company, product, process and region.",
     "metaTitle": "China FRP suppliers — public and verified company profiles",
     "metaDescription": "Browse public Chinese FRP supplier profiles — pultrusion, GFRP / CFRP / basalt, resin and fiber makers. Search by company, product, process or region.",
-    "subtitle": "Browse all public FRP composite companies — filter by type, region or keyword.",
+    "subtitle": "Browse Chinese FRP manufacturers and composite suppliers by product, process, region and verified capability.",
     "ctaFreeList": "List your company (free)",
     "ctaBoxTitle": "Get your company into the f1frp directory",
     "ctaBoxSub": "Showcase products, credentials, and get targeted buyer inquiries.",
     "ctaFreeEnroll": "Enroll for free",
     "ctaMembership": "Membership benefits",
-    "searchPlaceholder": "Search company, product, process or region…",
+    "searchPlaceholder": "Search FRP suppliers, products or region…",
     "typeLabel": "Type:",
     "regionLabel": "Region:",
     "all": "All",
@@ -987,7 +987,7 @@
     "pageTitle": "Saved items",
     "eyebrow": "ENGINEER WORKBENCH · SAVED",
     "totalCount": "{count} items",
-    "empty": "Nothing saved yet. Click the Save button on a material, paper, patent or formula page.",
+    "empty": "Nothing saved yet. Save a product, supplier, standard, paper or formula to build your shortlist.",
     "needLogin": "Sign in to see your saved items.",
     "signIn": "Sign in",
     "sources": {
@@ -1001,8 +1001,8 @@
     }
   },
   "CertifiedDirectory": {
-    "metaTitle": "Certified supplier directory",
-    "h1": "Certified supplier directory",
+    "metaTitle": "Certified FRP Supplier Directory",
+    "h1": "Certified FRP Supplier Directory",
     "subtitle": "Filter platform-reviewed composites suppliers by certification, standard, category, material, process and industry.",
     "searchPlaceholder": "Search supplier name / region…",
     "resultCount": "{count} suppliers",
@@ -2060,12 +2060,12 @@
     }
   },
   "HpRtm": {
-    "metaTitle": "HP-RTM supplier China — automotive CFRP manufacturers",
-    "metaDescription": "Source HP-RTM capacity from China: automotive CFRP manufacturers, fast-cure resin houses, preform and mold suppliers — papers, patents, verified factory shortlist.",
+    "metaTitle": "HP-RTM Process Guide — Automotive CFRP Manufacturing",
+    "metaDescription": "Technical HP-RTM guide for automotive CFRP manufacturing, covering injection strategy, fast-cure systems, preforming, tooling and related engineering papers.",
     "breadcrumbHome": "Home",
     "label": "HP-RTM SPOTLIGHT",
-    "h1": "HP-RTM Vertical",
-    "lead": "HP-RTM (high-pressure resin transfer molding) is the key process for automotive CFRP structural mass production. This vertical aggregates all HP-RTM papers and patents, paired with AI Chinese commentary covering injection strategy, mold, fast-cure resin and preforming.",
+    "h1": "HP-RTM Process and Manufacturing Guide",
+    "lead": "HP-RTM (high-pressure resin transfer molding) is a key process for automotive CFRP structural mass production. This guide connects engineering papers with relevant molded FRP product specifications and manufacturer discovery.",
     "statPapers": "HP-RTM papers",
     "statPatents": "HP-RTM patents",
     "statCommented": "AI commentary done",
@@ -2080,7 +2080,7 @@
     "badgeGranted": "Granted",
     "badgeChinese": "CN",
     "aiCtaTitle": "AI HP-RTM assistant",
-    "aiCtaBody": "Describe your HP-RTM application (B-pillar, battery shell, roof panel). AI draws on papers + patents + materials for process parameters, resin selection and tooling advice.",
+    "aiCtaBody": "Describe your HP-RTM application (B-pillar, battery shell, roof panel). AI uses engineering papers, product specifications and standards for process, resin and tooling guidance.",
     "aiCtaBtn": "Ask the AI →",
     "aiSuggestQuery": "What are typical HP-RTM injection pressure, mold temperature and cure time ranges? How to choose fast-cure epoxy for automotive CFRP structural parts?"
   },
@@ -2118,10 +2118,10 @@
     "lead": "China's FRP supply chain — verified, documented, exported",
     "missionTitle": "Our mission",
     "missionP1": "Composites is a $100B industry running on PDF datasheets and WeChat groups. Buyers can't compare suppliers without three phone calls. Pricing is opaque. The Chinese supply base is invisible to most overseas engineers, and the few directories that exist are out of date the day they ship.",
-    "missionP2": "We're trying to fix the part of that we can reach: a structured database of materials, formulas, standards, papers, patents, and verified Chinese suppliers, all linked, all queryable in plain English. Five fiber families covered (glass, carbon, basalt, aramid, bio). When you're ready to RFQ, a human takes over.",
+    "missionP2": "We're building a structured database of FRP products and Chinese suppliers, with explicit product-to-manufacturer relationships, comparable specifications and standards evidence. Buyers can research in plain English, then hand a structured RFQ to a sourcing engineer.",
     "advTitle": "What's here",
-    "adv1Title": "Material data, structured",
-    "adv1Desc": "4,000+ material records with properties, processing, applications, and the suppliers who actually make them. All five fiber families.",
+    "adv1Title": "Product and supplier data, connected",
+    "adv1Desc": "Structured FRP product families connect specifications, processes and applications to the Chinese manufacturers that can make them.",
     "adv2Title": "Standards crosswalk",
     "adv2Desc": "GB ⇄ ASTM ⇄ ISO ⇄ EN mappings for the standards that matter in FRP procurement. Tells you which Chinese standard your spec maps to before you ask the factory.",
     "adv3Title": "AI assistant, not chatbot",
@@ -2132,7 +2132,7 @@
     "roadmap": [
       {
         "date": "2026 Q2",
-        "event": "Platform launch — news hub, materials database, supplier directory"
+        "event": "Platform launch — structured FRP products and supplier directory"
       },
       {
         "date": "2026 Q3",
