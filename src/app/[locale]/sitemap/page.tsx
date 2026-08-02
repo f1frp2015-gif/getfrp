@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { and, asc, isNotNull, ne } from "drizzle-orm";
 import { setRequestLocale } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
-import { db } from "@/lib/db";
-import { supplierListings } from "@/lib/db/schema";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 import { sourcingTopics } from "@/lib/data/sourcing-topics";
 import { SUPPLIER_REGION_PAGES } from "@/lib/data/supplier-region-pages";
@@ -18,6 +15,11 @@ import {
 } from "@/lib/sitemap-data";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import {
+  getSupplierDirectoryCount,
+  supplierDirectoryPageCount,
+  supplierDirectoryPath,
+} from "@/lib/supplier-directory";
 
 export const revalidate = 3600;
 
@@ -25,8 +27,6 @@ const CORE_LABELS: Record<string, string> = {
   "/": "Home",
   "/products": "FRP product specifications",
   "/suppliers": "China supplier directory",
-  "/standards": "Standards cross-reference",
-  "/papers": "Composite research papers",
   "/ai": "Composite sourcing AI",
   "/about": "About GetFRP",
   "/source-from-china": "China sourcing process",
@@ -47,38 +47,13 @@ const TOOL_LABELS: Record<string, string> = {
 export async function generateMetadata(): Promise<Metadata> {
   const title = "GetFRP HTML Sitemap — Products, Suppliers, Guides & Tools";
   const description =
-    "Browse GetFRP product specifications, China supplier profiles, sourcing guides, standards, data pages and engineering tools from one index.";
+    "Browse GetFRP product specifications, paginated China supplier directories, sourcing guides, data pages and engineering tools from one index.";
   return {
     title: { absolute: title },
     description,
     alternates: alternates("/sitemap"),
     openGraph: og("/sitemap", { title, description }),
   };
-}
-
-async function loadSupplierLinks() {
-  try {
-    const rows = await db
-      .select({
-        slug: supplierListings.slug,
-        name: supplierListings.nameEn,
-      })
-      .from(supplierListings)
-      .where(
-        and(
-          isNotNull(supplierListings.slug),
-          isNotNull(supplierListings.nameEn),
-          ne(supplierListings.nameEn, ""),
-        ),
-      )
-      .orderBy(asc(supplierListings.nameEn));
-    return rows.filter(
-      (row): row is { slug: string; name: string } =>
-        Boolean(row.slug && row.name?.trim()),
-    );
-  } catch {
-    return [];
-  }
 }
 
 function LinkGrid({
@@ -119,7 +94,11 @@ export default async function HtmlSitemapPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const suppliers = await loadSupplierLinks();
+  const supplierCount = await getSupplierDirectoryCount();
+  const directoryPages = Array.from(
+    { length: supplierDirectoryPageCount(supplierCount) },
+    (_, index) => index + 1,
+  );
   const pageUrl = `${CURRENT_SITE_URL}/sitemap`;
 
   return (
@@ -151,8 +130,8 @@ export default async function HtmlSitemapPage({
           GetFRP HTML Sitemap
         </h1>
         <p className="mt-5 text-[16px] leading-7 text-muted-foreground">
-          Find product specifications, public supplier profiles, sourcing
-          guides, standards, research, trade data and engineering tools. The
+          Find product specifications, crawlable supplier directory pages,
+          sourcing guides, trade data and engineering tools. The
           XML sitemap for search engines is available at{" "}
           <a href="/sitemap.xml" className="font-medium text-foreground underline underline-offset-4">
             /sitemap.xml
@@ -231,18 +210,19 @@ export default async function HtmlSitemapPage({
           />
         </section>
 
-        {suppliers.length > 0 && (
+        {supplierCount > 0 && (
           <section>
-            <h2 className="text-2xl font-semibold">Supplier profiles</h2>
+            <h2 className="text-2xl font-semibold">Supplier directory pages</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {suppliers.length.toLocaleString()} public company profiles,
-              ordered alphabetically. Product capability and verification
-              scope are shown on each profile.
+              {supplierCount.toLocaleString()} public company profiles are
+              distributed across {directoryPages.length} crawlable directory
+              pages. Each page links directly to its company profiles.
             </p>
             <LinkGrid
-              links={suppliers.map((supplier) => ({
-                href: `/suppliers/${supplier.slug}`,
-                label: supplier.name,
+              links={directoryPages.map((page) => ({
+                href: supplierDirectoryPath(page),
+                label: `China FRP suppliers — page ${page}`,
+                note: `Directory page ${page} of ${directoryPages.length}`,
               }))}
             />
           </section>

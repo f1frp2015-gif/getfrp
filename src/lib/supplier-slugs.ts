@@ -8,6 +8,7 @@ type SupplierSlugSource = {
 
 const RESERVED_SUPPLIER_SLUGS = new Set([
   "certified",
+  "directory",
   ...SUPPLIER_CATEGORY_PAGES.map((page) => page.slug),
   ...SUPPLIER_REGION_SLUGS,
 ]);

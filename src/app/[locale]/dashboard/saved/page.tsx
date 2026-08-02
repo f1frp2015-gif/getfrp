@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, notInArray } from "drizzle-orm";
 import { Bookmark } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -25,8 +25,6 @@ export async function generateMetadata({
 const SOURCE_COLORS: Record<string, string> = {
   material: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200",
   formula: "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200",
-  standard: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
-  paper: "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
   patent: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-200",
   supplier: "bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-200",
   article: "bg-slate-100 text-slate-800 dark:bg-slate-800/60 dark:text-slate-200",
@@ -69,7 +67,12 @@ export default async function SavedPage({
           createdAt: savedItems.createdAt,
         })
         .from(savedItems)
-        .where(eq(savedItems.userId, me.id))
+        .where(
+          and(
+            eq(savedItems.userId, me.id),
+            notInArray(savedItems.sourceType, ["paper", "standard"]),
+          ),
+        )
         .orderBy(desc(savedItems.createdAt))
     : [];
 
@@ -81,7 +84,7 @@ export default async function SavedPage({
     groups.set(r.sourceType, g);
   }
 
-  const ORDER: string[] = ["material", "formula", "standard", "paper", "patent", "supplier", "article"];
+  const ORDER: string[] = ["material", "formula", "patent", "supplier", "article"];
 
   return (
     <div className="max-w-5xl">
@@ -105,8 +108,8 @@ export default async function SavedPage({
               <Link href="/products" className="text-primary hover:underline">
                 /products
               </Link>
-              <Link href="/papers" className="text-primary hover:underline">
-                /papers
+              <Link href="/tools" className="text-primary hover:underline">
+                /tools
               </Link>
               <Link href="/suppliers" className="text-primary hover:underline">
                 /suppliers

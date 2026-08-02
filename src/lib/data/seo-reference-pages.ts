@@ -572,7 +572,7 @@ export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
     related: [
       { label: "FRP properties reference", href: "/technical/frp-properties" },
       { label: "FRP quality inspection guide", href: "/guides/frp-quality-inspection" },
-      { label: "Browse verified standards", href: "/standards" },
+      { label: "Read the standards sourcing guide", href: "/sourcing/gb-vs-astm-frp" },
     ],
     sources: [ASTM_COMPOSITES, BEDFORD_GUIDE, STRONGWELL_MANUAL],
   },

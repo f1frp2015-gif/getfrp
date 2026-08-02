@@ -199,7 +199,7 @@ export default async function TechPage({
         <h3 className="text-xl font-bold">{t("stdDbTitle")}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{t("stdDbSub")}</p>
         <Link
-          href="/standards"
+          href="/sourcing/gb-vs-astm-frp"
           className="mt-4 inline-block text-sm text-primary hover:underline"
         >
           {t("stdDbLink")}

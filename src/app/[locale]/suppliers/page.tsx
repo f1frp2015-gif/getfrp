@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { desc, asc, eq, sql } from "drizzle-orm";
+import { and, desc, asc, eq, isNotNull, ne, sql } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
@@ -14,6 +14,10 @@ import { CURRENT_SITE_URL } from "@/lib/sites";
 import { SUPPLIER_CATEGORY_PAGES } from "@/lib/data/supplier-category-pages";
 import { ArrowRight } from "lucide-react";
 import { supplierPublicPath } from "@/lib/supplier-slugs";
+import {
+  supplierDirectoryPageCount,
+  supplierDirectoryPath,
+} from "@/lib/supplier-directory";
 export const revalidate = 3600;
 
 const PINNED_SUPPLIER_ID = "sup-yaoyi";
@@ -88,6 +92,13 @@ export default async function SuppliersPage({
     })
     .from(supplierListings)
     .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
+    .where(
+      and(
+        isNotNull(supplierListings.slug),
+        isNotNull(supplierListings.nameEn),
+        ne(supplierListings.nameEn, ""),
+      ),
+    )
     .orderBy(
       // F1 stays permanently first. Published company profiles follow as one
       // contiguous group, then the remaining directory-only records.
@@ -170,6 +181,10 @@ export default async function SuppliersPage({
       sponsored: s.id === PINNED_SUPPLIER_ID,
     };
   });
+  const directoryPages = Array.from(
+    { length: supplierDirectoryPageCount(rows.length) },
+    (_, index) => index + 1,
+  );
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -223,6 +238,40 @@ export default async function SuppliersPage({
               </Link>
             ))}
           </div>
+      </section>
+
+      <section className="mb-10 rounded-xl border border-border/70 bg-muted/20 p-6 sm:p-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              CRAWLABLE COMPANY INDEX
+            </div>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              Browse every public supplier profile
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              The filtered directory below is interactive. These server-rendered
+              index pages provide a stable alphabetical route to all {rows.length.toLocaleString()} company profiles.
+            </p>
+          </div>
+          <Link
+            href={supplierDirectoryPath(1) as never}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
+          >
+            Open directory page 1 <ArrowRight size={14} />
+          </Link>
+        </div>
+        <nav className="mt-6 flex flex-wrap gap-2" aria-label="Supplier directory pages">
+          {directoryPages.map((page) => (
+            <Link
+              key={page}
+              href={supplierDirectoryPath(page) as never}
+              className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-background px-3 text-sm hover:border-foreground/50"
+            >
+              {page}
+            </Link>
+          ))}
+        </nav>
       </section>
 
       <SuppliersClient

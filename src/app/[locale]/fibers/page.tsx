@@ -20,8 +20,8 @@ export async function generateMetadata({
       ? "Composite Fibers Index — Glass / Carbon / Basalt / Aramid / Bio | getfrp"
       : "复材纤维体系总览 — 玻纤 / 碳纤 / 玄武岩 / 芳纶 / 生物基 | 复材站",
     description: isEn
-      ? "Index of composite reinforcement fiber families with grades, applications, and links to materials, papers, and patents per fiber type."
-      : "复合材料增强纤维家族总览:玻璃纤维、碳纤维、玄武岩、芳纶、生物基。每种纤维下挂材料牌号、论文、专利数据。",
+      ? "Index of composite reinforcement fiber families with grades, applications, process compatibility, products, and suppliers per fiber type."
+      : "复合材料增强纤维家族总览:玻璃纤维、碳纤维、玄武岩、芳纶、生物基。每种纤维下挂产品、供应商和工艺兼容性。",
     alternates: alternates("/fibers"),
   };
 }
@@ -47,8 +47,8 @@ export default async function FibersHubPage({
         </h1>
         <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
           {isEn
-            ? "Pick a fiber family to drill into grade ranges, suppliers, papers, patents, and process compatibility — all linked into the rest of the GetFRP libraries."
-            : "选择纤维家族,进入对应的牌号区间、供应商、论文、专利和工艺兼容性。"}
+            ? "Pick a fiber family to drill into grade ranges, suppliers, products, and process compatibility — all linked into the rest of the GetFRP sourcing platform."
+            : "选择纤维家族,进入对应的牌号区间、供应商、产品和工艺兼容性。"}
         </p>
       </header>
 

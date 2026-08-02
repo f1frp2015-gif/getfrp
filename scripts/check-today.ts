@@ -3,7 +3,7 @@
 
 import { db } from "../src/lib/db";
 import { papers, patents, articles, posts } from "../src/lib/db/schema";
-import { gte, sql, desc, and, isNotNull } from "drizzle-orm";
+import { gte, sql, desc, isNotNull } from "drizzle-orm";
 
 function startOfDayUTC(d = new Date()): Date {
   const x = new Date(d);
@@ -44,7 +44,7 @@ async function main() {
   console.log(`📄 Papers (last 24h): ${papersToday.length}`);
   for (const p of papersToday) {
     const mark = p.hasCommentary ? "✓ 解读" : "—";
-    console.log(`   [${mark}] ${p.title?.slice(0, 50)} — /papers/${p.slug}`);
+    console.log(`   [${mark}] ${p.title?.slice(0, 50)} — paper:${p.slug}`);
   }
   console.log();
 

@@ -604,10 +604,10 @@ export default async function SourceFromChinaPage({
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Link
-            href="/standards"
+            href="/sourcing/gb-vs-astm-frp"
             className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
           >
-            Browse full standards database →
+            Read the standards crosswalk guide →
           </Link>
         </div>
       </section>
@@ -671,7 +671,7 @@ export default async function SourceFromChinaPage({
               Cost: typically USD 500–2,000 per test panel.
             </p>
             <p className="mt-2 font-mono text-[11px] text-muted-foreground/80">
-              Tool: <Link href="/standards" className="underline">standards database</Link> for test-method selection
+              Guide: <Link href="/sourcing/gb-vs-astm-frp" className="underline">GB vs ASTM crosswalk</Link> for test-method selection
             </p>
           </PlatformCard>
 

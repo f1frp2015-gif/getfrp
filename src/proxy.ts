@@ -6,8 +6,21 @@ import { SESSION_COOKIE, verifySession } from "@/lib/auth/session";
 
 const handleIntlRouting = createIntlMiddleware(routing);
 
+const REMOVED_PUBLIC_SECTIONS = ["/papers", "/standards"] as const;
+
+function strippedPath(pathname: string): string {
+  return pathname.replace(/^\/en(?=\/|$)/, "") || "/";
+}
+
+function isRemovedPublicPath(pathname: string): boolean {
+  const path = strippedPath(pathname);
+  return REMOVED_PUBLIC_SECTIONS.some(
+    (section) => path === section || path.startsWith(`${section}/`),
+  );
+}
+
 function isProtectedPath(pathname: string): boolean {
-  const stripped = pathname.replace(/^\/en(?=\/|$)/, "");
+  const stripped = strippedPath(pathname);
   return stripped === "/dashboard" || stripped.startsWith("/dashboard/");
 }
 
@@ -15,6 +28,17 @@ export default async function proxy(request: NextRequest) {
   const { pathname } = new URL(request.url);
 
   if (pathname.startsWith("/api/")) return;
+
+  if (isRemovedPublicPath(pathname)) {
+    return new Response("This content section has been permanently removed.", {
+      status: 410,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=0, s-maxage=86400",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+  }
 
   if (isProtectedPath(pathname)) {
     const token = request.cookies.get(SESSION_COOKIE)?.value;

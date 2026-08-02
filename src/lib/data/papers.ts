@@ -1,6 +1,6 @@
 // FRP / composite materials research paper library — seed data.
 // Entries reference real, publicly-indexed publications; AI-assisted abstract summarization.
-// Full records remain the property of respective publishers; see disclaimer on /papers page.
+// Full records remain the property of their respective publishers; retained for private retrieval and source attribution.
 
 export interface PaperSeed {
   id: string;

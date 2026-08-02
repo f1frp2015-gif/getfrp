@@ -220,6 +220,37 @@ function checkStandaloneGetfrpSeo(): Violation[] {
       message: "supplier sitemap must include every English supplier slug",
     });
   }
+  if (
+    !supplierSitemap.includes("supplierDirectoryPageCount") ||
+    !supplierSitemap.includes("supplierDirectoryPath")
+  ) {
+    out.push({
+      page: "/sitemaps/suppliers.xml",
+      field: "directory-pages",
+      severity: "error",
+      message: "supplier sitemap must include the crawlable directory pagination",
+    });
+  }
+
+  const supplierHub = readFileSync(
+    resolve("src/app/[locale]/suppliers/page.tsx"),
+    "utf8",
+  );
+  const htmlSitemap = readFileSync(
+    resolve("src/app/[locale]/sitemap/page.tsx"),
+    "utf8",
+  );
+  if (
+    !supplierHub.includes("supplierDirectoryPath") ||
+    !htmlSitemap.includes("supplierDirectoryPath")
+  ) {
+    out.push({
+      page: "/suppliers/directory/[page]",
+      field: "entry-links",
+      severity: "error",
+      message: "supplier directory pages need crawlable links from both hubs",
+    });
+  }
 
   const homepage = readFileSync(resolve("src/app/[locale]/home-english.tsx"), "utf8");
   const homepageMetadata = readFileSync(resolve("src/app/[locale]/page.tsx"), "utf8");
@@ -245,12 +276,13 @@ function checkStandaloneGetfrpSeo(): Violation[] {
 
 function checkIndexCleanup(): Violation[] {
   const out: Violation[] = [];
-  const removedRoutes = [
+  const redirectedRoutes = [
     "materials",
     "formulas",
     "patents",
     "articles",
   ] as const;
+  const goneRoutes = ["papers", "standards"] as const;
   const sitemapSource = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
   const redirectsSource = readFileSync(resolve("next.config.ts"), "utf8");
   const termsSource = readFileSync(
@@ -271,7 +303,7 @@ function checkIndexCleanup(): Violation[] {
     });
   }
 
-  for (const route of removedRoutes) {
+  for (const route of redirectedRoutes) {
     const publicPage = resolve(`src/app/[locale]/${route}/page.tsx`);
     if (existsSync(publicPage)) {
       out.push({
@@ -290,6 +322,17 @@ function checkIndexCleanup(): Violation[] {
         message: "removed corpus routes must not appear in sitemap sources",
       });
     }
+    if (
+      sitemapSource.includes(`| \"${route}\"`) ||
+      sitemapSource.includes(`    \"${route}\",`)
+    ) {
+      out.push({
+        page: `/${route}`,
+        field: "sitemap-child",
+        severity: "error",
+        message: "410 content sections must not retain child sitemap types",
+      });
+    }
 
     if (!redirectsSource.includes(`source: \"/${route}/:path*\"`)) {
       out.push({
@@ -297,6 +340,40 @@ function checkIndexCleanup(): Violation[] {
         field: "redirect",
         severity: "error",
         message: "removed corpus routes must permanently consolidate to a live page",
+      });
+    }
+  }
+
+  const proxySource = readFileSync(resolve("src/proxy.ts"), "utf8");
+  for (const route of goneRoutes) {
+    const publicRoute = resolve(`src/app/[locale]/${route}`);
+    const retainedRouteFiles = existsSync(publicRoute)
+      ? readdirSync(publicRoute, { recursive: true }).some((entry) =>
+          /(?:page|route|opengraph-image)\.(?:ts|tsx|js|jsx)$/.test(String(entry)),
+        )
+      : false;
+    if (retainedRouteFiles) {
+      out.push({
+        page: `/${route}`,
+        field: "public-route",
+        severity: "error",
+        message: "permanently removed content sections must not retain route files",
+      });
+    }
+    if (sitemapSource.includes(`\"/${route}`)) {
+      out.push({
+        page: `/${route}`,
+        field: "sitemap",
+        severity: "error",
+        message: "410 content sections must not appear in sitemap sources",
+      });
+    }
+    if (!proxySource.includes(`\"/${route}\"`)) {
+      out.push({
+        page: `/${route}`,
+        field: "410",
+        severity: "error",
+        message: "removed content sections must remain covered by the 410 tombstone",
       });
     }
   }
