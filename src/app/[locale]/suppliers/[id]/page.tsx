@@ -424,16 +424,20 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             <div>
               <div className="flex items-start gap-5">
                 {logo ? (
-                  // Supplier logos are user-managed remote assets. Keep the
-                  // original image URL rather than proxying it through GetFRP.
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={logo}
-                    alt={`${name} logo`}
-                    className="h-20 w-32 shrink-0 rounded-xl border border-border/70 bg-white object-contain p-2 sm:h-24 sm:w-40"
-                  />
+                  // Supplier logos have very different source aspect ratios.
+                  // Use a generous, centered box and preserve each source's
+                  // intrinsic ratio so wide wordmarks remain legible without
+                  // stretching or cropping.
+                  <div className="flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-white p-3 sm:h-28 sm:w-64 sm:p-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={logo}
+                      alt={`${name} logo`}
+                      className="block h-auto max-h-full w-auto max-w-full object-contain"
+                    />
+                  </div>
                 ) : (
-                  <div className="flex h-20 w-32 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-muted text-2xl font-semibold sm:h-24 sm:w-40">
+                  <div className="flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-muted text-2xl font-semibold sm:h-28 sm:w-64">
                     {name.slice(0, 2).toUpperCase()}
                   </div>
                 )}
