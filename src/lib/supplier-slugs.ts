@@ -82,6 +82,7 @@ export function supplierRouteSlug(
   supplier: SupplierSlugSource & { slug?: string | null },
 ): string {
   if (supplier.id === "sup-jushi") return "jushi";
+  if (supplier.id === "sup-taishan") return "taishan-fiberglass";
   return supplier.slug?.trim() || baseSupplierSlug(supplier.nameEn, supplier.id);
 }
 
