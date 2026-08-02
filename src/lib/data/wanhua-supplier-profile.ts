@@ -99,7 +99,7 @@ export const WANHUA_SUPPLIER_PROFILE: SupplierListing = {
   ],
   profilePublished: true,
   profileReviewedAt: new Date("2026-08-01T00:00:00.000Z"),
-  logo: null,
+  logo: "/api/supplier-assets/wanhua-logo",
   contactEmail: "support@whchem.com",
   contactPhone: "400-960-0309",
   address: "No. 3 Sanya Road, YEDA, Yantai, Shandong Province, China",
