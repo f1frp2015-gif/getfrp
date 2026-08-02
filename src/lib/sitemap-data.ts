@@ -29,6 +29,7 @@ import {
   supplierDirectoryPageCount,
   supplierDirectoryPath,
 } from "@/lib/supplier-directory";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export type SitemapType =
   | "core"
@@ -160,6 +161,7 @@ export async function buildSitemapEntries(
       const rows = (await safeFetch(() =>
         db
           .select({
+            id: supplierListings.id,
             slug: supplierListings.slug,
             nameEn: supplierListings.nameEn,
             updatedAt: supplierListings.updatedAt,
@@ -173,10 +175,10 @@ export async function buildSitemapEntries(
             ),
           )
           .limit(MAX_PER_SITEMAP),
-      )) as Array<{ slug: string | null; nameEn: string | null; updatedAt: Date | null }>;
+      )) as Array<{ id: string; slug: string | null; nameEn: string | null; updatedAt: Date | null }>;
       const companyEntries = rows
         .filter((r): r is typeof r & { slug: string } => Boolean(r.slug && (r.nameEn ?? "").trim()))
-        .map((r) => toEntry(`/suppliers/${r.slug}`, r.updatedAt, 0.7, now));
+        .map((r) => toEntry(`/suppliers/${supplierRouteSlug(r)}`, r.updatedAt, 0.7, now));
       const directoryEntries = Array.from(
         { length: supplierDirectoryPageCount(companyEntries.length) },
         (_, index) => ({

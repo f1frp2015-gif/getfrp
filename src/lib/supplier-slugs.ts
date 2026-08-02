@@ -81,6 +81,7 @@ export function buildSupplierSlugMap(
 export function supplierRouteSlug(
   supplier: SupplierSlugSource & { slug?: string | null },
 ): string {
+  if (supplier.id === "sup-jushi") return "jushi";
   return supplier.slug?.trim() || baseSupplierSlug(supplier.nameEn, supplier.id);
 }
 

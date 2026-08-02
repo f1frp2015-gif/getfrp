@@ -2,6 +2,7 @@ import { and, asc, count, isNotNull, ne } from "drizzle-orm";
 import { cache } from "react";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export const SUPPLIER_DIRECTORY_PAGE_SIZE = 24;
 
@@ -57,6 +58,7 @@ export const getSupplierDirectoryPage = cache(async (page: number): Promise<{
         .where(publicSupplierWhere),
       db
         .select({
+          id: supplierListings.id,
           slug: supplierListings.slug,
           name: supplierListings.nameEn,
           location: supplierListings.locationEn,
@@ -74,7 +76,14 @@ export const getSupplierDirectoryPage = cache(async (page: number): Promise<{
     const items = rows.filter(
       (row): row is typeof row & { slug: string; name: string } =>
         Boolean(row.slug && row.name?.trim()),
-    );
+    ).map((row) => ({
+      ...row,
+      slug: supplierRouteSlug({
+        id: row.id,
+        nameEn: row.name,
+        slug: row.slug,
+      }),
+    }));
     return { items, total, pageCount: supplierDirectoryPageCount(total) };
   } catch {
     return { items: [], total: 0, pageCount: 0 };
