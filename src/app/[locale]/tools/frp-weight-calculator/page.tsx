@@ -20,7 +20,7 @@ export function generateMetadata(): Metadata {
   return {
     title: { absolute: title },
     description,
-    alternates: alternates("/tools/frp-weight-calculator", { enOnly: true }),
+    alternates: alternates("/tools/frp-weight-calculator"),
     openGraph: og("/tools/frp-weight-calculator", { title, description }),
   };
 }

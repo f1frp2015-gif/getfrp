@@ -27,7 +27,7 @@ export async function generateMetadata({
   return {
     title: { absolute: page.metaTitle },
     description: page.metaDescription,
-    alternates: alternates(path, { enOnly: true }),
+    alternates: alternates(path),
     openGraph: og(path, { title: page.metaTitle, description: page.metaDescription }),
   };
 }

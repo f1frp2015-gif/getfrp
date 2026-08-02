@@ -120,17 +120,8 @@ export function EditDraftClient({ article }: { article: Draft }) {
           <Badge variant={published ? "default" : "secondary"}>
             {published ? "已发布" : "草稿"}
           </Badge>
-          <span className="text-xs text-muted-foreground">/articles/{article.slug}</span>
+          <span className="text-xs text-muted-foreground">Internal content record</span>
         </div>
-        {published && (
-          <Link
-            href="/news"
-            target="_blank"
-            className="text-sm text-primary hover:underline"
-          >
-            查看公开页 ↗
-          </Link>
-        )}
       </div>
 
       {msg && (

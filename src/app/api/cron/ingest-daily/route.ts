@@ -179,10 +179,9 @@ export async function GET(req: Request) {
 
   // Fan out new English URLs to GetFRP's search discovery integrations.
   // Each engine no-ops when its credentials are absent.
-  const pushUrls = [
-    ...results.papers.inserted.map((id) => `${CURRENT_SITE_URL}/papers/${id}`),
-    ...results.patents.inserted.map((id) => `${CURRENT_SITE_URL}/patents/${id}`),
-  ];
+  const pushUrls = results.papers.inserted.map(
+    (id) => `${CURRENT_SITE_URL}/papers/${id}`,
+  );
   const searchPush = await fanOutSearchPush(pushUrls);
 
   // Telegram channel notify — no-ops when env vars are absent.
@@ -191,11 +190,6 @@ export async function GET(req: Request) {
       title: id,
       url: `${CURRENT_SITE_URL}/papers/${id}`,
       kind: "paper" as const,
-    })),
-    ...results.patents.inserted.map((id) => ({
-      title: id,
-      url: `${CURRENT_SITE_URL}/patents/${id}`,
-      kind: "patent" as const,
     })),
   ]);
 

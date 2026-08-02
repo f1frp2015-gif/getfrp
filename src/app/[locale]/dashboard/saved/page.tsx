@@ -111,9 +111,6 @@ export default async function SavedPage({
               <Link href="/suppliers" className="text-primary hover:underline">
                 /suppliers
               </Link>
-              <Link href="/formulas" className="text-primary hover:underline">
-                /formulas
-              </Link>
             </div>
           </CardContent>
         </Card>

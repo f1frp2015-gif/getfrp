@@ -4,15 +4,14 @@
 // landing-page keyword map. Reports length violations (Title 30-60,
 // Description 120-160 per current Google guidance) and missing S/A-tier
 // keywords on the pages that ought to carry them. Exits non-zero on any
-// violation when run with --strict (intended for future CI gate; not wired
-// into `next build` yet per W1 plan in
-// 2026-05-18-getfrp定位与SEO-GEO-AI-native规划.md).
+// violation when run with --strict. The prebuild script runs this as a hard
+// gate before every production build.
 //
 // Usage:
 //   pnpm tsx scripts/seo-check.ts           # warn-only, exit 0
 //   pnpm tsx scripts/seo-check.ts --strict  # exit 1 on violations
 
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
 
 type Severity = "error" | "warn";
@@ -157,6 +156,8 @@ function checkAlternatesCoverage(): Violation[] {
 
 function checkStandaloneGetfrpSeo(): Violation[] {
   const out: Violation[] = [];
+  const seoHelper = readFileSync(resolve("src/lib/seo.ts"), "utf8");
+  const routingSource = readFileSync(resolve("src/i18n/routing.ts"), "utf8");
   const seoSources = [
     "src/lib/sites.ts",
     "src/lib/seo.ts",
@@ -167,8 +168,9 @@ function checkStandaloneGetfrpSeo(): Violation[] {
     .join("\n");
 
   for (const [field, pattern] of [
-    ["f1frp-domain", /https?:\/\/f1frp\.com/i],
+    ["f1frp-domain", /f1frp\.com/i],
     ["zh-hreflang", /hreflang=["']zh|["']zh-CN["']\s*:/i],
+    ["language-alternates", /languages\s*:/i],
     ["localized-sitemap-link", /<xhtml:link/i],
   ] as const) {
     if (pattern.test(seoSources)) {
@@ -179,6 +181,19 @@ function checkStandaloneGetfrpSeo(): Violation[] {
         message: "GetFRP SEO sources must not declare a Chinese or cross-domain alternate",
       });
     }
+  }
+
+  if (
+    !routingSource.includes('locales: ["en"]') ||
+    !seoHelper.includes("return { canonical: canonical(path) };")
+  ) {
+    out.push({
+      page: "standalone-site",
+      field: "english-only-canonical",
+      severity: "error",
+      message:
+        "GetFRP must route only English and alternates() must return only its self-canonical",
+    });
   }
 
   const supplierClient = readFileSync(
@@ -223,6 +238,67 @@ function checkStandaloneGetfrpSeo(): Violation[] {
       severity: "error",
       message: "homepage title must retain the factory-direct China FRP keyword",
     });
+  }
+
+  return out;
+}
+
+function checkIndexCleanup(): Violation[] {
+  const out: Violation[] = [];
+  const removedRoutes = [
+    "materials",
+    "formulas",
+    "patents",
+    "articles",
+  ] as const;
+  const sitemapSource = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
+  const redirectsSource = readFileSync(resolve("next.config.ts"), "utf8");
+  const termsSource = readFileSync(
+    resolve("src/app/[locale]/terms/page.tsx"),
+    "utf8",
+  );
+
+  if (
+    !/robots:\s*\{[\s\S]*?index:\s*false[\s\S]*?googleBot:\s*\{\s*index:\s*false/.test(
+      termsSource,
+    )
+  ) {
+    out.push({
+      page: "/terms",
+      field: "robots",
+      severity: "error",
+      message: "Terms must remain noindex for both generic crawlers and Googlebot",
+    });
+  }
+
+  for (const route of removedRoutes) {
+    const publicPage = resolve(`src/app/[locale]/${route}/page.tsx`);
+    if (existsSync(publicPage)) {
+      out.push({
+        page: `/${route}`,
+        field: "public-route",
+        severity: "error",
+        message: "removed corpus routes must not have a public page",
+      });
+    }
+
+    if (sitemapSource.includes(`\"/${route}`)) {
+      out.push({
+        page: `/${route}`,
+        field: "sitemap",
+        severity: "error",
+        message: "removed corpus routes must not appear in sitemap sources",
+      });
+    }
+
+    if (!redirectsSource.includes(`source: \"/${route}/:path*\"`)) {
+      out.push({
+        page: `/${route}`,
+        field: "redirect",
+        severity: "error",
+        message: "removed corpus routes must permanently consolidate to a live page",
+      });
+    }
   }
 
   return out;
@@ -294,6 +370,7 @@ function main() {
   // Structural canonical coverage across all page.tsx routes.
   violations.push(...checkAlternatesCoverage());
   violations.push(...checkStandaloneGetfrpSeo());
+  violations.push(...checkIndexCleanup());
 
   const errors = violations.filter((v) => v.severity === "error");
   const warns = violations.filter((v) => v.severity === "warn");

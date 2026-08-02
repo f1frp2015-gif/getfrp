@@ -52,11 +52,11 @@ export async function generateMetadata({
   const tagline = t("tagline");
   const description = t("description");
 
-  // canonical / hreflang are NOT set in the layout's default metadata
+  // canonical URLs are NOT set in the layout's default metadata
   // anymore. The old code set canonical to siteUrl (root) for every page,
   // which told Google that /about, /materials/{id}, /papers/{id} etc.
   // were all duplicates of the homepage — devastating for indexing.
-  // Each page now sets its own canonical + hreflang via @/lib/seo
+  // Each page now sets its own canonical via @/lib/seo
   // (path-aware). og:title / og:url / og:description are likewise NO LONGER
   // set as layout defaults — see the openGraph block below for why.
   const title = `${brand} — ${tagline}`;
@@ -109,8 +109,8 @@ export async function generateMetadata({
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     },
     // alternates intentionally NOT set here — see comment above the
-    // generateMetadata return. Each page sets path-aware canonical +
-    // hreflang via @/lib/seo.alternates(path).
+    // generateMetadata return. Each page sets a path-aware GetFRP canonical
+    // via @/lib/seo.alternates(path), with no language or cross-site mapping.
     // Search-engine verification values are public build-time metadata.
     other: {
       "mobile-web-app-capable": "yes",

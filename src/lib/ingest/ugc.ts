@@ -56,7 +56,7 @@ function buildMaterialChunk(m: {
     sourceId: m.id,
     title: m.name,
     content: [m.name, ...parts].join("\n"),
-    url: `/materials/${m.id}`,
+    url: null,
     metadata: { category: m.category, source: "ugc" },
   };
 }

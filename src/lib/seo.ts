@@ -1,6 +1,6 @@
 // Per-page SEO helpers. Used by every page's generateMetadata so we produce
-// path-aware canonical + hreflang instead of the all-pages-point-to-root
-// bug the layout had before. Keep these in lock-step with sitemap.ts.
+// path-aware canonicals instead of the all-pages-point-to-root bug the layout
+// had before. GetFRP is English-only and never emits hreflang alternates.
 
 import type { Metadata } from "next";
 import { CURRENT_SITE_URL } from "@/lib/sites";
@@ -36,12 +36,9 @@ export function og(
   };
 }
 
-// GetFRP is a standalone English site. Keep the helper name so page metadata
-// stays concise, but emit only a canonical URL and never cross-domain hreflang.
-export function alternates(
-  path: string,
-  _opts: { zhOnly?: boolean; enOnly?: boolean } = {},
-): Metadata["alternates"] {
-  void _opts;
+// Keep the helper name because this is the Next Metadata API field name. The
+// returned object is intentionally limited to the canonical URL: no language
+// map, x-default, Chinese URL, or URL on any other domain is permitted.
+export function alternates(path: string): Metadata["alternates"] {
   return { canonical: canonical(path) };
 }

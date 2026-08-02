@@ -20,7 +20,7 @@ const tools = [
   { href: "/tools/buy-america-frp-checker", title: "Buy America FRP checker", body: "Screen product and project facts against domestic-content requirements.", Icon: ShieldCheck },
 ] as const;
 
-export function generateMetadata(): Metadata { return { title: { absolute: title }, description, alternates: alternates("/tools", { enOnly: true }), openGraph: og("/tools", { title, description }) }; }
+export function generateMetadata(): Metadata { return { title: { absolute: title }, description, alternates: alternates("/tools"), openGraph: og("/tools", { title, description }) }; }
 
 export default async function ToolsHubPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

@@ -41,14 +41,14 @@ function buildHtml(
 
   function articleRow(a: typeof recentArticles[0]) {
     return `<li style="margin-bottom:12px">
-      <a href="${BASE}/articles/${htmlEscape(a.slug)}" style="color:#2563eb;font-weight:600">${htmlEscape(a.title)}</a>
+      <span style="font-weight:600">${htmlEscape(a.title)}</span>
       ${a.excerpt ? `<br/><span style="font-size:13px;color:#555">${htmlEscape(a.excerpt.slice(0, 120))}…</span>` : ""}
     </li>`;
   }
 
   function materialRow(m: typeof recentMaterials[0]) {
     return `<li style="margin-bottom:8px">
-      <a href="${BASE}/materials/${htmlEscape(m.id)}" style="color:#2563eb">${htmlEscape(m.name)}</a>
+      <span>${htmlEscape(m.name)}</span>
       ${m.description ? ` — <span style="font-size:13px;color:#555">${htmlEscape(m.description.slice(0, 100))}</span>` : ""}
     </li>`;
   }

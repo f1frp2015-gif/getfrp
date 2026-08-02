@@ -297,8 +297,8 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
   const isMaterialInquiry =
     rfq.materialId !== "general-inquiry" &&
     !rfq.materialId.startsWith("supplier:");
-  const materialUrl = isMaterialInquiry
-    ? `${CURRENT_SITE_URL}/materials/${encodeURIComponent(rfq.materialId)}`
+  const productCatalogUrl = isMaterialInquiry
+    ? `${CURRENT_SITE_URL}/products`
     : null;
   const rows: Array<[string, string | null | undefined]> = [
     ["Target supplier", targetSupplierName],
@@ -345,9 +345,9 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
     ${tableRows}
   </table>
 
-  ${materialUrl ? `<p style="margin-top:24px">
-    <a href="${materialUrl}" style="display:inline-block;padding:10px 20px;background:#0b756f;color:#fff;border-radius:6px;text-decoration:none">
-      View Material
+  ${productCatalogUrl ? `<p style="margin-top:24px">
+    <a href="${productCatalogUrl}" style="display:inline-block;padding:10px 20px;background:#0b756f;color:#fff;border-radius:6px;text-decoration:none">
+      Browse Products
     </a>
   </p>` : ""}
   <p style="color:#888;font-size:12px;margin-top:32px">

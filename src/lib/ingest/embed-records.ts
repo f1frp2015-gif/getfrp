@@ -43,7 +43,7 @@ function patentChunk(p: typeof patents.$inferSelect): KbChunk {
     sourceId: p.id,
     title: p.title,
     content: [p.title, p.titleEn ?? "", ...parts].filter(Boolean).join("\n"),
-    url: `/patents/${p.slug ?? p.id}`,
+    url: p.sourceUrl ?? null,
     metadata: { country: p.countryCode, status: p.status },
   };
 }

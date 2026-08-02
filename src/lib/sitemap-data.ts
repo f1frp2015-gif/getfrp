@@ -32,7 +32,6 @@ import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
 
 export type SitemapType =
   | "core"
-  | "formulas"
   | "products"
   | "papers"
   | "standards"
@@ -123,16 +122,6 @@ export async function buildSitemapEntries(
   switch (type) {
     case "core":
       return coreEntries(now);
-
-    case "formulas":
-      return [
-        {
-          url: urlFor("/formulas"),
-          lastModified: now,
-          changeFrequency: "weekly",
-          priority: 0.8,
-        },
-      ];
 
     case "products": {
       const rows = (await safeFetch(() =>
@@ -278,7 +267,6 @@ export function childSitemapTypes(): SitemapType[] {
     "suppliers",
     "standards",
     "papers",
-    "formulas",
   ];
   return [...base, "sourcing", "resources"];
 }
