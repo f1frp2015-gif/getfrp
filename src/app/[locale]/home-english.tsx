@@ -2,11 +2,16 @@ import {
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
+  BookOpenCheck,
   Boxes,
   Building2,
+  ClipboardCheck,
   Factory,
+  FileSearch,
+  Ruler,
   Search,
   Sparkles,
+  Truck,
 } from "lucide-react";
 
 import { JsonLd } from "@/components/json-ld";
@@ -90,6 +95,90 @@ const CATEGORY_LINKS = [
   ["Glass fiber", "fiber-glass"],
 ] as const;
 
+const BUYER_PATHS = [
+  {
+    eyebrow: "ENGINEER",
+    title: "Define properties and standards",
+    description:
+      "Compare FRP properties, density, manufacturing limits and ASTM / EN / GB references before freezing the product specification.",
+    href: "/technical",
+    cta: "Open technical references",
+    Icon: Ruler,
+  },
+  {
+    eyebrow: "PROCUREMENT",
+    title: "Compare manufacturers on one scope",
+    description:
+      "Search Chinese FRP suppliers by product, process and region, then close capability, certificate and commercial deviations through one RFQ.",
+    href: "/suppliers",
+    cta: "Compare suppliers",
+    Icon: ClipboardCheck,
+  },
+  {
+    eyebrow: "DISTRIBUTOR",
+    title: "Build a repeatable product line",
+    description:
+      "Screen factory-direct products, catalog data, OEM options, packaging and landed cost before committing to wholesale or private-label volume.",
+    href: "/products",
+    cta: "Browse product families",
+    Icon: Truck,
+  },
+] as const;
+
+const INSIGHTS = [
+  {
+    eyebrow: "BUYER PLAYBOOK",
+    title: "How to source FRP from China",
+    description:
+      "Move from specification and shortlist to samples, inspection, payment, export documents and delivered cargo.",
+    href: "/source-from-china",
+  },
+  {
+    eyebrow: "MATERIAL DECISION",
+    title: "FRP vs steel",
+    description:
+      "Compare corrosion, stiffness, weight, connections, fire and lifecycle cost before choosing a structural system.",
+    href: "/compare/frp-vs-steel",
+  },
+  {
+    eyebrow: "ENGINEERING DATA",
+    title: "FRP properties explained",
+    description:
+      "Read directional mechanical properties, test methods and the evidence needed before using supplier datasheets.",
+    href: "/technical/frp-properties",
+  },
+  {
+    eyebrow: "QUALITY CONTROL",
+    title: "Inspect FRP before shipment",
+    description:
+      "Turn drawings, materials, process controls, tests and packaging into an RFQ-to-release inspection plan.",
+    href: "/guides/frp-quality-inspection",
+  },
+] as const;
+
+const HOME_FAQS = [
+  {
+    question: "How do I find an FRP manufacturer in China?",
+    answer:
+      "Start with the product and manufacturing process, then filter public supplier records by location, certification and profile status. Send one controlled RFQ with drawings, standards, quantity and destination so GetFRP can recheck factory identity, capability and evidence before a shortlist is released.",
+  },
+  {
+    question: "Which FRP products can I source through GetFRP?",
+    answer:
+      "The marketplace covers molded and pultruded FRP grating, structural profiles, fiberglass sheet, GFRP/BFRP rebar, filament-wound pipe and tanks, SMC/BMC parts, resin and gelcoat, and glass, carbon or basalt reinforcement.",
+  },
+  {
+    question: "Does a verified supplier mean every FRP product is certified?",
+    answer:
+      "No. Company identity and profile verification are separate from product-level compliance. Certificate scope, test specimen, grade, thickness, production site and validity must be matched to the offered product and project requirement.",
+  },
+  {
+    question: "Can overseas buyers submit an RFQ in English?",
+    answer:
+      "Yes. Provide the product, process, technical standard, quantity, target delivery and evidence requirements in English. GetFRP structures the request for Chinese manufacturers and keeps the comparison tied to one specification.",
+  },
+] as const;
+
 function SectionIntro({
   eyebrow,
   title,
@@ -125,10 +214,10 @@ export async function HomePageEnglish() {
               "@type": "WebPage",
               "@id": "https://getfrp.com/#webpage",
               url: "https://getfrp.com/",
-              name: "Find FRP products and suppliers in China",
+              name: "FRP Products & Suppliers China | getfrp Marketplace",
               inLanguage: "en",
               description:
-                "Search FRP products and qualified composite suppliers in China by product category, manufacturing process and sourcing specification.",
+                "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.",
               about: [
                 { "@type": "Thing", name: "FRP products" },
                 { "@type": "Thing", name: "China FRP suppliers" },
@@ -147,6 +236,17 @@ export async function HomePageEnglish() {
           ],
         }}
       />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: HOME_FAQS.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        }}
+      />
 
       <section className="relative overflow-hidden bg-[#071d2a] text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(70,188,174,.2),transparent_34%),linear-gradient(135deg,#071d2a_0%,#0a2d3a_58%,#0d3c45_100%)]" />
@@ -159,19 +259,20 @@ export async function HomePageEnglish() {
               China&apos;s specialist FRP marketplace
             </div>
             <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[68px]">
-              Find the right FRP product
+              Find FRP Products &amp;
               <br className="hidden sm:block" />
-              <span className="text-[#72d4c9]"> and the factory behind it.</span>
+              <span className="text-[#72d4c9]"> Manufacturers in China</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:mt-5 sm:text-[17px] sm:leading-7">
               <span className="sm:hidden">
-                Search China&apos;s FRP network by product, process,
+                Search China FRP products and suppliers by product, process,
                 specification or factory capability.
               </span>
               <span className="hidden sm:inline">
-                Search China&apos;s composite supply network by product,
-                manufacturing process, technical specification or supplier
-                capability—then use one RFQ to verify the shortlist.
+                Search China FRP products and manufacturers by product family,
+                manufacturing process, technical specification or verified supplier
+                capability. Compare Chinese FRP suppliers, then use one RFQ for
+                factory, certification, quality and export checks.
               </span>
             </p>
           </div>
@@ -373,6 +474,92 @@ export async function HomePageEnglish() {
                 <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#31505c] group-hover:text-[#0a756f]">
                   {item.cta} <ArrowUpRight size={12} className="ml-1 inline" />
                 </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d5e0e2] bg-[#f2f6f6]">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+          <SectionIntro
+            eyebrow="Built for industrial buying"
+            title="One China FRP marketplace for each decision maker."
+            body="Engineers, procurement teams and distributors enter the same supply chain with different questions. Each path connects technical evidence to product and manufacturer records instead of separating research from sourcing."
+          />
+          <div className="mt-9 grid gap-4 lg:grid-cols-3">
+            {BUYER_PATHS.map((item) => (
+              <Link
+                key={item.eyebrow}
+                href={item.href as never}
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                    {item.eyebrow}
+                  </span>
+                  <item.Icon size={18} className="text-[#779099]" />
+                </div>
+                <h3 className="mt-7 text-xl font-semibold tracking-[-0.025em] text-[#102d3b] group-hover:text-[#0a756f]">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-[13px] leading-6 text-[#697b83]">
+                  {item.description}
+                </p>
+                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#0a756f]">
+                  {item.cta} <ArrowRight size={12} className="ml-1 inline" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d5e0e2] bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+          <div className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a756f]">
+            <FileSearch size={15} /> FRP SOURCING FAQ
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0b2938] sm:text-4xl">
+            Questions overseas FRP buyers ask first.
+          </h2>
+          <div className="mt-8 grid gap-x-10 border-y border-[#dce4e6] md:grid-cols-2">
+            {HOME_FAQS.map((faq) => (
+              <article key={faq.question} className="border-b border-[#e1e8ea] py-6 md:[&:nth-last-child(-n+2)]:border-b-0">
+                <h3 className="font-semibold leading-6 text-[#173440]">{faq.question}</h3>
+                <p className="mt-2 text-[13px] leading-7 text-[#697b83]">{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f2f6f6]">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <SectionIntro
+              eyebrow="Insights"
+              title="Technical answers that lead to better RFQs."
+              body="Use objective material comparisons, property references and quality-control guides to define the requirement before comparing factory prices."
+            />
+            <Link href="/guides" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline">
+              Explore buyer guides <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {INSIGHTS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href as never}
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">{item.eyebrow}</span>
+                  <BookOpenCheck size={16} className="text-[#789099]" />
+                </div>
+                <h3 className="mt-8 text-lg font-semibold leading-snug tracking-tight text-[#102d3b] group-hover:text-[#0a756f]">{item.title}</h3>
+                <p className="mt-3 text-[12px] leading-6 text-[#697b83]">{item.description}</p>
+                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#0a756f]">Read insight <ArrowUpRight size={12} className="ml-1 inline" /></div>
               </Link>
             ))}
           </div>

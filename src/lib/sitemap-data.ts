@@ -29,6 +29,7 @@ import { baikeTopicSlugs } from "@/lib/data/baike-topics";
 import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
+import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
 
 export type SitemapType =
   | "core"
@@ -38,6 +39,7 @@ export type SitemapType =
   | "standards"
   | "suppliers"
   | "sourcing"
+  | "resources"
   | "baike";
 
 // A single sitemap file may hold at most 50,000 URLs. Every table is well
@@ -292,6 +294,24 @@ export async function buildSitemapEntries(
       }));
     }
 
+    case "resources": {
+      if (!isEn) return [];
+      const paths = [
+        "/compare",
+        "/technical",
+        "/guides",
+        "/tools",
+        ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
+        "/tools/frp-weight-calculator",
+        "/tools/frp-cost-estimator",
+      ];
+      return paths.map((path) => ({
+        ...toEntry(path, now, path.split("/").length === 2 ? 0.75 : 0.7, now),
+        alternates: enOnlyAlternatesFor(path),
+        changeFrequency: "monthly" as const,
+      }));
+    }
+
     case "baike": {
       // 复材百科 — Chinese answer layer, zh deploy only. zh-only hreflang
       // (no EN alternate; getfrp has no /baike). Hub + each answer page.
@@ -322,7 +342,9 @@ export function childSitemapTypes(): SitemapType[] {
     "papers",
     "formulas",
   ];
-  return ACTIVE_LOCALE === "en" ? [...base, "sourcing"] : [...base, "baike"];
+  return ACTIVE_LOCALE === "en"
+    ? [...base, "sourcing", "resources"]
+    : [...base, "baike"];
 }
 
 export async function indexedChildSitemapTypes(): Promise<SitemapType[]> {
