@@ -109,6 +109,45 @@ export function EnterpriseClient() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [hasExistingEnterprise, setHasExistingEnterprise] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/v1/enterprises", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : { data: null }))
+      .then((body) => {
+        const ent = body?.data;
+        if (!alive || !ent) return;
+        setHasExistingEnterprise(true);
+        setName(ent.name ?? "");
+        setShortName(ent.shortName ?? "");
+        setCategory(ent.category ?? "");
+        setFounded(ent.established ? String(ent.established) : "");
+        setProvince(ent.province ?? "");
+        setCity(ent.city ?? "");
+        setEmployeeCount(ent.employeeCount ?? "");
+        setAddress(ent.address ?? "");
+        setDescription(ent.description ?? "");
+        setProducts(Array.isArray(ent.products) ? ent.products.join("\n") : "");
+        setSelectedProcesses(Array.isArray(ent.processes) ? ent.processes : []);
+        setSelectedCerts(Array.isArray(ent.certifications) ? ent.certifications : []);
+        setContactName(ent.contactName ?? "");
+        setContactPhone(ent.contactPhone ?? "");
+        setContactWechat(ent.contactWechat ?? "");
+        setWebsite(ent.website ?? "");
+        setContactEmail(ent.contactEmail ?? "");
+        setLicenseUrl(ent.businessLicense ?? null);
+        setOtpStep("verified");
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (alive) setLoadingProfile(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (otpCooldown <= 0) return;
@@ -217,19 +256,20 @@ export function EnterpriseClient() {
   }
 
   const phoneVerified = otpStep === "verified";
+  const phoneVerifiedForSubmit = phoneVerified || hasExistingEnterprise;
   const canSubmit =
-    name.trim() && category && contactName.trim() && contactPhone && phoneVerified && !submitting;
+    name.trim() && category && contactName.trim() && contactPhone && phoneVerifiedForSubmit && !submitting;
 
   async function submit() {
     setError(null);
-    if (!phoneVerified) {
+    if (!phoneVerifiedForSubmit) {
       setError(t("needVerifyPhone"));
       return;
     }
     setSubmitting(true);
     try {
       const res = await fetch("/api/v1/enterprises", {
-        method: "POST",
+        method: hasExistingEnterprise ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
@@ -269,10 +309,11 @@ export function EnterpriseClient() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">{t("h1")}</h1>
+        <h1 className="text-2xl font-bold">{hasExistingEnterprise ? t("editH1") : t("h1")}</h1>
         <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
       </div>
 
+      {loadingProfile ? <p className="text-sm text-muted-foreground">Loading company profile…</p> : null}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">{t("basicInfoTitle")}</CardTitle>
@@ -573,7 +614,7 @@ export function EnterpriseClient() {
       <div className="flex items-center justify-between">
         <p className="text-xs text-muted-foreground">{t("submitNote")}</p>
         <Button size="lg" disabled={!canSubmit} onClick={submit}>
-          {submitting ? t("submitting") : t("submit")}
+          {submitting ? t("submitting") : hasExistingEnterprise ? t("update") : t("submit")}
         </Button>
       </div>
     </div>
