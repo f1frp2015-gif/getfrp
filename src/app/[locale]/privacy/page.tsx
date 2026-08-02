@@ -14,7 +14,7 @@ export async function generateMetadata({
     title: locale === "en" ? "Privacy Policy" : "隐私政策",
     description:
       locale === "en"
-        ? "How getfrp / f1frp collects, uses, and protects personal data — GDPR, CCPA and PIPL aligned."
+        ? "How getfrp collects, uses, and protects personal data — GDPR, CCPA and PIPL aligned."
         : "复材站如何收集、使用与保护您的个人数据。",
     alternates: alternates("/privacy"),
   };
@@ -120,7 +120,7 @@ function PrivacyEn() {
       </ul>
       <p>
         To exercise any right, email{" "}
-        <a href="mailto:f1frp2015@gmail.com">f1frp2015@gmail.com</a>.
+        <a href="mailto:support@getfrp.com">support@getfrp.com</a>.
         We respond within 30 days.
       </p>
 
@@ -137,7 +137,7 @@ function PrivacyEn() {
         getfrp team<br />
         Attn: Data Protection contact<br />
         Email:{" "}
-        <a href="mailto:f1frp2015@gmail.com">f1frp2015@gmail.com</a>
+        <a href="mailto:support@getfrp.com">support@getfrp.com</a>
       </p>
     </div>
   );
@@ -162,7 +162,7 @@ function PrivacyZh() {
       <h2>3. 您的权利</h2>
       <p>
         您有权访问、更正、删除我们持有的您的个人信息。请发送邮件至{" "}
-        <a href="mailto:f1frp2015@gmail.com">f1frp2015@gmail.com</a>。
+        <a href="mailto:support@getfrp.com">support@getfrp.com</a>.
       </p>
       <h2>4. 联系</h2>
       <p>重庆曜一新材料科技有限公司</p>

@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 
 export type SerializedSupplier = {
   id: string;
+  slug: string;
   name: string;
   category: string;
   location: string;
@@ -532,22 +533,16 @@ export function SuppliersClient({
                     <div className="min-w-0 overflow-hidden">
                       <div className="flex min-h-11 items-start gap-2">
                         <div className="min-w-0 flex-1">
-                          {supplier.profilePublished ? (
-                            <Link
-                              href={`/suppliers/${supplier.id}` as never}
-                              className="group inline-flex max-w-full items-start gap-1.5 font-semibold leading-5 hover:text-primary"
-                            >
-                              <span className="line-clamp-2">{supplier.name}</span>
-                              <ArrowRight
-                                size={13}
-                                className="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5"
-                              />
-                            </Link>
-                          ) : (
-                            <h2 className="line-clamp-2 font-semibold leading-5">
-                              {supplier.name}
-                            </h2>
-                          )}
+                          <Link
+                            href={`/suppliers/${supplier.slug}` as never}
+                            className="group inline-flex max-w-full items-start gap-1.5 font-semibold leading-5 hover:text-primary"
+                          >
+                            <span className="line-clamp-2">{supplier.name}</span>
+                            <ArrowRight
+                              size={13}
+                              className="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5"
+                            />
+                          </Link>
                           <div className="mt-1 truncate text-xs text-muted-foreground">
                             {supplier.location || t("notDisclosed")}
                           </div>
@@ -642,7 +637,7 @@ export function SuppliersClient({
                         sourceType="supplier"
                         sourceId={supplier.id}
                         title={supplier.name}
-                        url={`/suppliers/${supplier.id}`}
+                        url={`/suppliers/${supplier.slug}`}
                         initialSaved={savedSupplierIds.has(supplier.id)}
                         signedIn={signedIn}
                         className="[&_button]:w-full"
@@ -665,19 +660,17 @@ export function SuppliersClient({
                         {selected ? <Check /> : <GitCompareArrows />}
                         {selected ? t("selected") : t("select")}
                       </Button>
-                      {supplier.profilePublished && (
-                        <Link
-                          href={`/suppliers/${supplier.id}` as never}
-                          className={buttonVariants({
-                            variant: "ghost",
-                            size: "sm",
-                            className: "w-full",
-                          })}
-                        >
-                          {t("viewProfile")}
-                          <ArrowRight />
-                        </Link>
-                      )}
+                      <Link
+                        href={`/suppliers/${supplier.slug}` as never}
+                        className={buttonVariants({
+                          variant: "ghost",
+                          size: "sm",
+                          className: "w-full",
+                        })}
+                      >
+                        {t("viewProfile")}
+                        <ArrowRight />
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -940,17 +933,13 @@ export function SuppliersClient({
                     <TableCell className="font-medium">{t("profile")}</TableCell>
                     {compareItems.map((supplier) => (
                       <TableCell key={supplier.id}>
-                        {supplier.profilePublished ? (
-                          <Link
-                            href={`/suppliers/${supplier.id}` as never}
-                            className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
-                          >
-                            {t("viewProfile")}
-                            <ArrowRight size={12} />
-                          </Link>
-                        ) : (
-                          t("notDisclosed")
-                        )}
+                        <Link
+                          href={`/suppliers/${supplier.slug}` as never}
+                          className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+                        >
+                          {t("viewProfile")}
+                          <ArrowRight size={12} />
+                        </Link>
                       </TableCell>
                     ))}
                   </TableRow>

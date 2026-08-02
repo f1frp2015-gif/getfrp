@@ -81,6 +81,7 @@ export default async function AdminClaimsPage({
     note: r.claim.note ?? "",
     reviewNote: r.claim.reviewNote ?? "",
     supplierId: r.supplier?.id ?? "",
+    supplierSlug: r.supplier?.slug ?? r.supplier?.id ?? "",
     supplierName: r.supplier?.name ?? t("adminClaims.supplierDeleted"),
     supplierLocation: r.supplier?.location ?? "",
     supplierAlreadyClaimed: !!r.supplier?.enterpriseId,

@@ -1,6 +1,6 @@
 // 对外展示层 —— 把确定性引擎(pricing.ts)算出的 CNY 基线换算成各市场对外报价。
 //
-//   国内(f1frp.com / zh):原样 CNY。
+//   Legacy zh mode: CNY baseline.
 //   海外(getfrp.com / en):× (1 + OVERSEAS_MARKUP) ÷ USD_CNY_RATE,以 USD 展示。
 //
 // 引擎保持纯 CNY(便于审计 / 回放 / quote_logs);加成与汇率只活在这一层,
@@ -27,7 +27,7 @@ export type PriceDisplay = {
   total_high: number;
 };
 
-// f1frp.com = zh = 国内;getfrp.com = en = 海外。host→locale 已在
+// GetFRP is English/export. The locale resolver is authoritative.
 // resolveServerLocale 里裁决,这里只按 locale 映射市场。
 export function marketForLocale(locale: "zh" | "en"): DisplayMarket {
   return locale === "en" ? "overseas" : "domestic";

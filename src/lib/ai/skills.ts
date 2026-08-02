@@ -1,7 +1,8 @@
 /**
  * AI 技能目录 —— 复材 AI 助手的 slash / 技能选项。
  *
- * f1frp 自有技能集,围绕本站六大库(材料/配方/标准/论文/专利/供应商)+ 工程核算
+ * GetFRP skills for materials, formulations, standards, papers, patents,
+ * suppliers, and engineering calculations.
  * 工具 + 供应商询盘闭环构建。每个技能 = 一段结构化提示词模板:用户在空状态技能卡
  * 或输入框 "/" slash 菜单选中后,模板填入输入框,补全 【____】 占位再发送。后端
  * chat 路由不变(RAG + 行内 [#N] 引用 + window_u_value 等工具已现成)。

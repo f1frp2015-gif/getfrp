@@ -74,7 +74,7 @@ export function renderOgCard({
               style={{ width: 20, height: 3, background: "rgba(255,255,255,0.52)" }}
             />
           </div>
-          <div>复材站 · f1frp.com</div>
+          <div>getfrp · China FRP marketplace</div>
         </div>
 
         {/* category pill */}
@@ -144,7 +144,7 @@ export function renderOgCard({
           <div style={{ display: "flex" }}>
             {meta ?? "AI-powered composite materials platform"}
           </div>
-          <div style={{ display: "flex", color: "#2563eb" }}>→ f1frp.com</div>
+          <div style={{ display: "flex", color: "#2563eb" }}>→ getfrp.com</div>
         </div>
       </div>
     ),

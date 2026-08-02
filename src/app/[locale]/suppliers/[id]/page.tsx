@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { and, asc, desc, eq, isNotNull, ne, sql } from "drizzle-orm";
+import { notFound, permanentRedirect } from "next/navigation";
+import { and, asc, desc, eq, isNotNull, ne, or, sql } from "drizzle-orm";
 import { cache } from "react";
 import {
   ArrowRight,
@@ -30,6 +30,7 @@ import {
 } from "@/lib/db/schema";
 import {
   getSupplierCategoryPage,
+  SUPPLIER_CATEGORY_PAGES,
   supplierMatchesCategory,
   type SupplierCategoryPage,
 } from "@/lib/data/supplier-category-pages";
@@ -51,6 +52,7 @@ import {
   SuppliersClient,
   type SerializedSupplier,
 } from "../suppliers-client";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -77,12 +79,26 @@ function englishProvince(province: string | null): string {
   return provincesEn[province] ?? EXTRA_PROVINCES_EN[province] ?? "China";
 }
 
-export function generateStaticParams() {
-  return SUPPLIER_REGION_SLUGS.map((id) => ({ id }));
+export async function generateStaticParams() {
+  let profileSlugs: string[] = [supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)];
+  try {
+    const rows = await db
+      .select({ slug: supplierListings.slug })
+      .from(supplierListings)
+      .where(isNotNull(supplierListings.slug));
+    profileSlugs = rows.flatMap((row) => row.slug ? [row.slug] : []);
+  } catch {
+    // Curated Git-backed profiles remain buildable during a DB outage.
+  }
+  return Array.from(new Set([
+    ...SUPPLIER_REGION_SLUGS,
+    ...SUPPLIER_CATEGORY_PAGES.map((page) => page.slug),
+    ...profileSlugs,
+  ])).map((id) => ({ id }));
 }
 
 type NetworkRow = SerializedSupplier & {
-  province: string | null;
+  province: string;
   exportReady: boolean;
 };
 
@@ -104,6 +120,7 @@ function serializeNetworkRow(row: JoinedNetworkRow): NetworkRow {
   const supplier = row.supplier;
   return {
     id: supplier.id,
+    slug: supplierRouteSlug(supplier),
     name: supplier.nameEn ?? "",
     category: supplier.category ?? "",
     location: supplier.locationEn ?? "",
@@ -121,14 +138,14 @@ function serializeNetworkRow(row: JoinedNetworkRow): NetworkRow {
     employeeCount: row.employeeCount ?? null,
     annualRevenue: row.annualRevenue ?? null,
     sponsored: supplier.id === PINNED_SUPPLIER_ID,
-    province: supplier.province ?? null,
+    province: englishProvince(supplier.province),
     exportReady: Boolean(supplier.exportReady),
   };
 }
 
 function directoryProvinces(rows: NetworkRow[]): string[] {
   return Array.from(
-    new Set(rows.map((row) => englishProvince(row.province)).filter(Boolean)),
+    new Set(rows.map((row) => row.province).filter(Boolean)),
   ).sort((a, b) => a.localeCompare(b));
 }
 
@@ -145,8 +162,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
       .where(
         and(
-          eq(supplierListings.id, id),
-          eq(supplierListings.profilePublished, true),
+          or(eq(supplierListings.slug, id), eq(supplierListings.id, id)),
+          isNotNull(supplierListings.nameEn),
+          ne(supplierListings.nameEn, ""),
         ),
       )
       .limit(1);
@@ -156,7 +174,7 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
     // temporarily unavailable during a build or request.
   }
 
-  return id === WANHUA_SUPPLIER_ID
+  return id === WANHUA_SUPPLIER_ID || id === supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)
     ? { supplier: WANHUA_SUPPLIER_PROFILE, enterprise: null }
     : null;
 });
@@ -174,6 +192,28 @@ function categoryLabel(category: string | null): string {
   };
   const value = category ? labels[category] : undefined;
   return value ?? category ?? "Supplier";
+}
+
+function supplierSeoKeyword(
+  supplier: typeof supplierListings.$inferSelect,
+): string {
+  const categoryKeywords: Record<string, string> = {
+    fiber: "Composite Fiber",
+    resin: "Polyurethane & Composite Resin",
+    additive: "Composite Additives",
+    equipment: "FRP Manufacturing Equipment",
+    mold: "Composite Molds & Tooling",
+    tooling: "Composite Tooling & NDT Equipment",
+    service: "Composite Testing & Certification",
+  };
+  if (supplier.category && categoryKeywords[supplier.category]) {
+    return categoryKeywords[supplier.category];
+  }
+  const primaryProduct = ((supplier.productsEn ?? []) as string[])[0]?.trim();
+  if (!primaryProduct) return "FRP Products";
+  return primaryProduct.length <= 48
+    ? primaryProduct
+    : `${primaryProduct.slice(0, 45).replace(/\s+\S*$/, "")}…`;
 }
 
 async function renderSupplierProfile(profile: SupplierProfile) {
@@ -208,7 +248,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const phoneHref = contactPhone
     ? `tel:${contactPhone.trim().startsWith("+") ? contactPhone.replace(/[^\d+]/g, "") : `+86${contactPhone.replace(/\D/g, "")}`}`
     : null;
-  const pageUrl = `${CURRENT_SITE_URL}/suppliers/${supplier.id}`;
+  const routeSlug = supplierRouteSlug(supplier);
+  const pageUrl = `${CURRENT_SITE_URL}/suppliers/${routeSlug}`;
   const profileKind = isVerified
     ? "verified company profile"
     : isClaimed
@@ -671,13 +712,17 @@ export async function generateMetadata({
   const description = normalizedDescription.length <= 165
     ? normalizedDescription
     : `${normalizedDescription.slice(0, 162).replace(/\s+\S*$/, "")}…`;
-  const isVerifiedProfile = Boolean(profile.supplier.verified && profile.enterprise);
-  const title = `${supplierName} — ${isVerifiedProfile ? "Verified" : "Public"} FRP Supplier Profile | getfrp`;
+  const routeSlug = supplierRouteSlug(profile.supplier);
+  const primaryProduct = supplierSeoKeyword(profile.supplier);
+  const businessKeyword = profile.supplier.category === "manufacturer"
+    ? "Manufacturer China"
+    : "Supplier China";
+  const title = `${supplierName} — ${primaryProduct} ${businessKeyword} | getfrp`;
   return {
     title: { absolute: title },
     description,
-    alternates: alternates(`/suppliers/${id}`),
-    openGraph: og(`/suppliers/${id}`, {
+    alternates: alternates(`/suppliers/${routeSlug}`),
+    openGraph: og(`/suppliers/${routeSlug}`, {
       title,
       description,
     }),
@@ -862,6 +907,8 @@ export default async function SupplierCategoryPageRoute({
   if (!category) {
     const profile = await loadSupplierProfile(id);
     if (!profile) notFound();
+    const canonicalSlug = supplierRouteSlug(profile.supplier);
+    if (id !== canonicalSlug) permanentRedirect(`/suppliers/${canonicalSlug}`);
     return await renderSupplierProfile(profile);
   }
   if (locale !== "en") notFound();
@@ -871,7 +918,7 @@ export default async function SupplierCategoryPageRoute({
   const provinceCounts = new Map<string, number>();
   for (const row of network) {
     if (!row.province) continue;
-    const label = englishProvince(row.province);
+    const label = row.province;
     provinceCounts.set(label, (provinceCounts.get(label) ?? 0) + 1);
   }
   const provinces = [...provinceCounts.entries()].sort((a, b) => b[1] - a[1]);

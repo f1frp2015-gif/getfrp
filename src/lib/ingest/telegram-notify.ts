@@ -13,21 +13,21 @@ const KIND_EMOJI: Record<TelegramItem["kind"], string> = {
   article: "📰",
 };
 
-const KIND_LABEL_ZH: Record<TelegramItem["kind"], string> = {
-  paper: "论文",
-  patent: "专利",
-  article: "资讯",
+const KIND_LABEL: Record<TelegramItem["kind"], string> = {
+  paper: "Paper",
+  patent: "Patent",
+  article: "Article",
 };
 
 function buildMessage(items: TelegramItem[]): string {
   const lines: string[] = [
-    "🔧 *复材站 f1frp 今日更新*",
+    "🔧 *GetFRP updates*",
     "",
   ];
 
   for (const item of items) {
     const emoji = KIND_EMOJI[item.kind];
-    const label = KIND_LABEL_ZH[item.kind];
+    const label = KIND_LABEL[item.kind];
     // Escape Markdown special chars for Telegram MarkdownV2
     const title = item.title
       .replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
@@ -35,7 +35,7 @@ function buildMessage(items: TelegramItem[]): string {
     lines.push(`${emoji} \\[${label}\\] [${title}](${item.url})`);
   }
 
-  lines.push("", "_via [f1frp\\.com](https://f1frp.com)_");
+  lines.push("", "_via [getfrp\\.com](https://getfrp.com)_");
   return lines.join("\n");
 }
 

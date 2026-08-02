@@ -9,13 +9,13 @@
 // Invariants preserved from the single-file version:
 //   - EN deploy (getfrp.com) only lists ASCII paths with English content.
 //   - Thin papers (abstract < 80 chars) are excluded on EN.
-//   - Cross-domain hreflang (zh ⇄ en) on every URL.
+//   - GetFRP is English-only and emits no cross-domain hreflang.
 // Changed on purpose:
 //   - The old 1,000 / 2,000 / 500 row caps are lifted to the 50k sitemap
 //     ceiling so the full supporting corpus gets crawled.
 
 import type { MetadataRoute } from "next";
-import { and, desc, eq, isNotNull, ne } from "drizzle-orm";
+import { desc, eq, isNotNull } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
   standards,
@@ -23,9 +23,8 @@ import {
   products,
   supplierListings,
 } from "@/lib/db/schema";
-import { CURRENT_SITE_URL, ACTIVE_LOCALE, crossSiteUrls } from "@/lib/sites";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
-import { baikeTopicSlugs } from "@/lib/data/baike-topics";
 import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
@@ -39,8 +38,7 @@ export type SitemapType =
   | "standards"
   | "suppliers"
   | "sourcing"
-  | "resources"
-  | "baike";
+  | "resources";
 
 // A single sitemap file may hold at most 50,000 URLs. Every table is well
 // under that, so one child sitemap per type is sufficient.
@@ -63,32 +61,10 @@ function urlFor(path: string): string {
   return `${CURRENT_SITE_URL}${path === "/" ? "" : path}` || CURRENT_SITE_URL;
 }
 
-// Cross-domain hreflang: identical paths exist on f1frp.com (zh) and
-// getfrp.com (en). zh-only paths omit the EN alternate (it 404s / redirects).
-function alternatesFor(
-  path: string,
-  zhOnly = false,
-): MetadataRoute.Sitemap[number]["alternates"] {
-  const { zh, en } = crossSiteUrls(path);
-  if (zhOnly) {
-    return { languages: { zh, "zh-CN": zh, "x-default": zh } };
-  }
-  return { languages: { zh, "zh-CN": zh, en, "x-default": en } };
-}
-
-function enOnlyAlternatesFor(
-  path: string,
-): MetadataRoute.Sitemap[number]["alternates"] {
-  const en = urlFor(path);
-  return { languages: { en, "x-default": en } };
-}
-
 type StaticRoute = {
   path: string;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
-  zhOnly?: boolean;
-  enOnly?: boolean;
 };
 
 const staticRoutes: StaticRoute[] = [
@@ -105,10 +81,9 @@ const staticRoutes: StaticRoute[] = [
   { path: "/community", changeFrequency: "weekly", priority: 0.5 },
   { path: "/trade", changeFrequency: "weekly", priority: 0.6 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/overseas", changeFrequency: "weekly", priority: 0.9, zhOnly: true },
-  { path: "/source-from-china", changeFrequency: "weekly", priority: 0.8, enOnly: true },
-  { path: "/data/china-frp-trade-remedies", changeFrequency: "weekly", priority: 0.8, enOnly: true },
-  { path: "/tools/buy-america-frp-checker", changeFrequency: "monthly", priority: 0.7, enOnly: true },
+  { path: "/source-from-china", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/data/china-frp-trade-remedies", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/tools/buy-america-frp-checker", changeFrequency: "monthly", priority: 0.7 },
 ];
 
 const toEntry = (
@@ -121,26 +96,16 @@ const toEntry = (
   lastModified: updatedAt ?? now,
   changeFrequency: "monthly",
   priority,
-  alternates: alternatesFor(path),
 });
 
 // ── per-type entry builders ───────────────────────────────────────────────
 
 function coreEntries(now: Date): MetadataRoute.Sitemap {
-  const staticEntries = staticRoutes
-    .filter(
-      (r) =>
-        !(r.zhOnly && ACTIVE_LOCALE === "en") &&
-        !(r.enOnly && ACTIVE_LOCALE === "zh"),
-    )
-    .map((r) => ({
+  const staticEntries = staticRoutes.map((r) => ({
       url: urlFor(r.path),
       lastModified: now,
       changeFrequency: r.changeFrequency,
       priority: r.priority,
-      alternates: r.enOnly
-        ? enOnlyAlternatesFor(r.path)
-        : alternatesFor(r.path, r.zhOnly),
     }));
 
   // Matrix combinations are supporting engineering tools, not primary search
@@ -153,7 +118,7 @@ export async function buildSitemapEntries(
   type: SitemapType,
 ): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const isEn = ACTIVE_LOCALE === "en";
+  const isEn = true;
 
   switch (type) {
     case "core":
@@ -166,7 +131,6 @@ export async function buildSitemapEntries(
           lastModified: now,
           changeFrequency: "weekly",
           priority: 0.8,
-          alternates: alternatesFor("/formulas"),
         },
       ];
 
@@ -251,36 +215,26 @@ export async function buildSitemapEntries(
     }
 
     case "suppliers": {
-      // Only claimed + verified businesses receive individual public profile
-      // URLs. Unclaimed directory records remain discoverable on /suppliers
-      // without creating thin or misleading company pages.
-      const networkEntries = isEn
-        ? SUPPLIER_REGION_SLUGS.map((slug) => ({
+      const networkEntries = SUPPLIER_REGION_SLUGS.map((slug) => ({
           ...toEntry(`/suppliers/${slug}`, now, 0.85, now),
-          alternates: enOnlyAlternatesFor(`/suppliers/${slug}`),
           changeFrequency: "weekly" as const,
-        }))
-        : [];
+        }));
       const rows = (await safeFetch(() =>
         db
           .select({
-            id: supplierListings.id,
+            slug: supplierListings.slug,
             nameEn: supplierListings.nameEn,
             updatedAt: supplierListings.updatedAt,
           })
           .from(supplierListings)
           .where(
-            and(
-              eq(supplierListings.profilePublished, true),
-              isNotNull(supplierListings.nameEn),
-              ne(supplierListings.nameEn, ""),
-            ),
+            isNotNull(supplierListings.slug),
           )
           .limit(MAX_PER_SITEMAP),
-      )) as Array<{ id: string; nameEn: string | null; updatedAt: Date | null }>;
+      )) as Array<{ slug: string | null; nameEn: string | null; updatedAt: Date | null }>;
       const companyEntries = rows
-        .filter((r) => (isEn ? (r.nameEn ?? "").trim() !== "" : true))
-        .map((r) => toEntry(`/suppliers/${r.id}`, r.updatedAt, 0.7, now));
+        .filter((r): r is typeof r & { slug: string } => Boolean(r.slug && (r.nameEn ?? "").trim()))
+        .map((r) => toEntry(`/suppliers/${r.slug}`, r.updatedAt, 0.7, now));
       return [...networkEntries, ...companyEntries];
     }
 
@@ -289,7 +243,6 @@ export async function buildSitemapEntries(
       if (!isEn) return [];
       return sourcingTopicSlugs.map((slug) => ({
         ...toEntry(`/sourcing/${slug}`, now, 0.75, now),
-        alternates: enOnlyAlternatesFor(`/sourcing/${slug}`),
         changeFrequency: "weekly" as const,
       }));
     }
@@ -307,22 +260,7 @@ export async function buildSitemapEntries(
       ];
       return paths.map((path) => ({
         ...toEntry(path, now, path.split("/").length === 2 ? 0.75 : 0.7, now),
-        alternates: enOnlyAlternatesFor(path),
         changeFrequency: "monthly" as const,
-      }));
-    }
-
-    case "baike": {
-      // 复材百科 — Chinese answer layer, zh deploy only. zh-only hreflang
-      // (no EN alternate; getfrp has no /baike). Hub + each answer page.
-      if (isEn) return [];
-      const paths = ["/baike", ...baikeTopicSlugs.map((s) => `/baike/${s}`)];
-      return paths.map((path) => ({
-        url: urlFor(path),
-        lastModified: now,
-        changeFrequency: "weekly" as const,
-        priority: path === "/baike" ? 0.7 : 0.6,
-        alternates: alternatesFor(path, true),
       }));
     }
 
@@ -342,9 +280,7 @@ export function childSitemapTypes(): SitemapType[] {
     "papers",
     "formulas",
   ];
-  return ACTIVE_LOCALE === "en"
-    ? [...base, "sourcing", "resources"]
-    : [...base, "baike"];
+  return [...base, "sourcing", "resources"];
 }
 
 export async function indexedChildSitemapTypes(): Promise<SitemapType[]> {
@@ -363,26 +299,11 @@ function xmlEscape(s: string): string {
 }
 
 export function renderUrlset(entries: MetadataRoute.Sitemap): string {
-  const hasAlternates = entries.some(
-    (e) => Object.keys(e.alternates?.languages ?? {}).length > 0,
-  );
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
-  xml += hasAlternates
-    ? ' xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-    : ">\n";
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   for (const e of entries) {
     xml += "  <url>\n";
     xml += `    <loc>${xmlEscape(e.url)}</loc>\n`;
-    const langs = e.alternates?.languages as Record<string, string> | undefined;
-    if (langs) {
-      for (const lang of Object.keys(langs)) {
-        const href = langs[lang];
-        if (href) {
-          xml += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${xmlEscape(href)}" />\n`;
-        }
-      }
-    }
     if (e.lastModified) {
       const d =
         e.lastModified instanceof Date

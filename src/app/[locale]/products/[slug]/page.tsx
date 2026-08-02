@@ -99,13 +99,9 @@ export default async function ProductDetailPage({
           ],
           manufacturer: suppliers.map((supplier) => ({
             "@type": "Organization",
-            "@id": supplier.profilePublished
-              ? `${CURRENT_SITE_URL}/suppliers/${supplier.id}#organization`
-              : `${CURRENT_SITE_URL}/suppliers#${supplier.id}`,
+            "@id": `${CURRENT_SITE_URL}/suppliers/${supplier.slug}#organization`,
             name: supplier.name,
-            url: supplier.profilePublished
-              ? `${CURRENT_SITE_URL}/suppliers/${supplier.id}`
-              : `${CURRENT_SITE_URL}/suppliers#${supplier.id}`,
+            url: `${CURRENT_SITE_URL}/suppliers/${supplier.slug}`,
           })),
         }}
       />

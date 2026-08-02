@@ -20,7 +20,7 @@ export function makeMaterialSelectorTool() {
       process: z
         .enum(Object.keys(PROCESSES) as [string, ...string[]])
         .optional()
-        .describe("Manufacturing process (sets typical fiber volume fraction & orientation). Default 'pultrusion' (f1frp's focus)."),
+        .describe("Manufacturing process (sets typical fiber volume fraction and orientation). Default 'pultrusion'."),
       minModulusGPa: z.number().positive().optional().describe("Required longitudinal tensile modulus E1 (GPa)."),
       minTensileMPa: z.number().positive().optional().describe("Required longitudinal tensile strength (MPa, 0° direction)."),
       maxDensity: z.number().positive().optional().describe("Maximum density (g/cm³) — i.e. a weight ceiling."),

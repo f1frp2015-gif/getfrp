@@ -11,6 +11,7 @@ export const WANHUA_SUPPLIER_PROFILE: SupplierListing = {
   id: WANHUA_SUPPLIER_ID,
   name: "万华化学集团股份有限公司",
   nameEn: "Wanhua Chemical Group Co., Ltd.",
+  slug: "wanhua-chemical",
   location: "山东烟台",
   locationEn: "Yantai, Shandong, China",
   province: "山东",

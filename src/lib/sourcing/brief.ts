@@ -1,15 +1,15 @@
 // getfrp Sourcing Desk · step 5 — Human Handoff. Persist a structured Sourcing
 // Brief (the 5-step terminus) and notify the getfrp ops inbox so a human can
-// follow up. Also the demand-intel source fed back to the domestic
-// S2 (what buyers are actually asking for). Reuses the Resend pattern from
+// follow up. It also records what international buyers are asking for. Reuses
+// the Resend pattern from
 // inquiries/dispatch.ts. Non-blocking: an email failure never loses the brief,
 // and (defensive) a missing table never hard-crashes the chat.
 
 import { db } from "@/lib/db";
 import { sourcingBriefs, type NewSourcingBrief } from "@/lib/db/schema";
 
-const OPS_RECIPIENT = "f1frp2015@gmail.com";
-const FROM = "getfrp Sourcing Desk <noreply@f1frp.com>";
+const OPS_RECIPIENT = "support@getfrp.com";
+const FROM = "GetFRP Sourcing Desk <noreply@getfrp.com>";
 
 export type SourcingBriefInput = {
   host?: string | null;

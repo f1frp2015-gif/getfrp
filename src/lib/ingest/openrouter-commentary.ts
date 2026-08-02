@@ -24,8 +24,8 @@ async function callOpenRouter(
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
         // OpenRouter recommends these for analytics / free credit routing:
-        "HTTP-Referer": "https://f1frp.com",
-        "X-Title": "f1frp commentary backfill",
+        "HTTP-Referer": "https://getfrp.com",
+        "X-Title": "GetFRP commentary backfill",
       },
       body: JSON.stringify({
         model,

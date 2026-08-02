@@ -70,7 +70,7 @@ export async function fetchCrossRef(
 
   const res = await fetch(url, {
     headers: {
-      "User-Agent": "f1frp-ingest/1.0 (mailto:f1frp2015@gmail.com)",
+      "User-Agent": "getfrp-ingest/1.0 (+https://getfrp.com)",
     },
   });
   if (!res.ok) throw new Error(`CrossRef ${res.status}`);
@@ -139,7 +139,7 @@ export async function fetchOpenAlex(
   );
 
   const res = await fetch(url, {
-    headers: { "User-Agent": "f1frp-ingest/1.0 (mailto:f1frp2015@gmail.com)" },
+    headers: { "User-Agent": "getfrp-ingest/1.0 (+https://getfrp.com)" },
   });
   if (!res.ok) throw new Error(`OpenAlex ${res.status}`);
   const json = (await res.json()) as { results: OpenAlexWork[] };
@@ -232,7 +232,7 @@ export async function fetchPatentsView(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "User-Agent": "f1frp-ingest/1.0 (mailto:f1frp2015@gmail.com)",
+      "User-Agent": "getfrp-ingest/1.0 (+https://getfrp.com)",
       ...(apiKey ? { "X-Api-Key": apiKey } : {}),
     },
     body: JSON.stringify(body),
@@ -369,7 +369,7 @@ export async function fetchGooglePatents(
       const res = await fetch(url, {
         headers: {
           "User-Agent":
-            "Mozilla/5.0 (compatible; f1frp-ingest/1.0; +https://f1frp.com)",
+            "Mozilla/5.0 (compatible; getfrp-ingest/1.0; +https://getfrp.com)",
           Accept: "application/json, text/plain, */*",
         },
       });

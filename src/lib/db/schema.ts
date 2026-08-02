@@ -552,6 +552,7 @@ export const supplierListings = pgTable(
     id: varchar("id", { length: 50 }).primaryKey(),
     name: varchar("name", { length: 200 }).notNull(),
     nameEn: varchar("name_en", { length: 200 }),
+    slug: varchar("slug", { length: 160 }),
     location: varchar("location", { length: 100 }),
     locationEn: varchar("location_en", { length: 100 }),
     province: varchar("province", { length: 20 }),
@@ -608,6 +609,7 @@ export const supplierListings = pgTable(
     index("supplier_listings_category_idx").on(table.category),
     index("supplier_listings_province_idx").on(table.province),
     index("supplier_listings_name_en_idx").on(table.nameEn),
+    uniqueIndex("supplier_listings_slug_unique_idx").on(table.slug),
     index("supplier_listings_brand_priority_idx").on(table.brandPriority),
     index("supplier_listings_scale_tier_idx").on(table.scaleTier),
     index("supplier_listings_export_ready_idx").on(table.exportReady),
@@ -980,7 +982,7 @@ export const articles = pgTable(
     readTime: varchar("read_time", { length: 20 }),
     hot: boolean("hot").default(false),
     // P2-⑥ geo flags — default both true (existing content visible everywhere).
-    // Set forZh=false to hide from f1frp.com (国内站); forEn=false to hide from getfrp.com.
+    // Legacy audience flags remain for migrated data; GetFRP publishes only forEn rows.
     // Use this for articles like 国内补贴/地方政策 解读 that shouldn't surface to overseas buyers,
     // or English-only buyer guides that shouldn't surface to domestic suppliers.
     forZh: boolean("for_zh").default(true).notNull(),
@@ -1704,7 +1706,7 @@ export type NewSourcingBrief = typeof sourcingBriefs.$inferInsert;
 // ═══════════════════════════════════════════
 // D3/v2 · 贸易救济(AD/CVD)情报 — 人工终审的可更新版
 //   静态种子在 src/lib/data/trade-remedy.ts 作 fallback;本表 published 行覆盖之。
-//   维护:f1frp-trade-remedy-digest 技能写 draft → 人工 publish(scripts/publish-trade-remedy.ts)。
+//   Maintenance: draft data is reviewed before scripts/publish-trade-remedy.ts publishes it.
 // ═══════════════════════════════════════════
 export const tradeRemedyReviewStatusEnum = pgEnum("trade_remedy_review_status", ["draft", "published"]);
 

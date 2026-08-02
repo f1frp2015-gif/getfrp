@@ -223,7 +223,7 @@ export const DEFLECTION_LIMITS: { n: number; zh: string; en: string }[] = [
 
 // ── 多标准风荷载引擎 ──────────────────────────────────────────────
 // 围护结构风压推导按各国规范分流；框料强度/挠度校核（简支梁 σ=Md/W、
-// δ=5qL⁴/384EI）通用。f1frp.com(中文)固定 GB；getfrp.com(英文)可选地区规范。
+// δ=5qL⁴/384EI is universal; GetFRP lets buyers select a regional code.
 //   pService  用于挠度校核的使用/标准级风压 (kN/m²)
 //   pDesign   用于强度校核的设计/极限级风压 (kN/m²)
 

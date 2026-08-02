@@ -39,7 +39,7 @@ export async function downloadBomXlsx(
   const ExcelJS = (mod as { default?: typeof import("exceljs") }).default ?? mod;
 
   const wb = new ExcelJS.Workbook();
-  wb.creator = "f1frp AI";
+  wb.creator = "GetFRP AI";
   const ws = wb.addWorksheet(safeSheetName(t.sheetName));
   const cols = t.headers.length;
 

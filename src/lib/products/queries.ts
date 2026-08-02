@@ -13,6 +13,7 @@ import {
   getSupplierCategoryPage,
   supplierMatchesCategory,
 } from "@/lib/data/supplier-category-pages";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export type CatalogProduct = {
   id: string;
@@ -40,6 +41,7 @@ export type ProductListItem = CatalogProduct & { supplierCount: number };
 
 export type ProductSupplier = {
   id: string;
+  slug: string;
   name: string;
   category: string;
   location: string;
@@ -167,6 +169,7 @@ export async function loadSuppliersForProduct(
       );
     return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
       id: supplier.id,
+      slug: supplierRouteSlug(supplier),
       name: supplier.nameEn ?? supplier.name,
       category: supplier.category ?? "",
       location: supplier.locationEn ?? supplier.location ?? "China",
@@ -209,6 +212,7 @@ export async function loadSuppliersForProduct(
         .filter(({ supplier }) => supplierMatchesCategory(page, supplier))
         .map(({ supplier, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
           id: supplier.id,
+          slug: supplierRouteSlug(supplier),
           name: supplier.nameEn ?? supplier.name,
           category: supplier.category ?? "",
           location: supplier.locationEn ?? supplier.location ?? "China",
