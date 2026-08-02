@@ -7,9 +7,10 @@
 
 import { db } from "@/lib/db";
 import { sourcingBriefs, type NewSourcingBrief } from "@/lib/db/schema";
+import { getGetfrpFrom } from "@/lib/email/from";
 
 const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
-const FROM = "GetFRP Sourcing Desk <noreply@getfrp.com>";
+const FROM = getGetfrpFrom("GetFRP Sourcing Desk");
 
 export type SourcingBriefInput = {
   host?: string | null;

@@ -1,4 +1,6 @@
-const FROM = "GetFRP <noreply@getfrp.com>";
+import { getGetfrpFrom } from "@/lib/email/from";
+
+const FROM = getGetfrpFrom("GetFRP");
 const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
 const CC_OPS = OPS_RECIPIENT ? [OPS_RECIPIENT] : [];
 

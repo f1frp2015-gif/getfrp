@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { articles, materials } from "@/lib/db/schema";
+import { getGetfrpFrom } from "@/lib/email/from";
 import { and, desc, eq, gte } from "drizzle-orm";
 
 export const runtime = "nodejs";
@@ -126,7 +127,7 @@ export async function GET(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "GetFRP Weekly <newsletter@getfrp.com>",
+      from: getGetfrpFrom("GetFRP Weekly"),
       to: allRecipients,
       subject,
       html,
