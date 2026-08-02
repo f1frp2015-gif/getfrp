@@ -785,18 +785,9 @@ function ResultCard({
         <div className="border-t border-border/70 pt-4">
           <div className="text-sm text-muted-foreground">{t("result.cta.hint")}</div>
           <div className="mt-2 flex gap-2">
-            {isZh ? (
-              <a
-                href={`mailto:${t("result.cta.email")}?subject=${encodeURIComponent(t("result.cta.emailSubject"))}`}
-                className="inline-flex items-center rounded bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-foreground/85"
-              >
-                {t("result.cta.emailButton")}
-              </a>
-            ) : (
-              <Link href="/rfq" className="inline-flex items-center rounded bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-foreground/85">
-                {t("result.cta.rfq")}
-              </Link>
-            )}
+            <Link href="/rfq" className="inline-flex items-center rounded bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-foreground/85">
+              {t("result.cta.rfq")}
+            </Link>
           </div>
         </div>
       </CardContent>

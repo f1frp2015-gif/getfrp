@@ -923,27 +923,15 @@ function AssistantAnswer({
             </button>
 
             {supplierHits.length > 0 && (
-              <a
-                href={`mailto:support@getfrp.com?subject=${encodeURIComponent(
-                  isEn
-                    ? `RFQ — ${question.slice(0, 80)}`
-                    : `询盘 — ${question.slice(0, 80)}`,
-                )}&body=${encodeURIComponent(
-                  (isEn
-                    ? `Hi,\n\nI saw the following suppliers via the getfrp assistant and would like to RFQ them:\n\n${supplierHits
-                        .map((s) => `- ${s.title}`)
-                        .join("\n")}\n\nMy question was:\n${question}\n\nSpec / volume / target country:\n[fill in]\n\nThanks,`
-                    : `你好，\n\n通过 复材 AI 看到以下供应商，想发起询盘：\n\n${supplierHits
-                        .map((s) => `- ${s.title}`)
-                        .join("\n")}\n\n我的问题：\n${question}\n\n规格 / 数量 / 目标市场：\n[请补充]\n\n谢谢，`),
-                )}`}
+              <Link
+                href="/rfq"
                 className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3 py-1 text-[11px] text-background transition-colors hover:bg-foreground/90"
               >
                 <MessagesSquare size={12} />
                 {isEn
                   ? `Send these ${supplierHits.length} as RFQ`
                   : `把这 ${supplierHits.length} 家发给询盘`}
-              </a>
+              </Link>
             )}
 
             <Link

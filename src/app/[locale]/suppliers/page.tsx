@@ -244,7 +244,7 @@ export default async function SuppliersPage({
           Ready to source?
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Email tech support with what you need. First reply within 24 hours, no account required.
+          Send your specification through the RFQ form. First reply within 24 hours, no account required.
         </p>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
           <Link
@@ -253,12 +253,6 @@ export default async function SuppliersPage({
           >
             Submit an RFQ
           </Link>
-          <a
-            href="mailto:support@getfrp.com"
-            className={buttonVariants({ size: "lg", variant: "outline" })}
-          >
-            Email tech support
-          </a>
         </div>
       </div>
     </div>

@@ -331,7 +331,7 @@
     "disclaimer": "* Formula data is for reference only. Adjust for raw-material batch, environmental conditions and equipment before production. Run a small trial first.",
     "contribute": "Contribute a formula",
     "contributeSub": "Have a validated FRP formula to share? The database grows with industry contributions.",
-    "contributeContact": "Submit corrections: support@getfrp.com",
+    "contributeContact": "Submit corrections through the GetFRP contact form.",
     "difficulty": {
       "beginner": "Beginner",
       "intermediate": "Intermediate",
@@ -370,7 +370,7 @@
     "euStdDesc": "<b>EN 13706</b> — Core pultrusion standard<br/><b>EN 13121</b> — GRP tanks and vessels<br/><b>EN 1796 / 14364</b> — GRP pipes",
     "updateTitle": "Continuously updated",
     "updateSub": "The standards database is updated regularly to include the latest published and revised FRP-related standards. Found an error or omission? Let us know.",
-    "updateEmail": "Feedback: support@getfrp.com",
+    "updateEmail": "Send feedback through the GetFRP contact form.",
     "detail": {
       "breadcrumb": "Standards",
       "notFound": "Standard not found",
@@ -800,9 +800,9 @@
       "breadcrumb": "Articles",
       "hot": "Hot",
       "readTime": "{time} read",
-      "disclaimer": "This article was compiled by the GetFRP editorial team from publicly available sources for informational purposes only. Facts and data are sourced from public channels. If you believe content infringes on copyright or other rights, contact support@getfrp.com and we will remove or correct it promptly.",
+      "disclaimer": "This article was compiled by the GetFRP editorial team from publicly available sources for informational purposes only. Facts and data are sourced from public channels. If you believe content infringes on copyright or other rights, use the GetFRP contact form and we will remove or correct it promptly.",
       "disclaimerLabel": "Disclaimer:",
-      "disclaimerEmail": "support@getfrp.com",
+      "disclaimerEmail": "GetFRP contact form",
       "back": "← Back to list",
       "editorial": "Compiled by GetFRP editorial"
     }
@@ -1981,7 +1981,7 @@
         "i3Title": "Clerk + enterprise flow",
         "i3Body": "Clerk provides email / phone / OAuth login. Webhook syncs to users table. Claim flow goes from supplier_claims to enterprise association.",
         "i4Title": "Resend email",
-        "i4Body": "RFQ dispatch, newsletter, system notifications via Resend HTTP API. dispatchToSuppliers is non-blocking; fails soft to support@getfrp.com.",
+        "i4Body": "RFQ dispatch, newsletter, and system notifications use independent GetFRP delivery paths with non-blocking fallbacks.",
         "i5Title": "Online calculators",
         "i5Body": "Pure React client components + in-house engineering formulas. Pultrusion selection references EN 13706 / GB/T 31539; U-value references GB/T 8484.",
         "i6Title": "Vercel deployment",
@@ -2056,7 +2056,7 @@
       "r8Body": "Instrument every AI answer with OpenTelemetry and user-feedback loops; build an AI citation-quality score + hallucination monitor; every AI commentary flows into a human-review channel. Trust becomes the product.",
       "r8When": "From Q2 2026 onward",
       "cta": "Have suggestions, want to partner, want beta access?",
-      "ctaEmail": "support@getfrp.com"
+      "ctaEmail": "Contact us through the GetFRP RFQ form."
     }
   },
   "HpRtm": {
@@ -2381,9 +2381,6 @@
       "aiExplain": "AI engineer's note",
       "cta": {
         "hint": "Want a formal supplier quote? Submit RFQ — our sourcing team replies within 24h.",
-        "email": "support@getfrp.com",
-        "emailSubject": "Pultruded profile formal quote",
-        "emailButton": "Email support@getfrp.com →",
         "rfq": "Request formal quote →"
       }
     },

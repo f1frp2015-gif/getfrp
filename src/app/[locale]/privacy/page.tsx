@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { alternates } from "@/lib/seo";
 import { setRequestLocale } from "next-intl/server";
 
@@ -119,8 +120,8 @@ function PrivacyEn() {
         <li>Lodge a complaint with your local supervisory authority.</li>
       </ul>
       <p>
-        To exercise any right, email{" "}
-        <a href="mailto:support@getfrp.com">support@getfrp.com</a>.
+        To exercise any right, use the{" "}
+        <Link href="/rfq">GetFRP contact form</Link>.
         We respond within 30 days.
       </p>
 
@@ -136,8 +137,7 @@ function PrivacyEn() {
       <p>
         getfrp team<br />
         Attn: Data Protection contact<br />
-        Email:{" "}
-        <a href="mailto:support@getfrp.com">support@getfrp.com</a>
+        Contact: <Link href="/rfq">GetFRP contact form</Link>
       </p>
     </div>
   );
@@ -161,8 +161,7 @@ function PrivacyZh() {
       <p>应用数据库托管于 Neon Postgres（新加坡）。</p>
       <h2>3. 您的权利</h2>
       <p>
-        您有权访问、更正、删除我们持有的您的个人信息。请发送邮件至{" "}
-        <a href="mailto:support@getfrp.com">support@getfrp.com</a>.
+        您有权访问、更正、删除我们持有的您的个人信息。请通过站内联系表单提交请求。
       </p>
       <h2>4. 联系</h2>
       <p>重庆曜一新材料科技有限公司</p>

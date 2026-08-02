@@ -112,24 +112,24 @@ export default async function BookPage({
                 Live calendar coming online shortly.
               </h2>
               <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
-                For now, email{" "}
-                <a
-                  href={`mailto:${CONTACT.email}?subject=Sourcing call request`}
+                For now, use the{" "}
+                <Link
+                  href={CONTACT.path as "/rfq"}
                   className="font-medium text-foreground hover:underline"
                 >
-                  {CONTACT.email}
-                </a>{" "}
-                with your preferred region + one of the windows below. Reply
+                  GetFRP contact form
+                </Link>{" "}
+                with your preferred region and one of the windows below. We reply
                 within 24h US/EU business time.
               </p>
-              <a
-                href={`mailto:${CONTACT.email}?subject=Sourcing call request&body=Region:%20%0APreferred window:%20%0AProject:%20%0AQuestion:%20`}
+              <Link
+                href={CONTACT.path as "/rfq"}
                 className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
               >
                 <Mail size={14} />
-                Email to book
+                Request a call
                 <ArrowRight size={14} />
-              </a>
+              </Link>
             </div>
           </div>
         </section>
