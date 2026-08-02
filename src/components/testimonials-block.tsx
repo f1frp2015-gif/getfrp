@@ -21,10 +21,7 @@ export function TestimonialsBlock({ items, className }: Props) {
   const list = (items ?? testimonials).filter((t) => t.verifiable);
   if (list.length === 0) return null;
 
-  const orgId =
-    process.env.NEXT_PUBLIC_SITE_HOST === "f1frp.com"
-      ? "https://f1frp.com/#organization"
-      : "https://getfrp.com/#organization";
+  const orgId = "https://getfrp.com/#organization";
 
   // Only emit aggregate Review schema when we have at least 3 — fewer is
   // both Rich-Results-ineligible and looks weak to a discerning reader.

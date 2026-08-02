@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { processes as processesData } from "@/lib/data/tech";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export async function generateMetadata({
   params,
@@ -49,7 +50,7 @@ export default async function TechPage({
   const techItemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    url: `https://f1frp.com/${locale}/tech`,
+    url: `${CURRENT_SITE_URL}/tech`,
     inLanguage: "en",
     name: t("h1"),
     numberOfItems: rows.length,
@@ -60,7 +61,7 @@ export default async function TechPage({
         "@type": "Thing",
         name: p.nameEn,
         description: p.descriptionEn,
-        url: `https://f1frp.com/${locale}/tech#${p.id}`,
+        url: `${CURRENT_SITE_URL}/tech#${p.id}`,
       },
     })),
   };

@@ -75,7 +75,7 @@ function localeInstruction(locale: string): string {
 function citationGuidance(locale: string): string {
   if (locale === "en") {
     return `Your answer MUST cite the retrieved results wherever possible. Use the format \`[#N]\` (where N is the result index) inline at the end of the supported statement.
-- If no retrieved result supports a statement, explicitly say "f1frp has no record of this; the following is general knowledge."
+- If no retrieved result supports a statement, explicitly say "GetFRP has no record of this; the following is general knowledge."
 - Do NOT fabricate DOIs, patent numbers, or standard numbers.
 - Do NOT append a "References" section — the inline [#N] markers are sufficient.`;
   }
@@ -193,7 +193,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const uiMessages = normalizeMessages(body.messages || []);
-    // Host wins: getfrp.com → en, f1frp.com → zh, ignoring stale client locale.
+    // GetFRP is English-only; ignore stale client locale values.
     const locale = resolveServerLocale(req, body.locale);
 
     const ctx = body.context as
@@ -212,7 +212,7 @@ export async function POST(req: Request) {
     // friendly message rather than 500-ing.
     // Client model-picker selection (domestic side). parseRequestedProvider +
     // the host invariant in getChatModel ensure this can only switch *within*
-    // the domestic provider set — it can never pull f1frp.com onto Google.
+    // the configured provider set without changing GetFRP's production default.
     const requestedProvider = parseRequestedProvider(body.model);
     const withAttachments = hasFilePart(uiMessages);
     let model = getChatModelForRequest(req, requestedProvider);

@@ -42,13 +42,13 @@ export interface RfqPayload {
   attachment?: { filename: string; content: string };
 }
 
-const FALLBACK_RECIPIENT = "f1frp2015@gmail.com";
+const FALLBACK_RECIPIENT = "support@getfrp.com";
 // 2026-05 simplification: single CC channel on both deploys.
 // (Previously routed to a named sourcing-desk inbox on en side; consolidated
 // to the tech mailbox after the anonymization policy made both sides
 // surface the same email anyway.)
-const CC_OPS = ["f1frp2015@gmail.com"];
-const FROM = "f1frp RFQ <noreply@f1frp.com>";
+const CC_OPS = ["support@getfrp.com"];
+const FROM = "GetFRP RFQ <noreply@getfrp.com>";
 
 const CATEGORY_TO_SUPPLIER: Record<string, string[]> = {
   resin: ["resin", "additive"],
@@ -234,7 +234,7 @@ export async function dispatchToSuppliers(rfq: RfqPayload): Promise<void> {
           },
           body: JSON.stringify({
             from: FROM,
-            // 收件人若已是 f1frp2015 fallback，避免重复，把 CC 中相同地址过滤掉
+            // Avoid duplicating the fallback recipient in CC.
             to: r.email,
             cc: CC_OPS.filter((c) => c.toLowerCase() !== r.email.toLowerCase()),
             reply_to: rfq.email,

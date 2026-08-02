@@ -214,7 +214,7 @@ export async function HomePageEnglish() {
               "@type": "WebPage",
               "@id": "https://getfrp.com/#webpage",
               url: "https://getfrp.com/",
-              name: "FRP Products & Suppliers China | getfrp Marketplace",
+              name: "FRP Products & Suppliers China — Factory-Direct Marketplace | getfrp",
               inLanguage: "en",
               description:
                 "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.",
@@ -259,9 +259,9 @@ export async function HomePageEnglish() {
               China&apos;s specialist FRP marketplace
             </div>
             <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[68px]">
-              Find FRP Products &amp;
+              China FRP Products &amp; Manufacturers
               <br className="hidden sm:block" />
-              <span className="text-[#72d4c9]"> Manufacturers in China</span>
+              <span className="text-[#72d4c9]"> — Direct Factory Sourcing</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:mt-5 sm:text-[17px] sm:leading-7">
               <span className="sm:hidden">

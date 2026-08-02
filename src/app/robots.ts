@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { ACTIVE_LOCALE, CURRENT_SITE_URL } from "@/lib/sites";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 const baseDisallow = [
   "/api/",
@@ -9,9 +9,6 @@ const baseDisallow = [
   "/search",
 ];
 
-// 海外侧(getfrp.com)仅屏蔽不存在的中文业务路径。/formulas 有完整
-// English pages remain crawlable unless an individual route explicitly emits noindex.
-// 搜索引擎抓取，否则无法读取页面级索引指令。
 const enExtraDisallow = [
   "/pricing",
   "/overseas",
@@ -44,39 +41,11 @@ const WESTERN_AGENTS = [
   "MistralAI-User",
 ];
 
-// China-locale crawlers — only meaningful on f1frp.com (zh).
-// Letting them crawl getfrp.com wastes Vercel egress and leaks the dual-track
-// architecture to Western SEO competitors via WHOIS-style bot fingerprinting.
-const CHINA_AGENTS = [
-  "Baiduspider",
-  "Baiduspider-render",
-  "Baiduspider-image",
-  "Sogou web spider",
-  "Sogou inst spider",
-  "Sogou News Spider",
-  "360Spider",
-  "Haosouspider",
-  "YisouSpider",
-  "Bytespider", // ByteDance / 豆包 / 今日头条
-  "toutiaospider",
-  "iaskspider", // 讯飞
-  "Kimi-Bot",
-  "MoonshotAI",
-];
-
 export default function robots(): MetadataRoute.Robots {
-  const userAgents =
-    ACTIVE_LOCALE === "en"
-      ? WESTERN_AGENTS
-      : [...WESTERN_AGENTS, ...CHINA_AGENTS];
-
-  const disallow =
-    ACTIVE_LOCALE === "en"
-      ? [...baseDisallow, ...enExtraDisallow]
-      : baseDisallow;
+  const disallow = [...baseDisallow, ...enExtraDisallow];
 
   return {
-    rules: userAgents.map((ua) => ({
+    rules: WESTERN_AGENTS.map((ua) => ({
       userAgent: ua,
       allow: "/",
       disallow,

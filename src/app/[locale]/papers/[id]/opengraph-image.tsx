@@ -4,7 +4,7 @@ import { papers } from "@/lib/db/schema";
 import { paperCategories } from "@/lib/data/papers";
 import { renderOgCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-image";
 
-export const alt = "f1frp papers library";
+export const alt = "GetFRP papers library";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export const revalidate = 3600;
@@ -35,7 +35,7 @@ export default async function Image({
     return renderOgCard({
       category: fallback,
       title: isEn ? "Paper not found" : "论文未找到",
-      subtitle: "f1frp.com",
+      subtitle: "getfrp.com",
     });
   }
   const catEntry = paperCategories.find((c) => c.id === p.category);

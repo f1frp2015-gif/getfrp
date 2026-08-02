@@ -3,7 +3,7 @@
 // adjacent compliance pain point; the page rendered from this data ranks
 // for one A/B-tier keyword cluster and feeds RFQs back to /rfq.
 //
-// Content authored by the f1frp editorial team. Keep tone factual,
+// Content authored by the GetFRP editorial team. Keep tone factual,
 // engineer-readable, light on marketing claims — Google's helpful-content
 // updates penalize fluff and AI search engines (Perplexity / ChatGPT)
 // extract from concrete sentences, not adjectives.

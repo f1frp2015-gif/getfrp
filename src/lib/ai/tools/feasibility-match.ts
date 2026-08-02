@@ -1,32 +1,14 @@
 import { tool } from "ai";
-import { headers } from "next/headers";
 import { SourcingSpecSchema } from "@/lib/sourcing/spec";
 import { matchSuppliers } from "@/lib/sourcing/match";
 
-// Overseas-side anonymization. getfrp.com (and any non-domestic / unknown host)
-// must NOT surface specific factory identities to overseas buyers — handing out
-// names + province would let a buyer go direct and disintermediate the F1
-// sourcing desk. Only the domestic f1frp.com host gets named candidates;
-// overseas gets an anonymized capability/standards shortlist and is funnelled to
-// the RFQ, where the desk discloses the plant after spec lock.
-const DOMESTIC_HOSTS = new Set(["f1frp.com", "www.f1frp.com"]);
-async function isDomesticRequest(): Promise<boolean> {
-  try {
-    const h = await headers();
-    const host = (h.get("x-forwarded-host") || h.get("host") || "")
-      .toLowerCase()
-      .split(":")[0];
-    return DOMESTIC_HOSTS.has(host);
-  } catch {
-    // No request scope (script/build) → treat as overseas: anonymize (safe default).
-    return false;
-  }
-}
+// GetFRP keeps supplier identities private until an RFQ specification is
+// locked, so chat results always use anonymized capability references.
 
 // Sourcing Desk · step 2 — "Feasibility & Standards Match".
 // Given a buyer's spec (which the concierge extracts from the conversation or an
 // uploaded drawing), answers "can a Chinese factory make this, and to which
-// standards" against f1frp's EXPORT-READY supply graph. Returns atomic data + an
+// standards" against GetFRP's export-ready supply graph. Returns atomic data + an
 // explicit caveat (per feedback_ai_tool_atomic_data): a feasibility shortlist,
 // NOT a quote — pricing/compliance/final factory are separate steps confirmed by
 // the getfrp sourcing team after spec lock. On the overseas side the
@@ -42,7 +24,7 @@ export function makeFeasibilityMatchTool() {
     inputSchema: SourcingSpecSchema,
     execute: async (spec) => {
       const r = await matchSuppliers(spec);
-      const anonymize = !(await isDomesticRequest());
+      const anonymize = true;
       return {
         canMake: r.canMake,
         productCategory: r.productCategory,
@@ -82,7 +64,7 @@ export function makeFeasibilityMatchTool() {
                 ? " All requested standards are covered by at least one candidate."
                 : "") +
             (anonymize
-              ? " Candidates are anonymized — submit an RFQ to have the F1 desk match and disclose the specific plant."
+              ? " Candidates are anonymized — submit an RFQ to have the GetFRP sourcing desk match and disclose the specific plant."
               : "")
           : `No export-ready ${r.productCategory} supplier matched in the supply graph yet. Offer to take the buyer's spec to the getfrp sourcing team to source a factory.`,
         caveat: anonymize

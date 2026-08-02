@@ -14,7 +14,7 @@ export async function generateMetadata({
     title: locale === "en" ? "Terms of Use" : "使用条款",
     description:
       locale === "en"
-        ? "Terms governing your use of getfrp / f1frp."
+        ? "Terms governing your use of getfrp."
         : "复材站使用条款。",
     alternates: alternates("/terms"),
   };
@@ -117,7 +117,7 @@ function TermsEn() {
       <h2>8. Contact</h2>
       <p>
         Email{" "}
-        <a href="mailto:f1frp2015@gmail.com">f1frp2015@gmail.com</a>{" "}
+        <a href="mailto:support@getfrp.com">support@getfrp.com</a>{" "}
         for any question regarding these Terms.
       </p>
     </div>

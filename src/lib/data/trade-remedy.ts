@@ -10,7 +10,7 @@
 // 返回原子 summary + 预算好的派生值 + 权威措施名 + 不臆造。
 //
 // v1 = 代码内静态种子(下方 rate/日期为编写时口径,以 source 为准);v2 升级为
-// `f1frp-trade-remedy-digest` 技能 + `trade_remedy_measures` 表(仿 price_reports 草稿→人工终审)。
+// `trade_remedy_measures` uses a draft-to-human-review publication workflow.
 
 import type { ProductCategory } from "@/lib/sourcing/spec";
 import { hsForCategory, type TariffRegion } from "@/lib/data/tariff";
@@ -37,7 +37,7 @@ export interface TradeRemedyMeasure {
   caveat: string;
 }
 
-// 种子数据(fallback) — 2026-06-20 经 f1frp-trade-remedy-digest 上权威源核实更新。
+// Fallback seed data — verified against authoritative sources on 2026-06-20.
 // 线上以 DB published(trade_remedy_measures)为准;本静态种子仅在 DB 空/失败时兜底。
 export const TRADE_REMEDIES: TradeRemedyMeasure[] = [
   {

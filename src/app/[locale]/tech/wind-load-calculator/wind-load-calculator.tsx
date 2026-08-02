@@ -338,7 +338,7 @@ export default function WindLoadCalculator() {
   const isEn = locale === "en";
   const s = isEn ? L10N.en : L10N.zh;
 
-  // f1frp.com(中文)固定 GB；getfrp.com(英文)默认美标，可选地区
+  // GetFRP defaults to US codes and lets buyers choose a region.
   const [standard, setStandard] = useState<WindStandard>(isEn ? "asce" : "gb");
 
   // GB

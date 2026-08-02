@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { standards } from "@/lib/db/schema";
 import { renderOgCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-image";
 
-export const alt = "f1frp standards library";
+export const alt = "GetFRP standards library";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export const revalidate = 3600;
@@ -40,7 +40,7 @@ export default async function Image({
     return renderOgCard({
       category: fallback,
       title: isEn ? "Standard not found" : "标准未找到",
-      subtitle: "f1frp.com",
+      subtitle: "getfrp.com",
     });
   }
   const statusDisplay = s.status

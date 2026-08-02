@@ -9,6 +9,7 @@ import { notifyTelegram } from "@/lib/ingest/telegram-notify";
 import { embedNewRecords } from "@/lib/ingest/embed-records";
 import { isCompositeRelevant } from "@/lib/ingest/relevance";
 import { refreshDemandDigest } from "@/lib/ingest/demand-digest";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
   paperQueryPool,
   patentQueryPool,
@@ -176,11 +177,11 @@ export async function GET(req: Request) {
     );
   }
 
-  // Fan-out new URLs to Baidu + IndexNow (Bing/Yandex) + Sogou + 360 + Google.
+  // Fan out new English URLs to GetFRP's search discovery integrations.
   // Each engine no-ops when its credentials are absent.
   const pushUrls = [
-    ...results.papers.inserted.map((id) => `https://f1frp.com/papers/${id}`),
-    ...results.patents.inserted.map((id) => `https://f1frp.com/patents/${id}`),
+    ...results.papers.inserted.map((id) => `${CURRENT_SITE_URL}/papers/${id}`),
+    ...results.patents.inserted.map((id) => `${CURRENT_SITE_URL}/patents/${id}`),
   ];
   const searchPush = await fanOutSearchPush(pushUrls);
 
@@ -188,12 +189,12 @@ export async function GET(req: Request) {
   await notifyTelegram([
     ...results.papers.inserted.map((id) => ({
       title: id,
-      url: `https://f1frp.com/papers/${id}`,
+      url: `${CURRENT_SITE_URL}/papers/${id}`,
       kind: "paper" as const,
     })),
     ...results.patents.inserted.map((id) => ({
       title: id,
-      url: `https://f1frp.com/patents/${id}`,
+      url: `${CURRENT_SITE_URL}/patents/${id}`,
       kind: "patent" as const,
     })),
   ]);

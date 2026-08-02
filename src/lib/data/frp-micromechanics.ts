@@ -107,7 +107,7 @@ export function estimateLaminate(
 }
 
 export type SelectionTargets = {
-  process?: string; // default pultrusion (f1frp focus)
+  process?: string; // defaults to pultrusion
   minModulusGPa?: number; // required longitudinal E1
   minTensileMPa?: number; // required longitudinal tensile (0° upper bound)
   maxDensity?: number; // g/cm³ ceiling (weight)

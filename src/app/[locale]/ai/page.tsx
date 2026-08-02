@@ -55,7 +55,7 @@ export default async function AiPage({
     redirect(`/ai/chat?q=${encodeURIComponent(initialQuery)}`);
   }
 
-  // Domestic f1frp.com keeps its existing AI application at /ai.
+  // Non-English locales are unreachable in the standalone GetFRP deployment.
   if (locale !== "en") {
     return (
       <AiAssistantClient

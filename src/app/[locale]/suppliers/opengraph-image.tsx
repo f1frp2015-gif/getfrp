@@ -1,21 +1,12 @@
 import { ImageResponse } from "next/og";
 
-// Per-route OG for /suppliers. Locale-aware: zh deploy serves a different
-// pitch (供应商目录) than the en deploy (China supplier directory).
+// Per-route OG for the standalone English supplier directory.
 
 export const alt = "Verified Chinese FRP supplier directory — ranked by scale";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function OpengraphImage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale: rawLocale } = await params;
-  const locale = rawLocale === "zh" ? "zh" : "en";
-  const isZh = locale === "zh";
-
+export default function OpengraphImage() {
   return new ImageResponse(
     (
       <div
@@ -43,9 +34,9 @@ export default async function OpengraphImage({
             color: "rgba(255,255,255,0.65)",
           }}
         >
-          <span>{isZh ? "复材企业目录" : "VERIFIED SUPPLIER DIRECTORY"}</span>
+          <span>VERIFIED SUPPLIER DIRECTORY</span>
           <span style={{ color: "#ffffff", fontWeight: 600 }}>
-            {isZh ? "f1frp" : "getfrp"}
+            getfrp
           </span>
         </div>
 
@@ -60,9 +51,9 @@ export default async function OpengraphImage({
             letterSpacing: "-0.02em",
           }}
         >
-          <div>{isZh ? "复材供应商目录" : "China FRP suppliers,"}</div>
+          <div>China FRP suppliers,</div>
           <div style={{ color: "rgba(255,255,255,0.55)" }}>
-            {isZh ? "按规模与认证排序。" : "verified, ranked by scale."}
+            verified, ranked by scale.
           </div>
         </div>
 
@@ -75,13 +66,9 @@ export default async function OpengraphImage({
             color: "rgba(255,255,255,0.75)",
           }}
         >
-          <span>
-            {isZh
-              ? "制品 · 纤维 · 树脂 · 设备 · 模具 · 检测"
-              : "Manufacturer · Fiber · Resin · Equipment · Mold · Testing"}
-          </span>
+          <span>Manufacturer · Fiber · Resin · Equipment · Mold · Testing</span>
           <span style={{ fontWeight: 500, color: "#ffffff" }}>
-            {isZh ? "f1frp.com/suppliers" : "getfrp.com/suppliers"}
+            getfrp.com/suppliers
           </span>
         </div>
       </div>

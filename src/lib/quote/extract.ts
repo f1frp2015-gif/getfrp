@@ -13,7 +13,7 @@ import { generateText } from "ai";
 import { withChatFallbackForRequest } from "@/lib/ai/provider";
 import { ExtractResultSchema, type ExtractResult } from "./types";
 
-const SYSTEM_ZH = `你是 f1frp.com 拉挤型材 AI 粗测报价助手的"输入解析器"。
+const SYSTEM_ZH = `你是 GetFRP 拉挤型材 AI 粗测报价助手的"输入解析器"。
 你的任务:把用户用自然语言描述的拉挤型材需求,提取为严格 JSON。
 
 规则:
@@ -62,7 +62,7 @@ const SYSTEM_ZH = `你是 f1frp.com 拉挤型材 AI 粗测报价助手的"输入
 严格输出单行 JSON,符合以下结构,无任何 markdown 或多余文字:
 {"confidence": 0-100, "partial": {...}, "missing": ["..."], "followup_question": "..."}`;
 
-const SYSTEM_EN = `You are the input parser for f1frp.com's AI pultruded profile quote tool.
+const SYSTEM_EN = `You are the input parser for GetFRP's AI pultruded profile quote tool.
 Your job: extract STRICT JSON from a natural-language profile request.
 
 Rules:

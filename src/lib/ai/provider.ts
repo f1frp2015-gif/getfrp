@@ -1,8 +1,5 @@
-// AI provider 分流(2026-06-18 — 国内侧三大国产模型并接,GLM-5.2 为主)
-//
-// 按 *host* 挑 chat model:
-//   - f1frp.com (国内站)         → 国产模型(智谱 GLM-5.2 主 / 通义 Qwen / DeepSeek 兜底)
-//   - getfrp.com (海外站) / preview → Google Gemini direct (gemini-2.5-flash)
+// GetFRP uses Google Gemini for production chat. Explicit provider/profile
+// overrides are retained for local diagnostics and backend jobs only.
 //
 // 国内侧的四个国产 provider 全部走各自的 OpenAI-compatible 端点(见 build* 函数),
 // 由 pickDomesticProvider() 按"哪个 key 配了"自动择优:ZHIPU → DASHSCOPE(Qwen) →
@@ -15,9 +12,9 @@
 //
 // 必需的 API key:
 //   - GOOGLE_GENERATIVE_AI_API_KEY  (getfrp.com / preview 必需,Google AI Studio 申请)
-//   - ZHIPU_API_KEY                 (f1frp.com 主模型 GLM-5.2,open.bigmodel.cn)
-//   - DASHSCOPE_API_KEY             (f1frp.com Qwen + 图纸/PDF 视觉 Qwen-VL,百炼)
-//   - DEEPSEEK_API_KEY              (f1frp.com 兜底,platform.deepseek.com)
+//   - ZHIPU_API_KEY                 (optional private-job provider)
+//   - DASHSCOPE_API_KEY             (optional private-job and vision provider)
+//   - DEEPSEEK_API_KEY              (optional private-job fallback)
 //   - OPENROUTER_API_KEY            (可选 fallback,通过 CHAT_PROVIDER=openrouter 启用)
 //
 // 显式覆盖:CHAT_PROVIDER=openrouter|google|deepseek|zhipu|qwen 仍然有效,无视 host
@@ -54,7 +51,6 @@ const explicitProvider: ChatProvider | null = CHAT_PROVIDERS.includes(
   ? (process.env.CHAT_PROVIDER as ChatProvider)
   : null;
 
-const DOMESTIC_HOSTS = new Set(["f1frp.com", "www.f1frp.com"]);
 const OVERSEAS_HOSTS = new Set(["getfrp.com", "www.getfrp.com"]);
 
 function normalizeHost(host?: string | null): string | null {
@@ -62,17 +58,12 @@ function normalizeHost(host?: string | null): string | null {
   return host.toLowerCase().split(":")[0];
 }
 
-function isDomesticHost(host?: string | null): boolean {
-  const h = normalizeHost(host);
-  return h !== null && DOMESTIC_HOSTS.has(h);
-}
-
 function isOverseasHost(host?: string | null): boolean {
   const h = normalizeHost(host);
   return h !== null && OVERSEAS_HOSTS.has(h);
 }
 
-// The domestic (f1frp.com) text-chat provider set, in default priority order:
+// Optional private-job provider set, in default priority order:
 //   智谱 GLM (primary) → 通义千问 Qwen → DeepSeek (legacy fallback)
 // The client model-picker lets a visitor override *within this set*; the host
 // invariant in pickProviderForHost guarantees a domestic request can never be
@@ -111,22 +102,8 @@ function pickProviderForHost(
   // wrong provider, which is exactly the bug we hit 2026-05-18 when
   // CHAT_PROVIDER=openrouter pinned getfrp.com to an out-of-credits
   // OpenRouter account.
-  if (isDomesticHost(host)) {
-    // Honour a client-picked model ONLY within the domestic set, and only if
-    // its key is configured — so the picker can switch GLM ↔ Qwen ↔ DeepSeek
-    // but can NEVER route f1frp.com to Google (GFW). Anything else → the
-    // key-priority default.
-    if (
-      requested &&
-      DOMESTIC_PROVIDERS.includes(requested) &&
-      isProviderConfigured(requested)
-    ) {
-      return requested;
-    }
-    return pickDomesticProvider();
-  }
-  // Overseas is always Gemini — the picker isn't offered there, and even a
-  // crafted body.model can't pull getfrp.com onto a 国产 provider.
+  // The canonical production host is always Gemini. A crafted body.model or a
+  // stale environment override cannot change the GetFRP production provider.
   if (isOverseasHost(host)) return "google";
 
   // For non-prod hosts (localhost, preview deploys, cron/scripts with no
@@ -151,8 +128,8 @@ const CHAT_MODEL_ZHIPU = "glm-5.2";
 // endpoint. Override via QWEN_CHAT_MODEL (qwen-plus / qwen-max / qwen-turbo).
 const CHAT_MODEL_QWEN = "qwen-plus";
 
-// Vision model for the *domestic* side. deepseek-chat is text-only, so when a
-// f1frp.com request carries image/PDF attachments we switch to Alibaba's
+// Vision fallback for private domestic-profile jobs. deepseek-chat is text-only,
+// so image/PDF attachments switch to Alibaba's
 // Qwen-VL via the (already-present) DashScope OpenAI-compatible endpoint —
 // same Hangzhou region as the ECS box. Override with DASHSCOPE_VL_MODEL
 // (e.g. qwen-vl-plus for cheaper, qwen-vl-max for best drawing reading).
@@ -295,8 +272,8 @@ function buildOpenRouter() {
     apiKey,
     baseURL: "https://openrouter.ai/api/v1",
     headers: {
-      "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "https://f1frp.com",
-      "X-Title": "f1frp",
+      "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "https://getfrp.com",
+      "X-Title": "GetFRP",
     },
   });
 }
@@ -336,12 +313,8 @@ export function getChatModelForRequest(
 
 // ── Runtime provider fallback (non-streaming use) ────────────────────────────
 //
-// ★★ GFW + BRAND INVARIANT (DO NOT BREAK) ★★
-// A fallback chain is *strictly within the same side* as the primary provider:
-//   - Domestic (f1frp.com)   → only providers from DOMESTIC_PROVIDERS
-//     (["zhipu","qwen","deepseek"], 国产 only). NEVER google, NEVER openrouter
-//     (openrouter relays to Gemini = overseas + GFW-blocked).
-//   - Overseas (getfrp.com)  → only ["google", "openrouter"]. NEVER any 国产.
+// Fallback chains never mix global and domestic-profile providers. GetFRP
+// production always starts from the global pool.
 //
 // This is guaranteed *statically* by partitioning on host: chatProviderChain
 // branches on isDomesticHost / isOverseasHost and, in each branch, draws ONLY
@@ -565,16 +538,12 @@ export function parseRequestedProvider(value: unknown): ChatProvider | null {
 }
 
 // Model options to surface in the client picker for THIS deployment. Driven by
-// AI_PROFILE (the two sites are separate builds) rather than host:
-//   - domestic (ECS / f1frp.com)   → the 3 国产 providers, each with a `configured` flag
-//   - global   (Vercel / getfrp.com) → [] (single Gemini → no picker)
-// The chat route still enforces the host invariant at request time, so this is
-// purely what the UI offers. Pass a host to force domestic detection in tests.
+// AI_PROFILE rather than host. GetFRP's global profile exposes no picker.
 export function listAvailableChatModels(
-  host?: string | null,
+  _host?: string | null,
 ): ChatModelOption[] {
-  const domestic =
-    isDomesticHost(host) || (!isOverseasHost(host) && profile === "domestic");
+  void _host;
+  const domestic = profile === "domestic";
   if (!domestic) return [];
   return DOMESTIC_PROVIDERS.map((id) => ({
     id,

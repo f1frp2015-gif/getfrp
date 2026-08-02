@@ -286,7 +286,7 @@ export const PRICE_TABLE_VERSION = "2026-05-30-r7";
 
 // ─── 海外侧(getfrp.com)对外加成 + 汇率 ─────────────────────────────
 //
-// 引擎(pricing.ts)只算国内 CNY 基线(= f1frp.com 对外口径)。海外报价在
+// The pricing engine calculates a CNY cost baseline. Export display pricing is
 // 展示层(display.ts)换算:
 //   海外 USD 报价 = 国内 CNY 基线 × (1 + OVERSEAS_MARKUP) ÷ USD_CNY_RATE
 //

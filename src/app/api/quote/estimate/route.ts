@@ -101,7 +101,7 @@ export async function POST(req: Request) {
   }
 
   // 1.5) 对外展示口径 — 海外(getfrp.com/en)在 CNY 基线上加成 50%+ 并换算 USD,
-  //      国内(f1frp.com/zh)原样 CNY。详见 display.ts。
+  //      Legacy zh mode uses the CNY baseline. See display.ts.
   const display = buildPriceDisplay(result, marketForLocale(locale));
 
   // 2) AI 解释 — 不阻塞;失败 null。按 display 的币种/数值口径解释。

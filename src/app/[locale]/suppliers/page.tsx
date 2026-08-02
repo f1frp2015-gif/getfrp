@@ -13,6 +13,7 @@ import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { SUPPLIER_CATEGORY_PAGES } from "@/lib/data/supplier-category-pages";
 import { ArrowRight } from "lucide-react";
+import { supplierPublicPath } from "@/lib/supplier-slugs";
 export const revalidate = 3600;
 
 const PINNED_SUPPLIER_ID = "sup-yaoyi";
@@ -110,8 +111,8 @@ export default async function SuppliersPage({
       },
     ]),
   );
-  const inLanguage = isEn ? "en" : "zh-CN";
-  const top20Verified = rows.filter((s) => s.verified).slice(0, 20);
+  const inLanguage = "en";
+  const visibleSuppliers = rows.slice(0, 20);
   const suppliersItemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -119,35 +120,34 @@ export default async function SuppliersPage({
     inLanguage,
     name: t("pageDirectoryTitle"),
     numberOfItems: rows.length,
-    itemListElement: top20Verified.map((s, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "LocalBusiness",
-        "@id": s.profilePublished
-          ? `${CURRENT_SITE_URL}/suppliers/${s.id}#organization`
-          : `${CURRENT_SITE_URL}/suppliers#${s.id}`,
-        name: isEn ? s.nameEn ?? "" : s.name,
-        description: isEn ? s.descriptionEn ?? undefined : s.description ?? undefined,
-        address: (isEn ? s.locationEn : s.location)
-          ? {
-              "@type": "PostalAddress",
-              addressLocality: (isEn ? s.locationEn : s.location) as string,
-              addressCountry: "CN",
-            }
-          : undefined,
-        url:
-          s.profilePublished
-            ? `${CURRENT_SITE_URL}/suppliers/${s.id}`
-            : `${CURRENT_SITE_URL}/suppliers#${s.id}`,
-      },
-    })),
+    itemListElement: visibleSuppliers.map((s, i) => {
+      const path = supplierPublicPath(s);
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "LocalBusiness",
+          "@id": `${CURRENT_SITE_URL}${path}#organization`,
+          name: isEn ? s.nameEn ?? "" : s.name,
+          description: isEn ? s.descriptionEn ?? undefined : s.description ?? undefined,
+          address: (isEn ? s.locationEn : s.location)
+            ? {
+                "@type": "PostalAddress",
+                addressLocality: (isEn ? s.locationEn : s.location) as string,
+                addressCountry: "CN",
+              }
+            : undefined,
+          url: `${CURRENT_SITE_URL}${path}`,
+        },
+      };
+    }),
   };
 
   const serialized: SerializedSupplier[] = rows.map((s) => {
     const fields = companyFields.get(s.id);
     return {
       id: s.id,
+      slug: supplierPublicPath(s).replace("/suppliers/", ""),
       name: isEn ? s.nameEn ?? "" : s.name,
       category: s.category ?? "",
       location: isEn ? s.locationEn ?? "" : s.location ?? "",
@@ -254,7 +254,7 @@ export default async function SuppliersPage({
             Submit an RFQ
           </Link>
           <a
-            href="mailto:f1frp2015@gmail.com"
+            href="mailto:support@getfrp.com"
             className={buttonVariants({ size: "lg", variant: "outline" })}
           >
             Email tech support

@@ -12,32 +12,16 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const COPY = {
-  en: {
-    eyebrow: "CHINA FRP MARKETPLACE · PRODUCTS + FACTORIES",
-    h1Top: "FRP products and suppliers",
-    h1Bottom: "from China, verified.",
-    sub: "Product specs · manufacturer profiles · standards · one English RFQ",
-    domain: "getfrp.com",
-    brand: "getfrp",
-  },
-  zh: {
-    eyebrow: "AI 复材工作台",
-    h1Top: "选材 · 配方 · 标准",
-    h1Bottom: "AI 一站搞定。",
-    sub: "材料库 · 配方库 · 标准库 · 论文专利 · 供应商",
-    domain: "f1frp.com",
-    brand: "f1frp",
-  },
+  eyebrow: "CHINA FRP MARKETPLACE · PRODUCTS + FACTORIES",
+  h1Top: "FRP products and suppliers",
+  h1Bottom: "from China, verified.",
+  sub: "Product specs · manufacturer profiles · standards · one English RFQ",
+  domain: "getfrp.com",
+  brand: "getfrp",
 } as const;
 
-export default async function OpengraphImage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale: rawLocale } = await params;
-  const locale = rawLocale === "zh" ? "zh" : "en";
-  const copy = COPY[locale];
+export default function OpengraphImage() {
+  const copy = COPY;
 
   return new ImageResponse(
     (

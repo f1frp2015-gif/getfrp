@@ -116,21 +116,6 @@ export async function generateMetadata({
       "mobile-web-app-capable": "yes",
       "apple-mobile-web-app-capable": "yes",
       "apple-mobile-web-app-status-bar-style": "black-translucent",
-      ...(process.env.NEXT_PUBLIC_BAIDU_SITE_VERIFICATION
-        ? { "baidu-site-verification": process.env.NEXT_PUBLIC_BAIDU_SITE_VERIFICATION }
-        : {}),
-      ...(process.env.NEXT_PUBLIC_SOGOU_SITE_VERIFICATION
-        ? { "sogou_site_verification": process.env.NEXT_PUBLIC_SOGOU_SITE_VERIFICATION }
-        : {}),
-      ...(process.env.NEXT_PUBLIC_SHENMA_SITE_VERIFICATION
-        ? { "shenma-site-verification": process.env.NEXT_PUBLIC_SHENMA_SITE_VERIFICATION }
-        : {}),
-      ...(process.env.NEXT_PUBLIC_SM_SITE_VERIFICATION
-        ? { "360-site-verification": process.env.NEXT_PUBLIC_SM_SITE_VERIFICATION }
-        : {}),
-      ...(process.env.NEXT_PUBLIC_BYTEDANCE_VERIFICATION
-        ? { "bytedance-verification-code": process.env.NEXT_PUBLIC_BYTEDANCE_VERIFICATION }
-        : {}),
     },
   };
 }

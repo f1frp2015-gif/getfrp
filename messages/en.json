@@ -103,7 +103,7 @@
     "hotBadge": "HOT",
     "pultrusionLabel": "PULTRUSION SPOTLIGHT",
     "pultrusionTitle": "Pultrusion-focused vertical is live",
-    "pultrusionBody": "100+ pultrusion-related papers recently curated, paired with AI Chinese commentary and formula library cross-links — covering dies, resin selection, profile structures, wind blade spar caps, PV frames, gratings, window frames, cable trays.",
+    "pultrusionBody": "100+ pultrusion-related papers recently curated, paired with English AI commentary and formula library cross-links — covering dies, resin selection, profile structures, wind blade spar caps, PV frames, gratings, window frames, cable trays.",
     "pultrusionCta": "Enter the pultrusion vertical →",
     "hpRtmLabel": "HP-RTM SPOTLIGHT",
     "hpRtmTitle": "HP-RTM vertical is live",
@@ -331,7 +331,7 @@
     "disclaimer": "* Formula data is for reference only. Adjust for raw-material batch, environmental conditions and equipment before production. Run a small trial first.",
     "contribute": "Contribute a formula",
     "contributeSub": "Have a validated FRP formula to share? The database grows with industry contributions.",
-    "contributeContact": "Submit: f1frp2015@gmail.com · WeChat: f1frp_com",
+    "contributeContact": "Submit corrections: support@getfrp.com",
     "difficulty": {
       "beginner": "Beginner",
       "intermediate": "Intermediate",
@@ -370,7 +370,7 @@
     "euStdDesc": "<b>EN 13706</b> — Core pultrusion standard<br/><b>EN 13121</b> — GRP tanks and vessels<br/><b>EN 1796 / 14364</b> — GRP pipes",
     "updateTitle": "Continuously updated",
     "updateSub": "The standards database is updated regularly to include the latest published and revised FRP-related standards. Found an error or omission? Let us know.",
-    "updateEmail": "Feedback: f1frp2015@gmail.com",
+    "updateEmail": "Feedback: support@getfrp.com",
     "detail": {
       "breadcrumb": "Standards",
       "notFound": "Standard not found",
@@ -400,7 +400,7 @@
     "pageDescription": "Curated FRP academic literature with full-text search on authors, journals and years.",
     "statTotal": "Papers total",
     "statCategories": "Topics",
-    "statChinese": "Chinese papers",
+    "statChinese": "Indexed papers",
     "statLatestYear": "Latest year",
     "metaTitle": "FRP composites papers — curated academic literature library",
     "metaDescription": "Curated FRP composites paper library — mechanics, manufacturing, fiber-matrix interface, durability, recycling and sustainability — searchable with full citations.",
@@ -428,7 +428,7 @@
       "related": "Related papers",
       "curation": "this entry",
       "back": "← Back to papers",
-      "editorial": "Curated by f1frp editorial"
+      "editorial": "Curated by GetFRP editorial"
     }
   },
   "Patents": {
@@ -470,7 +470,7 @@
       "related": "Related patents",
       "curation": "this entry",
       "back": "← Back to patents",
-      "editorial": "Curated by f1frp editorial"
+      "editorial": "Curated by GetFRP editorial"
     }
   },
   "Suppliers": {
@@ -481,7 +481,7 @@
     "metaDescription": "Browse public Chinese FRP supplier profiles — pultrusion, GFRP / CFRP / basalt, resin and fiber makers. Search by company, product, process or region.",
     "subtitle": "Browse Chinese FRP manufacturers and composite suppliers by product, process, region and verified capability.",
     "ctaFreeList": "List your company (free)",
-    "ctaBoxTitle": "Get your company into the f1frp directory",
+    "ctaBoxTitle": "Get your company into the GetFRP directory",
     "ctaBoxSub": "Showcase products, credentials, and get targeted buyer inquiries.",
     "ctaFreeEnroll": "Enroll for free",
     "ctaMembership": "Membership benefits",
@@ -800,18 +800,18 @@
       "breadcrumb": "Articles",
       "hot": "Hot",
       "readTime": "{time} read",
-      "disclaimer": "This article was compiled by the f1frp editorial team from publicly available sources for informational purposes only. Facts and data are sourced from public channels. If you believe content infringes on copyright or other rights, contact f1frp2015@gmail.com and we will remove or correct it promptly.",
+      "disclaimer": "This article was compiled by the GetFRP editorial team from publicly available sources for informational purposes only. Facts and data are sourced from public channels. If you believe content infringes on copyright or other rights, contact support@getfrp.com and we will remove or correct it promptly.",
       "disclaimerLabel": "Disclaimer:",
-      "disclaimerEmail": "f1frp2015@gmail.com",
+      "disclaimerEmail": "support@getfrp.com",
       "back": "← Back to list",
-      "editorial": "Compiled by f1frp editorial"
+      "editorial": "Compiled by GetFRP editorial"
     }
   },
   "News": {
     "pageTitle": "Industry News",
     "pageDescription": "Daily updates on composites industry trends and policy.",
     "metaTitle": "FRP composites news — market trends, policy, technology",
-    "metaDescription": "Latest FRP composites industry news: market trends, trade policy, technology breakthroughs, company news and global expos — curated daily by f1frp editors.",
+    "metaDescription": "Latest FRP composites industry news: market trends, trade policy, technology breakthroughs, company news and global expos — curated daily by GetFRP editors.",
     "h1": "News Center",
     "subtitle": "Latest FRP composites industry news and in-depth reports",
     "subscribeTitle": "Subscribe to industry news",
@@ -1545,11 +1545,11 @@
   },
   "Platform": {
     "Hub": {
-      "metaTitle": "Platform — f1frp architecture, advantages, capabilities, roadmap",
-      "metaDescription": "Four sub-pages detailing the f1frp architecture, core advantages, current capabilities, and future roadmap.",
+      "metaTitle": "Platform — GetFRP architecture, advantages, capabilities, roadmap",
+      "metaDescription": "Four sub-pages detailing the GetFRP architecture, core advantages, current capabilities, and future roadmap.",
       "eyebrow": "PLATFORM",
-      "h1": "The logic underneath f1frp",
-      "lead": "f1frp is not the kind of thing you solve by stacking more data. What actually determines its value is how the AI Agent × structured data × engineering delivery three layers connect, how the nodes link, and how content compounds. This page set lays out the architecture, advantages, current capabilities, and the next-year roadmap.",
+      "h1": "The logic underneath GetFRP",
+      "lead": "GetFRP is not the kind of thing you solve by stacking more data. What actually determines its value is how the AI Agent × structured data × engineering delivery three layers connect, how the nodes link, and how content compounds. This page set lays out the architecture, advantages, current capabilities, and the next-year roadmap.",
       "stackLabel": "STACK",
       "stackTitle": "AI on top, data in the middle, engineering at the base",
       "stack": {
@@ -1568,7 +1568,7 @@
       },
       "advantages": {
         "title": "Advantages",
-        "lead": "Citation-first AI, multi-source auto-ingestion, bilingual by design, content that grows daily. Not a feature upgrade — a different operating model."
+        "lead": "Citation-first AI, multi-source auto-ingestion, English-first retrieval and content that grows daily. Not a feature upgrade — a different operating model."
       },
       "capabilities": {
         "title": "Capabilities",
@@ -1580,22 +1580,22 @@
       }
     },
     "Architecture": {
-      "metaTitle": "Architecture — how f1frp is built",
-      "metaDescription": "From AI Agent to structured data to engineering delivery, a detailed view of f1frp's three-layer technical architecture.",
+      "metaTitle": "Architecture — how GetFRP is built",
+      "metaDescription": "From AI Agent to structured data to engineering delivery, a detailed view of GetFRP's three-layer technical architecture.",
       "breadcrumb": "Platform",
       "eyebrow": "ARCHITECTURE",
       "h1": "AI Agent × Structured Data × Engineering Delivery",
-      "lead": "The base of f1frp is not just a database website. It is a three-layer stacked system: the top AI Agent layer consumes the two below it, the middle data layer is a knowledge graph of six interlinked libraries, and the bottom engineering layer turns answers into artifacts engineers can ship with.",
+      "lead": "The base of GetFRP is not just a database website. It is a three-layer stacked system: the top AI Agent layer consumes the two below it, the middle data layer is a knowledge graph of six interlinked libraries, and the bottom engineering layer turns answers into artifacts engineers can ship with.",
       "s1Label": "THREE-LAYER",
       "s1Title": "Each layer owns its role and feeds the others",
       "layer1Title": "AI Agent layer",
       "layer1Body": "Dual-model routing: Gemini 2.5 Flash and Claude Haiku via OpenRouter. pgvector RAG retrieves embeddings across the six libraries, citation-first enforces source attribution. Question → semantic retrieval → sourced answer, never fabricated.",
       "layer1Stack": "STACK · @ai-sdk/google · @ai-sdk/anthropic · pgvector · OpenRouter fallback",
       "layer2Title": "Structured data layer",
-      "layer2Body": "Six interlinked tables: materials (4,341) · formulas (102) · standards (95) · papers (698+) · patents (1,473+) · supplier_listings (67). Every parameter traces to its source, every slug deep-linkable via hash anchor.",
+      "layer2Body": "Six interlinked tables: materials, formulas, standards, papers, patents and 460 supplier listings. Every parameter traces to its source, and every supplier has a canonical profile URL.",
       "layer2Stack": "STACK · Neon Postgres · Drizzle ORM · pgvector · Zod schema",
       "layer3Title": "Engineering delivery layer",
-      "layer3Body": "RFQ form → Resend email to suppliers; download tier gating; PDF report generation; online calculators (pultrusion selection / U-value); zh/en language switch; Clerk auth + enterprise claim flow.",
+      "layer3Body": "RFQ form → email to suppliers; download tier gating; PDF report generation; online calculators; English routing; authentication and enterprise claim flow.",
       "layer3Stack": "STACK · Next.js 16 App Router · next-intl · Clerk · Resend · Vercel",
       "s2Label": "MECHANICS",
       "s2Title": "Four design choices that let the system self-run",
@@ -1603,32 +1603,32 @@
       "m1Body": "Material pages show related formulas / recommended suppliers / downloads; paper pages show related papers; patent pages show related patents. Every page is an entry to the other five libraries.",
       "m2Title": "Citation-first AI",
       "m2Body": "Every number and statement in an AI answer carries a [#N] citation that clicks to the source paper/patent/material page. When no source supports a claim, the AI says so explicitly — no hallucination.",
-      "m3Title": "Bilingual by design",
-      "m3Body": "next-intl path prefix /zh/ + /en/, default zh as-needed. One schema, two language renders, SEO hreflang bidirectional, llms.txt for LLM crawlers.",
+      "m3Title": "English-first routing",
+      "m3Body": "One English render with clean canonical paths, standalone sitemaps and llms.txt for LLM crawlers.",
       "m4Title": "Content flywheel",
-      "m4Body": "Daily cron: CrossRef/OpenAlex/USPTO ingestion + RSS news → AI Chinese commentary → multi-engine push (Baidu/Bing/Sogou/360) → Telegram channel → weekly newsletter. Self-running, no manual toil.",
+      "m4Body": "Daily cron: CrossRef, OpenAlex and USPTO ingestion plus selected feeds → English AI commentary → search refresh → weekly newsletter. Self-running, no manual toil.",
       "cta": "Now that you know the architecture, see what advantages it produces:",
       "nextAdvantages": "Advantages",
       "nextCapabilities": "Capabilities",
       "nextRoadmap": "Roadmap"
     },
     "Advantages": {
-      "metaTitle": "Advantages — why f1frp differs from traditional composites sites",
+      "metaTitle": "Advantages — why GetFRP differs from traditional composites sites",
       "metaDescription": "Six structural differences from traditional composites news/directory/e-commerce platforms.",
       "breadcrumb": "Platform",
       "eyebrow": "ADVANTAGES",
       "h1": "Why we are different from traditional composites sites",
-      "lead": "Most traditional composites sites are stuck in Web 2.0: news + yellow pages + PDF downloads. f1frp's six structural differences are not single-feature wins — the entire operating model is different, which is what makes content and traffic compound.",
+      "lead": "Most traditional composites sites are stuck in Web 2.0: news + yellow pages + PDF downloads. GetFRP's six structural differences are not single-feature wins — the entire operating model is different, which is what makes content and traffic compound.",
       "s1Label": "SIX PILLARS",
       "s1Title": "Structural differences, not feature upgrades",
       "a1Title": "Citation-first AI",
-      "a1Body": "Most other 'AI assistants' are ChatGPT-with-a-skin and hallucinate freely. f1frp's AI must source every statement from the six libraries; the [#N] markers are clickable and go to the source. No source → the AI says so.",
+      "a1Body": "Most other 'AI assistants' are ChatGPT-with-a-skin and hallucinate freely. GetFRP's AI must source every statement from the six libraries; the [#N] markers are clickable and go to the source. No source → the AI says so.",
       "a2Title": "Multi-source auto-ingestion",
       "a2Body": "CrossRef + OpenAlex + Google Patents + RSS, four pipelines in parallel. Papers went 101 → 698, patents 13 → 1,473 in a handful of bulk runs. Traditional sites depend on manual entry; here, the code produces content daily.",
-      "a3Title": "Bilingual by design",
-      "a3Body": "Not a Chinese site with English bolted on — one dataset, two renders. /zh/ + /en/ path prefix, hreflang bidirectional, llms.txt for LLMs. Covers Baidu / Sogou / Google / Bing / ChatGPT / Perplexity simultaneously.",
+      "a3Title": "Standalone English discovery",
+      "a3Body": "One English product and supplier graph with canonical URLs, segmented sitemaps and llms.txt for Google, Bing and AI discovery.",
       "a4Title": "Content flywheel",
-      "a4Body": "Every paper ingested auto-triggers Chinese commentary + related material/standard/formula links + sitemap refresh + six-engine push + Telegram channel + weekly newsletter. Once a user lands, there is always more to read.",
+      "a4Body": "Every paper ingested triggers English commentary, related material and standards links, and a sitemap refresh. Once a user lands, there is always more evidence to follow.",
       "a5Title": "Six libraries cross-linked",
       "a5Body": "Materials / formulas / standards / papers / patents / suppliers are not isolated. Material pages recommend suppliers, formula pages link materials, paper pages show related patents. Any page is an entry to the other five.",
       "a6Title": "Provenance everywhere",
@@ -1637,7 +1637,7 @@
       "s2Title": "Head-to-head with traditional composites sites",
       "colCompare": "Dimension",
       "colTraditional": "Traditional sites",
-      "colF1frp": "f1frp",
+      "colF1frp": "GetFRP",
       "compareRows": [
         {
           "dim": "Content updates",
@@ -1655,9 +1655,9 @@
           "f1": "Six-library cross-table linking, deep routing"
         },
         {
-          "dim": "Bilingual support",
-          "tr": "Chinese only, or crude machine translation",
-          "f1": "Bilingual at source, hreflang + SEO double coverage"
+          "dim": "International buyer focus",
+          "tr": "Mixed-language listings and inconsistent terminology",
+          "f1": "English at source, canonical URLs and focused SEO coverage"
         },
         {
           "dim": "Data provenance",
@@ -1675,7 +1675,7 @@
       "nextRoadmap": "Roadmap"
     },
     "Capabilities": {
-      "metaTitle": "Capabilities — what f1frp currently delivers",
+      "metaTitle": "Capabilities — what GetFRP currently delivers",
       "metaDescription": "Six core capabilities plus four typical workflow scenarios describing what engineers, buyers and suppliers get today.",
       "breadcrumb": "Platform",
       "eyebrow": "CAPABILITIES",
@@ -1687,7 +1687,7 @@
       "c1Body": "Describe the load case (stress, chemistry, temperature, budget) to the AI; it recommends materials from the full material + formula + standard library, every recommendation with a source link.",
       "c1Try": "TRY · /ai?q=which resin resists HCl for storage tank",
       "c2Title": "Paper & patent verification",
-      "c2Body": "698+ papers and 1,473+ patents in one place, each carrying an AI Chinese commentary that translates English abstracts into engineer-readable digests — no need to wrestle CrossRef yourself.",
+      "c2Body": "698+ papers and 1,473+ patents in one place, each carrying English AI commentary that turns source abstracts into engineer-readable digests — no need to wrestle CrossRef yourself.",
       "c2Try": "TRY · /papers · /patents · /pultrusion · /hp-rtm",
       "c3Title": "RFQ to suppliers",
       "c3Body": "On any material detail page, the \"Request Sample / Quote\" button opens an RFQ form. AI matches top-3 suppliers, Resend emails them — all automatic.",
@@ -1708,7 +1708,7 @@
       "sc2Title": "Buyer: comparison + verification",
       "sc2Body": "Filter supplier directory by region / type → inspect certifications / products → send RFQ → compare replies. Every decision data point carries a source.",
       "sc3Title": "Design firm / research institute: paper & patent verification",
-      "sc3Body": "/pultrusion or /hp-rtm verticals give you all related papers + patents directly; each has Chinese commentary; every claim you use in your proposal is verifiable.",
+      "sc3Body": "/pultrusion or /hp-rtm verticals give you related papers and patents directly; each has English commentary and links back to verifiable evidence.",
       "sc4Title": "Supplier: claim listing + receive leads",
       "sc4Body": "Claim your firm in /suppliers → complete products / certifications / contact → start receiving engineer-initiated RFQ emails.",
       "cta": "Start using it:",
@@ -1779,7 +1779,7 @@
         "aiCtaTitle": "Let the AI walk you through the engineering details",
         "aiCtaBody": "Ask 'under what load cases does {name} fit best? typical process parameters? recommended suppliers?' — the AI will answer based on the evidence.",
         "aiCtaBtn": "Ask the AI →",
-        "aiSuggestQuery": "{fiber} × {resin} combination: which load cases does it suit? Which process? Typical process parameters? Where are the matching materials and suppliers on f1frp?",
+        "aiSuggestQuery": "{fiber} × {resin} combination: which load cases does it suit? Which process? Typical process parameters? Where are the matching materials and suppliers on GetFRP?",
         "verdictTitle": "Feasibility verdict",
         "verdictLabel2": "Mainstream",
         "verdictLabel1": "Viable · niche",
@@ -1789,7 +1789,7 @@
         "verdictAnswer0": "{fiber} with {resin} is experimental / rare, with a limited production track record. Consider it only for special requirements, and validate with a small trial first.",
         "verdictEvidence": "{materials} materials · {papers} papers · {patents} patents",
         "verdictSourceLabel": "Source",
-        "verdictSource": "f1frp fiber × resin feasibility matrix + live knowledge-base lookup",
+        "verdictSource": "GetFRP fiber × resin feasibility matrix + live knowledge-base lookup",
         "verdictUpdatedLabel": "Updated",
         "nextStepLabel": "Next step",
         "ctaRfqTitle": "Submit an RFQ for this combination",
@@ -1800,12 +1800,12 @@
         "faqQ2": "Which forming processes suit {fiber} × {resin}?",
         "faqQ3": "Where can I find {fiber} × {resin} materials and suppliers?",
         "faqA2": "The mainstream compatible processes are listed under 'Compatible forming processes' on this page. Which one to choose depends on part cross-section and volume — ask the on-page AI for an evidence-based recommendation.",
-        "faqA3": "This page already aggregates the materials, formulas, papers and patents in the f1frp database related to this combination; click any material for detail, or reach the matching verified suppliers via RFQ / AI."
+        "faqA3": "This page already aggregates the materials, formulas, papers and patents in the GetFRP database related to this combination; click any material for detail, or reach the matching verified suppliers via RFQ / AI."
       }
     },
     "Stack": {
       "AiAgent": {
-        "metaTitle": "AI Agent Layer — f1frp architecture",
+        "metaTitle": "AI Agent Layer — GetFRP architecture",
         "metaDescription": "Design logic, features, implementation, usage and future of the AI Agent layer.",
         "breadcrumb": "Platform",
         "eyebrow": "AI AGENT / LAYER 1",
@@ -1814,7 +1814,7 @@
         "s1Label": "DESIGN LOGIC",
         "s1Title": "Four non-negotiable principles",
         "d1Title": "Citation-first, never fabricate",
-        "d1Body": "Every number, every statement, every standard code must come from the six libraries. When the model has no source, it says 'f1frp has no record of this; the following is general knowledge' — never pretends.",
+        "d1Body": "Every number, every statement, every standard code must come from the six libraries. When the model has no source, it says 'GetFRP has no record of this; the following is general knowledge' — never pretends.",
         "d2Title": "RAG retrieval, not fine-tuning",
         "d2Body": "We do not fine-tune models. Each query uses pgvector semantic search to fetch Top-K relevant records and inject them as context. New data in DB → usable same day, no retraining.",
         "d3Title": "Multi-model routing",
@@ -1830,11 +1830,11 @@
         "f3Title": "Standards lookup",
         "f3Body": "95 GB / ISO / ASTM / EN standards. AI gives applicable standards + chapter citations.",
         "f4Title": "Paper & patent commentary",
-        "f4Body": "698+ papers and 1,473+ patents with Chinese commentary. AI cites multiple sources as evidence.",
+        "f4Body": "698+ papers and 1,473+ patents with English commentary. AI cites multiple sources as evidence.",
         "f5Title": "Supplier matching",
         "f5Body": "Filters top-3 suppliers by material + region + certification. Paired with the RFQ button to send an inquiry directly.",
-        "f6Title": "Multi-lingual Q&A",
-        "f6Body": "Locale auto-passed to AI — Chinese question gets Chinese answer, English stays English. No mixing.",
+        "f6Title": "English technical Q&A",
+        "f6Body": "The assistant and retrieval layer are English-only, keeping terminology and citations consistent across the site.",
         "s3Label": "IMPLEMENTATION",
         "s3Title": "Stack",
         "i1Title": "pgvector semantic search",
@@ -1875,7 +1875,7 @@
         "r5When": "Q2 2027"
       },
       "Data": {
-        "metaTitle": "Structured Data Layer — f1frp architecture",
+        "metaTitle": "Structured Data Layer — GetFRP architecture",
         "metaDescription": "Design logic, features, implementation, usage and future of the structured data layer.",
         "breadcrumb": "Platform",
         "eyebrow": "DATA / LAYER 2",
@@ -1888,7 +1888,7 @@
         "d2Title": "Every parameter traceable",
         "d2Body": "Each material parameter will carry a source_type (manufacturer TDS / third-party test / AI inference). Papers link out to DOI, patents link to Google Patents.",
         "d3Title": "Daily growth, never stagnant",
-        "d3Body": "Cron runs at 2am UTC daily, pulling from CrossRef + OpenAlex + Google Patents + RSS. Ingest → translate → Chinese commentary → sitemap refresh → multi-engine push.",
+        "d3Body": "Cron runs daily, pulling from CrossRef, OpenAlex, Google Patents and selected feeds. Ingest → English enrichment → sitemap refresh.",
         "d4Title": "Human-in-the-loop expansion",
         "d4Body": "Beyond the automatic cron, companies can claim their own supplier listing and fill in details; engineers can submit corrections.",
         "s2Label": "SIX LIBRARIES",
@@ -1900,7 +1900,7 @@
         "lib3Title": "Standards · 95 records",
         "lib3Body": "China GB / HG / JC, International ISO, American ASTM, European EN, German DIN. Organized by process and product. AI clause commentary on the roadmap.",
         "lib4Title": "Papers · 698+",
-        "lib4Body": "Aggregated from CrossRef + OpenAlex. Covers mechanics, processing, fiber reinforcement, resin matrix, durability, recycling. Each with AI Chinese commentary.",
+        "lib4Body": "Aggregated from CrossRef and OpenAlex. Covers mechanics, processing, fiber reinforcement, resin matrix, durability and recycling, with English AI commentary.",
         "lib5Title": "Patents · 1,473+",
         "lib5Body": "Aggregated from Google Patents — CN / US / EP / JP / KR. Covers pultrusion / RTM / HP-RTM / thermoplastic / window/door / automotive / wind. Commentary backfill in progress.",
         "lib6Title": "Suppliers · 67",
@@ -1920,7 +1920,7 @@
         "u1Title": "Browse + filter",
         "u1Body": "Every library has its own list page with multi-dimensional filters (category / brand / country / year / language / process), search, and compare.",
         "u2Title": "Detail-page depth",
-        "u2Body": "Material pages show properties table + recommended suppliers + related formulas + downloads. Paper / patent pages show Chinese commentary + related entries + external source link.",
+        "u2Body": "Material pages show property tables, recommended suppliers, related formulas and downloads. Paper and patent pages show English commentary, related entries and the external source link.",
         "u3Title": "AI citations",
         "u3Body": "Every [#N] in an AI answer links to a data-layer entry. Data is not isolated — it is evidence for AI answers.",
         "s5Label": "FUTURE",
@@ -1942,7 +1942,7 @@
         "r5When": "All of 2027"
       },
       "Delivery": {
-        "metaTitle": "Engineering Delivery Layer — f1frp architecture",
+        "metaTitle": "Engineering Delivery Layer — GetFRP architecture",
         "metaDescription": "Design logic, features, implementation, usage and future of the engineering delivery layer.",
         "breadcrumb": "Platform",
         "eyebrow": "DELIVER / LAYER 3",
@@ -1951,7 +1951,7 @@
         "s1Label": "DESIGN LOGIC",
         "s1Title": "Four delivery principles",
         "d1Title": "Don't just display — deliver",
-        "d1Body": "Traditional composites sites stop at 'read the page → make your own phone call'. f1frp adds an 'engineering action' button to every page: request sample, RFQ, download, calculate, claim. Users complete something before leaving.",
+        "d1Body": "Traditional composites sites stop at 'read the page → make your own phone call'. GetFRP adds an 'engineering action' button to every page: request sample, RFQ, download, calculate, claim. Users complete something before leaving.",
         "d2Title": "One page → one action",
         "d2Body": "Material detail → request sample; formula detail → download PDF; standard page → AI digest; patent page → external source; supplier page → claim or RFQ. Each page does one thing well.",
         "d3Title": "Close the loop to transactions",
@@ -1968,20 +1968,20 @@
         "f3Body": "/tech/calculator pultrusion selection (load → section). /tech/u-value-calculator window U-value. Browser-only, no CAE license.",
         "f4Title": "Supplier claiming",
         "f4Body": "67 real firms claimable by owners. Upload credentials → review → receive RFQs. Free entry + Verified / Premium / Platinum paid tiers.",
-        "f5Title": "Bilingual SEO site",
-        "f5Body": "/zh/* + /en/* bilingual sitemap + hreflang. Covers Baidu / Sogou / 360 / Bing / Google / LLM search. Daily cron does six-engine push.",
+        "f5Title": "English SEO architecture",
+        "f5Body": "English-only canonical routes and segmented sitemaps cover Google, Bing and LLM search without cross-domain language alternates.",
         "f6Title": "User dashboard",
         "f6Body": "Clerk-authenticated /dashboard: overview, publish listings, inquiry messages, enterprise management, claim applications, subscription management.",
         "s3Label": "IMPLEMENTATION",
         "s3Title": "Stack",
         "i1Title": "Next.js 16 App Router",
         "i1Body": "Server Components + Route Handlers. /[locale]/* fully internationalized, /api/* server logic, /platform/* static content.",
-        "i2Title": "next-intl bilingual",
-        "i2Body": "Path prefix /zh/ + /en/, as-needed (default zh has no prefix). messages/ split by namespace.",
+        "i2Title": "English routing",
+        "i2Body": "One English locale with clean, prefix-free canonical paths and namespaced interface copy.",
         "i3Title": "Clerk + enterprise flow",
         "i3Body": "Clerk provides email / phone / OAuth login. Webhook syncs to users table. Claim flow goes from supplier_claims to enterprise association.",
         "i4Title": "Resend email",
-        "i4Body": "RFQ dispatch, newsletter, system notifications via Resend HTTP API. dispatchToSuppliers is non-blocking; fails soft to f1frp2015@gmail.com.",
+        "i4Body": "RFQ dispatch, newsletter, system notifications via Resend HTTP API. dispatchToSuppliers is non-blocking; fails soft to support@getfrp.com.",
         "i5Title": "Online calculators",
         "i5Body": "Pure React client components + in-house engineering formulas. Pultrusion selection references EN 13706 / GB/T 31539; U-value references GB/T 8484.",
         "i6Title": "Vercel deployment",
@@ -2012,7 +2012,7 @@
         "r3Body": "Private deployment + SSO + audit logs + unlimited private libraries for design institutes / large owners / downstream OEMs (commercial terms by email).",
         "r3When": "Q1 2027",
         "r4Title": "④ Data API platform",
-        "r4Body": "Open six-library metadata via REST API, tiered billing. Let ERP / PLM / CAE vendors integrate f1frp as their data foundation.",
+        "r4Body": "Open six-library metadata via REST API, tiered billing. Let ERP / PLM / CAE vendors integrate GetFRP as their data foundation.",
         "r4When": "Q1 2027",
         "r5Title": "⑤ Expert network",
         "r5Body": "Onboard certified engineers / professors for paid consulting; platform only does matching in P1 phase. Hybrid AI + human consulting model.",
@@ -2023,12 +2023,12 @@
       }
     },
     "Roadmap": {
-      "metaTitle": "Roadmap — f1frp next year priorities",
-      "metaDescription": "From agent tool-calling to private workspace to CBAM compliance, f1frp's next-year priorities and timeline.",
+      "metaTitle": "Roadmap — GetFRP next year priorities",
+      "metaDescription": "From agent tool-calling to private workspace to CBAM compliance, GetFRP's next-year priorities and timeline.",
       "breadcrumb": "Platform",
       "eyebrow": "ROADMAP",
       "h1": "What we plan to build next",
-      "lead": "Ordered by \"existing asset × highest leverage\". Earlier items are more certain than later ones, but even the last one is not vaporware — every track is grounded in AI Agent / data / user-relationship assets f1frp already has.",
+      "lead": "Ordered by \"existing asset × highest leverage\". Earlier items are more certain than later ones, but even the last one is not vaporware — every track is grounded in AI Agent / data / user-relationship assets GetFRP already has.",
       "s1Label": "EIGHT TRACKS",
       "s1Title": "Sorted by priority and feasibility",
       "r1Title": "Agent tool-calling",
@@ -2044,10 +2044,10 @@
       "r4Body": "EU CBAM mandatory from 2027. Build the \"one-click CBAM report\", EPD environmental declaration, and UFLPA audit tooling ahead of time, partnered with SGS / TÜV China.",
       "r4When": "Q4 2026",
       "r5Title": "Cross-border RFQ closed loop",
-      "r5Body": "Overseas buyer anonymous RFQ → AI matches Chinese suppliers → sample shipping + logistics + escrow → commission 2-5% on close. Upgrades f1frp from \"information\" to \"transactions\".",
+      "r5Body": "Overseas buyer anonymous RFQ → AI matches Chinese suppliers → sample shipping + logistics + escrow → commission 2-5% on close. Upgrades GetFRP from \"information\" to \"transactions\".",
       "r5When": "Q4 2026 / Q1 2027",
       "r6Title": "Data API licensing",
-      "r6Body": "Open materials / formulas / standards / papers metadata as REST API to ERP / PLM / CAE vendors — making f1frp the data backbone of the industry.",
+      "r6Body": "Open materials / formulas / standards / papers metadata as REST API to ERP / PLM / CAE vendors — making GetFRP the data backbone of the industry.",
       "r6When": "Q1 2027",
       "r7Title": "Expert network",
       "r7Body": "Onboard certified engineers / university professors / third-party labs for paid consulting. Extend the knowledge layer from databases to people.",
@@ -2056,7 +2056,7 @@
       "r8Body": "Instrument every AI answer with OpenTelemetry and user-feedback loops; build an AI citation-quality score + hallucination monitor; every AI commentary flows into a human-review channel. Trust becomes the product.",
       "r8When": "From Q2 2026 onward",
       "cta": "Have suggestions, want to partner, want beta access?",
-      "ctaEmail": "f1frp2015@gmail.com"
+      "ctaEmail": "support@getfrp.com"
     }
   },
   "HpRtm": {
@@ -2090,7 +2090,7 @@
     "breadcrumbHome": "Home",
     "label": "PULTRUSION SPOTLIGHT",
     "h1": "Pultrusion Vertical",
-    "lead": "All pultrusion / RTM / resin-transfer-molding related papers and patents in one place. AI Chinese commentary turns English source material into engineer-readable digest to support your die, resin, profile and application decisions.",
+    "lead": "All pultrusion, RTM and resin-transfer-molding papers and patents in one place. English AI commentary turns source material into engineer-readable digests for die, resin, profile and application decisions.",
     "statPapers": "Related papers",
     "statPatents": "Related patents",
     "statCommented": "AI commentary done",
@@ -2155,7 +2155,7 @@
     "contactBusiness": "Business",
     "contactWechat": "WeChat support",
     "contactOfficial": "WeChat channel",
-    "contactOfficialValue": "Search \"f1frp\"",
+    "contactOfficialValue": "Search \"GetFRP\"",
     "contactTech": "Tech support",
     "adTitle": "Advertising & partnerships",
     "adDesc": "We offer precision advertising and brand promotion for FRP companies — homepage banners, category placements, sponsored content and more.",
@@ -2244,7 +2244,7 @@
   },
   "PultrusionQuote": {
     "meta": {
-      "title": "Pultruded Profile AI Quick Quote · f1frp",
+      "title": "Pultruded Profile AI Quick Quote · GetFRP",
       "description": "Get a rough price range for pultruded fiberglass / carbon profiles in 30 seconds — with cost breakdown and an AI engineer's explanation. Anonymous-friendly. For directional reference only."
     },
     "breadcrumb": {
@@ -2381,9 +2381,9 @@
       "aiExplain": "AI engineer's note",
       "cta": {
         "hint": "Want a formal supplier quote? Submit RFQ — our sourcing team replies within 24h.",
-        "email": "f1frp2015@gmail.com",
+        "email": "support@getfrp.com",
         "emailSubject": "Pultruded profile formal quote",
-        "emailButton": "Email f1frp2015@gmail.com →",
+        "emailButton": "Email support@getfrp.com →",
         "rfq": "Request formal quote →"
       }
     },

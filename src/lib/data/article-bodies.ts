@@ -3,7 +3,7 @@
 // every body was re-verified against public sources and rewritten to remove
 // fabricated figures and AI-style phrasing. Do NOT re-run the generator over
 // these — it would overwrite the fact-checked text. Edit the relevant entry by
-// hand. Fact-check log: /tmp/f1frp-articles/FACTCHECK.md (session artifact).
+// hand. Fact-check logs are temporary session artifacts.
 
 export const articleBodies: Record<string, string> = {
   // ── #1 市场 ───────────────────────────────────────────────────────────

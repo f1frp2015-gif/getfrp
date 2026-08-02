@@ -1,7 +1,7 @@
 // 2026-06-16: DE-SCHEDULED. Removed from vercel.json crons — this pipeline
 // auto-PUBLISHED thin (~800-char) Gemini rewrites of RSS snippets, which is
 // being replaced by the human-reviewed deep-research digest (drafts only, see
-// /api/cron/article-draft + the f1frp-research-digest skill). The route is kept
+// /api/cron/article-draft). The route is kept
 // for manual one-off triggering with CRON_SECRET, but no longer runs on a cron.
 import { NextResponse } from "next/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
@@ -10,6 +10,7 @@ import { db } from "@/lib/db";
 import { articles } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { fanOutSearchPush } from "@/lib/ingest/search-push";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -96,7 +97,7 @@ function slugFromUrl(url: string, title: string): string {
 async function fetchFeed(feedUrl: string): Promise<RssItem[]> {
   try {
     const res = await fetch(feedUrl, {
-      headers: { "User-Agent": "f1frp-bot/1.0" },
+      headers: { "User-Agent": "getfrp-bot/1.0 (+https://getfrp.com)" },
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) return [];
@@ -202,9 +203,8 @@ export async function GET(req: Request) {
         continue;
       }
 
-      // Store bilingual body: zh body as primary, with EN appended after a separator.
-      const body = `${rewritten.zh}\n\n---\n\n${rewritten.en}`;
-      const excerpt = rewritten.zh.slice(0, 200);
+      const body = rewritten.en;
+      const excerpt = rewritten.en.slice(0, 200);
 
       try {
         const rows = await db
@@ -222,7 +222,7 @@ export async function GET(req: Request) {
         const id = rows[0]?.id;
         if (id) {
           results.inserted.push(slug);
-          pushUrls.push(`https://f1frp.com/articles/${slug}`);
+          pushUrls.push(`${CURRENT_SITE_URL}/articles/${slug}`);
         }
       } catch (e) {
         results.errors.push(

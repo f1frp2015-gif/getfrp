@@ -34,6 +34,7 @@ export type AdminClaimRow = {
   note: string;
   reviewNote: string;
   supplierId: string;
+  supplierSlug: string;
   supplierName: string;
   supplierLocation: string;
   supplierAlreadyClaimed: boolean;
@@ -98,7 +99,7 @@ export function AdminClaimsTable({ rows }: { rows: AdminClaimRow[] }) {
                 <div>
                   <CardTitle className="text-base">
                     <Link
-                      href={`/suppliers#${r.supplierId}`}
+                      href={`/suppliers/${r.supplierSlug}`}
                       className="hover:text-primary"
                     >
                       {r.supplierName}

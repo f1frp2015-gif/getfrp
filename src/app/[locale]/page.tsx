@@ -52,7 +52,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const base: Metadata = { alternates: alternates("/") };
   if (locale !== "en") return base;
-  const title = "FRP Products & Suppliers China | getfrp Marketplace";
+  const title = "FRP Products & Suppliers China — Factory-Direct Marketplace | getfrp";
   const description =
     "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.";
   return {

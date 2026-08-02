@@ -3,7 +3,7 @@
 // standards met/gap. DB-backed (like dispatch.ts); pure scoring in JS.
 //
 // Gate: verified = true AND export_ready = true. export_ready is the
-// domestic-side screening flag (set by the backfill / f1frp ops) — this is the
+// export-screening flag set by the GetFRP operations team — this is the
 // 国内筛选→海外消费 flywheel boundary: only screened factories surface to getfrp.
 
 import { db } from "@/lib/db";

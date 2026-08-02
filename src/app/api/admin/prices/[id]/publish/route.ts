@@ -8,6 +8,7 @@ import { gateAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
 import { priceReports } from "@/lib/db/schema";
 import { fanOutSearchPush } from "@/lib/ingest/search-push";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export async function POST(
   req: Request,
@@ -33,7 +34,7 @@ export async function POST(
     .where(eq(priceReports.id, id))
     .returning({ id: priceReports.id });
   if (!updated) {
-    return NextResponse.json({ error: "行情不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Price report not found" }, { status: 404 });
   }
 
   // 终审发布即推送行情页 /trade 与首页(均展示「最新一期」)到
@@ -42,8 +43,8 @@ export async function POST(
     after(async () => {
       try {
         await fanOutSearchPush([
-          "https://f1frp.com/trade",
-          "https://f1frp.com/",
+          `${CURRENT_SITE_URL}/trade`,
+          `${CURRENT_SITE_URL}/`,
         ]);
       } catch {
         // best-effort; 各引擎在 search-push 内部已各自吞错

@@ -1,6 +1,6 @@
 // AI 粗测拉挤型材报价工具 — 入口页
 //
-// 路径:f1frp.com/pultrusion/quote (zh) / getfrp.com/pultrusion/quote (en)
+// Public route: getfrp.com/pultrusion/quote.
 // 战略定位:v4.1 Layer 1 免费引流钩子(详见 ~/.claude memory project_f1frp_agency.md)
 //
 // 页面分两层:

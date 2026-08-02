@@ -144,7 +144,7 @@ export default async function PaperDetailPage({
       name: a,
     })),
     datePublished: p.year ? `${p.year}-01-01` : undefined,
-    inLanguage: p.language === "zh" ? "zh-CN" : "en",
+    inLanguage: "en",
     abstract: p.abstract ?? undefined,
     keywords: ((p.keywords as string[] | null) ?? []).join(", "),
     publisher: p.journal

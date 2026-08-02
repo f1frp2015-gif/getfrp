@@ -924,7 +924,7 @@ function AssistantAnswer({
 
             {supplierHits.length > 0 && (
               <a
-                href={`mailto:f1frp2015@gmail.com?subject=${encodeURIComponent(
+                href={`mailto:support@getfrp.com?subject=${encodeURIComponent(
                   isEn
                     ? `RFQ — ${question.slice(0, 80)}`
                     : `询盘 — ${question.slice(0, 80)}`,

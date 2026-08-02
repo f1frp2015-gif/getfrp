@@ -289,7 +289,7 @@ export default async function SourceFromChinaPage({
           Ask AI to check feasibility
         </Link>
         <a
-          href="mailto:f1frp2015@gmail.com"
+          href="mailto:support@getfrp.com"
           className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           Or email tech support →
@@ -596,9 +596,9 @@ export default async function SourceFromChinaPage({
         </div>
 
         <p className="mt-4 text-xs text-muted-foreground">
-          Curated by the f1frp editorial team. Submit corrections or additions to{" "}
-          <a className="text-foreground underline" href="mailto:f1frp2015@gmail.com">
-            f1frp2015@gmail.com
+          Curated by the GetFRP editorial team. Submit corrections or additions to{" "}
+          <a className="text-foreground underline" href="mailto:support@getfrp.com">
+            support@getfrp.com
           </a>.
         </p>
 
@@ -823,7 +823,7 @@ export default async function SourceFromChinaPage({
               Try a sample sourcing query →
             </Link>
             <a
-              href="mailto:f1frp2015@gmail.com"
+              href="mailto:support@getfrp.com"
               className="inline-flex items-center gap-1.5 rounded-md border border-background/30 px-4 py-2 text-sm text-background transition-colors hover:bg-background/10"
             >
               Email tech support

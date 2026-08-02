@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   }
 
   const question = (body.question ?? "").trim();
-  // Host wins: getfrp.com → en, f1frp.com → zh, ignoring stale client locale.
+  // GetFRP is English-only; ignore stale client locale values.
   const locale = resolveServerLocale(req, body.locale);
 
   if (!question || question.length < 5) {

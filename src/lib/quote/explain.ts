@@ -30,7 +30,7 @@ export async function explainQuote(
   const system =
     locale === "en"
       ? `You are a senior FRP pultrusion sourcing engineer at getfrp.com (export sourcing for Asian composites). Given a rough-quote breakdown, write a 80-140 word plain-English paragraph explaining WHY this USD price range, calling out the biggest cost driver and one practical engineering note. The figure is an indicative export price in USD with sourcing & export handling included — do NOT itemize, reveal, or mention any markup, agency margin, or any China-domestic price. DO NOT recompute or change any number. DO NOT add disclaimers about it being a rough quote (the UI already shows that). No markdown, no bullet lists, no headers.`
-      : `你是 f1frp.com 的拉挤型材资深工程师。给定一个粗测分项,用 80-140 字自然中文段落,解释为什么是这个价格区间,点出最大成本驱动 + 一条工程提示。不要重算或修改任何数字。不要重复"粗测仅供参考"(UI 已写)。不要 markdown、不要列表、不要标题。`;
+      : `你是 GetFRP 的拉挤型材资深工程师。给定一个粗测分项,用 80-140 字自然中文段落,解释为什么是这个价格区间,点出最大成本驱动 + 一条工程提示。不要重算或修改任何数字。不要重复"粗测仅供参考"(UI 已写)。不要 markdown、不要列表、不要标题。`;
 
   const unitRange = `${display.symbol}${display.unit_price_low.toFixed(2)} – ${display.symbol}${display.unit_price_high.toFixed(2)}`;
   const prompt =

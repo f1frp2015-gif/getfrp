@@ -39,7 +39,6 @@ export function EditDraftClient({ article }: { article: Draft }) {
   const [body, setBody] = useState(article.body);
   const [category, setCategory] = useState(article.category);
   const [readTime, setReadTime] = useState(article.readTime);
-  const [forZh, setForZh] = useState(article.forZh);
   const [forEn, setForEn] = useState(article.forEn);
   const [hot, setHot] = useState(article.hot);
   const [published, setPublished] = useState(article.isPublished);
@@ -54,7 +53,7 @@ export function EditDraftClient({ article }: { article: Draft }) {
       const res = await fetch(`/api/admin/articles/${article.id}`, {
         method: "PATCH",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ title, excerpt, body, category, readTime, forZh, forEn, hot }),
+        body: JSON.stringify({ title, excerpt, body, category, readTime, forZh: false, forEn, hot }),
       });
       const j = await res.json();
       if (!res.ok) throw new Error(j?.error ?? "保存失败");
@@ -190,12 +189,8 @@ export function EditDraftClient({ article }: { article: Draft }) {
 
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <label className="flex items-center gap-2">
-              <input type="checkbox" checked={forZh} onChange={(e) => setForZh(e.target.checked)} />
-              国内站(f1frp.com)
-            </label>
-            <label className="flex items-center gap-2">
               <input type="checkbox" checked={forEn} onChange={(e) => setForEn(e.target.checked)} />
-              海外站(getfrp.com)
+              Publish on GetFRP
             </label>
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={hot} onChange={(e) => setHot(e.target.checked)} />

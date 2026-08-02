@@ -21,7 +21,7 @@ export default async function SignUpPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // getfrp（en/海外）邮箱+密码直接注册;f1frp.com（zh）手机号 / 微信。
+  // GetFRP uses email and password authentication.
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4 py-16">
       {locale === "en" ? <EmailPasswordForm mode="signUp" /> : <PhoneAuthForm mode="signUp" />}

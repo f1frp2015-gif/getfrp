@@ -17,6 +17,25 @@ China.
 This repository is independent from `f1frp2015-gif/f1frp`. GetFRP production
 must always be reproducible from this repository's `main` branch.
 
+## Database isolation
+
+GetFRP uses its own PostgreSQL database and runtime role:
+
+| Setting | Required value |
+| --- | --- |
+| Database | `getfrp` |
+| Runtime role | `getfrp_app` |
+
+Never point GetFRP at the F1FRP database or reuse F1FRP's runtime connection.
+The application role only receives access to the `getfrp` database. When
+provisioning a fresh database, run the supplier slug migration with a database
+owner connection before switching the application over:
+
+```bash
+DATABASE_URL='postgresql://OWNER_CONNECTION_TO_GETFRP' \
+pnpm exec tsx scripts/apply-getfrp-supplier-slugs.ts
+```
+
 ## Local development
 
 ```bash

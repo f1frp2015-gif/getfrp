@@ -2,7 +2,7 @@
 
 // Rasterize a PDF File → JPEG data URLs (one per page) in the browser, so vision
 // models that can't ingest PDF directly — Qwen-VL via DashScope on the domestic
-// (f1frp.com) side — can read drawings as images. Overseas (Gemini) reads PDF
+// Private-job models can read drawings as images. Gemini reads PDF
 // natively and never calls this.
 //
 // pdfjs-dist is lazy-imported (dynamic import) so it stays out of the main bundle

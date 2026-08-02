@@ -17,7 +17,7 @@ export async function generateMetadata({
   const isEn = locale === "en";
   return {
     title: isEn
-      ? "Composite Fibers Index — Glass / Carbon / Basalt / Aramid / Bio | f1frp"
+      ? "Composite Fibers Index — Glass / Carbon / Basalt / Aramid / Bio | getfrp"
       : "复材纤维体系总览 — 玻纤 / 碳纤 / 玄武岩 / 芳纶 / 生物基 | 复材站",
     description: isEn
       ? "Index of composite reinforcement fiber families with grades, applications, and links to materials, papers, and patents per fiber type."
@@ -47,8 +47,8 @@ export default async function FibersHubPage({
         </h1>
         <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
           {isEn
-            ? "Pick a fiber family to drill into grade ranges, suppliers, papers, patents, and process compatibility — all linked into the rest of the f1frp libraries."
-            : "选择纤维家族,进入对应的牌号区间、供应商、论文、专利、工艺兼容性 — 全部交叉链接到 f1frp 六大库。"}
+            ? "Pick a fiber family to drill into grade ranges, suppliers, papers, patents, and process compatibility — all linked into the rest of the GetFRP libraries."
+            : "选择纤维家族,进入对应的牌号区间、供应商、论文、专利和工艺兼容性。"}
         </p>
       </header>
 

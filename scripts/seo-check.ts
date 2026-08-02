@@ -96,16 +96,16 @@ function checkKeyword(
 }
 
 // Structural guard. The en.json length/keyword checks above can't see whether a
-// page actually emits a canonical + cross-domain hreflang — that lives in
+// page actually emits a canonical — that lives in
 // page.tsx via @/lib/seo.alternates(), not in en.json. A page that sets
 // title/description but never calls alternates() inherits the layout default:
-// NO canonical, NO hreflang, and the homepage's og:title. This is the exact
+// NO canonical and the homepage's og:title. This is the exact
 // regression that shipped on /formulas /trade /tech /matrix /ai /platform /rfq
 // (+ ~15 more) and was fixed 2026-06-20. This check fails the strict build if it
 // ever comes back.
 const APP_DIR = "src/app/[locale]";
 
-// Routes that legitimately ship no canonical/hreflang: auth-gated (noindex) or
+// Routes that legitimately ship no canonical: auth-gated (noindex) or
 // pure redirects with no metadata.
 const ALT_EXEMPT: RegExp[] = [
   /(^|\/)dashboard(\/|$)/,
@@ -148,10 +148,83 @@ function checkAlternatesCoverage(): Violation[] {
         field: "alternates",
         severity: "error",
         message:
-          "sets metadata but never calls alternates() — ships no canonical/hreflang (inherits layout default)",
+          "sets metadata but never calls alternates() — ships no canonical (inherits layout default)",
       });
     }
   }
+  return out;
+}
+
+function checkStandaloneGetfrpSeo(): Violation[] {
+  const out: Violation[] = [];
+  const seoSources = [
+    "src/lib/sites.ts",
+    "src/lib/seo.ts",
+    "src/lib/sitemap-data.ts",
+    "scripts/build-llms-txt.ts",
+  ]
+    .map((file) => readFileSync(resolve(file), "utf8"))
+    .join("\n");
+
+  for (const [field, pattern] of [
+    ["f1frp-domain", /https?:\/\/f1frp\.com/i],
+    ["zh-hreflang", /hreflang=["']zh|["']zh-CN["']\s*:/i],
+    ["localized-sitemap-link", /<xhtml:link/i],
+  ] as const) {
+    if (pattern.test(seoSources)) {
+      out.push({
+        page: "standalone-site",
+        field,
+        severity: "error",
+        message: "GetFRP SEO sources must not declare a Chinese or cross-domain alternate",
+      });
+    }
+  }
+
+  const supplierClient = readFileSync(
+    resolve("src/app/[locale]/suppliers/suppliers-client.tsx"),
+    "utf8",
+  );
+  const supplierSitemap = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
+  if (supplierClient.includes("suppliers#") || !supplierClient.includes("supplier.slug")) {
+    out.push({
+      page: "/suppliers",
+      field: "supplier-links",
+      severity: "error",
+      message: "supplier cards must link to independent slug URLs",
+    });
+  }
+  if (
+    !supplierSitemap.includes("supplierListings.slug") ||
+    supplierSitemap.includes("eq(supplierListings.profilePublished, true)")
+  ) {
+    out.push({
+      page: "/sitemaps/suppliers.xml",
+      field: "supplier-coverage",
+      severity: "error",
+      message: "supplier sitemap must include every English supplier slug",
+    });
+  }
+
+  const homepage = readFileSync(resolve("src/app/[locale]/home-english.tsx"), "utf8");
+  const homepageMetadata = readFileSync(resolve("src/app/[locale]/page.tsx"), "utf8");
+  if (!homepage.includes("China FRP Products &amp; Manufacturers")) {
+    out.push({
+      page: "/",
+      field: "h1",
+      severity: "error",
+      message: "homepage H1 must retain the China FRP products and manufacturers keyword",
+    });
+  }
+  if (!homepageMetadata.includes("FRP Products & Suppliers China — Factory-Direct Marketplace")) {
+    out.push({
+      page: "/",
+      field: "title",
+      severity: "error",
+      message: "homepage title must retain the factory-direct China FRP keyword",
+    });
+  }
+
   return out;
 }
 
@@ -218,8 +291,9 @@ function main() {
     }
   }
 
-  // Structural canonical/hreflang coverage across all page.tsx routes.
+  // Structural canonical coverage across all page.tsx routes.
   violations.push(...checkAlternatesCoverage());
+  violations.push(...checkStandaloneGetfrpSeo());
 
   const errors = violations.filter((v) => v.severity === "error");
   const warns = violations.filter((v) => v.severity === "warn");
