@@ -41,7 +41,10 @@ import {
 } from "@/lib/data/wanhua-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
-import { loadProductsForSupplier } from "@/lib/products/queries";
+import {
+  inferProductPagesForSupplier,
+  loadProductsForSupplier,
+} from "@/lib/products/queries";
 import {
   getSupplierRegionByName,
   getSupplierRegionPage,
@@ -230,6 +233,9 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const location = supplier.locationEn ?? "China";
   const productNames = (supplier.productsEn ?? []) as string[];
   const structuredProducts = await loadProductsForSupplier(supplier);
+  const relatedProductPages = structuredProducts.length === 0
+    ? inferProductPagesForSupplier(supplier)
+    : [];
   const processes = (supplier.processListEn ?? []) as string[];
   const certifications = (supplier.certificationsEn ?? []) as string[];
   const productsServicesSummary =
@@ -477,6 +483,21 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                         className="flex items-center justify-between rounded-lg border border-border/70 px-3 py-2.5 text-sm font-medium hover:border-foreground/40"
                       >
                         {product.shortName ?? product.nameEn}
+                        <ArrowRight size={14} />
+                      </Link>
+                    ))}
+                    {relatedProductPages.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug}` as never}
+                        className="flex items-center justify-between rounded-lg border border-dashed border-border/70 px-3 py-2.5 text-sm font-medium hover:border-foreground/40"
+                      >
+                        <span>
+                          {product.shortName ?? product.nameEn}
+                          <span className="mt-0.5 block text-[10px] font-normal text-muted-foreground">
+                            Related specification · capability checked at RFQ
+                          </span>
+                        </span>
                         <ArrowRight size={14} />
                       </Link>
                     ))}

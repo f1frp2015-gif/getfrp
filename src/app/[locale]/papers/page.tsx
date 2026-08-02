@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { and, desc, isNotNull, ne, sql } from "drizzle-orm";
+import { and, desc, isNotNull, ne } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { papers as papersTable } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
 import { paperCategories } from "@/lib/data/papers";
 import { PapersClient, type SerializedPaper } from "./papers-client";
+import { buildCanonicalPaperSlugMap } from "@/lib/paper-urls";
 
 // 2026-04-27: list query now skips the heavy `abstract` field (only loaded
 // on detail pages). Pre-fix the page was force-dynamic with full-row select,
@@ -53,17 +54,18 @@ export default async function PapersPage({
     })
     .from(papersTable)
     .where(
-      // English records require both a translated title and an ASCII route.
+      // English records require a translated title. Public routes are built
+      // from that title below, so a legacy Chinese storage slug is harmless.
       and(
         isNotNull(papersTable.titleEn),
         ne(papersTable.titleEn, ""),
-        sql`COALESCE(${papersTable.slug}, ${papersTable.id}) ~ '^[\\x00-\\x7F]+$'`,
       ),
     )
     .orderBy(desc(papersTable.year), desc(papersTable.citationCount));
 
+  const canonicalById = buildCanonicalPaperSlugMap(rows);
   const serialized: SerializedPaper[] = rows.map((r) => ({
-    id: r.slug ?? r.id,
+    id: canonicalById.get(r.id) ?? r.id,
     title: r.titleEn ?? "",
     titleEn: r.titleEn ?? "",
     authors: (r.authors ?? []).filter(

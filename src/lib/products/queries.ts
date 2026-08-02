@@ -246,6 +246,21 @@ export async function loadSuppliersForProduct(
   }
 }
 
+export function inferProductPagesForSupplier(
+  supplier: typeof supplierListings.$inferSelect,
+): CatalogProduct[] {
+  return PRODUCT_SEED_RECORDS.filter((product) => {
+      const page = getSupplierCategoryPage(product.slug);
+      return page ? supplierMatchesCategory(page, supplier) : false;
+    }).map((record) => ({
+      ...record,
+      shortName: record.shortName ?? null,
+      description: record.description ?? null,
+      imageUrl: record.imageUrl ?? null,
+      imageAlt: record.imageAlt ?? null,
+    }));
+}
+
 export async function loadProductsForSupplier(
   supplier: typeof supplierListings.$inferSelect,
 ): Promise<CatalogProduct[]> {
@@ -263,15 +278,6 @@ export async function loadProductsForSupplier(
       .orderBy(asc(products.nameEn));
     return rows.map(({ product }) => product);
   } catch {
-    return PRODUCT_SEED_RECORDS.filter((product) => {
-      const page = getSupplierCategoryPage(product.slug);
-      return page ? supplierMatchesCategory(page, supplier) : false;
-    }).map((record) => ({
-      ...record,
-      shortName: record.shortName ?? null,
-      description: record.description ?? null,
-      imageUrl: record.imageUrl ?? null,
-      imageAlt: record.imageAlt ?? null,
-    }));
+    return inferProductPagesForSupplier(supplier);
   }
 }

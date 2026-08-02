@@ -55,6 +55,7 @@ export function Footer() {
             </span>
             <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
+            <Link href="/sitemap" className="hover:text-foreground">Sitemap</Link>
             <Link href="/image-credits" className="hover:text-foreground">
               {t("imageCredits")}
             </Link>
