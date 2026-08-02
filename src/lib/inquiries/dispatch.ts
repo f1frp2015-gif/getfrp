@@ -18,6 +18,7 @@
 import { db } from "@/lib/db";
 import { supplierListings, enterprises, rfqDispatches } from "@/lib/db/schema";
 import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
+import { getGetfrpFrom } from "@/lib/email/from";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export interface RfqPayload {
@@ -45,7 +46,7 @@ export interface RfqPayload {
 
 const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
 const CC_OPS = OPS_RECIPIENT ? [OPS_RECIPIENT] : [];
-const FROM = "GetFRP RFQ <noreply@getfrp.com>";
+const FROM = getGetfrpFrom("GetFRP RFQ");
 
 const CATEGORY_TO_SUPPLIER: Record<string, string[]> = {
   resin: ["resin", "additive"],
