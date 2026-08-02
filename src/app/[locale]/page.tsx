@@ -32,7 +32,7 @@ import { getLatestPublishedReport } from "@/lib/prices/queries";
 import { newsList } from "@/lib/data/news";
 import { ValueChainSection } from "@/components/value-chain-section";
 import { HomePageEnglish } from "./home-english";
-import { alternates } from "@/lib/seo";
+import { alternates, og } from "@/lib/seo";
 import type { Metadata } from "next";
 
 // Homepage live stats re-query DB on this cadence. DB count queries hit
@@ -52,13 +52,16 @@ export async function generateMetadata({
   const { locale } = await params;
   const base: Metadata = { alternates: alternates("/") };
   if (locale !== "en") return base;
+  const title = "FRP Products & Suppliers China | getfrp Marketplace";
+  const description =
+    "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.";
   return {
     ...base,
     title: {
-      absolute: "Find FRP Products & Suppliers in China | getfrp",
+      absolute: title,
     },
-    description:
-      "Search FRP products and qualified composite suppliers in China by product category, manufacturing process or specification with AI-assisted matching.",
+    description,
+    openGraph: og("/", { title, description }),
   };
 }
 

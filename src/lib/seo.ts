@@ -48,13 +48,26 @@ export function og(
 // EN hreflang is omitted (avoids Google chasing a 404).
 export function alternates(
   path: string,
-  opts: { zhOnly?: boolean } = {},
+  opts: { zhOnly?: boolean; enOnly?: boolean } = {},
 ): Metadata["alternates"] {
   const { zh, en } = crossSiteUrls(path);
   if (opts.zhOnly) {
     return {
       canonical: canonical(path),
       languages: { zh, "zh-CN": zh, "x-default": zh },
+    };
+  }
+  if (opts.enOnly) {
+    return {
+      canonical: canonical(path),
+      languages: {
+        en,
+        "en-US": en,
+        "en-GB": en,
+        "en-AU": en,
+        "en-CA": en,
+        "x-default": en,
+      },
     };
   }
   return {

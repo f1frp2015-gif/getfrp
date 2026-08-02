@@ -35,6 +35,12 @@ export function Footer() {
             <Link href="/source-from-china" className="transition-colors hover:text-[#0b8179]">
               Sourcing process
             </Link>
+            <Link href="/guides" className="transition-colors hover:text-[#0b8179]">
+              Guides
+            </Link>
+            <Link href="/tools" className="transition-colors hover:text-[#0b8179]">
+              Tools
+            </Link>
             <Link href="/rfq" className="font-semibold text-[#0a736d] transition-colors hover:text-[#095f5a]">
               Submit RFQ →
             </Link>

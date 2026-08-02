@@ -41,13 +41,22 @@ export type ProductListItem = CatalogProduct & { supplierCount: number };
 export type ProductSupplier = {
   id: string;
   name: string;
+  category: string;
   location: string;
+  established: number | null;
   description: string;
+  products: string[];
+  processList: string[];
+  certifications: string[];
   logo: string | null;
   website: string | null;
   verified: boolean;
   profilePublished: boolean;
+  enterpriseId: string | null;
   scaleTier: string | null;
+  employeeCount: string | null;
+  annualRevenue: string | null;
+  sponsored: boolean;
   relationshipType: string;
   supplierProductName: string | null;
   customAvailable: boolean;
@@ -140,6 +149,8 @@ export async function loadSuppliersForProduct(
         relation: supplierProducts,
         enterpriseLogo: enterprises.logo,
         enterpriseWebsite: enterprises.website,
+        employeeCount: enterprises.employeeCount,
+        annualRevenue: enterprises.annualRevenue,
       })
       .from(supplierProducts)
       .innerJoin(
@@ -154,16 +165,25 @@ export async function loadSuppliersForProduct(
         desc(supplierListings.brandPriority),
         asc(supplierListings.nameEn),
       );
-    return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite }) => ({
+    return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
       id: supplier.id,
       name: supplier.nameEn ?? supplier.name,
+      category: supplier.category ?? "",
       location: supplier.locationEn ?? supplier.location ?? "China",
+      established: supplier.established ?? null,
       description: supplier.descriptionEn ?? supplier.description ?? "",
+      products: (supplier.productsEn ?? supplier.products ?? []) as string[],
+      processList: (supplier.processListEn ?? supplier.processList ?? []) as string[],
+      certifications: (supplier.certificationsEn ?? supplier.certifications ?? []) as string[],
       logo: supplier.logo ?? enterpriseLogo ?? null,
       website: supplier.website ?? enterpriseWebsite ?? null,
       verified: Boolean(supplier.verified),
       profilePublished: Boolean(supplier.profilePublished),
+      enterpriseId: supplier.enterpriseId ?? null,
       scaleTier: supplier.scaleTier,
+      employeeCount: employeeCount ?? null,
+      annualRevenue: annualRevenue ?? null,
+      sponsored: supplier.id === "sup-yaoyi",
       relationshipType: relation.relationshipType,
       supplierProductName: relation.supplierProductName,
       customAvailable: relation.customAvailable,
@@ -176,21 +196,36 @@ export async function loadSuppliersForProduct(
     if (!page) return [];
     try {
       const rows = await db
-        .select({ supplier: supplierListings, enterpriseLogo: enterprises.logo })
+        .select({
+          supplier: supplierListings,
+          enterpriseLogo: enterprises.logo,
+          enterpriseWebsite: enterprises.website,
+          employeeCount: enterprises.employeeCount,
+          annualRevenue: enterprises.annualRevenue,
+        })
         .from(supplierListings)
         .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id));
       return rows
         .filter(({ supplier }) => supplierMatchesCategory(page, supplier))
-        .map(({ supplier, enterpriseLogo }) => ({
+        .map(({ supplier, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
           id: supplier.id,
           name: supplier.nameEn ?? supplier.name,
+          category: supplier.category ?? "",
           location: supplier.locationEn ?? supplier.location ?? "China",
+          established: supplier.established ?? null,
           description: supplier.descriptionEn ?? supplier.description ?? "",
+          products: (supplier.productsEn ?? supplier.products ?? []) as string[],
+          processList: (supplier.processListEn ?? supplier.processList ?? []) as string[],
+          certifications: (supplier.certificationsEn ?? supplier.certifications ?? []) as string[],
           logo: supplier.logo ?? enterpriseLogo ?? null,
-          website: supplier.website,
+          website: supplier.website ?? enterpriseWebsite ?? null,
           verified: Boolean(supplier.verified),
           profilePublished: Boolean(supplier.profilePublished),
+          enterpriseId: supplier.enterpriseId ?? null,
           scaleTier: supplier.scaleTier,
+          employeeCount: employeeCount ?? null,
+          annualRevenue: annualRevenue ?? null,
+          sponsored: supplier.id === "sup-yaoyi",
           relationshipType:
             supplier.category === "resin" || supplier.category === "fiber"
               ? "supplier"

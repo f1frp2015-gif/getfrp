@@ -4,11 +4,7 @@ import { notFound } from "next/navigation";
 import {
   ArrowRight,
   CheckCircle2,
-  Clock3,
   Factory,
-  MapPin,
-  PackageCheck,
-  ShieldCheck,
 } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -23,6 +19,8 @@ import {
 } from "@/lib/products/queries";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { supplierCategories } from "@/lib/data/suppliers";
+import { SuppliersClient } from "../../suppliers/suppliers-client";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -70,6 +68,9 @@ export default async function ProductDetailPage({
   const suppliers = await loadSuppliersForProduct(product);
   const pageUrl = `${CURRENT_SITE_URL}/products/${product.slug}`;
   const sourcingGuideHref = SOURCING_GUIDE_BY_PRODUCT[product.slug];
+  const directoryCategories = supplierCategories
+    .filter((category) => suppliers.some((supplier) => supplier.category === category.id))
+    .map((category) => ({ id: category.id, name: category.nameEn }));
 
   return (
     <main>
@@ -258,50 +259,18 @@ export default async function ProductDetailPage({
               Suppliers connected to {product.shortName ?? product.nameEn}
             </h2>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              Every card is an explicit supplier-product relationship. Verification
+              Every row is an explicit supplier-product relationship. Verification
               applies to the recorded capability and evidence state, not a blanket
               certification of every specification.
             </p>
           </div>
           {suppliers.length > 0 ? (
-            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {suppliers.map((supplier) => (
-                <article key={supplier.id} className="rounded-xl border border-border/70 bg-background p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
-                        {supplier.relationshipType}
-                      </div>
-                      <h3 className="mt-2 text-lg font-semibold">{supplier.name}</h3>
-                    </div>
-                    {supplier.verified && <ShieldCheck size={18} className="shrink-0 text-[#0a756f]" />}
-                  </div>
-                  <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <MapPin size={13} /> {supplier.location}
-                  </div>
-                  <p className="mt-4 line-clamp-3 text-[13px] leading-6 text-muted-foreground">
-                    {supplier.description || `${supplier.name} product capability record.`}
-                  </p>
-                  <div className="mt-5 grid grid-cols-2 gap-2 text-[11px]">
-                    <div className="rounded-lg bg-muted/50 p-3"><PackageCheck size={14} /><div className="mt-2 text-muted-foreground">MOQ</div><div className="mt-0.5 font-medium">{supplier.moq ? `${supplier.moq} ${supplier.moqUnit ?? "units"}` : "On request"}</div></div>
-                    <div className="rounded-lg bg-muted/50 p-3"><Clock3 size={14} /><div className="mt-2 text-muted-foreground">Lead time</div><div className="mt-0.5 font-medium">{supplier.leadTimeDays ? `${supplier.leadTimeDays} days` : "Confirm by RFQ"}</div></div>
-                  </div>
-                  <div className="mt-5 flex gap-2">
-                    {supplier.profilePublished ? (
-                      <Link href={`/suppliers/${supplier.id}` as never} className={buttonVariants({ size: "sm", variant: "outline" })}>
-                        View supplier
-                      </Link>
-                    ) : (
-                      <Link href={`/suppliers?q=${encodeURIComponent(supplier.name)}` as never} className={buttonVariants({ size: "sm", variant: "outline" })}>
-                        View directory record
-                      </Link>
-                    )}
-                    <Link href={`/rfq?product=${encodeURIComponent(product.slug)}&supplier=${encodeURIComponent(supplier.id)}` as never} className={buttonVariants({ size: "sm" })}>
-                      RFQ
-                    </Link>
-                  </div>
-                </article>
-              ))}
+            <div className="mt-8">
+              <SuppliersClient
+                suppliers={suppliers}
+                categories={directoryCategories}
+                provinces={[]}
+              />
             </div>
           ) : (
             <div className="mt-8 rounded-xl border border-dashed border-border p-10 text-center">
@@ -310,6 +279,31 @@ export default async function ProductDetailPage({
               <p className="mt-2 text-sm text-muted-foreground">Submit an RFQ and the sourcing desk will verify a shortlist.</p>
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="border-b border-border/80 bg-muted/20">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            Buyer research
+          </div>
+          <h2 className="mt-2 text-2xl font-semibold">Validate the material, supplier and landed cost</h2>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["FRP vs steel", "/compare/frp-vs-steel"],
+              ["FRP material properties", "/technical/frp-properties"],
+              ["Supplier quality inspection", "/guides/frp-quality-inspection"],
+              ["FRP landed cost estimator", "/tools/frp-cost-estimator"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href as never}
+                className="group flex items-center justify-between rounded-xl border border-border/70 bg-background px-4 py-4 text-sm font-medium transition-colors hover:border-[#0a756f]/50"
+              >
+                {label}<ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
