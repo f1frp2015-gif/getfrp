@@ -28,3 +28,9 @@ independent from this split onward.
 - GetFRP defaults to `NEXT_PUBLIC_SITE_URL=https://getfrp.com`, `NEXT_PUBLIC_LOCALES=en`, and `NEXT_PUBLIC_DEFAULT_LOCALE=en`.
 - Validate changes with `pnpm lint`, `pnpm exec tsc --noEmit`, and `NEXT_PUBLIC_SITE_URL=https://getfrp.com NEXT_PUBLIC_LOCALES=en NEXT_PUBLIC_DEFAULT_LOCALE=en pnpm build`.
 - A request to “deploy” means merge a validated PR to `main`, wait for the Git-connected Vercel production deployment, verify `getfrp.com`, and report the Git SHA and Vercel deployment ID.
+
+## Supplier profile logo rule
+
+- Every newly published supplier profile must first check the supplier's official website for its current logo.
+- Prefer downloading that official logo into `public/supplier-assets/` and referencing the local asset from the profile data; do not rely on an unverified hotlinked image.
+- If no official logo is available, use the profile's text fallback and record that the logo was unavailable. Keep logo provenance in the profile source comments or official catalog links.

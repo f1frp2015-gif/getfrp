@@ -102,7 +102,7 @@ export const JUSHI_SUPPLIER_PROFILE: SupplierListing = {
   ],
   profilePublished: true,
   profileReviewedAt: new Date("2026-08-02T00:00:00.000Z"),
-  logo: null,
+  logo: "/supplier-assets/jushi-logo.png",
   contactEmail: "info@jushi.com",
   contactPhone: "0086-573-88181222",
   address: "318 Fenghuanghu Avenue, Wutong District, Tongxiang, Zhejiang 314500, China",

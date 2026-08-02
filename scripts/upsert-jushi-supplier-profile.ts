@@ -39,6 +39,7 @@ async function main() {
       slug: supplierListings.slug,
       profilePublished: supplierListings.profilePublished,
       website: supplierListings.website,
+      logo: supplierListings.logo,
       ecatalogs: supplierListings.ecatalogs,
     })
     .from(supplierListings)
@@ -59,6 +60,7 @@ async function main() {
     !profile?.profilePublished ||
     profile.slug !== JUSHI_SUPPLIER_PROFILE.slug ||
     profile.website !== JUSHI_SUPPLIER_PROFILE.website ||
+    profile.logo !== JUSHI_SUPPLIER_PROFILE.logo ||
     !profile.ecatalogs?.length ||
     relationship?.productId !== JUSHI_PRODUCT_RELATION.productId
   ) {
