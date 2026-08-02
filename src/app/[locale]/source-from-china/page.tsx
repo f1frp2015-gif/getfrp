@@ -72,10 +72,9 @@ type VerifiedRow = {
 
 export function generateMetadata(): Metadata {
   return {
-    title:
-      "Source FRP composites from China: products, standards & sourcing playbook",
+    title: "Source FRP from China — Products, Suppliers & Standards | getfrp",
     description:
-      "What FRP products to source from China (pultruded profiles, grating, rebar, pipe), the GB ⇄ ASTM / ISO / EN standards crosswalk, export-readiness certifications, and a 6-step sourcing playbook — handled by one bilingual desk that sources as your principal.",
+      "Source FRP products from China with matched manufacturers, specification checks, standards cross-references, factory verification and export support.",
     alternates: alternates("/source-from-china"),
   };
 }
@@ -639,7 +638,7 @@ export default async function SourceFromChinaPage({
               standard, and end-use environment.
             </p>
             <p className="mt-2 font-mono text-[11px] text-background/70">
-              Tool: <span className="underline">/materials</span> to benchmark property ranges
+              Tool: <span className="underline">/products</span> to compare product specifications
             </p>
           </PlatformCard>
 

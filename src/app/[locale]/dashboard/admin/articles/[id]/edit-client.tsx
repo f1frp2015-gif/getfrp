@@ -125,7 +125,7 @@ export function EditDraftClient({ article }: { article: Draft }) {
         </div>
         {published && (
           <Link
-            href={`/articles/${article.slug}` as "/articles/[slug]"}
+            href="/news"
             target="_blank"
             className="text-sm text-primary hover:underline"
           >

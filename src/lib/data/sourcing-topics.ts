@@ -51,12 +51,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "frp-grating",
     pillar: "product",
-    title: "Source FRP grating from China — supplier shortlist & specifications",
+    title: "How to source FRP grating from China — specifications and factory checks",
     intro:
       "Verified Chinese FRP grating manufacturers, classified by molded vs pultruded process, with the certifications overseas buyers actually screen by.",
     deck:
       "FRP grating is the highest-volume cross-border SKU in the Chinese composites trade and the easiest one to get wrong on the first import. Two manufacturing processes (molded and pultruded) produce visually similar products with very different load profiles, fire ratings and unit economics. This page maps the Chinese supply base by process, lists the certifications that matter per end-market, and points to the verified plants that already ship into US, EU, AU and ME projects.",
-    metaTitle: "FRP grating supplier China — molded & pultruded shortlist",
+    metaTitle: "How to Source FRP Grating from China | Buyer’s Guide",
     metaDescription:
       "Verified Chinese FRP grating manufacturers: molded vs pultruded process, CE / EN 13706 / DNV / ASTM-tested mill sheets, MOQ and lead-time benchmarks for export buyers.",
     stats: [
@@ -133,7 +133,7 @@ export const sourcingTopics: SourcingTopic[] = [
       },
     ],
     related: [
-      { label: "Verified pultrusion suppliers", href: "/pultrusion" },
+      { label: "Pultruded FRP profiles and manufacturers", href: "/products/pultruded-profiles" },
       { label: "Standards crosswalk (GB ⇄ ASTM ⇄ EN)", href: "/standards" },
       { label: "Sourcing playbook (RFQ → delivery)", href: "/source-from-china" },
     ],
@@ -143,12 +143,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "frp-rebar",
     pillar: "product",
-    title: "Source FRP rebar from China — GFRP / BFRP / CFRP rebar suppliers",
+    title: "How to source FRP rebar from China — GFRP, BFRP and CFRP",
     intro:
       "Verified Chinese FRP rebar manufacturers — glass, basalt and carbon fiber rebar — with the corrosion-resistant infrastructure pedigree your project specifier wants.",
     deck:
       "FRP rebar is the fastest-growing infrastructure SKU in cross-border Chinese composites trade. Substituting steel rebar in seawall, bridge deck, parking structure and chloride-exposed slab applications eliminates corrosion as a failure mode — and Chinese capacity for GFRP and BFRP rebar has scaled past the European supply by 2024. This page maps the Chinese FRP rebar supply base by fiber system, lists the ACI / ASTM / EN specs each plant tests against, and explains where the unit-cost math actually beats steel.",
-    metaTitle: "FRP rebar supplier China — GFRP / BFRP / CFRP rebar export",
+    metaTitle: "How to Source FRP Rebar from China | Buyer’s Guide",
     metaDescription:
       "Verified Chinese FRP rebar manufacturers: GFRP, BFRP and CFRP rebar tested to ACI 440.6, ASTM D7957 and ISO 10406. Specifications, MOQs, and an export-ready shortlist.",
     stats: [
@@ -496,12 +496,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "pultruded-profiles",
     pillar: "product",
-    title: "Source pultruded FRP profiles from China — I-beam, channel, angle, tube",
+    title: "How to source pultruded FRP profiles from China",
     intro:
       "Verified Chinese pultruders of structural FRP profiles — I-beams, channels, angles, tubes and SHS — graded to EN 13706, with the resin systems and tolerances overseas structural buyers screen for.",
     deck:
       "Pultruded structural profiles are the highest-tonnage engineered FRP category in cross-border trade — the corrosion-proof substitute for hot-dip galvanised steel in walkways, platforms, cable supports, handrail and process structures. China has the deepest pultrusion line capacity in the world, but quality splits sharply between commodity and structural-grade plants. This page maps the Chinese profile supply base by section type and resin system, explains the EN 13706 E17 / E23 grades a specifier will ask for, and flags the tolerance and straightness checks that separate a structural pultruder from a fence-post extruder.",
-    metaTitle: "Pultruded FRP profiles from China — I-beam, channel, EN 13706",
+    metaTitle: "How to Source Pultruded FRP Profiles from China",
     metaDescription:
       "Source structural pultruded FRP profiles from verified Chinese pultruders: I-beams, channels, angles, tubes and SHS, graded to EN 13706 E17 / E23, with resin-system, tolerance and straightness checks for overseas structural buyers.",
     stats: [
@@ -578,12 +578,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "frp-cable-tray",
     pillar: "product",
-    title: "Source FRP cable tray & ladder from China — NEMA FG-1 corrosion-proof",
+    title: "How to source FRP cable tray and ladder from China",
     intro:
       "Verified Chinese manufacturers of FRP cable tray, ladder and trunking — the non-corroding, non-conductive cable support for chemical, coastal, offshore and tunnel installations, tested to NEMA FG-1 and IEC 61537.",
     deck:
       "FRP cable tray is the corrosion-proof alternative to hot-dip galvanised and stainless steel cable support, and a natural companion SKU to FRP grating and profiles. In chemical plants, coastal and offshore facilities, water treatment, tunnels and electrified rail, steel tray corrodes and stainless gets expensive fast — pultruded GFRP ladder and tray solve both while staying non-conductive and non-magnetic. This page maps the Chinese cable-tray supply base by type, explains the NEMA FG-1 and IEC 61537 load classes a specifier will quote, and lists the fire and span ratings that decide whether a tray passes.",
-    metaTitle: "FRP cable tray from China — NEMA FG-1 ladder & trough suppliers",
+    metaTitle: "How to Source FRP Cable Tray from China | NEMA FG-1",
     metaDescription:
       "Source corrosion-proof FRP cable tray, ladder and trunking from verified Chinese pultruders: NEMA FG-1 and IEC 61537 load classes, fire ratings, support-span data, and the resin systems for chemical, coastal and offshore use.",
     stats: [
@@ -742,12 +742,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "frp-tanks-vessels",
     pillar: "product",
-    title: "Source FRP / GRP tanks & vessels from China — ASME RTP-1, EN 13121",
+    title: "How to source FRP and GRP tanks from China",
     intro:
       "Verified Chinese fabricators of FRP/GRP corrosion-resistant tanks, vessels, scrubbers and ducting — filament-wound and contact-moulded, built to ASME RTP-1, ASTM D3299/D4097, BS 4994 or EN 13121.",
     deck:
       "Corrosion-resistant FRP tanks and vessels are where composites earn their keep: storing acids, caustics, chlorine, brine and wastewater that eat carbon steel and stress stainless. China has deep filament-winding and hand-lay capacity, but a tank is only as good as its corrosion barrier and the design code it's built to. This page maps the Chinese tank/vessel supply base by process, explains the ASME RTP-1 / EN 13121 / BS 4994 design codes a serious buyer specifies, and flags the corrosion-barrier, resin and inspection points that separate a 20-year tank from a 2-year failure.",
-    metaTitle: "FRP / GRP tanks & vessels from China — ASME RTP-1, EN 13121",
+    metaTitle: "How to Source FRP Tanks from China | ASME RTP-1",
     metaDescription:
       "Source corrosion-resistant FRP/GRP tanks, vessels, scrubbers and duct from verified Chinese fabricators: filament-wound vs contact-moulded, ASME RTP-1 / ASTM D3299 / BS 4994 / EN 13121 design codes, corrosion-barrier and resin selection, and the inspection points that matter.",
     stats: [
@@ -824,12 +824,12 @@ export const sourcingTopics: SourcingTopic[] = [
   {
     slug: "frp-piping",
     pillar: "product",
-    title: "Source FRP / GRP / GRE pipe from China — AWWA C950, ISO 14692",
+    title: "How to source FRP, GRP and GRE pipe from China",
     intro:
       "Verified Chinese manufacturers of FRP/GRP/GRE pipe and fittings — filament-wound pressure pipe for water, wastewater, seawater, firewater and oilfield service, built to AWWA C950, ASTM D3517 / D2996 or ISO 14692.",
     deck:
       "FRP pipe is the corrosion-proof workhorse for water, wastewater, desalination, firewater and oilfield fluid transport — lighter than ductile iron, immune to internal and external corrosion, and good for decades of buried or topside service. China has large filament-winding pipe capacity, but pressure and stiffness ratings, jointing and the design standard are where buyers get burned. This page maps the Chinese pipe supply base, explains the AWWA C950 / ASTM / ISO 14692 ratings a specifier quotes, and covers the jointing systems that decide install cost and reliability.",
-    metaTitle: "FRP / GRP / GRE pipe from China — AWWA C950, ISO 14692 suppliers",
+    metaTitle: "How to Source FRP Pipe from China | AWWA C950",
     metaDescription:
       "Source corrosion-proof FRP/GRP/GRE pressure pipe and fittings from verified Chinese manufacturers: AWWA C950 / ASTM D3517 / D2996 / ISO 14692 ratings, pressure (PN) and stiffness (SN) classes, jointing systems, and service from potable water to oilfield.",
     stats: [

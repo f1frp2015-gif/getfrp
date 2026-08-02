@@ -117,9 +117,9 @@ export function StandardsClient({
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">
-          FRP &amp; Composite Standards Cross Reference
-        </h1>
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Search the FRP standards database
+        </h2>
         <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
       </div>
 

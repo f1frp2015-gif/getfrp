@@ -44,7 +44,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-7 flex flex-col gap-3 border-t border-[#dbe3e6] pt-5 text-[10px] text-[#74858e] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-7 flex flex-col gap-3 border-t border-[#dbe3e6] pt-5 text-[11px] text-[#667983] sm:flex-row sm:items-center sm:justify-between">
           <span>{t("copyright", { year: new Date().getFullYear() })}</span>
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5">

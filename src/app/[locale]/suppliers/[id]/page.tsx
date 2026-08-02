@@ -624,7 +624,7 @@ export async function generateMetadata({
   const category = getSupplierCategoryPage(id);
   const region = getSupplierRegionPage(id);
   if (locale === "en" && region) {
-    const title = `FRP & Composite Manufacturers in ${region.name}, China — Supplier Directory | getfrp`;
+    const title = `FRP Manufacturers in ${region.name}, China | getfrp`;
     return {
       title: { absolute: title },
       description: region.summary,
@@ -653,8 +653,12 @@ export async function generateMetadata({
     };
   }
   const supplierName = profile.supplier.nameEn ?? "Supplier";
-  const description =
+  const rawDescription =
     profile.supplier.descriptionEn ?? `${supplierName} supplier profile.`;
+  const normalizedDescription = rawDescription.replace(/\s+/g, " ").trim();
+  const description = normalizedDescription.length <= 165
+    ? normalizedDescription
+    : `${normalizedDescription.slice(0, 162).replace(/\s+\S*$/, "")}…`;
   const isVerifiedProfile = Boolean(profile.supplier.verified && profile.enterprise);
   const title = `${supplierName} — ${isVerifiedProfile ? "Verified" : "Public"} FRP Supplier Profile | getfrp`;
   return {
@@ -1122,28 +1126,27 @@ export default async function SupplierCategoryPageRoute({
             RELATED EVIDENCE
           </div>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-            Materials and standards to check with this category
+            Product specifications and standards to check
           </h2>
           <div className="mt-7 grid gap-8 lg:grid-cols-2">
             <div>
-              <h3 className="text-base font-semibold">Material specifications</h3>
+              <h3 className="text-base font-semibold">Product specification inputs</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Move from a supplier capability to a defined material or grade
-                before asking for a price. These verified material records are
-                the specification layer used during matching.
+                Move from a supplier capability to a defined product, resin
+                system, reinforcement and performance requirement before asking
+                for a price. These inputs are carried into product matching.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {relatedMaterials.map((material) => (
-                  <Link
+                  <span
                     key={encodeURIComponent(material.id)}
-                    href={`/materials/${encodeURIComponent(material.id)}` as never}
-                    className="rounded-md border border-border bg-background px-3 py-2 text-xs hover:border-foreground/50"
+                    className="rounded-md border border-border bg-background px-3 py-2 text-xs"
                   >
                     {material.name}
-                  </Link>
+                  </span>
                 ))}
-                <Link href="/materials" className="rounded-md border border-border bg-background px-3 py-2 text-xs hover:border-foreground/50">
-                  Browse all materials →
+                <Link href="/products" className="rounded-md border border-border bg-background px-3 py-2 text-xs hover:border-foreground/50">
+                  Browse FRP products →
                 </Link>
               </div>
             </div>

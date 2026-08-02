@@ -10,10 +10,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import {
-  materials as materialsTable,
   formulas as formulasTable,
   papers as papersTable,
-  patents as patentsTable,
 } from "@/lib/db/schema";
 import {
   parseCombo,
@@ -59,34 +57,6 @@ function keywordOr(
       .map((c) => ilike(c as never, `%${k}%`))
   );
   return or(...(ors as never[]));
-}
-
-async function searchMaterials(fiber: Fiber, resin: Resin, limit = 12) {
-  try {
-    const cols = [
-      materialsTable.name,
-      materialsTable.nameEn,
-      materialsTable.description,
-    ];
-    return await db
-      .select({
-        id: materialsTable.id,
-        name: materialsTable.nameEn,
-        category: materialsTable.category,
-        subCategory: materialsTable.subCategoryEn,
-        brand: materialsTable.brandEn,
-      })
-      .from(materialsTable)
-      .where(
-        or(
-          keywordOr(null, fiber.keywords, cols),
-          keywordOr(null, resin.keywords, cols)
-        )
-      )
-      .limit(limit);
-  } catch {
-    return [];
-  }
 }
 
 async function searchFormulas(fiber: Fiber, resin: Resin, limit = 12) {
@@ -141,36 +111,6 @@ async function searchPapers(fiber: Fiber, resin: Resin, limit = 12) {
   }
 }
 
-async function searchPatents(fiber: Fiber, resin: Resin, limit = 12) {
-  const kws = [...fiber.keywords, ...resin.keywords];
-  try {
-    return await db
-      .select({
-        id: patentsTable.id,
-        slug: patentsTable.slug,
-        titleEn: patentsTable.titleEn,
-        countryCode: patentsTable.countryCode,
-        status: patentsTable.status,
-        applicant: patentsTable.applicantEn,
-      })
-      .from(patentsTable)
-      .where(
-        or(
-          ...kws
-            .slice(0, 4)
-            .flatMap((k) => [
-              ilike(patentsTable.title, `%${k}%`),
-              ilike(patentsTable.titleEn, `%${k}%`),
-            ])
-        )
-      )
-      .orderBy(desc(patentsTable.createdAt))
-      .limit(limit);
-  } catch {
-    return [];
-  }
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -193,6 +133,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    robots: { index: false, follow: true },
     // Path-aware canonical + cross-domain hreflang (was missing — every combo
     // page shipped the layout's root canonical). Bilingual route, so not zhOnly.
     alternates: alternates(`/matrix/${combo}`),
@@ -216,11 +157,9 @@ export default async function ComboPage({
   // Use namespace Matrix.Combo so keys stay colocated with the parent Matrix page.
   const t = await getTranslations({ locale, namespace: "Platform.Matrix.Combo" });
 
-  const [materials, formulas, papers, patents] = await Promise.all([
-    searchMaterials(fiber, resin),
+  const [formulas, papers] = await Promise.all([
     searchFormulas(fiber, resin),
     searchPapers(fiber, resin),
-    searchPatents(fiber, resin),
   ]);
 
   const fiberName = locale === "en" ? fiber.nameEn : fiber.name;
@@ -312,25 +251,13 @@ export default async function ComboPage({
           </span>
           <span className="text-muted-foreground/40">·</span>
           <span>
-            {t("verdictEvidence", {
-              materials: materials.length,
-              papers: papers.length,
-              patents: patents.length,
-            })}
-          </span>
-          <span className="text-muted-foreground/40">·</span>
-          <span>
             {t("verdictUpdatedLabel")} {MATRIX_REVIEWED}
           </span>
         </div>
       </section>
 
       {/* Live stats from DB */}
-      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-lg border bg-background p-4 text-center">
-          <div className="text-2xl font-bold tabular-nums">{materials.length}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statMaterials")}</div>
-        </div>
+      <div className="mb-10 grid grid-cols-2 gap-3">
         <div className="rounded-lg border bg-background p-4 text-center">
           <div className="text-2xl font-bold tabular-nums">{formulas.length}</div>
           <div className="mt-1 text-xs text-muted-foreground">{t("statFormulas")}</div>
@@ -338,10 +265,6 @@ export default async function ComboPage({
         <div className="rounded-lg border bg-background p-4 text-center">
           <div className="text-2xl font-bold tabular-nums">{papers.length}</div>
           <div className="mt-1 text-xs text-muted-foreground">{t("statPapers")}</div>
-        </div>
-        <div className="rounded-lg border bg-background p-4 text-center">
-          <div className="text-2xl font-bold tabular-nums">{patents.length}</div>
-          <div className="mt-1 text-xs text-muted-foreground">{t("statPatents")}</div>
         </div>
       </div>
 
@@ -362,38 +285,32 @@ export default async function ComboPage({
         <p className="mt-3 text-xs text-muted-foreground">{t("processesHint")}</p>
       </section>
 
-      {/* Materials */}
-      {materials.length > 0 && (
-        <section className="mb-12">
-          <PlatformSectionHeading eyebrow="MATERIALS" title={t("matTitle")} />
-          <div className="grid gap-2 md:grid-cols-2">
-            {materials.map((m) => (
-              <Link
-                key={encodeURIComponent(m.id)}
-                href={`/materials/${encodeURIComponent(m.id)}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1 flex flex-wrap items-center gap-1.5">
-                  <Badge variant="outline" className="text-[10px]">
-                    {m.category}
-                  </Badge>
-                  {m.subCategory && (
-                    <Badge variant="secondary" className="text-[10px]">
-                      {m.subCategory}
-                    </Badge>
-                  )}
-                  {m.brand && (
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      {m.brand}
-                    </span>
-                  )}
-                </div>
-                <div className="line-clamp-2 font-medium">{m.name}</div>
-              </Link>
-            ))}
+      <section className="mb-12 grid gap-3 sm:grid-cols-2">
+        <Link
+          href="/products"
+          className="group rounded-lg border bg-background p-5 transition-colors hover:border-primary/40"
+        >
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            PRODUCT DATABASE
           </div>
-        </section>
-      )}
+          <div className="mt-2 flex items-center justify-between gap-3 font-semibold">
+            Compare FRP product specifications
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+          </div>
+        </Link>
+        <Link
+          href="/suppliers"
+          className="group rounded-lg border bg-background p-5 transition-colors hover:border-primary/40"
+        >
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            SUPPLIER DATABASE
+          </div>
+          <div className="mt-2 flex items-center justify-between gap-3 font-semibold">
+            Find qualified FRP manufacturers
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+          </div>
+        </Link>
+      </section>
 
       {/* Formulas */}
       {formulas.length > 0 && (
@@ -460,46 +377,8 @@ export default async function ComboPage({
         </section>
       )}
 
-      {/* Patents */}
-      {patents.length > 0 && (
-        <section className="mb-12">
-          <PlatformSectionHeading eyebrow="PATENTS" title={t("patentTitle")} />
-          <div className="grid gap-2 md:grid-cols-2">
-            {patents.map((p) => (
-              <Link
-                key={p.id}
-                href={`/patents/${encodeURIComponent(p.slug ?? p.id)}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
-              >
-                <div className="mb-1 flex flex-wrap items-center gap-1.5">
-                  {p.countryCode && (
-                    <Badge variant="outline" className="font-mono text-[10px]">
-                      {p.countryCode}
-                    </Badge>
-                  )}
-                  {p.status === "granted" && (
-                    <Badge variant="signal" className="text-[10px]">
-                      {t("badgeGranted")}
-                    </Badge>
-                  )}
-                </div>
-                <div className="line-clamp-2 font-medium">{p.titleEn}</div>
-                {p.applicant && (
-                  <div className="mt-1 text-xs text-muted-foreground line-clamp-1">
-                    {p.applicant}
-                  </div>
-                )}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Empty state if no DB hits at all */}
-      {materials.length === 0 &&
-        formulas.length === 0 &&
-        papers.length === 0 &&
-        patents.length === 0 && (
+      {formulas.length === 0 && papers.length === 0 && (
           <section className="rounded-lg border bg-muted/30 p-10 text-center">
             <p className="text-sm text-muted-foreground">
               {t("emptyBody", { name: displayName })}

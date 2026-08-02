@@ -12,7 +12,7 @@ import { loadPublishedProducts } from "@/lib/products/queries";
 
 export const revalidate = 3600;
 
-const title = "FRP Products from China — Structured Product Catalog | getfrp";
+const title = "FRP Products from China | Product & Supplier Catalog | getfrp";
 const description =
   "Explore structured FRP product families with materials, processes, specifications, standards and direct links to matched Chinese manufacturers and suppliers.";
 
@@ -106,7 +106,7 @@ export default async function ProductsPage({
               Structured product database
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              Products connected to the suppliers that make them.
+              FRP products from China, connected to qualified suppliers.
             </h1>
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[#b6cbd2]">
               Compare product materials, manufacturing routes, applications,
@@ -135,7 +135,7 @@ export default async function ProductsPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-        <form action="/products" method="get" className="flex max-w-2xl gap-2">
+        <form action="/products" method="get" className="flex max-w-2xl flex-col gap-2 sm:flex-row">
           <label className="flex min-h-12 flex-1 items-center gap-3 rounded-lg border border-border bg-background px-4 focus-within:border-[#0b8179]">
             <Search size={18} className="text-muted-foreground" />
             <span className="sr-only">Search products</span>
@@ -143,13 +143,13 @@ export default async function ProductsPage({
               type="search"
               name="q"
               defaultValue={rawQuery ?? ""}
-              placeholder="Search product, material, process, standard or application"
+              placeholder="Search FRP products or specifications"
               className="min-w-0 flex-1 bg-transparent text-sm outline-none"
             />
           </label>
           <button
             type="submit"
-            className="rounded-lg bg-[#0a756f] px-5 text-sm font-semibold text-white hover:bg-[#08645f]"
+            className="min-h-12 rounded-lg bg-[#0a756f] px-5 text-sm font-semibold text-white hover:bg-[#08645f]"
           >
             Search
           </button>
