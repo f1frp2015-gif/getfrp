@@ -167,7 +167,7 @@ export default async function LocaleLayout({
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "technical support",
-                  email: CONTACT.email,
+                  url: `${siteUrl}${CONTACT.path}`,
                   availableLanguage: ["en"],
                 },
               },

@@ -1,5 +1,6 @@
 const FROM = "GetFRP <noreply@getfrp.com>";
-const CC_OPS = ["support@getfrp.com"];
+const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
+const CC_OPS = OPS_RECIPIENT ? [OPS_RECIPIENT] : [];
 
 interface SendOpts {
   to: string;
@@ -17,6 +18,7 @@ export async function sendEmail({ to, subject, html, cc }: SendOpts): Promise<bo
   }
 
   try {
+    const resolvedCc = cc ?? CC_OPS;
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -26,7 +28,7 @@ export async function sendEmail({ to, subject, html, cc }: SendOpts): Promise<bo
       body: JSON.stringify({
         from: FROM,
         to,
-        cc: cc ?? CC_OPS,
+        cc: resolvedCc.length > 0 ? resolvedCc : undefined,
         subject,
         html,
       }),

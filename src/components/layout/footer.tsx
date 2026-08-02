@@ -4,7 +4,6 @@ import { ShieldCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
-import { CONTACT } from "@/lib/contact";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -44,9 +43,6 @@ export function Footer() {
             <Link href="/rfq" className="font-semibold text-[#0a736d] transition-colors hover:text-[#095f5a]">
               Submit RFQ →
             </Link>
-            <a href={`mailto:${CONTACT.email}`} className="text-[#667983] transition-colors hover:text-[#0b8179]">
-              {CONTACT.email}
-            </a>
           </nav>
         </div>
 

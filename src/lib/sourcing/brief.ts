@@ -8,7 +8,7 @@
 import { db } from "@/lib/db";
 import { sourcingBriefs, type NewSourcingBrief } from "@/lib/db/schema";
 
-const OPS_RECIPIENT = "support@getfrp.com";
+const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
 const FROM = "GetFRP Sourcing Desk <noreply@getfrp.com>";
 
 export type SourcingBriefInput = {
@@ -57,6 +57,10 @@ async function notifyOps(input: SourcingBriefInput, ticketId: string | null): Pr
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.warn("[sourcing-brief] RESEND_API_KEY missing — brief stored, ops not emailed");
+    return false;
+  }
+  if (!OPS_RECIPIENT) {
+    console.warn("[sourcing-brief] GETFRP_OPS_EMAIL missing — brief stored, ops not emailed");
     return false;
   }
   const b = input.buyer ?? {};

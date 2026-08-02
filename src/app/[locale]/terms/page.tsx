@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { alternates } from "@/lib/seo";
 import { setRequestLocale } from "next-intl/server";
 
@@ -116,8 +117,7 @@ function TermsEn() {
 
       <h2>8. Contact</h2>
       <p>
-        Email{" "}
-        <a href="mailto:support@getfrp.com">support@getfrp.com</a>{" "}
+        Use the <Link href="/rfq">GetFRP contact form</Link>{" "}
         for any question regarding these Terms.
       </p>
     </div>

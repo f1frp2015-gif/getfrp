@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   Mail,
   ShieldCheck,
@@ -143,12 +144,12 @@ export default async function AboutPage({
                   {t("contactTech")}
                 </div>
                 <div className="mt-1 text-sm text-muted-foreground">
-                  <a
-                    href={`mailto:${CONTACT.email}`}
+                  <Link
+                    href={CONTACT.path as "/rfq"}
                     className="hover:text-foreground"
                   >
-                    {CONTACT.email}
-                  </a>
+                    {CONTACT.label}
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -222,19 +223,19 @@ function EnglishTrustBlock() {
             <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
               TECHNICAL SERVICE HOTLINE
             </div>
-            <div className="mt-2 text-base font-semibold">{CONTACT.email}</div>
+            <div className="mt-2 text-base font-semibold">GetFRP RFQ desk</div>
             <div className="mt-0.5 text-xs text-muted-foreground">
               One channel for everything: pre-sales questions, RFQ, tech
               spec discussion, post-shipment issues. Replies within 24h on
               business days, English and Mandarin both fine.
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-3 text-xs">
-              <a
-                href={`mailto:${CONTACT.email}`}
+              <Link
+                href={CONTACT.path as "/rfq"}
                 className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-background transition-colors hover:bg-foreground/90"
               >
-                <Mail size={12} /> Email tech support
-              </a>
+                <Mail size={12} /> Contact the sourcing desk
+              </Link>
             </div>
           </div>
 

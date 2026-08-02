@@ -31,7 +31,7 @@ Each supplier profile identifies the company, China location, products, manufact
 primary: English
 canonical site: https://getfrp.com
 ## Contact
-- Sourcing and technical support: support@getfrp.com
+- [Submit an RFQ or contact the sourcing desk](https://getfrp.com/rfq)
 `;
 
 const LLMS_FULL = `${LLMS}

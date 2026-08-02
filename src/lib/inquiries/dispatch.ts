@@ -5,13 +5,14 @@
  * 1. Map material category → supplier categories
  * 2. SELECT top 3 verified, claimed suppliers (enterprise_id NOT NULL + enterprises.contact_email NOT NULL)
  *    ordered by brand_priority DESC, scale_tier (XL>L>M>S) DESC, view_count DESC
- * 3. Send Resend email to each claimed supplier's enterprise.contact_email; CC Doris
- * 4. Always also send to FALLBACK_RECIPIENT (operator visibility)
+ * 3. Send Resend email to each claimed supplier's enterprise.contact_email;
+ *    CC the GetFRP ops address when GETFRP_OPS_EMAIL is configured
+ * 4. Also notify that GetFRP-only ops address when configured
  * 5. Log every dispatch attempt to rfq_dispatches (status: sent / failed / fallback)
  *
- * If no claimed supplier matches, only the fallback gets the email — operator
- * routes manually until more suppliers claim. This preserves the past behavior
- * while enabling the real flywheel as suppliers come online.
+ * If no claimed supplier matches and no GetFRP ops address is configured, the
+ * RFQ remains safely stored in GetFRP's database and no cross-site fallback is
+ * used.
  */
 
 import { db } from "@/lib/db";
@@ -42,12 +43,8 @@ export interface RfqPayload {
   attachment?: { filename: string; content: string };
 }
 
-const FALLBACK_RECIPIENT = "support@getfrp.com";
-// 2026-05 simplification: single CC channel on both deploys.
-// (Previously routed to a named sourcing-desk inbox on en side; consolidated
-// to the tech mailbox after the anonymization policy made both sides
-// surface the same email anyway.)
-const CC_OPS = ["support@getfrp.com"];
+const OPS_RECIPIENT = process.env.GETFRP_OPS_EMAIL?.trim() || null;
+const CC_OPS = OPS_RECIPIENT ? [OPS_RECIPIENT] : [];
 const FROM = "GetFRP RFQ <noreply@getfrp.com>";
 
 const CATEGORY_TO_SUPPLIER: Record<string, string[]> = {
@@ -186,7 +183,8 @@ export async function dispatchToSuppliers(rfq: RfqPayload): Promise<void> {
     console.error("[dispatch] supplier lookup failed:", err);
   }
 
-  // 2. Build recipient list — always include fallback for operator visibility
+  // 2. Build recipient list. GetFRP ops visibility is opt-in through its own
+  // environment variable; there is intentionally no other-site fallback.
   type Recipient = {
     email: string;
     isFallback: boolean;
@@ -201,13 +199,15 @@ export async function dispatchToSuppliers(rfq: RfqPayload): Promise<void> {
     enterpriseId: m.enterpriseId,
     name: m.name,
   }));
-  recipients.push({
-    email: FALLBACK_RECIPIENT,
-    isFallback: true,
-    supplierId: null,
-    enterpriseId: null,
-    name: null,
-  });
+  if (OPS_RECIPIENT) {
+    recipients.push({
+      email: OPS_RECIPIENT,
+      isFallback: true,
+      supplierId: null,
+      enterpriseId: null,
+      name: null,
+    });
+  }
 
   console.info(
     `[dispatch] rfq=${rfq.id} target=${rfq.targetSupplierId ?? "auto"} cats=${supplierCats.join(",")} matched=${matches.length} → recipients=${recipients.length}`,
@@ -301,23 +301,23 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
     ? `${CURRENT_SITE_URL}/materials/${encodeURIComponent(rfq.materialId)}`
     : null;
   const rows: Array<[string, string | null | undefined]> = [
-    ["指定供应商 / Target supplier", targetSupplierName],
-    ["产品 / Product", rfq.materialName],
-    ["公司 / Company", rfq.company],
-    ["联系人 / Contact", rfq.name],
-    ["邮箱 / Email", rfq.email],
-    ["电话 / Phone", rfq.phone],
-    ["目的国 / Destination", rfq.destinationCountry],
-    ["数量 / Quantity", rfq.quantity],
-    ["应用场景 / Application", rfq.application],
-    ["标准与认证 / Standards", rfq.standards],
-    ["交期 / Delivery date", rfq.deliveryDate],
+    ["Target supplier", targetSupplierName],
+    ["Product", rfq.materialName],
+    ["Company", rfq.company],
+    ["Contact", rfq.name],
+    ["Email", rfq.email],
+    ["Phone", rfq.phone],
+    ["Destination", rfq.destinationCountry],
+    ["Quantity", rfq.quantity],
+    ["Application", rfq.application],
+    ["Standards", rfq.standards],
+    ["Delivery date", rfq.deliveryDate],
     ["Incoterm", rfq.incoterm],
-    ["目标价 / Target price", rfq.targetPrice],
-    ["样品 / Sample", rfq.sampleRequired ? "Required" : null],
+    ["Target price", rfq.targetPrice],
+    ["Sample", rfq.sampleRequired ? "Required" : null],
     ["NDA", rfq.ndaRequired ? "Requested before technical-file release" : null],
-    ["附件 / Attachment", rfq.attachment?.filename],
-    ["附加要求 / Extra", rfq.extraRequirements],
+    ["Attachment", rfq.attachment?.filename],
+    ["Extra requirements", rfq.extraRequirements],
   ];
   const tableRows = rows
     .filter((row): row is [string, string] => Boolean(row[1]))
@@ -331,28 +331,26 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
     .join("");
   return `
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head><meta charset="UTF-8"><title>New RFQ</title></head>
 <body style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px;color:#1a1a1a">
-  <h2 style="color:#0b756f">新询价单 / New RFQ</h2>
-  <p>您好，GetFRP 收到一份关于 <strong>${escapeHtml(rfq.materialName)}</strong> 的询价单。</p>
+  <h2 style="color:#0b756f">New RFQ</h2>
   <p>Hello, a new RFQ for <strong>${escapeHtml(rfq.materialName)}</strong> has been submitted through GetFRP.</p>
 
   <table style="width:100%;border-collapse:collapse;margin-top:16px">
     <tr style="background:#f5f5f5">
-      <th style="padding:8px;text-align:left;border:1px solid #ddd">字段 / Field</th>
-      <th style="padding:8px;text-align:left;border:1px solid #ddd">内容 / Value</th>
+      <th style="padding:8px;text-align:left;border:1px solid #ddd">Field</th>
+      <th style="padding:8px;text-align:left;border:1px solid #ddd">Value</th>
     </tr>
     ${tableRows}
   </table>
 
   ${materialUrl ? `<p style="margin-top:24px">
     <a href="${materialUrl}" style="display:inline-block;padding:10px 20px;background:#0b756f;color:#fff;border-radius:6px;text-decoration:none">
-      查看材料详情 / View Material
+      View Material
     </a>
   </p>` : ""}
   <p style="color:#888;font-size:12px;margin-top:32px">
-    此邮件由 GetFRP 自动发出。直接回复即可联系采购方。<br>
     Sent by GetFRP. Reply to this email to contact the buyer.
   </p>
 </body>

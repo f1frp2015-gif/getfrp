@@ -288,12 +288,12 @@ export default async function SourceFromChinaPage({
         >
           Ask AI to check feasibility
         </Link>
-        <a
-          href="mailto:support@getfrp.com"
+        <Link
+          href="/rfq"
           className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          Or email tech support →
-        </a>
+          Contact the sourcing desk →
+        </Link>
       </div>
 
       {/* Featured: what you can source — generated product figures, anonymous
@@ -596,10 +596,10 @@ export default async function SourceFromChinaPage({
         </div>
 
         <p className="mt-4 text-xs text-muted-foreground">
-          Curated by the GetFRP editorial team. Submit corrections or additions to{" "}
-          <a className="text-foreground underline" href="mailto:support@getfrp.com">
-            support@getfrp.com
-          </a>.
+          Curated by the GetFRP editorial team. Submit corrections or additions through the{" "}
+          <Link className="text-foreground underline" href="/rfq">
+            GetFRP contact form
+          </Link>.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -822,12 +822,12 @@ export default async function SourceFromChinaPage({
             >
               Try a sample sourcing query →
             </Link>
-            <a
-              href="mailto:support@getfrp.com"
+            <Link
+              href="/rfq"
               className="inline-flex items-center gap-1.5 rounded-md border border-background/30 px-4 py-2 text-sm text-background transition-colors hover:bg-background/10"
             >
-              Email tech support
-            </a>
+              Contact the sourcing desk
+            </Link>
           </div>
         </div>
       </section>
