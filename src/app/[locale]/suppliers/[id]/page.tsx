@@ -294,6 +294,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   );
   const website = supplier.website ?? enterprise?.website ?? null;
   const logo = supplier.logo ?? enterprise?.logo ?? null;
+  const logoNeedsDarkBackground = Boolean(logo?.includes("zhongfu-shenying"));
   const structuredLogo = logo
     ? new URL(logo, CURRENT_SITE_URL).toString()
     : null;
@@ -428,7 +429,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                   // Use a generous, centered box and preserve each source's
                   // intrinsic ratio so wide wordmarks remain legible without
                   // stretching or cropping.
-                  <div className="flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-white p-3 sm:h-28 sm:w-64 sm:p-4">
+                  <div className={`flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 p-3 sm:h-28 sm:w-64 sm:p-4 ${logoNeedsDarkBackground ? "bg-[#202020]" : "bg-white"}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={logo}
