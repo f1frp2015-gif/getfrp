@@ -19,9 +19,11 @@ import { Textarea } from "@/components/ui/textarea";
 export function SupplierClaimButton({
   supplierId,
   supplierName,
+  supplierPath = "/dashboard/claims",
 }: {
   supplierId: string;
   supplierName: string;
+  supplierPath?: string;
 }) {
   const { isLoaded, user } = useSession();
   const isSignedIn = !!user;
@@ -34,7 +36,7 @@ export function SupplierClaimButton({
   if (!isLoaded) {
     return (
       <Button variant="outline" size="sm" disabled>
-        认领此企业
+        Claim your company
       </Button>
     );
   }
@@ -42,10 +44,10 @@ export function SupplierClaimButton({
   if (!isSignedIn) {
     return (
       <Link
-        href={`/sign-in?redirect_url=/suppliers`}
+        href={`/sign-in?redirect_url=${encodeURIComponent(supplierPath)}`}
         className={buttonVariants({ variant: "outline", size: "sm" })}
       >
-        登录后认领
+        Sign in to claim
       </Link>
     );
   }
@@ -90,44 +92,44 @@ export function SupplierClaimButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className={buttonVariants({ variant: "outline", size: "sm" })}>
-        认领此企业
+        Claim your company
       </DialogTrigger>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>认领「{supplierName}」</DialogTitle>
+          <DialogTitle>Claim “{supplierName}”</DialogTitle>
           <DialogDescription>
-            认领成功后可编辑企业信息、上传产品 CAD / PDF、管理询盘。提交后我们会通过邮件或电话与您核实。
+            After approval, you can update your company profile, upload product documents and manage buyer inquiries. We will verify the request by email or phone.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium">联系人姓名 *</label>
-              <Input name="contactName" required placeholder="张经理" />
+              <label className="mb-1 block text-xs font-medium">Contact name *</label>
+              <Input name="contactName" required placeholder="Your name" />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium">职位</label>
-              <Input name="contactTitle" placeholder="销售总监" />
+              <label className="mb-1 block text-xs font-medium">Title</label>
+              <Input name="contactTitle" placeholder="Sales director" />
             </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium">电话 *</label>
-              <Input name="contactPhone" required placeholder="138xxxx0000" />
+              <label className="mb-1 block text-xs font-medium">Phone *</label>
+              <Input name="contactPhone" required placeholder="+1 555 123 4567" />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium">企业邮箱 *</label>
+              <label className="mb-1 block text-xs font-medium">Company email *</label>
               <Input name="contactEmail" required type="email" placeholder="sales@company.com" />
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium">营业执照 URL（可选）</label>
+            <label className="mb-1 block text-xs font-medium">Business license URL (optional)</label>
             <Input name="businessLicenseUrl" type="url" placeholder="https://..." />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium">备注（如您与该企业的关系）</label>
-            <Textarea name="note" rows={3} placeholder="如：我是该企业销售部，需认领公司资料..." />
+            <label className="mb-1 block text-xs font-medium">Note</label>
+            <Textarea name="note" rows={3} placeholder="Tell us how you are connected to the company." />
           </div>
 
           {error && (
@@ -143,10 +145,10 @@ export function SupplierClaimButton({
 
           <div className="flex items-center justify-end gap-2 pt-2">
             <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
-              取消
+              Cancel
             </Button>
             <Button type="submit" disabled={submitting}>
-              {submitting ? "提交中..." : "提交认领"}
+              {submitting ? "Submitting…" : "Submit claim"}
             </Button>
           </div>
         </form>

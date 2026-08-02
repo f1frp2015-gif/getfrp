@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { and, eq, ne } from "drizzle-orm";
+import { and, eq, isNull, ne } from "drizzle-orm";
 import { db } from "@/lib/db";
 import {
   enterprises,
   supplierClaims,
   supplierListings,
+  supplierDocuments,
   users,
 } from "@/lib/db/schema";
 import { gateAdmin } from "@/lib/admin";
@@ -74,6 +75,14 @@ export async function POST(
       .update(supplierListings)
       .set({ enterpriseId, updatedAt: new Date() })
       .where(eq(supplierListings.id, supplier.id));
+
+    // Documents uploaded before approval were intentionally unlinked. Attach
+    // them to the newly approved enterprise and supplier so product brochures
+    // and certificates remain available after the claim is accepted.
+    await db
+      .update(supplierDocuments)
+      .set({ enterpriseId, supplierListingId: supplier.id, updatedAt: new Date() })
+      .where(and(eq(supplierDocuments.uploadedByUserId, claim.userId), isNull(supplierDocuments.enterpriseId)));
   }
 
   // 2. Promote user to enterprise_admin

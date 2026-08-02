@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { enterprises, users } from "@/lib/db/schema";
+import { enterprises, supplierListings, users } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
 
 export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
+  const me = await getCurrentUser();
+  if (me) {
+    const [enterprise] = me.enterpriseId
+      ? await db.select().from(enterprises).where(eq(enterprises.id, me.enterpriseId)).limit(1)
+      : [];
+    return NextResponse.json({ data: enterprise ?? null });
+  }
   const url = new URL(req.url);
   const category = url.searchParams.get("category");
   const province = url.searchParams.get("province");
@@ -18,6 +25,69 @@ export async function GET(req: NextRequest) {
     pagination: { page, limit, total: 0 },
     filters: { category, province },
   });
+}
+
+function enterpriseValues(body: Record<string, unknown>) {
+  const establishedRaw = body.established != null ? parseInt(String(body.established), 10) : NaN;
+  return {
+    name: String(body.name ?? "").trim(),
+    shortName: body.shortName ? String(body.shortName).trim() : null,
+    category: String(body.category ?? "").trim(),
+    province: body.province ? String(body.province).trim() : null,
+    city: body.city ? String(body.city).trim() : null,
+    address: body.address ? String(body.address).trim() : null,
+    established: Number.isFinite(establishedRaw) ? establishedRaw : null,
+    employeeCount: body.employeeCount ? String(body.employeeCount).trim() : null,
+    description: body.description ? String(body.description).trim() : null,
+    products: asStringArray(body.products),
+    processes: asStringArray(body.processes),
+    certifications: asStringArray(body.certifications),
+    contactName: String(body.contactName ?? "").trim(),
+    contactPhone: String(body.contactPhone ?? "").trim(),
+    contactEmail: body.contactEmail ? String(body.contactEmail).trim() : null,
+    contactWechat: body.contactWechat ? String(body.contactWechat).trim() : null,
+    website: body.website ? String(body.website).trim() : null,
+    businessLicense: body.businessLicense ? String(body.businessLicense).trim() : null,
+  };
+}
+
+export async function PATCH(req: NextRequest) {
+  const me = await getCurrentUser();
+  if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
+  if (!me.enterpriseId) return NextResponse.json({ error: "您尚未关联企业" }, { status: 404 });
+  const body = await req.json().catch(() => ({}));
+  const values = enterpriseValues(body);
+  if (!values.name || !values.category || !values.contactName || !values.contactPhone) {
+    return NextResponse.json({ error: "企业全称 / 类型 / 联系人 / 联系电话必填" }, { status: 400 });
+  }
+
+  try {
+    const [enterprise] = await db.update(enterprises)
+      .set({ ...values, updatedAt: new Date() })
+      .where(eq(enterprises.id, me.enterpriseId))
+      .returning();
+    if (!enterprise) return NextResponse.json({ error: "企业不存在" }, { status: 404 });
+
+    // Keep the public supplier record in sync with the editable company fields.
+    await db.update(supplierListings).set({
+      name: values.name,
+      location: [values.city, values.province].filter(Boolean).join(", ") || null,
+      address: values.address,
+      contactEmail: values.contactEmail,
+      contactPhone: values.contactPhone,
+      website: values.website,
+      description: values.description,
+      products: values.products,
+      processList: values.processes,
+      certifications: values.certifications,
+      updatedAt: new Date(),
+    }).where(eq(supplierListings.enterpriseId, me.enterpriseId));
+
+    return NextResponse.json({ data: enterprise });
+  } catch (e) {
+    console.error("[enterprises PATCH] failed:", e instanceof Error ? e.message : e);
+    return NextResponse.json({ error: "服务暂时不可用,请稍后重试" }, { status: 500 });
+  }
 }
 
 function asStringArray(v: unknown): string[] {
@@ -55,30 +125,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const establishedRaw = body?.established != null ? parseInt(String(body.established), 10) : NaN;
+  const values = enterpriseValues(body);
 
   try {
     const [ent] = await db
       .insert(enterprises)
       .values({
-        name,
-        shortName: body?.shortName ? String(body.shortName).trim() : null,
-        category,
-        province: body?.province ? String(body.province).trim() : null,
-        city: body?.city ? String(body.city).trim() : null,
-        address: body?.address ? String(body.address).trim() : null,
-        established: Number.isFinite(establishedRaw) ? establishedRaw : null,
-        employeeCount: body?.employeeCount ? String(body.employeeCount).trim() : null,
-        description: body?.description ? String(body.description).trim() : null,
-        products: asStringArray(body?.products),
-        processes: asStringArray(body?.processes),
-        certifications: asStringArray(body?.certifications),
-        contactName,
-        contactPhone,
-        contactEmail: body?.contactEmail ? String(body.contactEmail).trim() : null,
-        contactWechat: body?.contactWechat ? String(body.contactWechat).trim() : null,
-        website: body?.website ? String(body.website).trim() : null,
-        businessLicense: body?.businessLicense ? String(body.businessLicense).trim() : null,
+        ...values,
         status: "pending",
       })
       .returning({ id: enterprises.id });

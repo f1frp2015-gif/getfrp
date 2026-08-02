@@ -73,6 +73,7 @@ import {
   type SerializedSupplier,
 } from "../suppliers-client";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { SupplierClaimButton } from "@/components/supplier-claim-button";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -492,12 +493,13 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                         Register or sign in to claim your company, update this public profile and respond to buyer inquiries.
                       </p>
-                      <Link
-                        href={`/sign-up?redirect_url=${encodeURIComponent(pageUrl)}` as never}
-                        className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                      >
-                        Claim your company <ArrowRight size={14} />
-                      </Link>
+                      <div className="mt-3">
+                        <SupplierClaimButton
+                          supplierId={supplier.id}
+                          supplierName={name}
+                          supplierPath={`/suppliers/${routeSlug}`}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
