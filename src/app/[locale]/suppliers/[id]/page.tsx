@@ -39,6 +39,12 @@ import {
   WANHUA_SUPPLIER_ID,
   WANHUA_SUPPLIER_PROFILE,
 } from "@/lib/data/wanhua-supplier-profile";
+import {
+  JUSHI_LEGACY_SLUG,
+  JUSHI_SUPPLIER_ID,
+  JUSHI_SUPPLIER_PROFILE,
+  JUSHI_SUPPLIER_SLUG,
+} from "@/lib/data/jushi-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -83,7 +89,10 @@ function englishProvince(province: string | null): string {
 }
 
 export async function generateStaticParams() {
-  let profileSlugs: string[] = [supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)];
+  let profileSlugs: string[] = [
+    supplierRouteSlug(WANHUA_SUPPLIER_PROFILE),
+    JUSHI_SUPPLIER_SLUG,
+  ];
   try {
     const rows = await db
       .select({ slug: supplierListings.slug })
@@ -177,15 +186,24 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
         ),
       )
       .limit(1);
-    if (row) return row;
+    if (row) {
+      if (row.supplier.id === JUSHI_SUPPLIER_ID) {
+        return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: row.enterprise };
+      }
+      return row;
+    }
   } catch {
     // Curated Git-backed profiles below remain available if the database is
     // temporarily unavailable during a build or request.
   }
 
-  return id === WANHUA_SUPPLIER_ID || id === supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)
-    ? { supplier: WANHUA_SUPPLIER_PROFILE, enterprise: null }
-    : null;
+  if (id === WANHUA_SUPPLIER_ID || id === supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)) {
+    return { supplier: WANHUA_SUPPLIER_PROFILE, enterprise: null };
+  }
+  if (id === JUSHI_SUPPLIER_ID || id === JUSHI_SUPPLIER_SLUG || id === JUSHI_LEGACY_SLUG) {
+    return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: null };
+  }
+  return null;
 });
 
 function categoryLabel(category: string | null): string {
