@@ -50,6 +50,12 @@ import {
   TAISHAN_SUPPLIER_PROFILE,
   TAISHAN_SUPPLIER_SLUG,
 } from "@/lib/data/taishan-supplier-profile";
+import {
+  ZHONGFU_SHENYING_LEGACY_SLUG,
+  ZHONGFU_SHENYING_SUPPLIER_ID,
+  ZHONGFU_SHENYING_SUPPLIER_PROFILE,
+  ZHONGFU_SHENYING_SUPPLIER_SLUG,
+} from "@/lib/data/zhongfu-shenying-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -98,6 +104,7 @@ export async function generateStaticParams() {
     supplierRouteSlug(WANHUA_SUPPLIER_PROFILE),
     JUSHI_SUPPLIER_SLUG,
     TAISHAN_SUPPLIER_SLUG,
+    ZHONGFU_SHENYING_SUPPLIER_SLUG,
   ];
   try {
     const rows = await db
@@ -199,6 +206,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       if (row.supplier.id === TAISHAN_SUPPLIER_ID) {
         return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: row.enterprise };
       }
+      if (row.supplier.id === ZHONGFU_SHENYING_SUPPLIER_ID) {
+        return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: row.enterprise };
+      }
       return row;
     }
   } catch {
@@ -214,6 +224,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
   }
   if (id === TAISHAN_SUPPLIER_ID || id === TAISHAN_SUPPLIER_SLUG) {
     return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: null };
+  }
+  if (id === ZHONGFU_SHENYING_SUPPLIER_ID || id === ZHONGFU_SHENYING_SUPPLIER_SLUG || id === ZHONGFU_SHENYING_LEGACY_SLUG) {
+    return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: null };
   }
   return null;
 });
