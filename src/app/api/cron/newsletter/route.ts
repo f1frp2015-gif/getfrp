@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { papers, articles, materials } from "@/lib/db/schema";
 import { and, desc, eq, gte } from "drizzle-orm";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -108,7 +109,7 @@ export async function GET(req: Request) {
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   // Query last 7 days of content
-  const [recentPapers, recentArticles, recentMaterials] = await Promise.all([
+  const [recentPaperRows, recentArticles, recentMaterials, paperRouteIndex] = await Promise.all([
     db
       .select({ id: papers.id, title: papers.title, commentary: papers.commentary, createdAt: papers.createdAt })
       .from(papers)
@@ -129,7 +130,12 @@ export async function GET(req: Request) {
       .where(and(gte(materials.createdAt, sevenDaysAgo), eq(materials.status, "verified")))
       .orderBy(desc(materials.createdAt))
       .limit(3),
+    getPaperRouteIndex(),
   ]);
+  const recentPapers = recentPaperRows.map((paper) => ({
+    ...paper,
+    id: paperRouteIndex.canonicalById.get(paper.id) ?? paper.id,
+  }));
 
   if (!recentPapers.length && !recentArticles.length && !recentMaterials.length) {
     return NextResponse.json({ skipped: true, reason: "No new content in the last 7 days" });

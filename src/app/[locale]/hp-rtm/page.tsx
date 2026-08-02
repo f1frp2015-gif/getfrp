@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/json-ld";
 import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const revalidate = 600;
 
@@ -78,7 +79,10 @@ export default async function HpRtmPage({
   setRequestLocale(locale);
   const t = await getTranslations("HpRtm");
 
-  const papersAll = await fetchPapers(40);
+  const [papersAll, paperRouteIndex] = await Promise.all([
+    fetchPapers(40),
+    getPaperRouteIndex(),
+  ]);
 
   // getfrp.com (en): drop records lacking an English title so the page never
   // renders Chinese-only papers.
@@ -181,7 +185,9 @@ export default async function HpRtmPage({
             {papers.map((p) => (
               <Link
                 key={p.id}
-                href={`/papers/${encodeURIComponent(p.slug ?? p.id)}` as never}
+                href={`/papers/${encodeURIComponent(
+                  paperRouteIndex.canonicalById.get(p.id) ?? p.id,
+                )}` as never}
                 className="block rounded-md border bg-background p-4 transition-colors hover:border-primary/40 hover:bg-muted/30"
               >
                 <div className="mb-1.5 flex flex-wrap items-center gap-1.5">

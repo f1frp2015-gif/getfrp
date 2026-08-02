@@ -24,7 +24,11 @@ export function canonical(path: string): string {
 // inherits from these fields. Pass the page's own title/description.
 export function og(
   path: string,
-  meta: { title?: string; description?: string } = {},
+  meta: {
+    title?: string;
+    description?: string;
+    image?: { path: string; alt?: string; width?: number; height?: number };
+  } = {},
 ): Metadata["openGraph"] {
   return {
     type: "website",
@@ -33,6 +37,18 @@ export function og(
     url: canonical(path),
     ...(meta.title ? { title: meta.title } : {}),
     ...(meta.description ? { description: meta.description } : {}),
+    ...(meta.image
+      ? {
+          images: [
+            {
+              url: canonical(meta.image.path),
+              alt: meta.image.alt,
+              width: meta.image.width,
+              height: meta.image.height,
+            },
+          ],
+        }
+      : {}),
   };
 }
 

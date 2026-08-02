@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
-import { and, desc, eq, ne, or, isNotNull } from "drizzle-orm";
+import { and, desc, eq, ne, isNotNull } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
@@ -18,6 +18,7 @@ import { AskAiButton } from "@/components/ask-ai-button";
 import { resolveViewer, isSaved } from "@/lib/saved";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { getPaperRouteIndex, resolvePaperRoute } from "@/lib/paper-urls";
 
 export const revalidate = 600;
 
@@ -37,11 +38,8 @@ export async function generateMetadata({
   const { locale, id: raw } = await params;
   const id = safeDecode(raw);
   const t = await getTranslations({ locale, namespace: "Papers" });
-  const [row] = await db
-    .select()
-    .from(papersTable)
-    .where(or(eq(papersTable.slug, id), eq(papersTable.id, id)))
-    .limit(1);
+  const resolved = await resolvePaperRoute(id);
+  const row = resolved?.paper;
   const isEn = locale === "en";
   if (!row || (isEn && !(row.titleEn && row.titleEn.trim()))) {
     return {
@@ -55,7 +53,7 @@ export async function generateMetadata({
     : row.abstract ?? row.titleEn ?? undefined;
   // 缺英文 abstract → 页面仅有题录, 内容过薄, noindex 避免拉低质量分
   const thinContent = isEn && (row.abstractEn ?? "").trim().length < 80;
-  const slug = row.slug ?? row.id;
+  const slug = resolved.canonicalSlug;
   return {
     title: titleText,
     description: descText,
@@ -76,12 +74,9 @@ export default async function PaperDetailPage({
   const isEn = locale === "en";
 
   const id = safeDecode(raw);
-  const [pRaw] = await db
-    .select()
-    .from(papersTable)
-    .where(or(eq(papersTable.slug, id), eq(papersTable.id, id)))
-    .limit(1);
-  if (!pRaw) notFound();
+  const resolved = await resolvePaperRoute(id);
+  if (!resolved) notFound();
+  const pRaw = resolved.paper;
   // EN 侧缺英文标题一律 404, 不展示中文内容
   if (isEn && !(pRaw.titleEn && pRaw.titleEn.trim())) notFound();
 
@@ -96,12 +91,12 @@ export default async function PaperDetailPage({
     keywords: isEn ? pRaw.keywordsEn ?? null : pRaw.keywords ?? null,
     category: isEn ? pRaw.categoryEn ?? null : pRaw.category ?? null,
   };
-  // Legacy hash id → 301 to canonical slug URL
-  if (p.slug && id === p.id && id !== p.slug) {
-    permanentRedirect(`/papers/${encodeURIComponent(p.slug)}`);
+  // Every legacy hash slug and raw record ID remains a permanent alias.
+  if (id !== resolved.canonicalSlug) {
+    permanentRedirect(`/papers/${encodeURIComponent(resolved.canonicalSlug)}`);
   }
 
-  const canonical = p.slug ?? p.id;
+  const canonical = resolved.canonicalSlug;
   const viewer = await resolveViewer();
   const alreadySaved =
     viewer.userId != null
@@ -111,7 +106,6 @@ export default async function PaperDetailPage({
     ? await db
         .select({
           id: papersTable.id,
-          slug: papersTable.slug,
           title: papersTable.title,
           titleEn: papersTable.titleEn,
           year: papersTable.year,
@@ -132,6 +126,7 @@ export default async function PaperDetailPage({
         .orderBy(desc(papersTable.citationCount), desc(papersTable.year))
         .limit(6)
     : [];
+  const paperRouteIndex = await getPaperRouteIndex();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -306,7 +301,9 @@ export default async function PaperDetailPage({
             <h2 className="text-base font-semibold">{t("detail.related")}</h2>
             <div className="mt-3 grid gap-2 md:grid-cols-2">
               {related.map((r) => {
-                const target = `/papers/${encodeURIComponent(r.slug ?? r.id)}`;
+                const target = `/papers/${encodeURIComponent(
+                  paperRouteIndex.canonicalById.get(r.id) ?? r.id,
+                )}`;
                 return (
                   <Link
                     key={r.id}

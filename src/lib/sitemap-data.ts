@@ -29,6 +29,7 @@ import { GB_STANDARDS_EN } from "@/lib/data/gb-standards-en";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
+import { buildCanonicalPaperSlugMap } from "@/lib/paper-urls";
 
 export type SitemapType =
   | "core"
@@ -37,7 +38,9 @@ export type SitemapType =
   | "standards"
   | "suppliers"
   | "sourcing"
-  | "resources";
+  | "resources"
+  | "data"
+  | "tools";
 
 // A single sitemap file may hold at most 50,000 URLs. Every table is well
 // under that, so one child sitemap per type is sufficient.
@@ -60,29 +63,44 @@ function urlFor(path: string): string {
   return `${CURRENT_SITE_URL}${path === "/" ? "" : path}` || CURRENT_SITE_URL;
 }
 
-type StaticRoute = {
+export type StaticRoute = {
   path: string;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
 };
 
-const staticRoutes: StaticRoute[] = [
+export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/", changeFrequency: "daily", priority: 1.0 },
   { path: "/products", changeFrequency: "weekly", priority: 0.95 },
   { path: "/standards", changeFrequency: "weekly", priority: 0.8 },
   { path: "/papers", changeFrequency: "daily", priority: 0.8 },
   { path: "/suppliers", changeFrequency: "daily", priority: 0.9 },
-  { path: "/tech", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/fibers", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/matrix", changeFrequency: "monthly", priority: 0.6 },
   { path: "/ai", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/news", changeFrequency: "weekly", priority: 0.6 },
-  { path: "/community", changeFrequency: "weekly", priority: 0.5 },
-  { path: "/trade", changeFrequency: "weekly", priority: 0.6 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/source-from-china", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/sitemap", changeFrequency: "weekly", priority: 0.4 },
+];
+
+export const DATA_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/data/china-frp-trade-remedies", changeFrequency: "weekly", priority: 0.8 },
+];
+
+export const TOOL_SITEMAP_ROUTES: StaticRoute[] = [
+  { path: "/tools", changeFrequency: "monthly", priority: 0.75 },
   { path: "/tools/buy-america-frp-checker", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/tools/frp-weight-calculator", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/tools/frp-cost-estimator", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/tech", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/tech/calculator", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/tech/u-value-calculator", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/tech/wind-load-calculator", changeFrequency: "monthly", priority: 0.75 },
+];
+
+export const RESOURCE_SITEMAP_PATHS = [
+  "/compare",
+  "/technical",
+  "/guides",
+  ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
 ];
 
 const toEntry = (
@@ -100,7 +118,7 @@ const toEntry = (
 // ── per-type entry builders ───────────────────────────────────────────────
 
 function coreEntries(now: Date): MetadataRoute.Sitemap {
-  const staticEntries = staticRoutes.map((r) => ({
+  const staticEntries = CORE_SITEMAP_ROUTES.map((r) => ({
       url: urlFor(r.path),
       lastModified: now,
       changeFrequency: r.changeFrequency,
@@ -152,6 +170,7 @@ export async function buildSitemapEntries(
             id: papers.id,
             slug: papers.slug,
             titleEn: papers.titleEn,
+            year: papers.year,
             abstractEn: papers.abstractEn,
             updatedAt: papers.updatedAt,
           })
@@ -162,11 +181,13 @@ export async function buildSitemapEntries(
         id: string;
         slug: string | null;
         titleEn: string | null;
+        year: number | null;
         abstractEn: string | null;
         updatedAt: Date | null;
       }>;
+      const canonicalById = buildCanonicalPaperSlugMap(rows);
       return rows
-        .map((r) => ({ urlSlug: r.slug ?? r.id, ...r }))
+        .map((r) => ({ urlSlug: canonicalById.get(r.id) ?? r.id, ...r }))
         .filter((r) =>
           isEn
             ? isAsciiPath(r.urlSlug) &&
@@ -238,20 +259,23 @@ export async function buildSitemapEntries(
 
     case "resources": {
       if (!isEn) return [];
-      const paths = [
-        "/compare",
-        "/technical",
-        "/guides",
-        "/tools",
-        ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
-        "/tools/frp-weight-calculator",
-        "/tools/frp-cost-estimator",
-      ];
-      return paths.map((path) => ({
+      return RESOURCE_SITEMAP_PATHS.map((path) => ({
         ...toEntry(path, now, path.split("/").length === 2 ? 0.75 : 0.7, now),
         changeFrequency: "monthly" as const,
       }));
     }
+
+    case "data":
+      return DATA_SITEMAP_ROUTES.map((route) => ({
+        ...toEntry(route.path, now, route.priority, now),
+        changeFrequency: route.changeFrequency,
+      }));
+
+    case "tools":
+      return TOOL_SITEMAP_ROUTES.map((route) => ({
+        ...toEntry(route.path, now, route.priority, now),
+        changeFrequency: route.changeFrequency,
+      }));
 
     default:
       return [];
@@ -268,7 +292,7 @@ export function childSitemapTypes(): SitemapType[] {
     "standards",
     "papers",
   ];
-  return [...base, "sourcing", "resources"];
+  return [...base, "sourcing", "resources", "data", "tools"];
 }
 
 export async function indexedChildSitemapTypes(): Promise<SitemapType[]> {

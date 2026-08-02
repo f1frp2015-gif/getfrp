@@ -32,6 +32,17 @@ const SOURCING_GUIDE_BY_PRODUCT: Record<string, string> = {
   "frp-pipe": "/sourcing/frp-piping",
 };
 
+const RELATED_PRODUCT_SLUGS: Record<string, string[]> = {
+  "frp-grating": ["pultruded-profiles", "fiberglass-sheet", "frp-rebar"],
+  "pultruded-profiles": ["frp-grating", "fiberglass-sheet", "frp-rebar"],
+  "fiberglass-sheet": ["smc-bmc", "resin-gelcoat", "fiber-glass"],
+  "frp-rebar": ["pultruded-profiles", "frp-grating", "frp-pipe"],
+  "frp-pipe": ["resin-gelcoat", "pultruded-profiles", "frp-grating"],
+  "smc-bmc": ["resin-gelcoat", "fiber-glass", "fiberglass-sheet"],
+  "resin-gelcoat": ["fiber-glass", "frp-pipe", "smc-bmc"],
+  "fiber-glass": ["resin-gelcoat", "pultruded-profiles", "smc-bmc"],
+};
+
 export function generateStaticParams() {
   return PRODUCT_SEED_RECORDS.map((product) => ({ slug: product.slug }));
 }
@@ -52,6 +63,14 @@ export async function generateMetadata({
     openGraph: og(`/products/${product.slug}`, {
       title,
       description: product.summary,
+      image: product.imageUrl
+        ? {
+            path: product.imageUrl,
+            alt: product.imageAlt ?? product.nameEn,
+            width: 960,
+            height: 600,
+          }
+        : undefined,
     }),
   };
 }
@@ -68,6 +87,11 @@ export default async function ProductDetailPage({
   const suppliers = await loadSuppliersForProduct(product);
   const pageUrl = `${CURRENT_SITE_URL}/products/${product.slug}`;
   const sourcingGuideHref = SOURCING_GUIDE_BY_PRODUCT[product.slug];
+  const relatedProducts = (RELATED_PRODUCT_SLUGS[product.slug] ?? [])
+    .map((relatedSlug) =>
+      PRODUCT_SEED_RECORDS.find((record) => record.slug === relatedSlug),
+    )
+    .filter((record): record is (typeof PRODUCT_SEED_RECORDS)[number] => Boolean(record));
   const directoryCategories = supplierCategories
     .filter((category) => suppliers.some((supplier) => supplier.category === category.id))
     .map((category) => ({ id: category.id, name: category.nameEn }));
@@ -197,6 +221,43 @@ export default async function ProductDetailPage({
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="border-b border-border/80">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+            Related product families
+          </div>
+          <h2 className="mt-2 text-2xl font-semibold">
+            Compare adjacent specifications before sending the RFQ
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {relatedProducts.map((relatedProduct) => (
+              <Link
+                key={relatedProduct.slug}
+                href={`/products/${relatedProduct.slug}` as never}
+                className="group overflow-hidden rounded-xl border border-border/70 bg-background transition-colors hover:border-[#0a756f]/50"
+              >
+                <div className="relative aspect-[8/5] bg-muted">
+                  <Image
+                    src={relatedProduct.imageUrl}
+                    alt={relatedProduct.imageAlt ?? relatedProduct.nameEn}
+                    fill
+                    sizes="(max-width: 767px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-4 p-4">
+                  <div>
+                    <div className="font-semibold">{relatedProduct.shortName ?? relatedProduct.nameEn}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{relatedProduct.category}</div>
+                  </div>
+                  <ArrowRight size={15} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

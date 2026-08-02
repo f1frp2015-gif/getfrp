@@ -34,6 +34,7 @@ import {
 } from "@/components/platform-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { getPaperRouteIndex } from "@/lib/paper-urls";
 
 export const revalidate = 600;
 
@@ -157,9 +158,10 @@ export default async function ComboPage({
   // Use namespace Matrix.Combo so keys stay colocated with the parent Matrix page.
   const t = await getTranslations({ locale, namespace: "Platform.Matrix.Combo" });
 
-  const [formulas, papers] = await Promise.all([
+  const [formulas, papers, paperRouteIndex] = await Promise.all([
     searchFormulas(fiber, resin),
     searchPapers(fiber, resin),
+    getPaperRouteIndex(),
   ]);
 
   const fiberName = locale === "en" ? fiber.nameEn : fiber.name;
@@ -349,7 +351,9 @@ export default async function ComboPage({
             {papers.map((p) => (
               <Link
                 key={p.id}
-                href={`/papers/${encodeURIComponent(p.slug ?? p.id)}` as never}
+                href={`/papers/${encodeURIComponent(
+                  paperRouteIndex.canonicalById.get(p.id) ?? p.id,
+                )}` as never}
                 className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
               >
                 <div className="mb-1 flex flex-wrap items-center gap-1.5">
