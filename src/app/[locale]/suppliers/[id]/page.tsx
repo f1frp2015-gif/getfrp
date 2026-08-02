@@ -34,6 +34,10 @@ import {
   type SupplierCategoryPage,
 } from "@/lib/data/supplier-category-pages";
 import { provincesEn, supplierCategories } from "@/lib/data/suppliers";
+import {
+  WANHUA_SUPPLIER_ID,
+  WANHUA_SUPPLIER_PROFILE,
+} from "@/lib/data/wanhua-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { loadProductsForSupplier } from "@/lib/products/queries";
@@ -146,10 +150,15 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
         ),
       )
       .limit(1);
-    return row ?? null;
+    if (row) return row;
   } catch {
-    return null;
+    // Curated Git-backed profiles below remain available if the database is
+    // temporarily unavailable during a build or request.
   }
+
+  return id === WANHUA_SUPPLIER_ID
+    ? { supplier: WANHUA_SUPPLIER_PROFILE, enterprise: null }
+    : null;
 });
 
 function categoryLabel(category: string | null): string {
@@ -192,7 +201,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const logo = supplier.logo ?? enterprise?.logo ?? null;
   const contactEmail = supplier.contactEmail ?? enterprise?.contactEmail ?? null;
   const contactPhone = supplier.contactPhone ?? enterprise?.contactPhone ?? null;
-  const address = null;
+  const address = supplier.address ?? null;
   const phoneHref = contactPhone
     ? `tel:${contactPhone.trim().startsWith("+") ? contactPhone.replace(/[^\d+]/g, "") : `+86${contactPhone.replace(/\D/g, "")}`}`
     : null;
