@@ -46,6 +46,8 @@ const nextConfig: NextConfig = {
       { source: "/en/patents/:path*", destination: "/en/products", statusCode: 301 },
       { source: "/articles/:path*", destination: "/products", statusCode: 301 },
       { source: "/en/articles/:path*", destination: "/en/products", statusCode: 301 },
+      { source: "/formulas/:path*", destination: "/products", statusCode: 301 },
+      { source: "/en/formulas/:path*", destination: "/en/products", statusCode: 301 },
       ...legacyProductSlugs.flatMap((slug) => [
         {
           source: `/suppliers/${slug}`,

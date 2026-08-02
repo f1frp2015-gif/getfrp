@@ -16,7 +16,7 @@ export function generateMetadata(): Metadata {
   return {
     title: { absolute: title },
     description: config.description,
-    alternates: alternates("/technical", { enOnly: true }),
+    alternates: alternates("/technical"),
     openGraph: og("/technical", { title, description: config.description }),
   };
 }

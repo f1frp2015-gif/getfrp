@@ -5,19 +5,16 @@ import { setRequestLocale } from "next-intl/server";
 
 export const revalidate = 86400;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
+export function generateMetadata(): Metadata {
   return {
-    title: locale === "en" ? "Terms of Use" : "使用条款",
-    description:
-      locale === "en"
-        ? "Terms governing your use of getfrp."
-        : "复材站使用条款。",
+    title: "Terms of Use",
+    description: "Terms governing your use of getfrp.",
     alternates: alternates("/terms"),
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
   };
 }
 
@@ -33,9 +30,9 @@ export default async function TermsPage({
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
-      {locale === "en" ? <TermsEn /> : <TermsZh />}
+      <TermsEn />
       <p className="mt-12 text-xs text-muted-foreground">
-        {locale === "en" ? "Last updated" : "最近更新"}: {LAST_UPDATED}
+        Last updated: {LAST_UPDATED}
       </p>
     </main>
   );
@@ -120,32 +117,6 @@ function TermsEn() {
         Use the <Link href="/rfq">GetFRP contact form</Link>{" "}
         for any question regarding these Terms.
       </p>
-    </div>
-  );
-}
-
-function TermsZh() {
-  return (
-    <div className="prose prose-sm dark:prose-invert max-w-none">
-      <h1>使用条款</h1>
-      <p>
-        本站由重庆曜一新材料科技有限公司运营。访问与使用本站即表示您接受本条款。
-      </p>
-      <h2>1. 服务性质</h2>
-      <p>
-        本站为复合材料行业的资料、检索、AI 助手与询盘撮合平台。所提供的报价、规格、
-        交期信息均为参考性质，最终以合同为准。
-      </p>
-      <h2>2. AI 助手免责</h2>
-      <p>
-        AI 助手返回信息不构成工程建议。在做设计、合规、安全决策前请咨询合格工程师。
-      </p>
-      <h2>3. 知识产权</h2>
-      <p>
-        本站数据库、文案、视觉设计归本公司所有；标准、论文、专利原文版权归各权利人所有。
-      </p>
-      <h2>4. 适用法律</h2>
-      <p>本条款适用中华人民共和国法律。争议提交北京 CIETAC 仲裁。</p>
     </div>
   );
 }

@@ -63,7 +63,7 @@ async function main() {
 
   console.log(`🔖 Patents (last 24h): ${patentsToday.length}`);
   for (const p of patentsToday) {
-    console.log(`   ${p.title?.slice(0, 50)} — /patents/${p.slug}`);
+    console.log(`   ${p.title?.slice(0, 50)} — patent:${p.slug}`);
   }
   console.log();
 
@@ -83,7 +83,7 @@ async function main() {
 
   console.log(`📰 Articles (last 24h): ${articlesToday.length}`);
   for (const a of articlesToday) {
-    console.log(`   [${a.category}] ${a.title?.slice(0, 50)} — /articles/${a.slug}`);
+    console.log(`   [${a.category}] ${a.title?.slice(0, 50)} — article:${a.slug}`);
   }
   console.log();
 

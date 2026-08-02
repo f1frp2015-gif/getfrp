@@ -16,7 +16,7 @@ const title = "FRP Cost Estimator — Landed Import Cost | getfrp";
 const description = "Estimate landed FRP import cost from supplier unit price, quantity, freight, planning duty, inspection, destination delivery and contingency.";
 
 export function generateMetadata(): Metadata {
-  return { title: { absolute: title }, description, alternates: alternates("/tools/frp-cost-estimator", { enOnly: true }), openGraph: og("/tools/frp-cost-estimator", { title, description }) };
+  return { title: { absolute: title }, description, alternates: alternates("/tools/frp-cost-estimator"), openGraph: og("/tools/frp-cost-estimator", { title, description }) };
 }
 
 export default async function FrpCostEstimatorPage({ params }: { params: Promise<{ locale: string }> }) {

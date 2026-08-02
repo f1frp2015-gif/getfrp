@@ -65,7 +65,6 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: m.id,
       title: m.name,
       content: [m.name, ...parts].join("\n"),
-      url: `/materials/${m.id}`,
       metadata: { category: m.category },
     });
   }
@@ -131,7 +130,7 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: p.id,
       title: p.title,
       content: [p.title, p.titleEn ?? "", ...parts].filter(Boolean).join("\n"),
-      url: `/patents/${p.slug ?? p.id}`,
+      url: p.sourceUrl ?? undefined,
       metadata: { country: p.countryCode, status: p.status },
     });
   }
@@ -170,7 +169,6 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: f.id,
       title: f.name,
       content: [f.name, ...parts].join("\n"),
-      url: `/formulas#${f.id}`,
       metadata: { processId: f.processId, category: f.category },
     });
   }
@@ -186,7 +184,6 @@ async function buildChunks(): Promise<Chunk[]> {
       sourceId: a.id,
       title: a.title,
       content: [a.title, a.excerpt ?? "", body.slice(0, 3000)].filter(Boolean).join("\n"),
-      url: `/articles/${a.slug}`,
       metadata: { category: a.category, publishedAt: a.publishedAt },
     });
   }

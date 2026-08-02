@@ -134,8 +134,8 @@ export async function generateMetadata({
     title,
     description,
     robots: { index: false, follow: true },
-    // Path-aware canonical + cross-domain hreflang (was missing — every combo
-    // page shipped the layout's root canonical). Bilingual route, so not zhOnly.
+    // Path-aware GetFRP canonical. This English-only site never emits a
+    // cross-domain or Chinese hreflang alternate.
     alternates: alternates(`/matrix/${combo}`),
     openGraph: og(`/matrix/${combo}`, { title, description }),
   };
@@ -318,10 +318,9 @@ export default async function ComboPage({
           <PlatformSectionHeading eyebrow="FORMULAS" title={t("formulaTitle")} />
           <div className="grid gap-2 md:grid-cols-2">
             {formulas.map((f) => (
-              <Link
+              <div
                 key={f.id}
-                href={`/formulas#${encodeURIComponent(f.id)}` as never}
-                className="block rounded-md border bg-background p-3 text-sm transition-colors hover:border-primary/40 hover:bg-muted/30"
+                className="rounded-md border bg-background p-3 text-sm"
               >
                 <div className="mb-1 flex flex-wrap items-center gap-1.5">
                   {f.process && (
@@ -336,7 +335,7 @@ export default async function ComboPage({
                   )}
                 </div>
                 <div className="line-clamp-2 font-medium">{f.name}</div>
-              </Link>
+              </div>
             ))}
           </div>
         </section>

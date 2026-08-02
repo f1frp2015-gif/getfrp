@@ -70,7 +70,7 @@ const SYSTEM = `你是复材站的资深行业编辑，专长把零散的行业�
 - …
 
 ## 在复材站继续研究
-（柔性引导到 /materials /standards /suppliers /ai 等内部路径）
+（柔性引导到 /products /standards /suppliers /ai 等内部路径）
 
 ---
 `;

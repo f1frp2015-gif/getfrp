@@ -9,8 +9,6 @@ import { generateText } from "ai";
 import { db } from "@/lib/db";
 import { articles } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { fanOutSearchPush } from "@/lib/ingest/search-push";
-import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -108,19 +106,14 @@ async function fetchFeed(feedUrl: string): Promise<RssItem[]> {
   }
 }
 
-async function articleExistsBySlugOrUrl(
-  slug: string,
-  sourceUrl: string
-): Promise<boolean> {
+async function articleExistsBySlug(slug: string): Promise<boolean> {
   const bySlug = await db
     .select({ id: articles.id })
     .from(articles)
     .where(eq(articles.slug, slug))
     .limit(1);
   if (bySlug.length) return true;
-  // articles table has no source_url column — deduplicate by derived slug prefix.
-  // We try an alternative: check if a slug starting with the same prefix exists.
-  // (sourceUrl uniqueness is best-effort; slug collision handles repeated runs.)
+  // articles has no source_url column; slug collision handles repeated runs.
   return false;
 }
 
@@ -176,7 +169,6 @@ export async function GET(req: Request) {
     errors: [] as string[],
   };
 
-  const pushUrls: string[] = [];
 
   for (const feed of RSS_FEEDS) {
     if (results.inserted.length >= CAP) break;
@@ -192,7 +184,7 @@ export async function GET(req: Request) {
 
       const slug = slugFromUrl(item.link, item.title);
 
-      if (await articleExistsBySlugOrUrl(slug, item.link)) {
+      if (await articleExistsBySlug(slug)) {
         results.skipped.push(`${item.title.slice(0, 60)}: duplicate`);
         continue;
       }
@@ -222,7 +214,6 @@ export async function GET(req: Request) {
         const id = rows[0]?.id;
         if (id) {
           results.inserted.push(slug);
-          pushUrls.push(`${CURRENT_SITE_URL}/articles/${slug}`);
         }
       } catch (e) {
         results.errors.push(
@@ -232,10 +223,5 @@ export async function GET(req: Request) {
     }
   }
 
-  let searchPush = null;
-  if (pushUrls.length) {
-    searchPush = await fanOutSearchPush(pushUrls);
-  }
-
-  return NextResponse.json({ ok: true, ...results, searchPush });
+  return NextResponse.json({ ok: true, ...results });
 }
