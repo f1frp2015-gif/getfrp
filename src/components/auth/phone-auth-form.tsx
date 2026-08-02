@@ -27,7 +27,7 @@ const noopSubscribe = () => () => {};
 export function PhoneAuthForm({ mode }: { mode: "signIn" | "signUp" }) {
   const t = useTranslations("Auth");
   const searchParams = useSearchParams();
-  const redirectTo = safePath(searchParams.get("redirect_url"));
+  const redirectTo = safePath(searchParams.get("redirect_url") ?? searchParams.get("redirect"));
   const wechatStatus = searchParams.get("wechat");
 
   const [step, setStep] = useState<"phone" | "code">("phone");
