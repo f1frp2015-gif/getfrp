@@ -45,6 +45,11 @@ import {
   JUSHI_SUPPLIER_PROFILE,
   JUSHI_SUPPLIER_SLUG,
 } from "@/lib/data/jushi-supplier-profile";
+import {
+  TAISHAN_SUPPLIER_ID,
+  TAISHAN_SUPPLIER_PROFILE,
+  TAISHAN_SUPPLIER_SLUG,
+} from "@/lib/data/taishan-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -92,6 +97,7 @@ export async function generateStaticParams() {
   let profileSlugs: string[] = [
     supplierRouteSlug(WANHUA_SUPPLIER_PROFILE),
     JUSHI_SUPPLIER_SLUG,
+    TAISHAN_SUPPLIER_SLUG,
   ];
   try {
     const rows = await db
@@ -190,6 +196,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       if (row.supplier.id === JUSHI_SUPPLIER_ID) {
         return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: row.enterprise };
       }
+      if (row.supplier.id === TAISHAN_SUPPLIER_ID) {
+        return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: row.enterprise };
+      }
       return row;
     }
   } catch {
@@ -202,6 +211,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
   }
   if (id === JUSHI_SUPPLIER_ID || id === JUSHI_SUPPLIER_SLUG || id === JUSHI_LEGACY_SLUG) {
     return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: null };
+  }
+  if (id === TAISHAN_SUPPLIER_ID || id === TAISHAN_SUPPLIER_SLUG) {
+    return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: null };
   }
   return null;
 });
@@ -453,6 +465,25 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                   </a>
                 )}
               </div>
+              {!isClaimed && (
+                <div className="mt-6 rounded-xl border border-dashed border-primary/40 bg-primary/[0.04] p-4">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck size={18} className="mt-0.5 shrink-0 text-primary" />
+                    <div>
+                      <p className="text-sm font-semibold">Is this your business?</p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        Register or sign in to claim your company, update this public profile and respond to buyer inquiries.
+                      </p>
+                      <Link
+                        href={`/sign-up?redirect=${encodeURIComponent(pageUrl)}` as never}
+                        className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                      >
+                        Claim your company <ArrowRight size={14} />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <aside className="rounded-xl border border-border/70 bg-muted/20 p-6">
@@ -581,6 +612,17 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               {contactPhone && phoneHref && <a href={phoneHref} className="flex items-start gap-3 hover:underline"><Phone size={16} className="mt-0.5 shrink-0" /><span>{contactPhone}</span></a>}
               {address && <div className="flex items-start gap-3 text-muted-foreground"><MapPin size={16} className="mt-0.5 shrink-0" /><span>{address}</span></div>}
             </div>
+            {!isClaimed && (
+              <div className="mt-6 border-t border-border/70 pt-5">
+                <p className="text-sm font-semibold">Is this your business?</p>
+                <Link
+                  href={`/sign-up?redirect=${encodeURIComponent(pageUrl)}` as never}
+                  className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                >
+                  Claim your company <ArrowRight size={14} />
+                </Link>
+              </div>
+            )}
           </aside>
         </div>
       </section>
