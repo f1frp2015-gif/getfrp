@@ -493,7 +493,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                         Register or sign in to claim your company, update this public profile and respond to buyer inquiries.
                       </p>
                       <Link
-                        href={`/sign-up?redirect=${encodeURIComponent(pageUrl)}` as never}
+                        href={`/sign-up?redirect_url=${encodeURIComponent(pageUrl)}` as never}
                         className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                       >
                         Claim your company <ArrowRight size={14} />
@@ -634,7 +634,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               <div className="mt-6 border-t border-border/70 pt-5">
                 <p className="text-sm font-semibold">Is this your business?</p>
                 <Link
-                  href={`/sign-up?redirect=${encodeURIComponent(pageUrl)}` as never}
+                  href={`/sign-up?redirect_url=${encodeURIComponent(pageUrl)}` as never}
                   className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
                   Claim your company <ArrowRight size={14} />

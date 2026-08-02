@@ -28,7 +28,9 @@ function safePath(value: string | null): string {
 
 export function EmailPasswordForm({ mode }: { mode: "signIn" | "signUp" }) {
   const searchParams = useSearchParams();
-  const redirectParam = searchParams.get("redirect_url");
+  // Accept both names while older links migrate to the canonical
+  // redirect_url parameter.
+  const redirectParam = searchParams.get("redirect_url") ?? searchParams.get("redirect");
   const redirectTo = safePath(redirectParam);
   const isSignUp = mode === "signUp";
 
