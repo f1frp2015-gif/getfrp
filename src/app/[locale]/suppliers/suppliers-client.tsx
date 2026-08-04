@@ -445,7 +445,7 @@ export function SuppliersClient({
   const filterControls = layout === "sidebar" ? (
     <aside
       aria-label="Supplier filters"
-      className="self-start rounded-xl border border-border/80 bg-muted/20 p-4 lg:sticky lg:top-24 lg:col-start-1 lg:row-span-2 lg:row-start-1"
+      className="self-start rounded-xl border border-border/80 bg-muted/20 p-4 lg:sticky lg:top-24 lg:col-start-1 lg:row-span-3 lg:row-start-1"
     >
       <div className="flex items-center justify-between gap-3 border-b border-border/70 pb-3">
         <div className="flex items-center gap-2 text-sm font-semibold">
@@ -465,19 +465,6 @@ export function SuppliersClient({
       </div>
 
       <div className="mt-4 space-y-4">
-        <label className="block space-y-1.5 text-xs font-medium">
-          Search suppliers
-          <Input
-            placeholder={t("searchPlaceholder")}
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value);
-              setPage(1);
-            }}
-            className="bg-background"
-          />
-        </label>
-
         {selectedCapability && (
           <div className="rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-3">
             <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#0a756f]">
@@ -713,7 +700,7 @@ export function SuppliersClient({
       <div
         className={cn(
           layout === "sidebar" &&
-            "grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start lg:gap-x-8 lg:gap-y-5",
+            "grid gap-5 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start lg:gap-x-8 lg:gap-y-4",
         )}
       >
         {layout === "sidebar" && (
@@ -725,26 +712,32 @@ export function SuppliersClient({
               <ArrowLeft size={13} />
               Browse supplier categories
             </Link>
-            <div className="mt-4 flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
-              <div className="min-w-0">
-                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
-                  Live supplier search
-                </div>
-                <h1 className="mt-1.5 text-3xl font-semibold tracking-tight">
-                  Find, evaluate and compare China FRP suppliers
-                </h1>
+            <div className="mt-4 min-w-0">
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+                Live supplier search
               </div>
-              <div className="max-w-md shrink-0 xl:text-right">
-                <p className="text-xs leading-5 text-muted-foreground">
-                  Filter by type, region, certification and profile status, then
-                  compare up to three companies side by side.
-                </p>
-                <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
-                  {SUPPLIER_RESULTS_PAGE_SIZE} suppliers per page
-                </div>
-              </div>
+              <h1 className="mt-1.5 text-3xl font-semibold tracking-tight lg:whitespace-nowrap">
+                Find, evaluate and compare China FRP suppliers
+              </h1>
             </div>
           </header>
+        )}
+
+        {layout === "sidebar" && (
+          <label className="block min-w-0 lg:col-start-2 lg:row-start-2">
+            <span className="sr-only">Search suppliers</span>
+            <Input
+              data-supplier-search=""
+              aria-label="Search suppliers"
+              placeholder={t("searchPlaceholder")}
+              value={search}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setPage(1);
+              }}
+              className="h-10 bg-background px-3 text-base md:text-sm"
+            />
+          </label>
         )}
 
         {filterControls}
@@ -752,7 +745,7 @@ export function SuppliersClient({
         <div
           className={cn(
             "min-w-0",
-            layout === "sidebar" && "lg:col-start-2 lg:row-start-2",
+            layout === "sidebar" && "lg:col-start-2 lg:row-start-3",
           )}
         >
           <div
