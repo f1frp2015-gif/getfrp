@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -143,13 +144,17 @@ export default async function SuppliersPage({
       <JsonLd data={capabilityDirectoryJsonLd} />
 
       <section className="relative overflow-hidden rounded-2xl bg-[#073d3a] px-5 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:px-14">
-        <div
-          aria-hidden="true"
-          className="absolute -right-20 -top-36 h-96 w-96 rounded-full border border-white/10 bg-[#13a39b]/15"
+        <Image
+          src="/images/glass-fiber-strands.webp"
+          alt=""
+          fill
+          preload
+          sizes="(max-width: 1280px) 100vw, 1280px"
+          className="object-cover object-center"
         />
         <div
           aria-hidden="true"
-          className="absolute -bottom-40 right-44 h-80 w-80 rounded-full border border-white/10"
+          className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,35,40,.94)_0%,rgba(5,62,61,.82)_52%,rgba(3,43,48,.76)_100%)]"
         />
         <div className="relative max-w-4xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-50">
