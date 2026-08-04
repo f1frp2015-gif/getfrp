@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Boxes, Building2, Search, Sparkles } from "lucide-react";
 
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 
 type SearchScope = "products" | "suppliers";
 
@@ -12,13 +12,22 @@ const SCOPE_CONFIG = {
     label: "Products",
     Icon: Boxes,
     placeholder: "Search FRP products or specifications",
-    examples: ["vinyl ester grating", "pultruded structural profiles"],
+    examples: [
+      { label: "vinyl ester grating", href: "/products/frp-grating" },
+      {
+        label: "pultruded structural profiles",
+        href: "/products/pultruded-profiles",
+      },
+    ],
   },
   suppliers: {
     label: "Suppliers",
     Icon: Building2,
     placeholder: "Search FRP manufacturers by region",
-    examples: ["ISO 9001 pultrusion factory", "filament winding supplier"],
+    examples: [
+      { label: "ISO 9001 pultrusion factory", href: "/suppliers?q=pultrusion" },
+      { label: "filament winding supplier", href: "/suppliers?q=filament%20winding" },
+    ],
   },
 } as const;
 
@@ -30,7 +39,7 @@ export function HomeMarketplaceSearch() {
   const config = SCOPE_CONFIG[scope];
 
   const parameterizedUrl = useMemo(() => {
-    const previewQuery = query.trim() || config.examples[0];
+    const previewQuery = query.trim() || config.examples[0].label;
     const params = new URLSearchParams({ scope, q: previewQuery });
     return `getfrp.com/ai/chat?${params.toString()}`;
   }, [config.examples, query, scope]);
@@ -110,17 +119,13 @@ export function HomeMarketplaceSearch() {
         <div className="hidden flex-wrap items-center gap-2 text-[11px] text-[#647983] sm:flex">
           <span>Popular:</span>
           {config.examples.map((example) => (
-            <button
-              key={example}
-              type="button"
-              onClick={() => {
-                setQuery(example);
-                submit(example);
-              }}
+            <Link
+              key={example.label}
+              href={example.href as never}
               className="rounded-full border border-[#d6e0e2] px-2.5 py-1 font-medium text-[#395763] transition-colors hover:border-[#0b8179] hover:text-[#0b756f]"
             >
-              {example}
-            </button>
+              {example.label}
+            </Link>
           ))}
         </div>
         <div className="hidden min-w-0 font-mono text-[9px] text-[#667b84] sm:block sm:max-w-[46%]">

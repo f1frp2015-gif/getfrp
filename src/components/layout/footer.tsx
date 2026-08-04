@@ -32,7 +32,7 @@ export function Footer() {
               Supplier directory
             </Link>
             <Link href="/source-from-china" className="transition-colors hover:text-[#0b8179]">
-              Sourcing process
+              How to source
             </Link>
             <Link href="/guides" className="transition-colors hover:text-[#0b8179]">
               Guides

@@ -10,7 +10,7 @@ const navigation = [
   { href: "/suppliers", label: "Suppliers" },
   { href: "/products", label: "Products" },
   { href: "/tools", label: "Tools" },
-  { href: "/source-from-china", label: "Sourcing process" },
+  { href: "/source-from-china", label: "How to source" },
   { href: "/ai", label: "Ask AI" },
 ] as const;
 

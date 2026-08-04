@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { HomePageEnglish } from "./home-english";
+import {
+  HOME_DESCRIPTION,
+  HOME_TITLE,
+  HomePageEnglish,
+} from "./home-english";
 import { alternates, og } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export function generateMetadata(): Metadata {
-  const title =
-    "FRP Products & Suppliers China — Factory-Direct Marketplace | getfrp";
-  const description =
-    "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.";
-
   return {
-    title: { absolute: title },
-    description,
+    title: { absolute: HOME_TITLE },
+    description: HOME_DESCRIPTION,
     alternates: alternates("/"),
-    openGraph: og("/", { title, description }),
+    openGraph: og("/", { title: HOME_TITLE, description: HOME_DESCRIPTION }),
   };
 }
 
