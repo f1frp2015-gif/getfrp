@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Boxes, Building2, Search, Sparkles } from "lucide-react";
 
 import { Link, useRouter } from "@/i18n/navigation";
@@ -13,11 +13,13 @@ const SCOPE_CONFIG = {
     Icon: Boxes,
     placeholder: "Search FRP products or specifications",
     examples: [
-      { label: "vinyl ester grating", href: "/products/frp-grating" },
+      { label: "FRP grating", href: "/products/frp-grating" },
       {
-        label: "pultruded structural profiles",
+        label: "pultruded profiles",
         href: "/products/pultruded-profiles",
       },
+      { label: "filament-wound pipe", href: "/products/frp-pipe" },
+      { label: "SMC / BMC parts", href: "/products/smc-bmc" },
     ],
   },
   suppliers: {
@@ -33,6 +35,14 @@ const SCOPE_CONFIG = {
         label: "filament winding supplier",
         href: "/suppliers/search?q=filament%20winding",
       },
+      {
+        label: "vinyl ester grating maker",
+        href: "/suppliers/search?q=vinyl%20ester%20grating",
+      },
+      {
+        label: "custom SMC / BMC molder",
+        href: "/suppliers/search?q=SMC%20BMC",
+      },
     ],
   },
 } as const;
@@ -43,12 +53,6 @@ export function HomeMarketplaceSearch() {
   const [query, setQuery] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const config = SCOPE_CONFIG[scope];
-
-  const parameterizedUrl = useMemo(() => {
-    const previewQuery = query.trim() || config.examples[0].label;
-    const params = new URLSearchParams({ scope, q: previewQuery });
-    return `getfrp.com/ai/chat?${params.toString()}`;
-  }, [config.examples, query, scope]);
 
   function submit(nextQuery = query) {
     const q = nextQuery.trim();
@@ -121,9 +125,9 @@ export function HomeMarketplaceSearch() {
         </button>
       </form>
 
-      <div className="flex flex-col gap-2 px-1 pb-1 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-2 sm:pt-3">
-        <div className="hidden flex-wrap items-center gap-2 text-[11px] text-[#647983] sm:flex">
-          <span>Popular:</span>
+      <div className="px-1 pb-1 pt-2.5 sm:px-2 sm:pt-3">
+        <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-[#647983] sm:gap-2 sm:text-[11px]">
+          <span className="mr-0.5 font-medium">Popular searches:</span>
           {config.examples.map((example) => (
             <Link
               key={example.label}
@@ -133,10 +137,6 @@ export function HomeMarketplaceSearch() {
               {example.label}
             </Link>
           ))}
-        </div>
-        <div className="hidden min-w-0 font-mono text-[9px] text-[#667b84] sm:block sm:max-w-[46%]">
-          <span className="mr-1.5 text-[#0a756f]">SHAREABLE URL</span>
-          <span className="break-all">{parameterizedUrl}</span>
         </div>
       </div>
     </div>

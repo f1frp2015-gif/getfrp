@@ -4,13 +4,11 @@ import {
   BadgeCheck,
   BookOpenCheck,
   Boxes,
-  Building2,
   ClipboardCheck,
   Factory,
   FileSearch,
   Ruler,
   Search,
-  Sparkles,
   Truck,
 } from "lucide-react";
 import { count, eq } from "drizzle-orm";
@@ -26,7 +24,13 @@ import { HomeMarketplaceSearch } from "./home-marketplace-search";
 export const HOME_TITLE =
   "FRP Products & Suppliers China — Factory-Direct Marketplace";
 export const HOME_DESCRIPTION =
-  "FRP products, manufacturers and suppliers in China — compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.";
+  "Search China's complete FRP supply chain — glass fiber, carbon fiber, resins, grating, profiles, pipe, molded parts and verified manufacturers.";
+
+// Supply-chain capacity basis checked 2026-08-04: China Jushi (2.0M t/yr),
+// Taishan Fiberglass (800K+ t/yr) and CPIC (1.2M+ t/yr) official profiles;
+// Jilin government disclosure (70K t/yr carbon fiber), Zhongfu Shenying's
+// 2025 annual-report release (29K t/yr) and Guangwei's 2024 annual report
+// (7,685 t/yr). Display values are deliberately rounded.
 
 const FEATURED_PRODUCTS = [
   {
@@ -344,70 +348,97 @@ export async function HomePageEnglish() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(70,188,174,.2),transparent_34%),linear-gradient(135deg,#071d2a_0%,#0a2d3a_58%,#0d3c45_100%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.2)_1px,transparent_1px)] [background-size:40px_40px]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-20 sm:pt-20 lg:pt-24">
-          <div className="mx-auto max-w-4xl text-center">
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:pt-20">
+          <div className="mx-auto max-w-5xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#6bbdb3]/35 bg-[#58aa9f]/10 px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8ed8ce]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#69d2c5]" />
               China&apos;s specialist FRP marketplace
             </div>
-            <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[68px]">
-              China FRP Products &amp; Manufacturers
-              <br className="hidden sm:block" />
-              <span className="text-[#72d4c9]"> — Direct Factory Sourcing</span>
+            <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[64px]">
+              <span className="sr-only">
+                China FRP Products &amp; Manufacturers —
+              </span>
+              <span aria-hidden="true">Source China&apos;s FRP Supply Chain.</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:mt-5 sm:text-[17px] sm:leading-7">
-              <span className="sm:hidden">
-                Search China FRP products, manufacturers and suppliers by
-                product family, process, specification or verified factory
-                capability.
-              </span>
-              <span className="hidden sm:inline">
-                Search China FRP products and manufacturers by product family,
-                manufacturing process, technical specification or verified supplier
-                capability. Compare Chinese FRP suppliers, then use one RFQ for
-                factory, certification, quality and export checks.
-              </span>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:text-[16px] sm:leading-7">
+              From glass and carbon fiber to resin systems, production processes
+              and export-ready finished parts.
             </p>
-
-            <dl className="mx-auto mt-6 grid max-w-2xl grid-cols-3 overflow-hidden rounded-xl border border-white/15 bg-white/[0.06] text-left backdrop-blur-sm">
-              {[
-                [formatPlantCount(verifiedPlantCount), "verified plant records"],
-                ["8", "structured product families"],
-                ["<24h", "sourcing-desk follow-up"],
-              ].map(([value, label]) => (
-                <div
-                  key={label}
-                  className="border-r border-white/15 px-3 py-3 last:border-r-0 sm:px-5 sm:py-4"
-                >
-                  <dd className="text-lg font-semibold tracking-tight text-white sm:text-2xl">
-                    {value}
-                  </dd>
-                  <dt className="mt-0.5 text-[9px] leading-4 text-[#a8c0c8] sm:text-[10px]">
-                    {label}
-                  </dt>
-                </div>
-              ))}
-            </dl>
           </div>
 
-          <div className="mx-auto mt-7 max-w-5xl sm:mt-10">
+          <div className="mx-auto mt-7 max-w-5xl sm:mt-8">
             <HomeMarketplaceSearch />
           </div>
 
-          <div className="mx-auto mt-8 hidden max-w-4xl flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] text-[#a8c0c8] sm:flex">
-            <span className="inline-flex items-center gap-1.5">
-              <BadgeCheck size={14} className="text-[#69d2c5]" />
-              Supplier identity and capability evidence
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Sparkles size={14} className="text-[#69d2c5]" />
-              AI-assisted specification matching
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Building2 size={14} className="text-[#69d2c5]" />
-              Human RFQ, QA and export support
-            </span>
-          </div>
+          <section
+            aria-labelledby="china-frp-supply-chain"
+            className="mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border border-white/15 bg-white/[0.07] backdrop-blur-sm"
+          >
+            <div className="grid gap-3 border-b border-white/10 px-4 py-4 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
+              <div>
+                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#72d4c9]">
+                  China FRP supply chain
+                </div>
+                <h2
+                  id="china-frp-supply-chain"
+                  className="mt-1.5 text-xl font-semibold tracking-[-0.025em] text-white sm:text-2xl"
+                >
+                  From reinforcement and resin to finished composite parts.
+                </h2>
+              </div>
+              <p className="max-w-md text-[11px] leading-5 text-[#a8c0c8] md:text-right">
+                Representative market leaders and rounded public disclosures
+                available August 2026 — a sourcing map, not a universal ranking.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  value: "≈4.0M t/yr",
+                  label: "Glass fiber capacity",
+                  leaders: "China Jushi · Taishan Fiberglass · CPIC",
+                  detail: "Roving, yarn, mat, fabric and electronic glass.",
+                },
+                {
+                  value: "100K+ t/yr",
+                  label: "Carbon fiber capacity",
+                  leaders: "Jilin Chemical Fiber · Zhongfu Shenying · Guangwei",
+                  detail: "Precursor, carbon fiber, prepreg and pultruded parts.",
+                },
+                {
+                  value: "3 material platforms",
+                  label: "Resin & chemistry",
+                  leaders: "Wanhua Chemical · Sinopec · Swancor",
+                  detail: "Epoxy, vinyl ester, polyester, PU and curing systems.",
+                },
+                {
+                  value: `${formatPlantCount(verifiedPlantCount)} plants`,
+                  label: "Finished FRP products",
+                  leaders: "8 structured product families",
+                  detail: "Grating, profiles, pipe, rebar, SMC/BMC and custom parts.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="border-b border-white/10 px-4 py-4 last:border-b-0 sm:px-5 sm:py-5 sm:[&:nth-child(3)]:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"
+                >
+                  <div className="text-xl font-semibold tracking-tight text-white">
+                    {item.value}
+                  </div>
+                  <h3 className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.11em] text-[#72d4c9]">
+                    {item.label}
+                  </h3>
+                  <p className="mt-3 text-[11px] font-medium leading-4 text-[#d2e0e4]">
+                    {item.leaders}
+                  </p>
+                  <p className="mt-1 text-[10px] leading-4 text-[#91aeb7]">
+                    {item.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       </section>
 
