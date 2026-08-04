@@ -360,9 +360,8 @@ export async function HomePageEnglish() {
               </span>
               <span aria-hidden="true">Source China&apos;s FRP Supply Chain.</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:text-[16px] sm:leading-7">
-              From glass and carbon fiber to resin systems, production processes
-              and export-ready finished parts.
+            <p className="mx-auto mt-4 max-w-4xl text-[12px] leading-5 text-[#b6cbd2] sm:whitespace-nowrap sm:text-sm sm:leading-6">
+              Glass fiber, carbon fiber, resin systems and export-ready FRP products.
             </p>
           </div>
 
@@ -437,6 +436,38 @@ export async function HomePageEnglish() {
                   </p>
                 </div>
               ))}
+            </div>
+
+            <div className="grid gap-5 border-t border-white/10 bg-[#061923]/35 px-4 py-5 sm:px-6 md:grid-cols-[1fr_auto] md:items-center">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#72d4c9]">
+                  <BadgeCheck size={13} />
+                  For overseas buyers
+                </div>
+                <h3 className="mt-2 text-xl font-semibold tracking-[-0.025em] text-white">
+                  One search. Verified suppliers. One RFQ.
+                </h3>
+                <p className="mt-2 text-[12px] leading-5 text-[#b6cbd2]">
+                  Access China&apos;s full FRP supply chain through GetFRP. Search
+                  immediately; create a free buyer account to compare verified
+                  companies side by side, review certification evidence, save a
+                  shortlist and send one structured RFQ to matched factories.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 sm:flex-row md:flex-col lg:flex-row">
+                <Link
+                  href="/suppliers/search"
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#72d4c9] px-4 text-[11px] font-semibold text-[#082630] transition-colors hover:bg-[#8ce1d7]"
+                >
+                  Search the supply chain <ArrowRight size={13} />
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/20 px-4 text-[11px] font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/[0.06]"
+                >
+                  Create buyer account <ArrowUpRight size={13} />
+                </Link>
+              </div>
             </div>
           </section>
         </div>
