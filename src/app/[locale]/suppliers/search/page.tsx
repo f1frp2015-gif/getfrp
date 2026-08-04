@@ -71,6 +71,8 @@ export default async function SupplierSearchPage({
   const initialCertification = firstParam(sp.certification).slice(0, 100);
   const initialProfileStatus = firstParam(sp.profile).slice(0, 100);
   const initialCapability = firstParam(sp.capability).slice(0, 100);
+  const initialReadiness = firstParam(sp.readiness).slice(0, 100);
+  const initialSort = firstParam(sp.sort).slice(0, 100);
   const directoryPageCount = Math.max(
     1,
     Math.ceil(suppliers.length / SUPPLIER_RESULTS_PAGE_SIZE),
@@ -86,6 +88,8 @@ export default async function SupplierSearchPage({
     initialCertification,
     initialProfileStatus,
     initialCapability,
+    initialReadiness,
+    initialSort,
     initialPage,
   ].join("|");
 
@@ -112,6 +116,8 @@ export default async function SupplierSearchPage({
           initialCertification={initialCertification}
           initialProfileStatus={initialProfileStatus}
           initialCapability={initialCapability}
+          initialReadiness={initialReadiness}
+          initialSort={initialSort}
           initialPage={initialPage}
           categories={supplierCategories.map((category) => ({
             id: category.id,

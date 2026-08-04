@@ -32,6 +32,7 @@ export function EmailPasswordForm({ mode }: { mode: "signIn" | "signUp" }) {
   // redirect_url parameter.
   const redirectParam = searchParams.get("redirect_url") ?? searchParams.get("redirect");
   const redirectTo = safePath(redirectParam);
+  const isSupplierIntent = searchParams.get("intent") === "supplier";
   const isSignUp = mode === "signUp";
 
   const [email, setEmail] = useState("");
@@ -74,14 +75,29 @@ export function EmailPasswordForm({ mode }: { mode: "signIn" | "signUp" }) {
     }
   }
 
-  const switchHref = (isSignUp ? "/sign-in" : "/sign-up") + (redirectParam ? `?redirect_url=${encodeURIComponent(redirectParam)}` : "");
+  const switchParams = new URLSearchParams();
+  if (isSupplierIntent) switchParams.set("intent", "supplier");
+  if (redirectParam) switchParams.set("redirect_url", redirectParam);
+  const switchHref = `${isSignUp ? "/sign-in" : "/sign-up"}${switchParams.size ? `?${switchParams}` : ""}`;
 
   return (
     <div className="w-full max-w-sm space-y-5">
       <div className="text-center">
-        <h1 className="text-2xl font-bold">{isSignUp ? "Create your account" : "Sign in"}</h1>
+        <h1 className="text-2xl font-bold">
+          {isSupplierIntent
+            ? isSignUp
+              ? "Create your supplier account"
+              : "Sign in to your supplier account"
+            : isSignUp
+              ? "Create your account"
+              : "Sign in"}
+        </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {isSignUp ? "Register with your email — no verification needed." : "Welcome back."}
+          {isSupplierIntent
+            ? "Claim a company, upload evidence and manage buyer inquiries."
+            : isSignUp
+              ? "Register with your email — no verification needed."
+              : "Welcome back."}
         </p>
       </div>
 

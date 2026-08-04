@@ -33,6 +33,7 @@ export default async function DashboardLayout({
     { href: "/dashboard/posts/new" as const, label: t("nav.postNew"), iconKey: "post-new" },
     { href: "/dashboard/posts" as const, label: t("nav.posts"), iconKey: "post-list" },
     { href: "/dashboard/messages" as const, label: t("nav.messages"), iconKey: "messages" },
+    { href: "/dashboard/supplier" as const, label: t("nav.supplierWorkspace"), iconKey: "enterprise" },
     { href: "/dashboard/enterprise" as const, label: t("nav.enterprise"), iconKey: "enterprise" },
     { href: "/dashboard/claims" as const, label: t("nav.claims"), iconKey: "claims" },
     { href: "/dashboard/qualifications" as const, label: t("nav.qualifications"), iconKey: "admin-claims" },
@@ -44,6 +45,7 @@ export default async function DashboardLayout({
     { href: "/dashboard/admin/claims" as const, label: t("nav.adminClaims"), iconKey: "admin-claims" },
     { href: "/dashboard/admin/qualifications" as const, label: t("nav.adminQualifications"), iconKey: "admin-claims" },
     { href: "/dashboard/admin/enterprises" as const, label: t("nav.adminEnterprises"), iconKey: "admin-claims" },
+    { href: "/dashboard/admin/suppliers" as const, label: t("nav.adminSuppliers"), iconKey: "enterprise" },
     { href: "/dashboard/admin/articles" as const, label: "资讯草稿箱", iconKey: "post-list" },
     { href: "/dashboard/admin/prices" as const, label: t("nav.adminPrices"), iconKey: "ai-price" },
   ];

@@ -38,6 +38,8 @@ const SEARCH_FILTER_KEYS = [
   "certification",
   "profile",
   "capability",
+  "readiness",
+  "sort",
   "page",
 ] as const;
 
@@ -114,6 +116,10 @@ export default async function SuppliersPage({
     ]),
   );
   const verifiedCount = serialized.filter((supplier) => supplier.verified).length;
+  const glassFiberCount = capabilityCounts.get("fiber-glass") ?? 0;
+  const carbonFiberCount = capabilityCounts.get("fiber-carbon") ?? 0;
+  const resinSupplierCount = serialized.filter((supplier) => supplier.category === "resin").length;
+  const manufacturerCount = serialized.filter((supplier) => supplier.category === "manufacturer").length;
   const regionCount = new Set(
     serialized.map((supplier) => supplier.location).filter(Boolean),
   ).size;
@@ -165,9 +171,7 @@ export default async function SuppliersPage({
             Find China FRP manufacturers by material and process
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-emerald-50/80 sm:text-base sm:leading-7">
-            Search public manufacturer profiles, then narrow the directory by
-            fiber reinforcement, resin system, FRP manufacturing process,
-            product capability, region and certification evidence.
+            For overseas buyers: search one of China&apos;s most complete FRP supply-chain directories, then sign in to save, compare and send one RFQ using separately reviewed identity and capability evidence.
           </p>
 
           <form
@@ -200,14 +204,14 @@ export default async function SuppliersPage({
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-emerald-50/70">
             <span className="font-medium text-white">Popular:</span>
             {[
-              ["Pultrusion", "process-pultrusion"],
-              ["Vinyl ester", "resin-vinyl-ester"],
-              ["Carbon fiber", "fiber-carbon"],
-              ["Vacuum infusion", "process-vacuum-infusion"],
-            ].map(([label, capability]) => (
+              ["ISO 9001 pultrusion factory", "process-pultrusion", "ISO 9001"],
+              ["Filament winding pressure vessel supplier", "process-filament-winding", "pressure vessel"],
+              ["Carbon fiber prepreg manufacturer", "fiber-carbon", "prepreg"],
+              ["Vinyl ester FRP grating factory", "resin-vinyl-ester", "FRP grating"],
+            ].map(([label, capability, query]) => (
               <a
                 key={capability}
-                href={`${supplierSearchBasePath}?capability=${capability}#supplier-results`}
+                href={`${supplierSearchBasePath}?q=${encodeURIComponent(query)}&capability=${capability}#supplier-results`}
                 className="border-b border-white/30 pb-0.5 transition-colors hover:border-white hover:text-white"
               >
                 {label}
@@ -266,6 +270,52 @@ export default async function SuppliersPage({
             );
           })}
         </dl>
+      </section>
+
+      <section className="border-b border-border/70 py-10 sm:py-12">
+        <div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+              China FRP supply-chain coverage
+            </div>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+              Global-scale material producers to specialized part factories
+            </h2>
+          </div>
+          <p className="text-sm leading-6 text-muted-foreground">
+            Start with direct search. A free account lets buyers save and compare companies, build a controlled shortlist and submit RFQs; GetFRP keeps business identity, certifications and product evidence as separate review signals.
+          </p>
+        </div>
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            {
+              value: glassFiberCount,
+              title: "Glass fiber",
+              note: "Includes profiles for Jushi, Taishan Fiberglass and CPIC alongside specialist reinforcement suppliers.",
+            },
+            {
+              value: carbonFiberCount,
+              title: "Carbon fiber",
+              note: "Tow, fabric, prepreg and CFRP capability across major producers and downstream converters.",
+            },
+            {
+              value: resinSupplierCount,
+              title: "Resin & chemistry",
+              note: "Epoxy, UPR, vinyl ester, polyurethane, additives and application-specific matrix systems.",
+            },
+            {
+              value: manufacturerCount,
+              title: "Products & processing",
+              note: "Pultrusion, winding, molding, grating, pipe, profiles, tanks, testing and production equipment.",
+            },
+          ].map((item) => (
+            <article key={item.title} className="rounded-xl border border-border/80 bg-muted/20 p-4">
+              <div className="font-mono text-2xl font-semibold text-[#0a756f]">{item.value}</div>
+              <h3 className="mt-1 font-semibold">{item.title} profiles</h3>
+              <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.note}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section id="capability-categories" className="scroll-mt-24 py-12 sm:py-16">

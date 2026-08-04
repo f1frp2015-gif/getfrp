@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { db } from "@/lib/db";
-import { supplierClaims, supplierListings, users } from "@/lib/db/schema";
+import { supplierClaims, supplierDocuments, supplierListings, users } from "@/lib/db/schema";
 import { gateAdmin } from "@/lib/admin";
 import { AdminClaimsTable, type AdminClaimRow } from "./admin-claims-table";
 
@@ -68,6 +68,21 @@ export default async function AdminClaimsPage({
     ? base
     : base.where(eq(supplierClaims.status, statusFilter as "pending" | "approved" | "rejected")));
 
+  const applicantIds = [...new Set(rowsRaw.map((row) => row.claim.userId))];
+  const documentRows = applicantIds.length
+    ? await db
+        .select({ userId: supplierDocuments.uploadedByUserId, kind: supplierDocuments.kind })
+        .from(supplierDocuments)
+        .where(inArray(supplierDocuments.uploadedByUserId, applicantIds))
+    : [];
+  const documentCounts = new Map<string, { total: number; licenses: number }>();
+  for (const document of documentRows) {
+    const current = documentCounts.get(document.userId) ?? { total: 0, licenses: 0 };
+    current.total += 1;
+    if (document.kind === "license") current.licenses += 1;
+    documentCounts.set(document.userId, current);
+  }
+
   const rows: AdminClaimRow[] = rowsRaw.map((r) => ({
     id: r.claim.id,
     status: r.claim.status,
@@ -87,6 +102,8 @@ export default async function AdminClaimsPage({
     supplierAlreadyClaimed: !!r.supplier?.enterpriseId,
     applicantName: r.user?.name ?? r.user?.email ?? t("adminClaims.anonymous"),
     applicantEmail: r.user?.email ?? "",
+    documentCount: documentCounts.get(r.claim.userId)?.total ?? 0,
+    licenseCount: documentCounts.get(r.claim.userId)?.licenses ?? 0,
   }));
 
   const counts = {

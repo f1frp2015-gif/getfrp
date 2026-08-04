@@ -11,6 +11,7 @@ import {
   enterprises,
   supplierClaims,
   supplierDocuments,
+  supplierListings,
   users,
 } from "@/lib/db/schema";
 
@@ -58,6 +59,9 @@ export default async function AdminOverviewPage({
     [{ c: verifiedEnterprises }],
     [{ c: qualNeedsReview }],
     [{ c: qualTotal }],
+    [{ c: supplierTotal }],
+    [{ c: supplierPublished }],
+    [{ c: supplierExportReady }],
   ] = await Promise.all([
     db.select({ c: count() }).from(users).where(eq(users.role, "individual")),
     db.select({ c: count() }).from(users),
@@ -66,6 +70,9 @@ export default async function AdminOverviewPage({
     db.select({ c: count() }).from(enterprises).where(eq(enterprises.status, "verified")),
     db.select({ c: count() }).from(supplierDocuments).where(eq(supplierDocuments.status, "needs_review")),
     db.select({ c: count() }).from(supplierDocuments),
+    db.select({ c: count() }).from(supplierListings),
+    db.select({ c: count() }).from(supplierListings).where(eq(supplierListings.profilePublished, true)),
+    db.select({ c: count() }).from(supplierListings).where(eq(supplierListings.exportReady, true)),
   ]);
 
   return (
@@ -114,6 +121,15 @@ export default async function AdminOverviewPage({
             value={verifiedEnterprises}
             href="/dashboard/admin/enterprises?status=verified"
           />
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-sm font-semibold text-muted-foreground">Supplier database</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stat label="Supplier records" value={supplierTotal} href="/dashboard/admin/suppliers" />
+          <Stat label="Profiles published" value={supplierPublished} href="/dashboard/admin/suppliers?status=published" />
+          <Stat label="Export ready" value={supplierExportReady} href="/dashboard/admin/suppliers?status=export" />
         </div>
       </section>
 

@@ -1,10 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { enterprises, supplierListings, users } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
 
 export const runtime = "nodejs";
+
+const optionalString = (max: number) => z.string().trim().max(max).optional();
+const optionalList = z
+  .union([z.string().max(20_000), z.array(z.string().trim().min(1).max(200)).max(100)])
+  .optional();
+const EnterpriseBody = z
+  .object({
+    locale: z.enum(["en", "zh"]).optional(),
+    name: z.string().trim().min(2).max(200),
+    shortName: optionalString(50),
+    category: z.string().trim().min(1).max(50),
+    province: optionalString(20),
+    city: optionalString(50),
+    address: optionalString(5000),
+    established: z.union([z.string().trim().max(4), z.number().int(), z.null()]).optional(),
+    employeeCount: optionalString(50),
+    description: optionalString(20_000),
+    products: optionalList,
+    processes: optionalList,
+    certifications: optionalList,
+    contactName: z.string().trim().min(2).max(50),
+    contactPhone: z.string().trim().min(6).max(20),
+    contactEmail: z.union([z.string().trim().email().max(255), z.literal("")]).optional(),
+    contactWechat: optionalString(100),
+    website: optionalString(255),
+    businessLicense: optionalString(3000),
+  })
+  .strict();
+
+function invalidEnterpriseResponse(error: z.ZodError) {
+  return NextResponse.json(
+    { error: error.issues[0]?.message ?? "Please check the company information." },
+    { status: 400 },
+  );
+}
 
 export async function GET(req: NextRequest) {
   const me = await getCurrentUser();
@@ -55,9 +91,12 @@ export async function PATCH(req: NextRequest) {
   const me = await getCurrentUser();
   if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
   if (!me.enterpriseId) return NextResponse.json({ error: "您尚未关联企业" }, { status: 404 });
-  const body = await req.json().catch(() => ({}));
+  const parsed = EnterpriseBody.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) return invalidEnterpriseResponse(parsed.error);
+  const body = parsed.data;
   const values = enterpriseValues(body);
-  if (!values.name || !values.category || !values.contactName || !values.contactPhone) {
+  const isEnglish = body?.locale === "en";
+  if (!values.name || !values.category || !values.contactName || !values.contactPhone || (isEnglish && !values.contactEmail)) {
     return NextResponse.json({ error: "企业全称 / 类型 / 联系人 / 联系电话必填" }, { status: 400 });
   }
 
@@ -69,17 +108,29 @@ export async function PATCH(req: NextRequest) {
     if (!enterprise) return NextResponse.json({ error: "企业不存在" }, { status: 404 });
 
     // Keep the public supplier record in sync with the editable company fields.
+    const localizedPublicValues = isEnglish
+      ? {
+          nameEn: values.name,
+          locationEn: [values.city, values.province].filter(Boolean).join(", ") || null,
+          descriptionEn: values.description,
+          productsEn: values.products,
+          processListEn: values.processes,
+          certificationsEn: values.certifications,
+        }
+      : {
+          name: values.name,
+          location: [values.city, values.province].filter(Boolean).join(", ") || null,
+          description: values.description,
+          products: values.products,
+          processList: values.processes,
+          certifications: values.certifications,
+        };
     await db.update(supplierListings).set({
-      name: values.name,
-      location: [values.city, values.province].filter(Boolean).join(", ") || null,
+      ...localizedPublicValues,
       address: values.address,
       contactEmail: values.contactEmail,
       contactPhone: values.contactPhone,
       website: values.website,
-      description: values.description,
-      products: values.products,
-      processList: values.processes,
-      certifications: values.certifications,
       updatedAt: new Date(),
     }).where(eq(supplierListings.enterpriseId, me.enterpriseId));
 
@@ -112,13 +163,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "您已关联企业,无需重复注册" }, { status: 409 });
   }
 
-  const body = await req.json().catch(() => ({}));
+  const parsed = EnterpriseBody.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) return invalidEnterpriseResponse(parsed.error);
+  const body = parsed.data;
   const name = String(body?.name ?? "").trim();
   const category = String(body?.category ?? "").trim();
   const contactName = String(body?.contactName ?? "").trim();
   const contactPhone = String(body?.contactPhone ?? "").trim();
+  const contactEmail = String(body?.contactEmail ?? "").trim();
+  const isEnglish = body?.locale === "en";
 
-  if (!name || !category || !contactName || !contactPhone) {
+  if (!name || !category || !contactName || !contactPhone || (isEnglish && !contactEmail)) {
     return NextResponse.json(
       { error: "企业全称 / 类型 / 联系人 / 联系电话必填" },
       { status: 400 }

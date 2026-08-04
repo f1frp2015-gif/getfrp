@@ -68,6 +68,11 @@ export const getPublicSupplierDirectory = cache(
       scaleTier: supplier.scaleTier ?? null,
       employeeCount: enterprise.employeeCount ?? null,
       annualRevenue: enterprise.annualRevenue ?? null,
+      capabilities: supplier.capabilities ?? [],
+      standardsSupported: supplier.standardsSupported ?? [],
+      moqKg: supplier.moqKg ?? null,
+      leadTimeDays: supplier.leadTimeDays ?? null,
+      exportReady: supplier.exportReady,
       sponsored: supplier.id === PINNED_SUPPLIER_ID,
     }));
   },

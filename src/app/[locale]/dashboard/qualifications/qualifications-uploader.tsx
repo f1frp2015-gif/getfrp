@@ -22,13 +22,15 @@ type UploadResult = {
 
 export function QualificationsUploader({
   supplierListingId,
+  initialKind = "cert",
 }: {
   supplierListingId: string | null;
+  initialKind?: Kind;
 }) {
   const t = useTranslations("Dashboard.myQual");
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [kind, setKind] = useState<Kind>("cert");
+  const [kind, setKind] = useState<Kind>(initialKind);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<UploadResult | null>(null);

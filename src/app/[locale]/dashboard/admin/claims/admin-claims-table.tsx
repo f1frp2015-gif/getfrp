@@ -40,6 +40,8 @@ export type AdminClaimRow = {
   supplierAlreadyClaimed: boolean;
   applicantName: string;
   applicantEmail: string;
+  documentCount: number;
+  licenseCount: number;
 };
 
 export function AdminClaimsTable({ rows }: { rows: AdminClaimRow[] }) {
@@ -163,6 +165,20 @@ export function AdminClaimsTable({ rows }: { rows: AdminClaimRow[] }) {
                   </a>
                 </div>
               )}
+
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border bg-muted/20 p-3 text-xs">
+                <div>
+                  <span className="font-semibold">Verification evidence: </span>
+                  {r.documentCount} uploaded · {r.licenseCount} business license
+                  {r.licenseCount === 1 ? "" : "s"}
+                </div>
+                <Link
+                  href="/dashboard/admin/qualifications?status=all"
+                  className="font-semibold text-primary hover:underline"
+                >
+                  Review applicant documents →
+                </Link>
+              </div>
 
               {r.note && (
                 <div className="rounded-md bg-muted p-2">

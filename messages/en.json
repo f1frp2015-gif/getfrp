@@ -1027,6 +1027,7 @@
       "postNew": "Post listing",
       "posts": "My listings",
       "messages": "Inquiries",
+      "supplierWorkspace": "Supplier workspace",
       "enterprise": "Company",
       "claims": "Company claims",
       "qualifications": "Qualifications",
@@ -1035,6 +1036,7 @@
       "adminClaims": "Claim review",
       "adminQualifications": "Qualifications",
       "adminEnterprises": "Registration review",
+      "adminSuppliers": "Supplier database",
       "adminPrices": "Price index"
     },
     "profilePage": {

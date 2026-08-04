@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -68,6 +68,8 @@ const labelCls = "block text-sm font-medium mb-1.5";
 export function EnterpriseClient() {
   const t = useTranslations("Dashboard.enterprise");
   const tAuth = useTranslations("Auth");
+  const locale = useLocale();
+  const isEnglish = locale === "en";
   const router = useRouter();
 
   // ── 基本信息 ──
@@ -160,7 +162,11 @@ export function EnterpriseClient() {
   }
 
   function onPhoneChange(v: string) {
-    setContactPhone(v.replace(/\D/g, "").slice(0, 11));
+    setContactPhone(
+      isEnglish
+        ? v.replace(/[^+\d\s().-]/g, "").slice(0, 20)
+        : v.replace(/\D/g, "").slice(0, 11),
+    );
     // 改号 → 需重新验证
     if (otpStep !== "idle") {
       setOtpStep("idle");
@@ -256,9 +262,15 @@ export function EnterpriseClient() {
   }
 
   const phoneVerified = otpStep === "verified";
-  const phoneVerifiedForSubmit = phoneVerified || hasExistingEnterprise;
+  const phoneVerifiedForSubmit = isEnglish || phoneVerified || hasExistingEnterprise;
   const canSubmit =
-    name.trim() && category && contactName.trim() && contactPhone && phoneVerifiedForSubmit && !submitting;
+    name.trim() &&
+    category &&
+    contactName.trim() &&
+    contactPhone.trim() &&
+    (!isEnglish || contactEmail.trim()) &&
+    phoneVerifiedForSubmit &&
+    !submitting;
 
   async function submit() {
     setError(null);
@@ -272,6 +284,7 @@ export function EnterpriseClient() {
         method: hasExistingEnterprise ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          locale,
           name,
           shortName,
           category,
@@ -298,7 +311,7 @@ export function EnterpriseClient() {
         return;
       }
       setSuccess(true);
-      setTimeout(() => router.push("/dashboard"), 1800);
+      setTimeout(() => router.push("/dashboard/supplier"), 1200);
     } catch {
       setError(t("submitError"));
     } finally {
@@ -417,10 +430,11 @@ export function EnterpriseClient() {
 
           <div>
             <label className={labelCls}>{t("products")}</label>
-            <Input
+            <Textarea
               value={products}
               onChange={(e) => setProducts(e.target.value)}
               placeholder={t("productsPlaceholder")}
+              rows={3}
             />
           </div>
         </CardContent>
@@ -487,17 +501,17 @@ export function EnterpriseClient() {
               <div className="flex gap-2">
                 <Input
                   type="tel"
-                  inputMode="numeric"
+                  inputMode="tel"
                   value={contactPhone}
-                  disabled={phoneVerified}
+                  disabled={!isEnglish && phoneVerified}
                   onChange={(e) => onPhoneChange(e.target.value)}
                   placeholder={t("contactPhonePlaceholder")}
                 />
-                {phoneVerified ? (
+                {!isEnglish && phoneVerified ? (
                   <Badge variant="default" className="shrink-0 self-center">
                     ✓ {t("phoneVerified")}
                   </Badge>
-                ) : (
+                ) : !isEnglish ? (
                   <Button
                     type="button"
                     variant="outline"
@@ -507,9 +521,14 @@ export function EnterpriseClient() {
                   >
                     {otpCooldown > 0 ? `${otpCooldown}s` : t("verifyPhone")}
                   </Button>
-                )}
+                ) : null}
               </div>
-              {otpStep === "sent" && (
+              {isEnglish && (
+                <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
+                  Use an international business phone number. GetFRP verifies it together with your company email and documents during review.
+                </p>
+              )}
+              {!isEnglish && otpStep === "sent" && (
                 <div className="mt-2 flex gap-2">
                   <Input
                     type="text"
@@ -528,12 +547,12 @@ export function EnterpriseClient() {
                   </Button>
                 </div>
               )}
-              {otpDevCode && (
+              {!isEnglish && otpDevCode && (
                 <p className="mt-1 text-xs text-amber-600">
                   {tAuth("devCodeHint", { code: otpDevCode })}
                 </p>
               )}
-              {otpError && <p className="mt-1 text-xs text-red-600">{otpError}</p>}
+              {!isEnglish && otpError && <p className="mt-1 text-xs text-red-600">{otpError}</p>}
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -555,7 +574,9 @@ export function EnterpriseClient() {
             </div>
           </div>
           <div>
-            <label className={labelCls}>{t("contactEmail")}</label>
+            <label className={labelCls}>
+              {t("contactEmail")}{isEnglish ? " *" : ""}
+            </label>
             <Input
               type="email"
               value={contactEmail}
