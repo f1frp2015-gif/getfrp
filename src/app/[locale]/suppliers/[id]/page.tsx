@@ -169,6 +169,10 @@ function serializeNetworkRow(row: JoinedNetworkRow): NetworkRow {
     scaleTier: supplier.scaleTier ?? null,
     employeeCount: row.employeeCount ?? null,
     annualRevenue: row.annualRevenue ?? null,
+    capabilities: supplier.capabilities ?? [],
+    standardsSupported: supplier.standardsSupported ?? [],
+    moqKg: supplier.moqKg ?? null,
+    leadTimeDays: supplier.leadTimeDays ?? null,
     sponsored: supplier.id === PINNED_SUPPLIER_ID,
     province: englishProvince(supplier.province),
     exportReady: Boolean(supplier.exportReady),
@@ -497,7 +501,6 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                         <SupplierClaimButton
                           supplierId={supplier.id}
                           supplierName={name}
-                          supplierPath={`/suppliers/${routeSlug}`}
                         />
                       </div>
                     </div>
@@ -636,7 +639,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               <div className="mt-6 border-t border-border/70 pt-5">
                 <p className="text-sm font-semibold">Is this your business?</p>
                 <Link
-                  href={`/sign-up?redirect_url=${encodeURIComponent(pageUrl)}` as never}
+                  href={`/sign-up?intent=supplier&redirect_url=${encodeURIComponent(`/suppliers/claim?supplier=${routeSlug}`)}` as never}
                   className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                 >
                   Claim your company <ArrowRight size={14} />

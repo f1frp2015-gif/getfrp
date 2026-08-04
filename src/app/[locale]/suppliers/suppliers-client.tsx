@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   ArrowLeft,
@@ -44,6 +44,8 @@ export type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
 type Opt = { id: string; name: string };
 type PaginationItem = number | "start-ellipsis" | "end-ellipsis";
+type ReadinessFilter = "all" | "export" | "standards" | "commercial";
+type SortMode = "recommended" | "name" | "founded" | "verified";
 
 const ALL_REGIONS_TOKEN = "__all__";
 const COMPARE_MAX = 3;
@@ -169,6 +171,8 @@ export function SuppliersClient({
   initialCertification = "",
   initialProfileStatus = "",
   initialCapability = "",
+  initialReadiness = "",
+  initialSort = "",
   initialPage = 1,
   layout = "inline",
 }: {
@@ -181,12 +185,15 @@ export function SuppliersClient({
   initialCertification?: string;
   initialProfileStatus?: string;
   initialCapability?: string;
+  initialReadiness?: string;
+  initialSort?: string;
   initialPage?: number;
   layout?: "inline" | "sidebar";
 }) {
   const t = useTranslations("Suppliers");
 
   const [search, setSearch] = useState(initialSearch);
+  const deferredSearch = useDeferredValue(search);
   const [cat, setCat] = useState(() =>
     categories.some((category) => category.id === initialCategory)
       ? initialCategory
@@ -207,6 +214,16 @@ export function SuppliersClient({
   );
   const [capability, setCapability] = useState(() =>
     findSupplierCapability(initialCapability) ? initialCapability : "",
+  );
+  const [readiness, setReadiness] = useState<ReadinessFilter>(() =>
+    ["export", "standards", "commercial"].includes(initialReadiness)
+      ? (initialReadiness as ReadinessFilter)
+      : "all",
+  );
+  const [sort, setSort] = useState<SortMode>(() =>
+    ["name", "founded", "verified"].includes(initialSort)
+      ? (initialSort as SortMode)
+      : "recommended",
   );
   const [page, setPage] = useState(() =>
     Number.isInteger(initialPage) && initialPage > 0 ? initialPage : 1,
@@ -254,8 +271,26 @@ export function SuppliersClient({
     [capability],
   );
 
+  const searchSuggestions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          suppliers.flatMap((supplier) => [
+            supplier.name,
+            ...supplier.products,
+            ...supplier.processList,
+            ...supplier.capabilities,
+            ...supplier.standardsSupported,
+          ]),
+        ),
+      )
+        .filter(Boolean)
+        .slice(0, 120),
+    [suppliers],
+  );
+
   const filtered = useMemo(() => {
-    const query = search.trim().toLowerCase();
+    const query = deferredSearch.trim().toLowerCase();
     return suppliers.filter((supplier) => {
       const hitSearch =
         !query ||
@@ -268,6 +303,15 @@ export function SuppliersClient({
         ) ||
         supplier.processList.some((process) =>
           process.toLowerCase().includes(query),
+        ) ||
+        supplier.certifications.some((certificationItem) =>
+          certificationItem.toLowerCase().includes(query),
+        ) ||
+        supplier.capabilities.some((capabilityItem) =>
+          capabilityItem.toLowerCase().includes(query),
+        ) ||
+        supplier.standardsSupported.some((standard) =>
+          standard.toLowerCase().includes(query),
         );
       const hitCat = cat === "all" || supplier.category === cat;
       const hitRegion =
@@ -293,29 +337,57 @@ export function SuppliersClient({
         supplier.products,
         supplier.processList,
         supplier.certifications,
+        supplier.capabilities,
+        supplier.standardsSupported,
       ]);
+      const hitReadiness =
+        readiness === "all" ||
+        (readiness === "export" && supplier.exportReady) ||
+        (readiness === "standards" && supplier.standardsSupported.length > 0) ||
+        (readiness === "commercial" &&
+          supplier.moqKg !== null &&
+          supplier.leadTimeDays !== null);
       return (
         hitSearch &&
         hitCat &&
         hitRegion &&
         hitCertification &&
         hitProfileStatus &&
-        hitCapability
+        hitCapability &&
+        hitReadiness
       );
     });
   }, [
     suppliers,
-    search,
+    deferredSearch,
     cat,
     region,
     certification,
     profileStatus,
     capability,
+    readiness,
   ]);
+
+  const sortedFiltered = useMemo(() => {
+    const rows = [...filtered];
+    if (sort === "name") return rows.sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === "founded") {
+      return rows.sort((a, b) => (b.established ?? 0) - (a.established ?? 0));
+    }
+    if (sort === "verified") {
+      return rows.sort(
+        (a, b) =>
+          Number(b.verified) - Number(a.verified) ||
+          Number(b.profilePublished) - Number(a.profilePublished) ||
+          a.name.localeCompare(b.name),
+      );
+    }
+    return rows;
+  }, [filtered, sort]);
 
   const totalPages = Math.max(
     1,
-    Math.ceil(filtered.length / SUPPLIER_RESULTS_PAGE_SIZE),
+    Math.ceil(sortedFiltered.length / SUPPLIER_RESULTS_PAGE_SIZE),
   );
   const currentPage = Math.min(page, totalPages);
 
@@ -336,6 +408,10 @@ export function SuppliersClient({
     else params.delete("profile");
     if (capability) params.set("capability", capability);
     else params.delete("capability");
+    if (readiness !== "all") params.set("readiness", readiness);
+    else params.delete("readiness");
+    if (sort !== "recommended") params.set("sort", sort);
+    else params.delete("sort");
     if (currentPage > 1) params.set("page", String(currentPage));
     else params.delete("page");
     const query = params.toString();
@@ -351,16 +427,18 @@ export function SuppliersClient({
     certification,
     profileStatus,
     capability,
+    readiness,
+    sort,
     currentPage,
   ]);
 
   const paginated = useMemo(
     () =>
-      filtered.slice(
+      sortedFiltered.slice(
         (currentPage - 1) * SUPPLIER_RESULTS_PAGE_SIZE,
         currentPage * SUPPLIER_RESULTS_PAGE_SIZE,
       ),
-    [filtered, currentPage],
+    [sortedFiltered, currentPage],
   );
   const pageItems = paginationItems(currentPage, totalPages);
   const compareItems = useMemo(
@@ -394,7 +472,8 @@ export function SuppliersClient({
       region !== ALL_REGIONS_TOKEN ||
       certification !== "all" ||
       profileStatus !== "all" ||
-      capability,
+      capability ||
+      readiness !== "all",
   );
 
   const clearFilters = () => {
@@ -404,6 +483,8 @@ export function SuppliersClient({
     setCertification("all");
     setProfileStatus("all");
     setCapability("");
+    setReadiness("all");
+    setSort("recommended");
     setPage(1);
   };
 
@@ -422,14 +503,6 @@ export function SuppliersClient({
     return category ? category.name : id;
   };
 
-  const getScaleLabel = (tier: string | null) => {
-    if (tier === "XL") return t("scaleXL");
-    if (tier === "L") return t("scaleL");
-    if (tier === "M") return t("scaleM");
-    if (tier === "S") return t("scaleS");
-    return t("notDisclosed");
-  };
-
   const getProductTags = (supplier: SerializedSupplier) => {
     const tags = Array.from(
       new Set(supplier.products.map((item) => item.trim()).filter(Boolean)),
@@ -440,6 +513,23 @@ export function SuppliersClient({
     }
     while (tags.length < PRODUCT_TAG_COUNT) tags.push(t("notDisclosed"));
     return tags;
+  };
+
+  const getMatchReasons = (supplier: SerializedSupplier) => {
+    const query = deferredSearch.trim().toLowerCase();
+    const reasons: string[] = [];
+    if (selectedCapability) reasons.push(selectedCapability.label);
+    if (query) {
+      if (supplier.products.some((item) => item.toLowerCase().includes(query))) reasons.push("Product match");
+      else if (supplier.processList.some((item) => item.toLowerCase().includes(query))) reasons.push("Process match");
+      else if (supplier.standardsSupported.some((item) => item.toLowerCase().includes(query))) reasons.push("Standard match");
+      else if (supplier.certifications.some((item) => item.toLowerCase().includes(query))) reasons.push("Certification match");
+      else if (supplier.name.toLowerCase().includes(query)) reasons.push("Company match");
+    }
+    if (readiness === "export" && supplier.exportReady) reasons.push("Export ready");
+    if (readiness === "standards" && supplier.standardsSupported.length) reasons.push("Standards documented");
+    if (readiness === "commercial" && supplier.moqKg !== null && supplier.leadTimeDays !== null) reasons.push("Commercial terms available");
+    return Array.from(new Set(reasons)).slice(0, 2);
   };
 
   const filterControls = layout === "sidebar" ? (
@@ -565,6 +655,23 @@ export function SuppliersClient({
             <option value="verified">Verified business</option>
           </select>
         </label>
+
+        <label className="block space-y-1.5 text-xs font-medium">
+          Buyer readiness
+          <select
+            value={readiness}
+            onChange={(event) => {
+              setReadiness(event.target.value as ReadinessFilter);
+              setPage(1);
+            }}
+            className="h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="all">Any readiness</option>
+            <option value="export">Export ready</option>
+            <option value="standards">Standards documented</option>
+            <option value="commercial">MOQ and lead time available</option>
+          </select>
+        </label>
       </div>
     </aside>
   ) : (
@@ -596,6 +703,7 @@ export function SuppliersClient({
         </div>
       )}
       <Input
+        list="supplier-search-suggestions-inline"
         placeholder={t("searchPlaceholder")}
         value={search}
         onChange={(event) => {
@@ -604,6 +712,9 @@ export function SuppliersClient({
         }}
         className="sm:max-w-lg"
       />
+      <datalist id="supplier-search-suggestions-inline">
+        {searchSuggestions.map((suggestion) => <option key={suggestion} value={suggestion} />)}
+      </datalist>
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-sm font-medium">{t("typeLabel")}</span>
         <Badge
@@ -677,6 +788,22 @@ export function SuppliersClient({
           </select>
         </label>
         <label className="flex items-center gap-2 text-sm font-medium">
+          Buyer readiness
+          <select
+            value={readiness}
+            onChange={(event) => {
+              setReadiness(event.target.value as ReadinessFilter);
+              setPage(1);
+            }}
+            className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
+          >
+            <option value="all">Any readiness</option>
+            <option value="export">Export ready</option>
+            <option value="standards">Standards documented</option>
+            <option value="commercial">MOQ and lead time available</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-2 text-sm font-medium">
           Profile status
           <select
             value={profileStatus}
@@ -728,6 +855,7 @@ export function SuppliersClient({
             <span className="sr-only">Search suppliers</span>
             <Input
               data-supplier-search=""
+              list="supplier-search-suggestions"
               aria-label="Search suppliers"
               placeholder={t("searchPlaceholder")}
               value={search}
@@ -737,6 +865,9 @@ export function SuppliersClient({
               }}
               className="h-10 bg-background px-3 text-base md:text-sm"
             />
+            <datalist id="supplier-search-suggestions">
+              {searchSuggestions.map((suggestion) => <option key={suggestion} value={suggestion} />)}
+            </datalist>
           </label>
         )}
 
@@ -758,7 +889,24 @@ export function SuppliersClient({
                 total: suppliers.length,
               })}
             </span>
-            <span>{t("compareHint")}</span>
+            <div className="flex items-center gap-2">
+              <label htmlFor="supplier-sort" className="text-xs font-medium text-foreground">Sort</label>
+              <select
+                id="supplier-sort"
+                value={sort}
+                onChange={(event) => {
+                  setSort(event.target.value as SortMode);
+                  setPage(1);
+                }}
+                className="h-8 rounded-md border bg-background px-2 text-xs"
+              >
+                <option value="recommended">Recommended</option>
+                <option value="verified">Verified first</option>
+                <option value="name">Company name</option>
+                <option value="founded">Newest founded</option>
+              </select>
+              <span className="hidden sm:inline">{t("compareHint")}</span>
+            </div>
           </div>
 
           {filtered.length === 0 ? (
@@ -773,6 +921,7 @@ export function SuppliersClient({
                 {paginated.map((supplier) => {
               const selected = selectedIds.includes(supplier.id);
               const productTags = getProductTags(supplier);
+              const matchReasons = getMatchReasons(supplier);
               const selectionDisabled =
                 !selected && selectedIds.length >= COMPARE_MAX;
 
@@ -782,7 +931,7 @@ export function SuppliersClient({
                   id={supplier.id}
                   data-supplier-card=""
                   className={cn(
-                    "h-[25rem] scroll-mt-20 py-0 transition-colors hover:border-primary/50 sm:h-[22rem] lg:h-[17.5rem]",
+                    "scroll-mt-20 py-0 [content-visibility:auto] [contain-intrinsic-size:288px] transition-colors hover:border-primary/50 lg:min-h-[18rem]",
                     selected && "border-primary ring-1 ring-primary/20",
                   )}
                 >
@@ -820,24 +969,20 @@ export function SuppliersClient({
 
                       <div className="mt-3 grid grid-cols-2 gap-y-3 sm:grid-cols-4 sm:gap-y-0">
                         <Metric
-                          label={t("companySize")}
-                          value={getScaleLabel(supplier.scaleTier)}
+                          label="Process"
+                          value={supplier.processList[0] || t("notDisclosed")}
                         />
                         <Metric
-                          label={t("annualRevenue")}
-                          value={supplier.annualRevenue || t("notDisclosed")}
+                          label="Standard"
+                          value={supplier.standardsSupported[0] || supplier.certifications[0] || t("notDisclosed")}
                         />
                         <Metric
-                          label={t("employeeCount")}
-                          value={supplier.employeeCount || t("notDisclosed")}
+                          label="MOQ"
+                          value={supplier.moqKg !== null ? `${supplier.moqKg.toLocaleString()} kg` : t("notDisclosed")}
                         />
                         <Metric
-                          label={t("founded")}
-                          value={
-                            supplier.established
-                              ? String(supplier.established)
-                              : t("notDisclosed")
-                          }
+                          label="Lead time"
+                          value={supplier.leadTimeDays !== null ? `${supplier.leadTimeDays} days` : t("notDisclosed")}
                         />
                       </div>
 
@@ -866,6 +1011,17 @@ export function SuppliersClient({
                         </div>
                       </div>
 
+                      {matchReasons.length > 0 && (
+                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                          <span className="text-[10px] uppercase tracking-[0.08em] text-muted-foreground">Why matched</span>
+                          {matchReasons.map((reason) => (
+                            <Badge key={reason} variant="outline" className="border-[#0a756f]/30 bg-[#0a756f]/5 text-[10px] text-[#08645f]">
+                              {reason}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+
                       <div className="mt-3 flex min-w-0 items-center gap-2 text-xs">
                         <span className="shrink-0 text-muted-foreground">
                           {t("website")}
@@ -890,7 +1046,7 @@ export function SuppliersClient({
                       </div>
                     </div>
 
-                    <div className="col-span-2 grid grid-cols-2 gap-2 border-t border-border/70 pt-3 sm:grid-cols-3 lg:col-span-1 lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
+                    <div className="col-span-2 grid grid-cols-2 gap-2 border-t border-border/70 pt-3 lg:col-span-1 lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
                       <SaveButton
                         key={`${supplier.id}-${savedSupplierIds.has(supplier.id)}`}
                         sourceType="supplier"
@@ -919,6 +1075,16 @@ export function SuppliersClient({
                         {selected ? <Check /> : <GitCompareArrows />}
                         {selected ? t("selected") : t("select")}
                       </Button>
+                      <Link
+                        href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never}
+                        className={buttonVariants({
+                          size: "sm",
+                          className: "w-full",
+                        })}
+                      >
+                        Add to RFQ
+                        <ArrowRight />
+                      </Link>
                       <Link
                         href={`/suppliers/${supplier.slug}` as never}
                         className={buttonVariants({
@@ -1101,19 +1267,24 @@ export function SuppliersClient({
                 <TableBody>
                   {[
                     {
-                      label: t("companySize"),
+                      label: "Identity status",
                       value: (supplier: SerializedSupplier) =>
-                        getScaleLabel(supplier.scaleTier),
+                        supplier.verified ? "GetFRP checked" : "Public record",
                     },
                     {
-                      label: t("annualRevenue"),
+                      label: "Export readiness",
                       value: (supplier: SerializedSupplier) =>
-                        supplier.annualRevenue || t("notDisclosed"),
+                        supplier.exportReady ? "Export ready" : t("notDisclosed"),
                     },
                     {
-                      label: t("employeeCount"),
+                      label: "MOQ",
                       value: (supplier: SerializedSupplier) =>
-                        supplier.employeeCount || t("notDisclosed"),
+                        supplier.moqKg !== null ? `${supplier.moqKg.toLocaleString()} kg` : t("notDisclosed"),
+                    },
+                    {
+                      label: "Lead time",
+                      value: (supplier: SerializedSupplier) =>
+                        supplier.leadTimeDays !== null ? `${supplier.leadTimeDays} days` : t("notDisclosed"),
                     },
                     {
                       label: t("founded"),
@@ -1137,6 +1308,18 @@ export function SuppliersClient({
                       ))}
                     </TableRow>
                   ))}
+                  <TableRow>
+                    <TableCell className="font-medium align-top">Processes</TableCell>
+                    {compareItems.map((supplier) => (
+                      <TableCell key={supplier.id}>{supplier.processList.slice(0, 4).join(", ") || t("notDisclosed")}</TableCell>
+                    ))}
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium align-top">Supported standards</TableCell>
+                    {compareItems.map((supplier) => (
+                      <TableCell key={supplier.id}>{supplier.standardsSupported.slice(0, 4).join(", ") || t("notDisclosed")}</TableCell>
+                    ))}
+                  </TableRow>
                   <TableRow>
                     <TableCell className="font-medium">{t("website")}</TableCell>
                     {compareItems.map((supplier) => (

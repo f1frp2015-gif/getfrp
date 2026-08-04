@@ -58,6 +58,10 @@ export type ProductSupplier = {
   scaleTier: string | null;
   employeeCount: string | null;
   annualRevenue: string | null;
+  capabilities: string[];
+  standardsSupported: string[];
+  moqKg: number | null;
+  exportReady: boolean;
   sponsored: boolean;
   relationshipType: string;
   supplierProductName: string | null;
@@ -186,13 +190,17 @@ export async function loadSuppliersForProduct(
       scaleTier: supplier.scaleTier,
       employeeCount: employeeCount ?? null,
       annualRevenue: annualRevenue ?? null,
+      capabilities: supplier.capabilities ?? [],
+      standardsSupported: supplier.standardsSupported ?? [],
+      moqKg: relation.moqUnit === "kg" ? relation.moq : supplier.moqKg,
+      exportReady: supplier.exportReady,
       sponsored: supplier.id === "sup-yaoyi",
       relationshipType: relation.relationshipType,
       supplierProductName: relation.supplierProductName,
       customAvailable: relation.customAvailable,
       moq: relation.moq,
       moqUnit: relation.moqUnit,
-      leadTimeDays: relation.leadTimeDays,
+      leadTimeDays: relation.leadTimeDays ?? supplier.leadTimeDays,
     }));
   } catch {
     const page = getSupplierCategoryPage(product.slug);
@@ -229,6 +237,10 @@ export async function loadSuppliersForProduct(
           scaleTier: supplier.scaleTier,
           employeeCount: employeeCount ?? null,
           annualRevenue: annualRevenue ?? null,
+          capabilities: supplier.capabilities ?? [],
+          standardsSupported: supplier.standardsSupported ?? [],
+          moqKg: supplier.moqKg ?? null,
+          exportReady: supplier.exportReady,
           sponsored: supplier.id === "sup-yaoyi",
           relationshipType:
             supplier.category === "resin" || supplier.category === "fiber"

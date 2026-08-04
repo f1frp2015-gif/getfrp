@@ -17,5 +17,10 @@ export type SerializedSupplier = {
   scaleTier: string | null;
   employeeCount: string | null;
   annualRevenue: string | null;
+  capabilities: string[];
+  standardsSupported: string[];
+  moqKg: number | null;
+  leadTimeDays: number | null;
+  exportReady: boolean;
   sponsored: boolean;
 };

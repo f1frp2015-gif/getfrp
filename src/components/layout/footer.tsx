@@ -31,6 +31,9 @@ export function Footer() {
             <Link href="/suppliers/directory/1" className="transition-colors hover:text-[#0b8179]">
               Supplier directory
             </Link>
+            <Link href="/suppliers/claim" className="transition-colors hover:text-[#0b8179]">
+              Claim your company
+            </Link>
             <Link href="/source-from-china" className="transition-colors hover:text-[#0b8179]">
               How to source
             </Link>
