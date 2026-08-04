@@ -25,6 +25,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import {
+  findSupplierCapability,
+  supplierMatchesCapability,
+} from "@/lib/data/supplier-capability-directory";
 
 export type SerializedSupplier = {
   id: string;
@@ -175,6 +179,7 @@ export function SuppliersClient({
   initialRegion = "",
   initialCertification = "",
   initialProfileStatus = "",
+  initialCapability = "",
 }: {
   suppliers: SerializedSupplier[];
   categories: Opt[];
@@ -184,6 +189,7 @@ export function SuppliersClient({
   initialRegion?: string;
   initialCertification?: string;
   initialProfileStatus?: string;
+  initialCapability?: string;
 }) {
   const t = useTranslations("Suppliers");
 
@@ -205,6 +211,9 @@ export function SuppliersClient({
     initialProfileStatus === "published" || initialProfileStatus === "verified"
       ? initialProfileStatus
       : "all",
+  );
+  const [capability, setCapability] = useState(() =>
+    findSupplierCapability(initialCapability) ? initialCapability : "",
   );
   const [page, setPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -260,13 +269,20 @@ export function SuppliersClient({
     }
     if (profileStatus !== "all") params.set("profile", profileStatus);
     else params.delete("profile");
+    if (capability) params.set("capability", capability);
+    else params.delete("capability");
     const query = params.toString();
     window.history.replaceState(
       null,
       "",
       `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`,
     );
-  }, [search, cat, region, certification, profileStatus]);
+  }, [search, cat, region, certification, profileStatus, capability]);
+
+  const selectedCapability = useMemo(
+    () => findSupplierCapability(capability),
+    [capability],
+  );
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -299,15 +315,33 @@ export function SuppliersClient({
         profileStatus === "all" ||
         (profileStatus === "published" && supplier.profilePublished) ||
         (profileStatus === "verified" && supplier.verified);
+      const hitCapability = supplierMatchesCapability(capability, [
+        supplier.name,
+        supplier.category,
+        supplier.location,
+        supplier.description,
+        supplier.products,
+        supplier.processList,
+        supplier.certifications,
+      ]);
       return (
         hitSearch &&
         hitCat &&
         hitRegion &&
         hitCertification &&
-        hitProfileStatus
+        hitProfileStatus &&
+        hitCapability
       );
     });
-  }, [suppliers, search, cat, region, certification, profileStatus]);
+  }, [
+    suppliers,
+    search,
+    cat,
+    region,
+    certification,
+    profileStatus,
+    capability,
+  ]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -383,6 +417,32 @@ export function SuppliersClient({
   return (
     <>
       <div className="mb-6 space-y-3">
+        {selectedCapability && (
+          <div className="flex flex-col gap-3 rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#0a756f]">
+                Capability filter
+              </div>
+              <div className="mt-1 font-semibold">{selectedCapability.label}</div>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {selectedCapability.description}
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCapability("");
+                setPage(1);
+              }}
+              className="shrink-0"
+            >
+              <X />
+              Clear capability
+            </Button>
+          </div>
+        )}
         <Input
           placeholder={t("searchPlaceholder")}
           value={search}
