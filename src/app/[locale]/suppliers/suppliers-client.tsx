@@ -2,7 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, Check, ExternalLink, GitCompareArrows, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  ExternalLink,
+  GitCompareArrows,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { SaveButton } from "@/components/save-button";
 import { Badge } from "@/components/ui/badge";
@@ -162,6 +170,7 @@ export function SuppliersClient({
   initialProfileStatus = "",
   initialCapability = "",
   initialPage = 1,
+  layout = "inline",
 }: {
   suppliers: SerializedSupplier[];
   categories: Opt[];
@@ -173,6 +182,7 @@ export function SuppliersClient({
   initialProfileStatus?: string;
   initialCapability?: string;
   initialPage?: number;
+  layout?: "inline" | "sidebar";
 }) {
   const t = useTranslations("Suppliers");
 
@@ -378,6 +388,25 @@ export function SuppliersClient({
     });
   };
 
+  const hasActiveFilters = Boolean(
+    search.trim() ||
+      cat !== "all" ||
+      region !== ALL_REGIONS_TOKEN ||
+      certification !== "all" ||
+      profileStatus !== "all" ||
+      capability,
+  );
+
+  const clearFilters = () => {
+    setSearch("");
+    setCat("all");
+    setRegion(ALL_REGIONS_TOKEN);
+    setCertification("all");
+    setProfileStatus("all");
+    setCapability("");
+    setPage(1);
+  };
+
   const catStats = useMemo(() => {
     const stats: Record<string, number> = {};
     suppliers.forEach((supplier) => {
@@ -413,165 +442,342 @@ export function SuppliersClient({
     return tags;
   };
 
-  return (
-    <>
-      <div className="mb-6 space-y-3">
+  const filterControls = layout === "sidebar" ? (
+    <aside
+      aria-label="Supplier filters"
+      className="self-start rounded-xl border border-border/80 bg-muted/20 p-4 lg:sticky lg:top-24 lg:col-start-1 lg:row-span-2 lg:row-start-1"
+    >
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 pb-3">
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <SlidersHorizontal size={15} className="text-[#0a756f]" />
+          Filters
+        </div>
+        {hasActiveFilters && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="xs"
+            onClick={clearFilters}
+          >
+            Clear all
+          </Button>
+        )}
+      </div>
+
+      <div className="mt-4 space-y-4">
+        <label className="block space-y-1.5 text-xs font-medium">
+          Search suppliers
+          <Input
+            placeholder={t("searchPlaceholder")}
+            value={search}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
+            className="bg-background"
+          />
+        </label>
+
         {selectedCapability && (
-          <div className="flex flex-col gap-3 rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#0a756f]">
-                Capability filter
-              </div>
-              <div className="mt-1 font-semibold">{selectedCapability.label}</div>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {selectedCapability.description}
-              </p>
+          <div className="rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-3">
+            <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#0a756f]">
+              Capability filter
             </div>
+            <div className="mt-1 text-sm font-semibold">
+              {selectedCapability.label}
+            </div>
+            <p className="mt-1 line-clamp-3 text-xs leading-5 text-muted-foreground">
+              {selectedCapability.description}
+            </p>
             <Button
               type="button"
-              variant="outline"
-              size="sm"
+              variant="ghost"
+              size="xs"
               onClick={() => {
                 setCapability("");
                 setPage(1);
               }}
-              className="shrink-0"
+              className="mt-2 px-0 text-[#0a756f] hover:bg-transparent"
             >
               <X />
               Clear capability
             </Button>
           </div>
         )}
-        <Input
-          placeholder={t("searchPlaceholder")}
-          value={search}
-          onChange={(event) => {
-            setSearch(event.target.value);
+
+        <label className="block space-y-1.5 text-xs font-medium">
+          {t("typeLabel")}
+          <select
+            value={cat}
+            onChange={(event) => {
+              setCat(event.target.value);
+              setPage(1);
+            }}
+            className="h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="all">{t("all")}</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+                {catStats[category.id] ? ` (${catStats[category.id]})` : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block space-y-1.5 text-xs font-medium">
+          {t("regionLabel")}
+          <select
+            value={region}
+            onChange={(event) => {
+              setRegion(event.target.value);
+              setPage(1);
+            }}
+            className="h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value={ALL_REGIONS_TOKEN}>{t("allRegions")}</option>
+            {provinces.map((province) => (
+              <option key={province} value={province}>
+                {province}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block space-y-1.5 text-xs font-medium">
+          Certification
+          <select
+            value={certification}
+            onChange={(event) => {
+              setCertification(event.target.value);
+              setPage(1);
+            }}
+            className="h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="all">Any certification</option>
+            {CERTIFICATION_FILTERS.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block space-y-1.5 text-xs font-medium">
+          Profile status
+          <select
+            value={profileStatus}
+            onChange={(event) => {
+              setProfileStatus(event.target.value);
+              setPage(1);
+            }}
+            className="h-8 w-full rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="all">All records</option>
+            <option value="published">Company profile available</option>
+            <option value="verified">Verified business</option>
+          </select>
+        </label>
+      </div>
+    </aside>
+  ) : (
+    <div className="mb-6 space-y-3">
+      {selectedCapability && (
+        <div className="flex flex-col gap-3 rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#0a756f]">
+              Capability filter
+            </div>
+            <div className="mt-1 font-semibold">{selectedCapability.label}</div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {selectedCapability.description}
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setCapability("");
+              setPage(1);
+            }}
+            className="shrink-0"
+          >
+            <X />
+            Clear capability
+          </Button>
+        </div>
+      )}
+      <Input
+        placeholder={t("searchPlaceholder")}
+        value={search}
+        onChange={(event) => {
+          setSearch(event.target.value);
+          setPage(1);
+        }}
+        className="sm:max-w-lg"
+      />
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sm font-medium">{t("typeLabel")}</span>
+        <Badge
+          variant={cat === "all" ? "default" : "outline"}
+          className="cursor-pointer px-3 py-1"
+          onClick={() => {
+            setCat("all");
             setPage(1);
           }}
-          className="sm:max-w-lg"
-        />
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium">{t("typeLabel")}</span>
+        >
+          {t("all")}
+        </Badge>
+        {categories.map((category) => (
           <Badge
-            variant={cat === "all" ? "default" : "outline"}
+            key={category.id}
+            variant={cat === category.id ? "default" : "outline"}
             className="cursor-pointer px-3 py-1"
             onClick={() => {
-              setCat("all");
+              setCat(category.id);
               setPage(1);
             }}
           >
-            {t("all")}
+            {category.name}
+            {catStats[category.id] ? ` (${catStats[category.id]})` : ""}
           </Badge>
-          {categories.map((category) => (
-            <Badge
-              key={category.id}
-              variant={cat === category.id ? "default" : "outline"}
-              className="cursor-pointer px-3 py-1"
-              onClick={() => {
-                setCat(category.id);
-                setPage(1);
-              }}
-            >
-              {category.name}
-              {catStats[category.id] ? ` (${catStats[category.id]})` : ""}
-            </Badge>
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium">{t("regionLabel")}</span>
-          <Badge
-            variant={region === ALL_REGIONS_TOKEN ? "default" : "outline"}
-            className="cursor-pointer px-3 py-1"
-            onClick={() => {
-              setRegion(ALL_REGIONS_TOKEN);
-              setPage(1);
-            }}
-          >
-            {t("allRegions")}
-          </Badge>
-          {provinces.map((province) => (
-            <Badge
-              key={province}
-              variant={region === province ? "default" : "outline"}
-              className="cursor-pointer px-3 py-1"
-              onClick={() => {
-                setRegion(province);
-                setPage(1);
-              }}
-            >
-              {province}
-            </Badge>
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-3 pt-1">
-          <label className="flex items-center gap-2 text-sm font-medium">
-            Certification
-            <select
-              value={certification}
-              onChange={(event) => {
-                setCertification(event.target.value);
-                setPage(1);
-              }}
-              className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
-            >
-              <option value="all">
-                Any certification
-              </option>
-              {CERTIFICATION_FILTERS.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="flex items-center gap-2 text-sm font-medium">
-            Profile status
-            <select
-              value={profileStatus}
-              onChange={(event) => {
-                setProfileStatus(event.target.value);
-                setPage(1);
-              }}
-              className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
-            >
-              <option value="all">
-                All records
-              </option>
-              <option value="published">
-                Company profile available
-              </option>
-              <option value="verified">
-                Verified business
-              </option>
-            </select>
-          </label>
-        </div>
+        ))}
       </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sm font-medium">{t("regionLabel")}</span>
+        <Badge
+          variant={region === ALL_REGIONS_TOKEN ? "default" : "outline"}
+          className="cursor-pointer px-3 py-1"
+          onClick={() => {
+            setRegion(ALL_REGIONS_TOKEN);
+            setPage(1);
+          }}
+        >
+          {t("allRegions")}
+        </Badge>
+        {provinces.map((province) => (
+          <Badge
+            key={province}
+            variant={region === province ? "default" : "outline"}
+            className="cursor-pointer px-3 py-1"
+            onClick={() => {
+              setRegion(province);
+              setPage(1);
+            }}
+          >
+            {province}
+          </Badge>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-3 pt-1">
+        <label className="flex items-center gap-2 text-sm font-medium">
+          Certification
+          <select
+            value={certification}
+            onChange={(event) => {
+              setCertification(event.target.value);
+              setPage(1);
+            }}
+            className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
+          >
+            <option value="all">Any certification</option>
+            {CERTIFICATION_FILTERS.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex items-center gap-2 text-sm font-medium">
+          Profile status
+          <select
+            value={profileStatus}
+            onChange={(event) => {
+              setProfileStatus(event.target.value);
+              setPage(1);
+            }}
+            className="rounded-md border border-border bg-background px-2.5 py-1.5 text-sm font-normal"
+          >
+            <option value="all">All records</option>
+            <option value="published">Company profile available</option>
+            <option value="verified">Verified business</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  );
 
+  return (
+    <>
       <div
-        ref={listTopRef}
-        className="mb-4 flex scroll-mt-20 flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground"
+        className={cn(
+          layout === "sidebar" &&
+            "grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start lg:gap-x-8 lg:gap-y-5",
+        )}
       >
-        <span>
-          {t("resultCount", {
-            filtered: filtered.length,
-            total: suppliers.length,
-          })}
-        </span>
-        <span>{t("compareHint")}</span>
-      </div>
+        {layout === "sidebar" && (
+          <header className="min-w-0 border-b border-border/70 pb-5 lg:col-start-2 lg:row-start-1">
+            <Link
+              href={"/suppliers" as never}
+              className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft size={13} />
+              Browse supplier categories
+            </Link>
+            <div className="mt-4 flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+              <div className="min-w-0">
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+                  Live supplier search
+                </div>
+                <h1 className="mt-1.5 text-3xl font-semibold tracking-tight">
+                  Find, evaluate and compare China FRP suppliers
+                </h1>
+              </div>
+              <div className="max-w-md shrink-0 xl:text-right">
+                <p className="text-xs leading-5 text-muted-foreground">
+                  Filter by type, region, certification and profile status, then
+                  compare up to three companies side by side.
+                </p>
+                <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                  {SUPPLIER_RESULTS_PAGE_SIZE} suppliers per page
+                </div>
+              </div>
+            </div>
+          </header>
+        )}
 
-      {filtered.length === 0 ? (
-        <Card>
-          <CardContent className="py-16 text-center text-muted-foreground">
-            {t("noResults")}
-          </CardContent>
-        </Card>
-      ) : (
-        <>
-          <div className="space-y-3">
-            {paginated.map((supplier) => {
+        {filterControls}
+
+        <div
+          className={cn(
+            "min-w-0",
+            layout === "sidebar" && "lg:col-start-2 lg:row-start-2",
+          )}
+        >
+          <div
+            ref={listTopRef}
+            className="mb-4 flex scroll-mt-20 flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground"
+          >
+            <span>
+              {t("resultCount", {
+                filtered: filtered.length,
+                total: suppliers.length,
+              })}
+            </span>
+            <span>{t("compareHint")}</span>
+          </div>
+
+          {filtered.length === 0 ? (
+            <Card>
+              <CardContent className="py-16 text-center text-muted-foreground">
+                {t("noResults")}
+              </CardContent>
+            </Card>
+          ) : (
+            <>
+              <div className="space-y-3">
+                {paginated.map((supplier) => {
               const selected = selectedIds.includes(supplier.id);
               const productTags = getProductTags(supplier);
               const selectionDisabled =
@@ -735,11 +941,11 @@ export function SuppliersClient({
                   </CardContent>
                 </Card>
               );
-            })}
-          </div>
+                })}
+              </div>
 
-          {totalPages > 1 && (
-            <nav
+              {totalPages > 1 && (
+                <nav
               aria-label={t("paginationLabel")}
               className="mt-8 flex flex-wrap items-center justify-center gap-2"
             >
@@ -797,10 +1003,12 @@ export function SuppliersClient({
                   total: totalPages,
                 })}
               </span>
-            </nav>
+                </nav>
+              )}
+            </>
           )}
-        </>
-      )}
+        </div>
+      </div>
 
       {selectedIds.length > 0 && (
         <div className="fixed bottom-4 left-1/2 z-40 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 rounded-xl border border-border bg-background/95 px-3 py-2 shadow-lg backdrop-blur sm:px-4">
