@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
@@ -90,7 +90,7 @@ export default async function SupplierSearchPage({
   ].join("|");
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: `${CURRENT_SITE_URL}/` },
@@ -102,35 +102,7 @@ export default async function SupplierSearchPage({
         ]}
       />
 
-      <Link
-        href={"/suppliers" as never}
-        className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft size={14} />
-        Browse supplier categories
-      </Link>
-
-      <section id="supplier-results" className="mt-8 scroll-mt-24">
-        <header className="mb-7 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
-              Live supplier search
-            </div>
-            <h1 className="mt-2 max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
-              Find, evaluate and compare China FRP suppliers
-            </h1>
-          </div>
-          <div className="max-w-xl lg:text-right">
-            <p className="text-sm leading-6 text-muted-foreground">
-              Combine a capability with product type, region, certification and
-              profile status. Select up to three companies for side-by-side comparison.
-            </p>
-            <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              {SUPPLIER_RESULTS_PAGE_SIZE} suppliers per page
-            </div>
-          </div>
-        </header>
-
+      <section id="supplier-results" className="scroll-mt-24">
         <SuppliersClient
           key={clientKey}
           suppliers={suppliers}
@@ -146,14 +118,16 @@ export default async function SupplierSearchPage({
             name: category.nameEn,
           }))}
           provinces={SUPPLIER_PROVINCES_EN}
+          layout="sidebar"
         />
       </section>
 
-      <section className="mt-10 flex flex-col gap-4 rounded-xl border bg-muted/30 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <section className="mt-8 flex flex-col gap-4 rounded-xl border bg-muted/30 p-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold">Need a supplier shortlist?</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Send one controlled specification and let GetFRP coordinate capability checks and quotations.
+            Send one controlled specification and let GetFRP coordinate
+            capability checks and quotations.
           </p>
         </div>
         <Link
