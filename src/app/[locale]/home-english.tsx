@@ -13,41 +13,65 @@ import {
   Sparkles,
   Truck,
 } from "lucide-react";
+import { count, eq } from "drizzle-orm";
 
 import { JsonLd } from "@/components/json-ld";
 import { SupplierCategoryCardImage } from "@/components/supplier-category-card-image";
 import { Link } from "@/i18n/navigation";
+import { db } from "@/lib/db";
+import { supplierListings } from "@/lib/db/schema";
 
 import { HomeMarketplaceSearch } from "./home-marketplace-search";
+
+export const HOME_TITLE =
+  "FRP Products & Suppliers China — Factory-Direct Marketplace";
+export const HOME_DESCRIPTION =
+  "FRP products, manufacturers and suppliers in China — compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.";
 
 const FEATURED_PRODUCTS = [
   {
     slug: "frp-grating",
     eyebrow: "Corrosion infrastructure",
-    title: "FRP Grating",
+    title: "FRP Grating Manufacturers in China",
     description: "Molded and pultruded panels, stair treads and handrail systems.",
     detail: "VE · anti-slip · fire options",
+    related: [
+      ["Pultruded profiles", "pultruded-profiles"],
+      ["FRP rebar", "frp-rebar"],
+    ],
   },
   {
     slug: "pultruded-profiles",
     eyebrow: "Structural profiles",
-    title: "Pultruded Profiles",
+    title: "Pultruded Profile Manufacturers in China",
     description: "Angles, channels, beams, tubes and custom constant sections.",
     detail: "EN 13706 · CNC finishing",
+    related: [
+      ["FRP grating", "frp-grating"],
+      ["Fiberglass sheet", "fiberglass-sheet"],
+    ],
   },
   {
     slug: "frp-pipe",
     eyebrow: "Process equipment",
-    title: "FRP Pipe & Tanks",
+    title: "FRP Pipe & Tank Manufacturers in China",
     description: "Filament-wound pipe, fittings, vessels and corrosion equipment.",
     detail: "VE · pressure · chemical service",
+    related: [
+      ["Resin & gelcoat", "resin-gelcoat"],
+      ["Pultruded profiles", "pultruded-profiles"],
+    ],
   },
   {
     slug: "smc-bmc",
     eyebrow: "Molded components",
-    title: "SMC / BMC Parts",
+    title: "SMC / BMC Parts Manufacturers in China",
     description: "Compression-molded enclosures, covers and engineered components.",
     detail: "Tooling · volume production",
+    related: [
+      ["Resin & gelcoat", "resin-gelcoat"],
+      ["Glass fiber", "fiber-glass"],
+    ],
   },
 ] as const;
 
@@ -93,6 +117,38 @@ const CATEGORY_LINKS = [
   ["SMC / BMC", "smc-bmc"],
   ["Resin & gelcoat", "resin-gelcoat"],
   ["Glass fiber", "fiber-glass"],
+] as const;
+
+const SERVICE_COUNTRIES = [
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Germany",
+  "Netherlands",
+  "Australia",
+  "India",
+  "United Arab Emirates",
+] as const;
+
+const HOW_IT_WORKS = [
+  {
+    step: "01",
+    title: "Search the right product and process",
+    body: "Start with the FRP family, manufacturing route, service condition and target standard.",
+    Icon: Search,
+  },
+  {
+    step: "02",
+    title: "Compare capability and evidence",
+    body: "Review manufacturer identity, process fit, certificate scope and product-level proof.",
+    Icon: BadgeCheck,
+  },
+  {
+    step: "03",
+    title: "Submit one controlled RFQ",
+    body: "Send one English specification for matched quotes, QA checks and export follow-up.",
+    Icon: ClipboardCheck,
+  },
 ] as const;
 
 const BUYER_PATHS = [
@@ -203,7 +259,28 @@ function SectionIntro({
   );
 }
 
+async function loadVerifiedPlantCount(): Promise<number | null> {
+  try {
+    const [result] = await db
+      .select({ value: count() })
+      .from(supplierListings)
+      .where(eq(supplierListings.verified, true));
+    const value = Number(result?.value ?? 0);
+    return value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function formatPlantCount(value: number | null): string {
+  if (value === null) return "China-wide";
+  if (value < 100) return String(value);
+  return `${Math.floor(value / 10) * 10}+`;
+}
+
 export async function HomePageEnglish() {
+  const verifiedPlantCount = await loadVerifiedPlantCount();
+
   return (
     <>
       <JsonLd
@@ -214,10 +291,9 @@ export async function HomePageEnglish() {
               "@type": "WebPage",
               "@id": "https://getfrp.com/#webpage",
               url: "https://getfrp.com/",
-              name: "FRP Products & Suppliers China — Factory-Direct Marketplace | getfrp",
+              name: HOME_TITLE,
               inLanguage: "en",
-              description:
-                "Find FRP products, manufacturers and suppliers in China. Compare grating, profiles, pipe, rebar, resin and fiber, then verify factories through one RFQ.",
+              description: HOME_DESCRIPTION,
               about: [
                 { "@type": "Thing", name: "FRP products" },
                 { "@type": "Thing", name: "China FRP suppliers" },
@@ -230,8 +306,24 @@ export async function HomePageEnglish() {
               name: "AI-assisted FRP product and supplier search",
               serviceType:
                 "Product discovery, supplier matching, specification alignment and China sourcing support for FRP and composite products",
-              areaServed: "Worldwide",
+              areaServed: SERVICE_COUNTRIES.map((name) => ({
+                "@type": "Country",
+                name,
+              })),
+              availableLanguage: "English",
               provider: { "@id": "https://getfrp.com/#organization" },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "China FRP product and manufacturer sourcing",
+                itemListElement: CATEGORY_LINKS.map(([name, slug]) => ({
+                  "@type": "Offer",
+                  url: `https://getfrp.com/products/${slug}`,
+                  itemOffered: {
+                    "@type": "Service",
+                    name: `${name} manufacturer sourcing in China`,
+                  },
+                })),
+              },
             },
           ],
         }}
@@ -265,8 +357,9 @@ export async function HomePageEnglish() {
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#b6cbd2] sm:mt-5 sm:text-[17px] sm:leading-7">
               <span className="sm:hidden">
-                Search China FRP products and suppliers by product, process,
-                specification or factory capability.
+                Search China FRP products, manufacturers and suppliers by
+                product family, process, specification or verified factory
+                capability.
               </span>
               <span className="hidden sm:inline">
                 Search China FRP products and manufacturers by product family,
@@ -275,6 +368,26 @@ export async function HomePageEnglish() {
                 factory, certification, quality and export checks.
               </span>
             </p>
+
+            <dl className="mx-auto mt-6 grid max-w-2xl grid-cols-3 overflow-hidden rounded-xl border border-white/15 bg-white/[0.06] text-left backdrop-blur-sm">
+              {[
+                [formatPlantCount(verifiedPlantCount), "verified plant records"],
+                ["8", "structured product families"],
+                ["<24h", "sourcing-desk follow-up"],
+              ].map(([value, label]) => (
+                <div
+                  key={label}
+                  className="border-r border-white/15 px-3 py-3 last:border-r-0 sm:px-5 sm:py-4"
+                >
+                  <dd className="text-lg font-semibold tracking-tight text-white sm:text-2xl">
+                    {value}
+                  </dd>
+                  <dt className="mt-0.5 text-[9px] leading-4 text-[#a8c0c8] sm:text-[10px]">
+                    {label}
+                  </dt>
+                </div>
+              ))}
+            </dl>
           </div>
 
           <div className="mx-auto mt-7 max-w-5xl sm:mt-10">
@@ -316,29 +429,148 @@ export async function HomePageEnglish() {
 
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURED_PRODUCTS.map((product) => (
-              <Link
+              <article
                 key={product.slug}
-                href={`/products/${product.slug}` as never}
-                className="group overflow-hidden rounded-xl border border-[#d8e1e4] bg-white transition-all hover:-translate-y-0.5 hover:border-[#96bbb6] hover:shadow-lg"
+                className="group flex overflow-hidden rounded-xl border border-[#d8e1e4] bg-white transition-all hover:-translate-y-0.5 hover:border-[#96bbb6] hover:shadow-lg"
               >
-                <SupplierCategoryCardImage slug={product.slug} />
-                <div className="p-5">
-                  <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
-                    {product.eyebrow}
-                  </div>
-                  <h3 className="mt-3 text-lg font-semibold tracking-tight text-[#102d3b]">
-                    {product.title}
-                  </h3>
-                  <p className="mt-2 min-h-10 text-[12px] leading-5 text-[#677982]">
-                    {product.description}
-                  </p>
-                  <div className="mt-4 border-t border-[#e3e9eb] pt-3 font-mono text-[9px] text-[#7c8d94]">
-                    {product.detail}
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <Link href={`/products/${product.slug}` as never} className="block">
+                    <SupplierCategoryCardImage slug={product.slug} />
+                    <div className="p-5">
+                      <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                        {product.eyebrow}
+                      </div>
+                      <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-[#102d3b]">
+                        {product.title}
+                      </h3>
+                      <p className="mt-2 min-h-10 text-[12px] leading-5 text-[#677982]">
+                        {product.description}
+                      </p>
+                      <div className="mt-4 border-t border-[#e3e9eb] pt-3 font-mono text-[9px] text-[#7c8d94]">
+                        {product.detail}
+                      </div>
+                    </div>
+                  </Link>
+                  <div className="mt-auto border-t border-[#e3e9eb] px-5 py-3">
+                    <span className="mr-2 font-mono text-[8px] uppercase tracking-[0.12em] text-[#8a999f]">
+                      Related
+                    </span>
+                    {product.related.map(([label, slug], index) => (
+                      <span key={slug}>
+                        {index > 0 ? <span className="mx-1 text-[#aab5b9]">·</span> : null}
+                        <Link
+                          href={`/products/${slug}` as never}
+                          className="text-[10px] font-medium text-[#4f6973] hover:text-[#0a756f] hover:underline"
+                        >
+                          {label}
+                        </Link>
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </Link>
+              </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d5e0e2] bg-[#f7faf9]">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.25fr_.75fr] lg:gap-16">
+          <div>
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a756f]">
+              China FRP sourcing
+            </div>
+            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#0b2938] sm:text-4xl">
+              Why source FRP from China with GetFRP?
+            </h2>
+            <div className="mt-6 space-y-5 text-[14px] leading-7 text-[#566d77] sm:text-[15px]">
+              <p>
+                China has one of the world&apos;s broadest FRP manufacturing
+                ecosystems, with specialist factory clusters for pultrusion,
+                filament winding, molded grating, SMC/BMC compression molding,
+                resin systems and fiber reinforcement. Jiangsu is strong in
+                resin and pultruded profiles; Hebei and Shandong combine
+                grating, pipe, tanks and corrosion equipment; Guangdong adds
+                custom fabrication, machining and export consolidation. This
+                depth gives overseas buyers more choices, but it also makes a
+                generic search for a &ldquo;China FRP factory&rdquo; too broad to
+                produce a dependable shortlist.
+              </p>
+              <p>
+                GetFRP narrows the China FRP supplier market around the product
+                and process actually required. Public company identity,
+                production location, manufacturing capability, certificate
+                scope, product evidence and export readiness are kept as
+                separate checks. A verified company record does not imply that
+                every FRP grade is certified; the offered resin, construction,
+                thickness, production site and current test report still need
+                to match the project. Buyers can review the structured
+                <Link href="/suppliers" className="mx-1 font-medium text-[#0a756f] underline underline-offset-2">
+                  China FRP manufacturer directory
+                </Link>
+                before a commercial conversation starts.
+              </p>
+              <p>
+                A useful sourcing request begins with service conditions and an
+                acceptance basis, not only dimensions and target price. State
+                the load case, chemical exposure, operating temperature, fire
+                requirement, governing ASTM, EN, ISO or project standard,
+                quantity, destination and documentation package. GetFRP then
+                maps that controlled specification to the relevant product
+                family and factory process. This makes quotations comparable
+                and exposes technical deviations before tooling, samples or a
+                purchase order create switching costs.
+              </p>
+              <p>
+                The final step is evidence. Use approved samples, current
+                certificates, batch traceability, measurable inspection points,
+                packaging requirements and export documents against the same
+                RFQ revision. The detailed
+                <Link href="/source-from-china" className="mx-1 font-medium text-[#0a756f] underline underline-offset-2">
+                  FRP sourcing process
+                </Link>
+                covers standards, regional clusters, supplier checks and the
+                path from specification to shipment. When the scope is ready,
+                one English-language RFQ keeps the manufacturer comparison,
+                quality plan and delivery handoff tied to the same requirement.
+              </p>
+            </div>
+          </div>
+
+          <aside className="h-fit rounded-2xl border border-[#cfdcde] bg-white p-5 shadow-sm sm:p-7">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a756f]">
+              How it works
+            </div>
+            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#102d3b]">
+              Search → Compare → RFQ
+            </h3>
+            <ol className="mt-7 space-y-6">
+              {HOW_IT_WORKS.map((item) => (
+                <li key={item.step} className="flex gap-4">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#e5f2f0] text-[#0a756f]">
+                    <item.Icon size={18} />
+                  </span>
+                  <div>
+                    <div className="font-mono text-[9px] font-semibold tracking-[0.14em] text-[#7b8e95]">
+                      STEP {item.step}
+                    </div>
+                    <div className="mt-1 text-[14px] font-semibold text-[#173440]">
+                      {item.title}
+                    </div>
+                    <p className="mt-1 text-[12px] leading-5 text-[#697b83]">
+                      {item.body}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <Link
+              href="/rfq"
+              className="mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#0a756f] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#08645f]"
+            >
+              Submit your FRP RFQ <ArrowRight size={14} />
+            </Link>
+          </aside>
         </div>
       </section>
 

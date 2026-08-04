@@ -262,7 +262,11 @@ function checkStandaloneGetfrpSeo(): Violation[] {
       message: "homepage H1 must retain the China FRP products and manufacturers keyword",
     });
   }
-  if (!homepageMetadata.includes("FRP Products & Suppliers China — Factory-Direct Marketplace")) {
+  if (
+    !`${homepageMetadata}\n${homepage}`.includes(
+      "FRP Products & Suppliers China — Factory-Direct Marketplace",
+    )
+  ) {
     out.push({
       page: "/",
       field: "title",
