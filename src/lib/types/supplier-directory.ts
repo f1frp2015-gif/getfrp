@@ -1,0 +1,21 @@
+export type SerializedSupplier = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  location: string;
+  established: number | null;
+  description: string;
+  products: string[];
+  processList: string[];
+  certifications: string[];
+  verified: boolean;
+  profilePublished: boolean;
+  enterpriseId: string | null;
+  website: string | null;
+  logo: string | null;
+  scaleTier: string | null;
+  employeeCount: string | null;
+  annualRevenue: string | null;
+  sponsored: boolean;
+};

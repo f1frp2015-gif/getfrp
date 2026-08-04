@@ -354,7 +354,7 @@ export default async function ComboPage({
             <ArrowRight size={15} className="shrink-0" />
           </Link>
           <Link
-            href={"/suppliers?verified=1" as never}
+            href={"/suppliers/search?profile=verified" as never}
             className="group flex items-center justify-between gap-3 rounded-md border bg-background p-4 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-muted/30"
           >
             {t("ctaSuppliersTitle")}

@@ -25,8 +25,14 @@ const SCOPE_CONFIG = {
     Icon: Building2,
     placeholder: "Search FRP manufacturers by region",
     examples: [
-      { label: "ISO 9001 pultrusion factory", href: "/suppliers?q=pultrusion" },
-      { label: "filament winding supplier", href: "/suppliers?q=filament%20winding" },
+      {
+        label: "ISO 9001 pultrusion factory",
+        href: "/suppliers/search?q=pultrusion",
+      },
+      {
+        label: "filament winding supplier",
+        href: "/suppliers/search?q=filament%20winding",
+      },
     ],
   },
 } as const;

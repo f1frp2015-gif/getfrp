@@ -1,0 +1,1 @@
+export const SUPPLIER_RESULTS_PAGE_SIZE = 25;
