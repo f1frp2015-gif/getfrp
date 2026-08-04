@@ -29,34 +29,15 @@ import {
   findSupplierCapability,
   supplierMatchesCapability,
 } from "@/lib/data/supplier-capability-directory";
+import type { SerializedSupplier } from "@/lib/types/supplier-directory";
+import { SUPPLIER_RESULTS_PAGE_SIZE } from "@/lib/supplier-directory-config";
 
-export type SerializedSupplier = {
-  id: string;
-  slug: string;
-  name: string;
-  category: string;
-  location: string;
-  established: number | null;
-  description: string;
-  products: string[];
-  processList: string[];
-  certifications: string[];
-  verified: boolean;
-  profilePublished: boolean;
-  enterpriseId: string | null;
-  website: string | null;
-  logo: string | null;
-  scaleTier: string | null;
-  employeeCount: string | null;
-  annualRevenue: string | null;
-  sponsored: boolean;
-};
+export type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
 type Opt = { id: string; name: string };
 type PaginationItem = number | "start-ellipsis" | "end-ellipsis";
 
 const ALL_REGIONS_TOKEN = "__all__";
-const PAGE_SIZE = 20;
 const COMPARE_MAX = 3;
 const PRODUCT_TAG_COUNT = 3;
 const CERTIFICATION_FILTERS = [
@@ -180,6 +161,7 @@ export function SuppliersClient({
   initialCertification = "",
   initialProfileStatus = "",
   initialCapability = "",
+  initialPage = 1,
 }: {
   suppliers: SerializedSupplier[];
   categories: Opt[];
@@ -190,6 +172,7 @@ export function SuppliersClient({
   initialCertification?: string;
   initialProfileStatus?: string;
   initialCapability?: string;
+  initialPage?: number;
 }) {
   const t = useTranslations("Suppliers");
 
@@ -215,7 +198,9 @@ export function SuppliersClient({
   const [capability, setCapability] = useState(() =>
     findSupplierCapability(initialCapability) ? initialCapability : "",
   );
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(() =>
+    Number.isInteger(initialPage) && initialPage > 0 ? initialPage : 1,
+  );
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
   const [savedSupplierIds, setSavedSupplierIds] = useState<Set<string>>(
@@ -253,31 +238,6 @@ export function SuppliersClient({
 
     return () => controller.abort();
   }, []);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (search.trim()) params.set("q", search.trim());
-    else params.delete("q");
-    if (cat !== "all") params.set("category", cat);
-    else params.delete("category");
-    if (region !== ALL_REGIONS_TOKEN) params.set("region", region);
-    else params.delete("region");
-    if (certification !== "all") {
-      params.set("certification", certification);
-    } else {
-      params.delete("certification");
-    }
-    if (profileStatus !== "all") params.set("profile", profileStatus);
-    else params.delete("profile");
-    if (capability) params.set("capability", capability);
-    else params.delete("capability");
-    const query = params.toString();
-    window.history.replaceState(
-      null,
-      "",
-      `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`,
-    );
-  }, [search, cat, region, certification, profileStatus, capability]);
 
   const selectedCapability = useMemo(
     () => findSupplierCapability(capability),
@@ -343,13 +303,52 @@ export function SuppliersClient({
     capability,
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filtered.length / SUPPLIER_RESULTS_PAGE_SIZE),
+  );
   const currentPage = Math.min(page, totalPages);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (search.trim()) params.set("q", search.trim());
+    else params.delete("q");
+    if (cat !== "all") params.set("category", cat);
+    else params.delete("category");
+    if (region !== ALL_REGIONS_TOKEN) params.set("region", region);
+    else params.delete("region");
+    if (certification !== "all") {
+      params.set("certification", certification);
+    } else {
+      params.delete("certification");
+    }
+    if (profileStatus !== "all") params.set("profile", profileStatus);
+    else params.delete("profile");
+    if (capability) params.set("capability", capability);
+    else params.delete("capability");
+    if (currentPage > 1) params.set("page", String(currentPage));
+    else params.delete("page");
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`,
+    );
+  }, [
+    search,
+    cat,
+    region,
+    certification,
+    profileStatus,
+    capability,
+    currentPage,
+  ]);
+
   const paginated = useMemo(
     () =>
       filtered.slice(
-        (currentPage - 1) * PAGE_SIZE,
-        currentPage * PAGE_SIZE,
+        (currentPage - 1) * SUPPLIER_RESULTS_PAGE_SIZE,
+        currentPage * SUPPLIER_RESULTS_PAGE_SIZE,
       ),
     [filtered, currentPage],
   );
@@ -582,6 +581,7 @@ export function SuppliersClient({
                 <Card
                   key={supplier.id}
                   id={supplier.id}
+                  data-supplier-card=""
                   className={cn(
                     "h-[25rem] scroll-mt-20 py-0 transition-colors hover:border-primary/50 sm:h-[22rem] lg:h-[17.5rem]",
                     selected && "border-primary ring-1 ring-primary/20",

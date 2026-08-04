@@ -87,7 +87,7 @@ export default async function FiberDetailPage({
           <div className="mt-1 text-xs text-muted-foreground">Compare specifications</div>
         </Link>
         <Link
-          href={`/suppliers?q=${encodeURIComponent(fiber.nameEn)}` as never}
+          href={`/suppliers/search?q=${encodeURIComponent(fiber.nameEn)}` as never}
           className="group rounded-lg border bg-background p-4 text-center transition-colors hover:border-primary/40"
         >
           <div className="text-sm font-semibold">FRP suppliers</div>

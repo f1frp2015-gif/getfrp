@@ -3,8 +3,9 @@ import { cache } from "react";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { SUPPLIER_RESULTS_PAGE_SIZE } from "@/lib/supplier-directory-config";
 
-export const SUPPLIER_DIRECTORY_PAGE_SIZE = 24;
+export const SUPPLIER_DIRECTORY_PAGE_SIZE = SUPPLIER_RESULTS_PAGE_SIZE;
 
 export type SupplierDirectoryItem = {
   slug: string;

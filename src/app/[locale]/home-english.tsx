@@ -605,7 +605,7 @@ export async function HomePageEnglish() {
                 {PROCESS_LINKS.map((process) => (
                   <Link
                     key={process.name}
-                    href={`/suppliers?q=${encodeURIComponent(process.query)}` as "/suppliers"}
+                    href={`/suppliers/search?q=${encodeURIComponent(process.query)}` as never}
                     className="group flex items-center justify-between gap-4 py-3.5"
                   >
                     <div>
