@@ -62,9 +62,9 @@ export function HomeMarketplaceSearch() {
   }
 
   return (
-    <div className="rounded-2xl border border-white/20 bg-white p-1.5 text-[#0b2635] shadow-[0_24px_70px_rgba(0,0,0,.28)] sm:p-3">
+    <div className="rounded-2xl border border-white/20 bg-white p-1.5 text-[#0a1f44] shadow-[0_24px_70px_rgba(0,0,0,.28)] sm:p-3">
       <div
-        className="grid grid-cols-2 gap-1 rounded-xl bg-[#edf3f3] p-1"
+        className="grid grid-cols-2 gap-1 rounded-xl bg-[#f4f6f9] p-1"
         role="group"
         aria-label="Search scope"
       >
@@ -82,8 +82,8 @@ export function HomeMarketplaceSearch() {
               }}
               className={`inline-flex h-10 items-center justify-center gap-2 rounded-lg text-sm font-semibold transition-colors sm:h-11 ${
                 active
-                  ? "bg-white text-[#0a736d] shadow-sm"
-                  : "text-[#60737d] hover:text-[#173d4b]"
+                  ? "bg-white text-[#123f8c] shadow-sm"
+                  : "text-[#5d6672] hover:text-[#0a1f44]"
               }`}
             >
               <itemConfig.Icon size={16} strokeWidth={1.8} />
@@ -100,8 +100,8 @@ export function HomeMarketplaceSearch() {
         }}
         className="mt-1.5 flex flex-col gap-1.5 sm:mt-2 sm:flex-row sm:gap-2"
       >
-        <label className="flex min-h-14 flex-1 items-center gap-3 rounded-xl border border-[#d7e1e3] bg-white px-3 focus-within:border-[#0b8179] focus-within:ring-2 focus-within:ring-[#0b8179]/15 sm:min-h-16 sm:px-4">
-          <Search size={20} className="shrink-0 text-[#64808a]" />
+        <label className="flex min-h-14 flex-1 items-center gap-3 rounded-xl border border-[#d9dfe8] bg-white px-3 focus-within:border-[#19c3c8] focus-within:ring-2 focus-within:ring-[#19c3c8]/15 sm:min-h-16 sm:px-4">
+          <Search size={20} className="shrink-0 text-[#5d6672]" />
           <span className="sr-only">{config.placeholder}</span>
           <input
             value={query}
@@ -111,13 +111,13 @@ export function HomeMarketplaceSearch() {
             }}
             placeholder={config.placeholder}
             autoComplete="off"
-            className="h-12 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#83959c] sm:h-14 sm:text-[15px]"
+            className="h-12 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#5d6672] sm:h-14 sm:text-[15px]"
           />
         </label>
         <button
           type="submit"
           disabled={!query.trim() || submitting}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#0a756f] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#08645f] disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-16"
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#123f8c] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0a1f44] disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-16"
         >
           <Sparkles size={16} />
           Search with AI
@@ -126,13 +126,13 @@ export function HomeMarketplaceSearch() {
       </form>
 
       <div className="px-1 pb-1 pt-2.5 sm:px-2 sm:pt-3">
-        <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-[#647983] sm:gap-2 sm:text-[11px]">
+        <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-[#5d6672] sm:gap-2 sm:text-[11px]">
           <span className="mr-0.5 font-medium">Popular searches:</span>
           {config.examples.map((example) => (
             <Link
               key={example.label}
               href={example.href as never}
-              className="rounded-full border border-[#d6e0e2] px-2.5 py-1 font-medium text-[#395763] transition-colors hover:border-[#0b8179] hover:text-[#0b756f]"
+              className="rounded-full border border-[#d9dfe8] px-2.5 py-1 font-medium text-[#0a1f44] transition-colors hover:border-[#19c3c8] hover:text-[#123f8c]"
             >
               {example.label}
             </Link>

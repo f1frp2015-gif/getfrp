@@ -46,20 +46,20 @@ function buildHtml(
 
   const content = `
 <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px">
-  <h1 style="color:#1e293b;font-size:22px;margin-bottom:4px">GetFRP Weekly</h1>
-  <p style="color:#64748b;font-size:13px;margin-bottom:24px">getfrp.com · Fiber-reinforced composites sourcing digest</p>
+  <h1 style="color:#1b2430;font-size:22px;margin-bottom:4px">GetFRP Weekly</h1>
+  <p style="color:#5d6672;font-size:13px;margin-bottom:24px">getfrp.com · Fiber-reinforced composites sourcing digest</p>
 
-  <h2 style="font-size:16px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:6px">Industry News</h2>
+  <h2 style="font-size:16px;color:#1b2430;border-bottom:2px solid #d9dfe8;padding-bottom:6px">Industry News</h2>
   <ul style="padding-left:18px;margin-top:12px">
     ${recentArticles.map(articleRow).join("")}
   </ul>
 
-  <h2 style="font-size:16px;color:#1e293b;border-bottom:2px solid #e2e8f0;padding-bottom:6px;margin-top:24px">New Materials</h2>
+  <h2 style="font-size:16px;color:#1b2430;border-bottom:2px solid #d9dfe8;padding-bottom:6px;margin-top:24px">New Materials</h2>
   <ul style="padding-left:18px;margin-top:12px">
     ${recentMaterials.map(materialRow).join("")}
   </ul>
 
-  <p style="margin-top:32px;font-size:12px;color:#94a3b8">
+  <p style="margin-top:32px;font-size:12px;color:#d9dfe8">
     You received this because you subscribed to GetFRP Weekly.<br/>
     Reply to unsubscribe.
   </p>

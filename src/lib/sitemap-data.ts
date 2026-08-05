@@ -90,6 +90,7 @@ export const RESOURCE_SITEMAP_PATHS = [
   "/compare",
   "/technical",
   "/guides",
+  "/suppliers/resources",
   ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
 ];
 

@@ -115,10 +115,10 @@ export default async function ClaimSupplierPage({
 
   return (
     <main>
-      <section className="border-b border-border/80 bg-[#f3f7f7]">
+      <section className="border-b border-border/80 bg-[#f4f6f9]">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_.9fr] lg:py-16">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#087c75]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#19c3c8]">
               For FRP suppliers
             </div>
             <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -131,7 +131,7 @@ export default async function ClaimSupplierPage({
             </p>
           </div>
 
-          <Card className="border-[#aacac7] bg-white shadow-none">
+          <Card className="border-[#7be4e1] bg-white shadow-none">
             <CardHeader>
               <CardTitle className="text-base">What happens after you claim</CardTitle>
             </CardHeader>
@@ -143,7 +143,7 @@ export default async function ClaimSupplierPage({
                 "Business identity, capabilities and certifications receive distinct statuses.",
               ].map((item) => (
                 <div key={item} className="flex gap-3">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#087c75]" />
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#19c3c8]" />
                   <span>{item}</span>
                 </div>
               ))}

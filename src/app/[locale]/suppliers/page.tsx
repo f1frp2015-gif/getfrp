@@ -149,7 +149,7 @@ export default async function SuppliersPage({
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <JsonLd data={capabilityDirectoryJsonLd} />
 
-      <section className="relative overflow-hidden rounded-2xl bg-[#073d3a] px-5 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:px-14">
+      <section className="relative overflow-hidden rounded-2xl bg-[#0a1f44] px-5 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:px-14">
         <Image
           src="/images/glass-fiber-strands.webp"
           alt=""
@@ -194,7 +194,7 @@ export default async function SuppliersPage({
             </div>
             <button
               type="submit"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#0a756f] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#08645f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0a756f] focus-visible:ring-offset-2"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#123f8c] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0a1f44] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#123f8c] focus-visible:ring-offset-2"
             >
               Search suppliers
               <ArrowRight size={15} />
@@ -229,7 +229,7 @@ export default async function SuppliersPage({
               className={buttonVariants({
                 variant: "secondary",
                 size: "lg",
-                className: "bg-white text-[#073d3a] hover:bg-emerald-50",
+                className: "bg-white text-[#0a1f44] hover:bg-emerald-50",
               })}
             >
               Submit one RFQ
@@ -258,8 +258,8 @@ export default async function SuppliersPage({
           ].map((stat) => {
             const StatIcon = stat.icon;
             return (
-              <div key={stat.label} className="flex items-center gap-3 bg-[#073d3a]/90 p-4 sm:p-5">
-                <StatIcon size={18} className="text-[#6ee7dc]" />
+              <div key={stat.label} className="flex items-center gap-3 bg-[#0a1f44]/90 p-4 sm:p-5">
+                <StatIcon size={18} className="text-[#7be4e1]" />
                 <div>
                   <dt className="font-mono text-xl font-semibold tracking-tight text-white">
                     {stat.value}
@@ -275,7 +275,7 @@ export default async function SuppliersPage({
       <section className="border-b border-border/70 py-10 sm:py-12">
         <div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
               China FRP supply-chain coverage
             </div>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -310,7 +310,7 @@ export default async function SuppliersPage({
             },
           ].map((item) => (
             <article key={item.title} className="rounded-xl border border-border/80 bg-muted/20 p-4">
-              <div className="font-mono text-2xl font-semibold text-[#0a756f]">{item.value}</div>
+              <div className="font-mono text-2xl font-semibold text-[#123f8c]">{item.value}</div>
               <h3 className="mt-1 font-semibold">{item.title} profiles</h3>
               <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.note}</p>
             </article>
@@ -321,7 +321,7 @@ export default async function SuppliersPage({
       <section id="capability-categories" className="scroll-mt-24 py-12 sm:py-16">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
               Explore suppliers by category
             </div>
             <h2 className="mt-2 max-w-3xl text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -350,7 +350,7 @@ export default async function SuppliersPage({
               >
                 <header className="border-b border-border/70 bg-muted/25 p-5">
                   <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0a756f]/10 text-[#0a756f]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#123f8c]/10 text-[#123f8c]">
                       <GroupIcon size={19} />
                     </div>
                     <span className="font-mono text-xs text-muted-foreground">
@@ -374,10 +374,10 @@ export default async function SuppliersPage({
                       <a
                         key={capability.id}
                         href={`${supplierSearchBasePath}?capability=${capability.id}#supplier-results`}
-                        className="group flex items-start justify-between gap-4 p-4 transition-colors hover:bg-[#0a756f]/5"
+                        className="group flex items-start justify-between gap-4 p-4 transition-colors hover:bg-[#123f8c]/5"
                       >
                         <span className="min-w-0">
-                          <span className="flex items-center gap-2 text-sm font-semibold group-hover:text-[#0a756f]">
+                          <span className="flex items-center gap-2 text-sm font-semibold group-hover:text-[#123f8c]">
                             {capability.label}
                           </span>
                           <span className="mt-1 block text-xs leading-5 text-muted-foreground">
@@ -391,7 +391,7 @@ export default async function SuppliersPage({
                         </span>
                         <ArrowRight
                           size={15}
-                          className="mt-1 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-[#0a756f]"
+                          className="mt-1 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-[#123f8c]"
                         />
                       </a>
                     );
@@ -464,7 +464,7 @@ export default async function SuppliersPage({
             </a>
             <Link
               href={supplierDirectoryPath(1) as never}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
             >
               Alphabetical index <ArrowRight size={14} />
             </Link>

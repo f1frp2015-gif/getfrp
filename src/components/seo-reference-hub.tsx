@@ -50,19 +50,19 @@ export function SeoReferenceHub({
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#071d2a] text-white">
+      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
-          <nav className="text-xs text-[#aac0c8]" aria-label="Breadcrumb">
+          <nav className="text-xs text-[#d9dfe8]" aria-label="Breadcrumb">
             <Link href="/">Home</Link><span className="mx-2">›</span><span>{config.label}</span>
           </nav>
           <div className="mt-8 max-w-4xl">
-            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#75d3c8]">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7be4e1]">
               {config.label}
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
               {config.title}
             </h1>
-            <p className="mt-5 max-w-3xl text-[16px] leading-8 text-[#b8ccd3]">
+            <p className="mt-5 max-w-3xl text-[16px] leading-8 text-[#d9dfe8]">
               {config.description}
             </p>
           </div>
@@ -75,21 +75,21 @@ export function SeoReferenceHub({
             <Link
               key={page.slug}
               href={`/${group}/${page.slug}` as never}
-              className="group flex min-h-64 flex-col rounded-xl border border-border/70 bg-background p-6 transition-all hover:-translate-y-0.5 hover:border-[#8dbab5] hover:shadow-lg"
+              className="group flex min-h-64 flex-col rounded-xl border border-border/70 bg-background p-6 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
             >
               <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#0a756f]">
+                <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#123f8c]">
                   {page.eyebrow}
                 </span>
                 <BookOpenCheck size={16} className="text-muted-foreground" />
               </div>
-              <h2 className="mt-7 text-2xl font-semibold leading-snug tracking-tight group-hover:text-[#0a756f]">
+              <h2 className="mt-7 text-2xl font-semibold leading-snug tracking-tight group-hover:text-[#123f8c]">
                 {page.title}
               </h2>
               <p className="mt-3 line-clamp-3 text-[13px] leading-6 text-muted-foreground">
                 {page.intro}
               </p>
-              <div className="mt-auto flex items-center justify-between border-t border-border/70 pt-4 text-xs font-semibold text-[#0a756f]">
+              <div className="mt-auto flex items-center justify-between border-t border-border/70 pt-4 text-xs font-semibold text-[#123f8c]">
                 Read the guide <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </div>
             </Link>

@@ -58,9 +58,9 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#071d2a] text-white">
+      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-          <nav className="text-xs text-[#aac0c8]" aria-label="Breadcrumb">
+          <nav className="text-xs text-[#d9dfe8]" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span className="mx-2">›</span>
             <Link href={`/${page.group}` as never}>{group.label}</Link>
@@ -68,18 +68,18 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
             <span>{page.shortTitle}</span>
           </nav>
           <div className="mt-8 max-w-4xl">
-            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#75d3c8]">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7be4e1]">
               {page.eyebrow}
             </div>
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-6xl">
               {page.title}
             </h1>
-            <p className="mt-6 max-w-3xl text-[16px] leading-8 text-[#b8ccd3]">
+            <p className="mt-6 max-w-3xl text-[16px] leading-8 text-[#d9dfe8]">
               {page.intro}
             </p>
-            <div className="mt-7 flex flex-wrap items-center gap-3 text-xs text-[#9fb6be]">
+            <div className="mt-7 flex flex-wrap items-center gap-3 text-xs text-[#7be4e1]">
               <span className="inline-flex items-center gap-1.5">
-                <BookOpenCheck size={14} className="text-[#75d3c8]" />
+                <BookOpenCheck size={14} className="text-[#7be4e1]" />
                 Technical sourcing reference
               </span>
               <span>Updated {page.reviewedDate}</span>
@@ -168,7 +168,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
                         key={bullet}
                         className="flex gap-3 rounded-lg border border-border/70 bg-muted/20 p-4 text-[13px] leading-6 text-muted-foreground"
                       >
-                        <CheckCircle2 size={15} className="mt-1 shrink-0 text-[#0a756f]" />
+                        <CheckCircle2 size={15} className="mt-1 shrink-0 text-[#123f8c]" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -211,7 +211,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
                     href={source.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-start gap-2 text-sm font-medium text-[#0a756f] hover:underline"
+                    className="inline-flex items-start gap-2 text-sm font-medium text-[#123f8c] hover:underline"
                   >
                     {source.label}
                     <ExternalLink size={13} className="mt-1 shrink-0" />
@@ -233,7 +233,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
                 <Link
                   key={item.href}
                   href={item.href as never}
-                  className="flex items-center justify-between rounded-lg border border-border/70 p-4 text-sm font-medium transition-colors hover:border-[#8dbab5] hover:text-[#0a756f]"
+                  className="flex items-center justify-between rounded-lg border border-border/70 p-4 text-sm font-medium transition-colors hover:border-[#7be4e1] hover:text-[#123f8c]"
                 >
                   {item.label}
                   <ArrowRight size={14} />
@@ -244,15 +244,15 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
         </div>
       </section>
 
-      <section className="bg-[#071d2a] py-12 text-white">
+      <section className="bg-[#0a1f44] py-12 text-white">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#75d3c8]">
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7be4e1]">
             TURN THE RESEARCH INTO ONE CONTROLLED RFQ
           </div>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight">
             Need product data or a supplier checked?
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#b8ccd3]">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[#d9dfe8]">
             Send the product, environment, standards, quantity and destination.
             GetFRP matches the specification to relevant Chinese manufacturers and evidence.
           </p>

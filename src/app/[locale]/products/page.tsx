@@ -99,16 +99,16 @@ export default async function ProductsPage({
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#071d2a] text-white">
+      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <div className="max-w-3xl">
-            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#75d3c8]">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7be4e1]">
               Structured product database
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
               FRP products from China, connected to qualified suppliers.
             </h1>
-            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[#b6cbd2]">
+            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[#d9dfe8]">
               Compare product materials, manufacturing routes, applications,
               standards and buying checks—then open the matched supplier network
               behind each category.
@@ -116,19 +116,19 @@ export default async function ProductsPage({
           </div>
           <div className="mt-9 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-white/15 bg-white/5 p-4">
-              <Boxes size={17} className="text-[#75d3c8]" />
+              <Boxes size={17} className="text-[#7be4e1]" />
               <div className="mt-3 text-2xl font-semibold">{products.length}</div>
-              <div className="mt-1 text-xs text-[#a9c0c8]">Structured product families</div>
+              <div className="mt-1 text-xs text-[#d9dfe8]">Structured product families</div>
             </div>
             <div className="rounded-xl border border-white/15 bg-white/5 p-4">
-              <Factory size={17} className="text-[#75d3c8]" />
+              <Factory size={17} className="text-[#7be4e1]" />
               <div className="mt-3 text-2xl font-semibold">{supplierRelationships}</div>
-              <div className="mt-1 text-xs text-[#a9c0c8]">Supplier relationships</div>
+              <div className="mt-1 text-xs text-[#d9dfe8]">Supplier relationships</div>
             </div>
             <div className="col-span-2 rounded-xl border border-white/15 bg-white/5 p-4 sm:col-span-1">
-              <Search size={17} className="text-[#75d3c8]" />
+              <Search size={17} className="text-[#7be4e1]" />
               <div className="mt-3 text-2xl font-semibold">2-way</div>
-              <div className="mt-1 text-xs text-[#a9c0c8]">Product ↔ supplier navigation</div>
+              <div className="mt-1 text-xs text-[#d9dfe8]">Product ↔ supplier navigation</div>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default async function ProductsPage({
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
         <form action="/products" method="get" className="flex max-w-2xl flex-col gap-2 sm:flex-row">
-          <label className="flex min-h-12 flex-1 items-center gap-3 rounded-lg border border-border bg-background px-4 focus-within:border-[#0b8179]">
+          <label className="flex min-h-12 flex-1 items-center gap-3 rounded-lg border border-border bg-background px-4 focus-within:border-[#19c3c8]">
             <Search size={18} className="text-muted-foreground" />
             <span className="sr-only">Search products</span>
             <input
@@ -149,7 +149,7 @@ export default async function ProductsPage({
           </label>
           <button
             type="submit"
-            className="min-h-12 rounded-lg bg-[#0a756f] px-5 text-sm font-semibold text-white hover:bg-[#08645f]"
+            className="min-h-12 rounded-lg bg-[#123f8c] px-5 text-sm font-semibold text-white hover:bg-[#0a1f44]"
           >
             Search
           </button>
@@ -165,7 +165,7 @@ export default async function ProductsPage({
             </h2>
           </div>
           {search && (
-            <Link href="/products" className="text-sm font-medium text-[#0a756f] hover:underline">
+            <Link href="/products" className="text-sm font-medium text-[#123f8c] hover:underline">
               Clear search
             </Link>
           )}
@@ -177,7 +177,7 @@ export default async function ProductsPage({
               <Link
                 key={product.id}
                 href={`/products/${product.slug}` as never}
-                className="group overflow-hidden rounded-xl border border-border/70 bg-background transition-all hover:-translate-y-0.5 hover:border-[#8dbab5] hover:shadow-lg"
+                className="group overflow-hidden rounded-xl border border-border/70 bg-background transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
               >
                 {product.imageUrl && (
                   <div className="relative aspect-[8/5] overflow-hidden bg-muted">
@@ -193,7 +193,7 @@ export default async function ProductsPage({
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#0a756f]">
+                      <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#123f8c]">
                         {product.category}
                       </div>
                       <h3 className="mt-2 text-xl font-semibold tracking-tight">
@@ -210,7 +210,7 @@ export default async function ProductsPage({
                       <Badge key={process} variant="secondary">{process}</Badge>
                     ))}
                   </div>
-                  <div className="mt-5 border-t border-border/70 pt-4 text-xs font-medium text-[#0a756f]">
+                  <div className="mt-5 border-t border-border/70 pt-4 text-xs font-medium text-[#123f8c]">
                     {product.supplierCount} matched supplier{product.supplierCount === 1 ? "" : "s"}
                   </div>
                 </div>

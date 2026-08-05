@@ -25,7 +25,7 @@ export function renderOgCard({
           background: "#ffffff",
           padding: "68px 80px 56px",
           fontFamily: "ui-sans-serif, system-ui, -apple-system",
-          color: "#0a0a0a",
+          color: "#1b2430",
           position: "relative",
         }}
       >
@@ -37,7 +37,7 @@ export function renderOgCard({
             left: 0,
             height: 8,
             width: "100%",
-            background: "#2563eb",
+            background: "#123f8c",
             display: "flex",
           }}
         />
@@ -57,7 +57,7 @@ export function renderOgCard({
             style={{
               width: 32,
               height: 32,
-              background: "#0a0a0a",
+              background: "#1b2430",
               borderRadius: 4,
               display: "flex",
               flexDirection: "column",
@@ -83,8 +83,8 @@ export function renderOgCard({
             style={{
               display: "flex",
               padding: "6px 12px",
-              border: "1.5px solid #e5e5e5",
-              color: "#525252",
+              border: "1.5px solid #d9dfe8",
+              color: "#5d6672",
               borderRadius: 4,
               fontSize: 18,
               fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
@@ -116,7 +116,7 @@ export function renderOgCard({
               display: "flex",
               fontSize: 24,
               marginTop: 20,
-              color: "#737373",
+              color: "#5d6672",
               lineHeight: 1.4,
               letterSpacing: "-0.005em",
             }}
@@ -133,10 +133,10 @@ export function renderOgCard({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "1.5px solid #e5e5e5",
+            borderTop: "1.5px solid #d9dfe8",
             paddingTop: 20,
             fontSize: 20,
-            color: "#737373",
+            color: "#5d6672",
             fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
             letterSpacing: "0.02em",
           }}
@@ -144,7 +144,7 @@ export function renderOgCard({
           <div style={{ display: "flex" }}>
             {meta ?? "AI-powered composite materials platform"}
           </div>
-          <div style={{ display: "flex", color: "#2563eb" }}>→ getfrp.com</div>
+          <div style={{ display: "flex", color: "#123f8c" }}>→ getfrp.com</div>
         </div>
       </div>
     ),

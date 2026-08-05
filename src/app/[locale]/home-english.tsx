@@ -250,13 +250,13 @@ function SectionIntro({
 }) {
   return (
     <div className="max-w-2xl">
-      <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a756f]">
+      <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#123f8c]">
         {eyebrow}
       </div>
-      <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#0b2938] sm:text-4xl">
+      <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
         {title}
       </h2>
-      <p className="mt-3 text-[14px] leading-6 text-[#62747d] sm:text-[15px]">
+      <p className="mt-3 text-[14px] leading-6 text-[#5d6672] sm:text-[15px]">
         {body}
       </p>
     </div>
@@ -344,14 +344,14 @@ export async function HomePageEnglish() {
         }}
       />
 
-      <section className="relative overflow-hidden bg-[#071d2a] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(70,188,174,.2),transparent_34%),linear-gradient(135deg,#071d2a_0%,#0a2d3a_58%,#0d3c45_100%)]" />
+      <section className="relative overflow-hidden bg-[#0a1f44] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(70,188,174,.2),transparent_34%),linear-gradient(135deg,#0a1f44_0%,#0a1f44_58%,#0a1f44_100%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.2)_1px,transparent_1px)] [background-size:40px_40px]" />
 
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:pt-20">
           <div className="mx-auto max-w-5xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#6bbdb3]/35 bg-[#58aa9f]/10 px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8ed8ce]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#69d2c5]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#19c3c8]/35 bg-[#19c3c8]/10 px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7be4e1]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#7be4e1]" />
               China&apos;s specialist FRP marketplace
             </div>
             <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[64px]">
@@ -360,7 +360,7 @@ export async function HomePageEnglish() {
               </span>
               <span aria-hidden="true">Source China&apos;s FRP Supply Chain.</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-4xl text-[12px] leading-5 text-[#b6cbd2] sm:whitespace-nowrap sm:text-sm sm:leading-6">
+            <p className="mx-auto mt-4 max-w-4xl text-[12px] leading-5 text-[#d9dfe8] sm:whitespace-nowrap sm:text-sm sm:leading-6">
               Glass fiber, carbon fiber, resin systems and export-ready FRP products.
             </p>
           </div>
@@ -375,7 +375,7 @@ export async function HomePageEnglish() {
           >
             <div className="grid gap-3 border-b border-white/10 px-4 py-4 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
               <div>
-                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#72d4c9]">
+                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7be4e1]">
                   China FRP supply chain
                 </div>
                 <h2
@@ -385,7 +385,7 @@ export async function HomePageEnglish() {
                   From reinforcement and resin to finished composite parts.
                 </h2>
               </div>
-              <p className="max-w-md text-[11px] leading-5 text-[#a8c0c8] md:text-right">
+              <p className="max-w-md text-[11px] leading-5 text-[#d9dfe8] md:text-right">
                 Representative market leaders and rounded public disclosures
                 available August 2026 — a sourcing map, not a universal ranking.
               </p>
@@ -425,29 +425,29 @@ export async function HomePageEnglish() {
                   <div className="text-xl font-semibold tracking-tight text-white">
                     {item.value}
                   </div>
-                  <h3 className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.11em] text-[#72d4c9]">
+                  <h3 className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.11em] text-[#7be4e1]">
                     {item.label}
                   </h3>
-                  <p className="mt-3 text-[11px] font-medium leading-4 text-[#d2e0e4]">
+                  <p className="mt-3 text-[11px] font-medium leading-4 text-[#d9dfe8]">
                     {item.leaders}
                   </p>
-                  <p className="mt-1 text-[10px] leading-4 text-[#91aeb7]">
+                  <p className="mt-1 text-[10px] leading-4 text-[#d9dfe8]">
                     {item.detail}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="grid gap-5 border-t border-white/10 bg-[#061923]/35 px-4 py-5 sm:px-6 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="grid gap-5 border-t border-white/10 bg-[#0a1f44]/35 px-4 py-5 sm:px-6 md:grid-cols-[1fr_auto] md:items-center">
               <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#72d4c9]">
+                <div className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7be4e1]">
                   <BadgeCheck size={13} />
                   For overseas buyers
                 </div>
                 <h3 className="mt-2 text-xl font-semibold tracking-[-0.025em] text-white">
                   One search. Verified suppliers. One RFQ.
                 </h3>
-                <p className="mt-2 text-[12px] leading-5 text-[#b6cbd2]">
+                <p className="mt-2 text-[12px] leading-5 text-[#d9dfe8]">
                   Access China&apos;s full FRP supply chain through GetFRP. Search
                   immediately; create a free buyer account to compare verified
                   companies side by side, review certification evidence, save a
@@ -457,7 +457,7 @@ export async function HomePageEnglish() {
               <div className="flex flex-col gap-2 sm:flex-row md:flex-col lg:flex-row">
                 <Link
                   href="/suppliers/search"
-                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#72d4c9] px-4 text-[11px] font-semibold text-[#082630] transition-colors hover:bg-[#8ce1d7]"
+                  className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#7be4e1] px-4 text-[11px] font-semibold text-[#0a1f44] transition-colors hover:bg-[#7be4e1]"
                 >
                   Search the supply chain <ArrowRight size={13} />
                 </Link>
@@ -473,7 +473,7 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#dce4e6] bg-white">
+      <section className="border-b border-[#d9dfe8] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
@@ -483,7 +483,7 @@ export async function HomePageEnglish() {
             />
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
             >
               View all products <ArrowRight size={14} />
             </Link>
@@ -493,36 +493,36 @@ export async function HomePageEnglish() {
             {FEATURED_PRODUCTS.map((product) => (
               <article
                 key={product.slug}
-                className="group flex overflow-hidden rounded-xl border border-[#d8e1e4] bg-white transition-all hover:-translate-y-0.5 hover:border-[#96bbb6] hover:shadow-lg"
+                className="group flex overflow-hidden rounded-xl border border-[#d9dfe8] bg-white transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
               >
                 <div className="flex min-w-0 flex-1 flex-col">
                   <Link href={`/products/${product.slug}` as never} className="block">
                     <SupplierCategoryCardImage slug={product.slug} />
                     <div className="p-5">
-                      <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                      <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
                         {product.eyebrow}
                       </div>
-                      <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-[#102d3b]">
+                      <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-[#0a1f44]">
                         {product.title}
                       </h3>
-                      <p className="mt-2 min-h-10 text-[12px] leading-5 text-[#677982]">
+                      <p className="mt-2 min-h-10 text-[12px] leading-5 text-[#5d6672]">
                         {product.description}
                       </p>
-                      <div className="mt-4 border-t border-[#e3e9eb] pt-3 font-mono text-[9px] text-[#7c8d94]">
+                      <div className="mt-4 border-t border-[#d9dfe8] pt-3 font-mono text-[9px] text-[#5d6672]">
                         {product.detail}
                       </div>
                     </div>
                   </Link>
-                  <div className="mt-auto border-t border-[#e3e9eb] px-5 py-3">
-                    <span className="mr-2 font-mono text-[8px] uppercase tracking-[0.12em] text-[#8a999f]">
+                  <div className="mt-auto border-t border-[#d9dfe8] px-5 py-3">
+                    <span className="mr-2 font-mono text-[8px] uppercase tracking-[0.12em] text-[#5d6672]">
                       Related
                     </span>
                     {product.related.map(([label, slug], index) => (
                       <span key={slug}>
-                        {index > 0 ? <span className="mx-1 text-[#aab5b9]">·</span> : null}
+                        {index > 0 ? <span className="mx-1 text-[#d9dfe8]">·</span> : null}
                         <Link
                           href={`/products/${slug}` as never}
-                          className="text-[10px] font-medium text-[#4f6973] hover:text-[#0a756f] hover:underline"
+                          className="text-[10px] font-medium text-[#5d6672] hover:text-[#123f8c] hover:underline"
                         >
                           {label}
                         </Link>
@@ -536,16 +536,16 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d5e0e2] bg-[#f7faf9]">
+      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.25fr_.75fr] lg:gap-16">
           <div>
-            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a756f]">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#123f8c]">
               China FRP sourcing
             </div>
-            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#0b2938] sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
               Why source FRP from China with GetFRP?
             </h2>
-            <div className="mt-6 space-y-5 text-[14px] leading-7 text-[#566d77] sm:text-[15px]">
+            <div className="mt-6 space-y-5 text-[14px] leading-7 text-[#5d6672] sm:text-[15px]">
               <p>
                 China has one of the world&apos;s broadest FRP manufacturing
                 ecosystems, with specialist factory clusters for pultrusion,
@@ -567,7 +567,7 @@ export async function HomePageEnglish() {
                 every FRP grade is certified; the offered resin, construction,
                 thickness, production site and current test report still need
                 to match the project. Buyers can review the structured
-                <Link href="/suppliers" className="mx-1 font-medium text-[#0a756f] underline underline-offset-2">
+                <Link href="/suppliers" className="mx-1 font-medium text-[#123f8c] underline underline-offset-2">
                   China FRP manufacturer directory
                 </Link>
                 before a commercial conversation starts.
@@ -588,7 +588,7 @@ export async function HomePageEnglish() {
                 certificates, batch traceability, measurable inspection points,
                 packaging requirements and export documents against the same
                 RFQ revision. The detailed
-                <Link href="/source-from-china" className="mx-1 font-medium text-[#0a756f] underline underline-offset-2">
+                <Link href="/source-from-china" className="mx-1 font-medium text-[#123f8c] underline underline-offset-2">
                   FRP sourcing process
                 </Link>
                 covers standards, regional clusters, supplier checks and the
@@ -599,27 +599,27 @@ export async function HomePageEnglish() {
             </div>
           </div>
 
-          <aside className="h-fit rounded-2xl border border-[#cfdcde] bg-white p-5 shadow-sm sm:p-7">
-            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a756f]">
+          <aside className="h-fit rounded-2xl border border-[#d9dfe8] bg-white p-5 shadow-sm sm:p-7">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#123f8c]">
               How it works
             </div>
-            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#102d3b]">
+            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#0a1f44]">
               Search → Compare → RFQ
             </h3>
             <ol className="mt-7 space-y-6">
               {HOW_IT_WORKS.map((item) => (
                 <li key={item.step} className="flex gap-4">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#e5f2f0] text-[#0a756f]">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f4f6f9] text-[#123f8c]">
                     <item.Icon size={18} />
                   </span>
                   <div>
-                    <div className="font-mono text-[9px] font-semibold tracking-[0.14em] text-[#7b8e95]">
+                    <div className="font-mono text-[9px] font-semibold tracking-[0.14em] text-[#5d6672]">
                       STEP {item.step}
                     </div>
-                    <div className="mt-1 text-[14px] font-semibold text-[#173440]">
+                    <div className="mt-1 text-[14px] font-semibold text-[#0a1f44]">
                       {item.title}
                     </div>
-                    <p className="mt-1 text-[12px] leading-5 text-[#697b83]">
+                    <p className="mt-1 text-[12px] leading-5 text-[#5d6672]">
                       {item.body}
                     </p>
                   </div>
@@ -628,7 +628,7 @@ export async function HomePageEnglish() {
             </ol>
             <Link
               href="/rfq"
-              className="mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#0a756f] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#08645f]"
+              className="mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#123f8c] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0a1f44]"
             >
               Submit your FRP RFQ <ArrowRight size={14} />
             </Link>
@@ -636,7 +636,7 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d5e0e2] bg-[#f2f6f6]">
+      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
@@ -646,24 +646,24 @@ export async function HomePageEnglish() {
             />
             <Link
               href="/suppliers"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
             >
               Open supplier directory <ArrowUpRight size={14} />
             </Link>
           </div>
 
           <div className="mt-9 grid gap-5 lg:grid-cols-2">
-            <div className="rounded-xl border border-[#d6e0e2] bg-white p-5 sm:p-6">
-              <div className="flex items-center gap-3 border-b border-[#e1e8ea] pb-4">
-                <span className="grid size-9 place-items-center rounded-lg bg-[#e6f2f0] text-[#0a756f]">
+            <div className="rounded-xl border border-[#d9dfe8] bg-white p-5 sm:p-6">
+              <div className="flex items-center gap-3 border-b border-[#d9dfe8] pb-4">
+                <span className="grid size-9 place-items-center rounded-lg bg-[#f4f6f9] text-[#123f8c]">
                   <Factory size={18} />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#102d3b]">By manufacturing process</h3>
-                  <p className="mt-0.5 text-[11px] text-[#75868e]">Match suppliers to the way the part must be made.</p>
+                  <h3 className="font-semibold text-[#0a1f44]">By manufacturing process</h3>
+                  <p className="mt-0.5 text-[11px] text-[#5d6672]">Match suppliers to the way the part must be made.</p>
                 </div>
               </div>
-              <div className="mt-2 divide-y divide-[#e5ebed]">
+              <div className="mt-2 divide-y divide-[#d9dfe8]">
                 {PROCESS_LINKS.map((process) => (
                   <Link
                     key={process.name}
@@ -671,25 +671,25 @@ export async function HomePageEnglish() {
                     className="group flex items-center justify-between gap-4 py-3.5"
                   >
                     <div>
-                      <div className="text-[13px] font-semibold text-[#173440] group-hover:text-[#0a756f]">
+                      <div className="text-[13px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
                         {process.name}
                       </div>
-                      <div className="mt-0.5 text-[10px] text-[#7c8d94]">{process.detail}</div>
+                      <div className="mt-0.5 text-[10px] text-[#5d6672]">{process.detail}</div>
                     </div>
-                    <ArrowRight size={14} className="shrink-0 text-[#8ca0a7] transition-transform group-hover:translate-x-1 group-hover:text-[#0a756f]" />
+                    <ArrowRight size={14} className="shrink-0 text-[#5d6672] transition-transform group-hover:translate-x-1 group-hover:text-[#123f8c]" />
                   </Link>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#d6e0e2] bg-white p-5 sm:p-6">
-              <div className="flex items-center gap-3 border-b border-[#e1e8ea] pb-4">
-                <span className="grid size-9 place-items-center rounded-lg bg-[#e6f2f0] text-[#0a756f]">
+            <div className="rounded-xl border border-[#d9dfe8] bg-white p-5 sm:p-6">
+              <div className="flex items-center gap-3 border-b border-[#d9dfe8] pb-4">
+                <span className="grid size-9 place-items-center rounded-lg bg-[#f4f6f9] text-[#123f8c]">
                   <Boxes size={18} />
                 </span>
                 <div>
-                  <h3 className="font-semibold text-[#102d3b]">By product category</h3>
-                  <p className="mt-0.5 text-[11px] text-[#75868e]">Compare specifications, factory capability and buying checks.</p>
+                  <h3 className="font-semibold text-[#0a1f44]">By product category</h3>
+                  <p className="mt-0.5 text-[11px] text-[#5d6672]">Compare specifications, factory capability and buying checks.</p>
                 </div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3">
@@ -697,10 +697,10 @@ export async function HomePageEnglish() {
                   <Link
                     key={slug}
                     href={`/products/${slug}` as never}
-                    className="group flex min-h-20 flex-col justify-between rounded-lg border border-[#e0e7e9] bg-[#fbfcfc] p-3.5 transition-colors hover:border-[#9cc1bc] hover:bg-[#f1f8f7]"
+                    className="group flex min-h-20 flex-col justify-between rounded-lg border border-[#d9dfe8] bg-[#f4f6f9] p-3.5 transition-colors hover:border-[#7be4e1] hover:bg-[#f4f6f9]"
                   >
-                    <Search size={14} className="text-[#6f858d] group-hover:text-[#0a756f]" />
-                    <span className="mt-3 text-[12px] font-semibold text-[#26434f] group-hover:text-[#0a756f]">
+                    <Search size={14} className="text-[#5d6672] group-hover:text-[#123f8c]" />
+                    <span className="mt-3 text-[12px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
                       {label}
                     </span>
                   </Link>
@@ -721,7 +721,7 @@ export async function HomePageEnglish() {
             />
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
             >
               Explore product data <ArrowRight size={14} />
             </Link>
@@ -754,18 +754,18 @@ export async function HomePageEnglish() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] p-6 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] p-6 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
               >
-                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
                   {item.label}
                 </div>
-                <h3 className="mt-7 text-xl font-semibold leading-snug tracking-[-0.025em] text-[#102d3b] group-hover:text-[#0a756f]">
+                <h3 className="mt-7 text-xl font-semibold leading-snug tracking-[-0.025em] text-[#0a1f44] group-hover:text-[#123f8c]">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-[13px] leading-6 text-[#697b83]">
+                <p className="mt-3 text-[13px] leading-6 text-[#5d6672]">
                   {item.body}
                 </p>
-                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#31505c] group-hover:text-[#0a756f]">
+                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
                   {item.cta} <ArrowUpRight size={12} className="ml-1 inline" />
                 </div>
               </Link>
@@ -774,7 +774,7 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d5e0e2] bg-[#f2f6f6]">
+      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <SectionIntro
             eyebrow="Built for industrial buying"
@@ -786,21 +786,21 @@ export async function HomePageEnglish() {
               <Link
                 key={item.eyebrow}
                 href={item.href as never}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">
+                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
                     {item.eyebrow}
                   </span>
-                  <item.Icon size={18} className="text-[#779099]" />
+                  <item.Icon size={18} className="text-[#5d6672]" />
                 </div>
-                <h3 className="mt-7 text-xl font-semibold tracking-[-0.025em] text-[#102d3b] group-hover:text-[#0a756f]">
+                <h3 className="mt-7 text-xl font-semibold tracking-[-0.025em] text-[#0a1f44] group-hover:text-[#123f8c]">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-[13px] leading-6 text-[#697b83]">
+                <p className="mt-3 text-[13px] leading-6 text-[#5d6672]">
                   {item.description}
                 </p>
-                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#0a756f]">
+                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#123f8c]">
                   {item.cta} <ArrowRight size={12} className="ml-1 inline" />
                 </div>
               </Link>
@@ -809,26 +809,26 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d5e0e2] bg-white">
+      <section className="border-b border-[#d9dfe8] bg-white">
         <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a756f]">
+          <div className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#123f8c]">
             <FileSearch size={15} /> FRP SOURCING FAQ
           </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0b2938] sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
             Questions overseas FRP buyers ask first.
           </h2>
-          <div className="mt-8 grid gap-x-10 border-y border-[#dce4e6] md:grid-cols-2">
+          <div className="mt-8 grid gap-x-10 border-y border-[#d9dfe8] md:grid-cols-2">
             {HOME_FAQS.map((faq) => (
-              <article key={faq.question} className="border-b border-[#e1e8ea] py-6 md:[&:nth-last-child(-n+2)]:border-b-0">
-                <h3 className="font-semibold leading-6 text-[#173440]">{faq.question}</h3>
-                <p className="mt-2 text-[13px] leading-7 text-[#697b83]">{faq.answer}</p>
+              <article key={faq.question} className="border-b border-[#d9dfe8] py-6 md:[&:nth-last-child(-n+2)]:border-b-0">
+                <h3 className="font-semibold leading-6 text-[#0a1f44]">{faq.question}</h3>
+                <p className="mt-2 text-[13px] leading-7 text-[#5d6672]">{faq.answer}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f2f6f6]">
+      <section className="bg-[#f4f6f9]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
@@ -836,7 +836,7 @@ export async function HomePageEnglish() {
               title="Technical answers that lead to better RFQs."
               body="Use objective material comparisons, property references and quality-control guides to define the requirement before comparing factory prices."
             />
-            <Link href="/guides" className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a756f] hover:underline">
+            <Link href="/guides" className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline">
               Explore buyer guides <ArrowRight size={14} />
             </Link>
           </div>
@@ -845,15 +845,15 @@ export async function HomePageEnglish() {
               <Link
                 key={item.href}
                 href={item.href as never}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9e2e5] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#9bbeb9] hover:shadow-lg"
+                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a756f]">{item.eyebrow}</span>
-                  <BookOpenCheck size={16} className="text-[#789099]" />
+                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">{item.eyebrow}</span>
+                  <BookOpenCheck size={16} className="text-[#5d6672]" />
                 </div>
-                <h3 className="mt-8 text-lg font-semibold leading-snug tracking-tight text-[#102d3b] group-hover:text-[#0a756f]">{item.title}</h3>
-                <p className="mt-3 text-[12px] leading-6 text-[#697b83]">{item.description}</p>
-                <div className="mt-auto border-t border-[#e4eaec] pt-4 text-[11px] font-semibold text-[#0a756f]">Read insight <ArrowUpRight size={12} className="ml-1 inline" /></div>
+                <h3 className="mt-8 text-lg font-semibold leading-snug tracking-tight text-[#0a1f44] group-hover:text-[#123f8c]">{item.title}</h3>
+                <p className="mt-3 text-[12px] leading-6 text-[#5d6672]">{item.description}</p>
+                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#123f8c]">Read insight <ArrowUpRight size={12} className="ml-1 inline" /></div>
               </Link>
             ))}
           </div>
