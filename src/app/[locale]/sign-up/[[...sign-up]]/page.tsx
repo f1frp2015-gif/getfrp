@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PhoneAuthForm } from "@/components/auth/phone-auth-form";
 import { EmailPasswordForm } from "@/components/auth/email-password-form";
@@ -24,7 +25,13 @@ export default async function SignUpPage({
   // GetFRP uses email and password authentication.
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4 py-16">
-      {locale === "en" ? <EmailPasswordForm mode="signUp" /> : <PhoneAuthForm mode="signUp" />}
+      {locale === "en" ? (
+        <Suspense fallback={<div className="h-[30rem] w-full max-w-xl" aria-hidden="true" />}>
+          <EmailPasswordForm mode="signUp" />
+        </Suspense>
+      ) : (
+        <PhoneAuthForm mode="signUp" />
+      )}
     </div>
   );
 }
