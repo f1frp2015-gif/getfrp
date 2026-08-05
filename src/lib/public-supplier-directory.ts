@@ -6,7 +6,10 @@ import {
   supplierListings,
   type SupplierListing,
 } from "@/lib/db/schema";
-import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
+import {
+  CURATED_SUPPLIER_PROFILES,
+  enrichSupplierWithCuratedProfile,
+} from "@/lib/data/curated-supplier-profiles";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
@@ -85,9 +88,15 @@ export function mergePublicSupplierDirectory(
   databaseRows: PublicSupplierRow[],
   locale: string,
 ): SerializedSupplier[] {
-  const databaseIds = new Set(databaseRows.map(({ supplier }) => supplier.id));
+  const enrichedDatabaseRows = databaseRows.map((row) => ({
+    ...row,
+    supplier: enrichSupplierWithCuratedProfile(row.supplier),
+  }));
+  const databaseIds = new Set(
+    enrichedDatabaseRows.map(({ supplier }) => supplier.id),
+  );
   const databaseSlugs = new Set(
-    databaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
+    enrichedDatabaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
   );
   const curatedFallbackRows = CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) => {
     const slug = supplierRouteSlug(profile);
@@ -108,7 +117,7 @@ export function mergePublicSupplierDirectory(
     } satisfies PublicSupplierRow];
   });
 
-  return [...databaseRows, ...curatedFallbackRows]
+  return [...enrichedDatabaseRows, ...curatedFallbackRows]
     .sort(compareSupplierRows)
     .map((row) => serializeSupplierRow(row, locale));
 }

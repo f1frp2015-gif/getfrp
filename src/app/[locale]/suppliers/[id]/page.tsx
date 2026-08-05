@@ -40,6 +40,7 @@ import {
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
 import {
+  enrichSupplierWithCuratedProfile,
   getCuratedSupplierProfile,
   getCuratedSupplierSlugs,
 } from "@/lib/data/curated-supplier-profiles";
@@ -188,7 +189,10 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       )
       .limit(1);
     if (row) {
-      return row;
+      return {
+        ...row,
+        supplier: enrichSupplierWithCuratedProfile(row.supplier),
+      };
     }
   } catch {
     // Curated Git-backed profiles below remain available if the database is
