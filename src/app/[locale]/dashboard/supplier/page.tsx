@@ -23,6 +23,7 @@ import {
   supplierClaims,
   supplierDocuments,
   supplierListings,
+  supplierProducts,
 } from "@/lib/db/schema";
 
 export const dynamic = "force-dynamic";
@@ -75,6 +76,12 @@ export default async function SupplierWorkspacePage({
   ]);
 
   const approvedDocs = documents.filter((document) => document.status === "approved");
+  const productLinks = linkedSupplier
+    ? await db
+        .select({ id: supplierProducts.id })
+        .from(supplierProducts)
+        .where(eq(supplierProducts.supplierListingId, linkedSupplier.id))
+    : [];
   const licenseDocs = documents.filter((document) => document.kind === "license");
   const hasLicense = Boolean(enterprise?.businessLicense || licenseDocs.length);
   const activeSupplier = linkedSupplier ?? latestClaim?.supplier ?? null;
@@ -92,6 +99,7 @@ export default async function SupplierWorkspacePage({
     true,
     latestClaim?.claim.status === "approved" || enterprise?.status === "verified",
     companyComplete,
+    productLinks.length > 0,
     hasLicense,
     approvedDocs.length > 0,
     publicReady,
@@ -133,6 +141,15 @@ export default async function SupplierWorkspacePage({
       done: hasLicense,
       href: "/dashboard/qualifications" as const,
       action: "Manage documents",
+    },
+    {
+      title: "Product catalog",
+      description: productLinks.length
+        ? `${productLinks.length} canonical product categor${productLinks.length === 1 ? "y" : "ies"} linked to your supplier profile.`
+        : "Add product categories, supplier models, MOQs, lead times and evidence.",
+      done: productLinks.length > 0,
+      href: "/dashboard/supplier/products" as const,
+      action: productLinks.length ? "Manage products" : "Add product offerings",
     },
     {
       title: "Capability evidence",

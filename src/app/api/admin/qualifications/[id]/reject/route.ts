@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { gateAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
 import { supplierDocumentTags, supplierDocuments } from "@/lib/db/schema";
+import { rollupSupplierTags } from "@/lib/qualification/rollup";
 
 export async function POST(
   req: Request,
@@ -50,6 +51,10 @@ export async function POST(
   await db
     .delete(supplierDocumentTags)
     .where(eq(supplierDocumentTags.documentId, doc.id));
+
+  if (doc.supplierListingId) {
+    await rollupSupplierTags(doc.supplierListingId);
+  }
 
   return NextResponse.json({ data: { documentId: doc.id, status: "rejected" } });
 }
