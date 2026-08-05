@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Logo } from "@/components/logo";
 
@@ -53,11 +53,18 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <Link href="/rfq">
-            <Button size="sm" className="bg-[#0b756f] text-white hover:bg-[#09645f]">
-              Submit RFQ
-            </Button>
+        <div className="hidden items-center gap-2 md:flex">
+          <Link
+            href="/rfq"
+            className={buttonVariants({
+              size: "sm",
+              className: "bg-[#0b756f] text-white hover:bg-[#09645f]",
+            })}
+          >
+            Submit RFQ
+          </Link>
+          <Link href="/sign-in" className={buttonVariants({ size: "sm", variant: "outline" })}>
+            Login
           </Link>
         </div>
 
@@ -93,11 +100,24 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/rfq" onClick={() => setOpen(false)} className="mt-5">
-                <Button className="w-full bg-[#0b756f] text-white hover:bg-[#09645f]">
+              <div className="mt-5 grid grid-cols-2 gap-2">
+                <Link
+                  href="/rfq"
+                  onClick={() => setOpen(false)}
+                  className={buttonVariants({
+                    className: "w-full bg-[#0b756f] text-white hover:bg-[#09645f]",
+                  })}
+                >
                   Submit RFQ
-                </Button>
-              </Link>
+                </Link>
+                <Link
+                  href="/sign-in"
+                  onClick={() => setOpen(false)}
+                  className={buttonVariants({ className: "w-full", variant: "outline" })}
+                >
+                  Login
+                </Link>
+              </div>
             </nav>
           </SheetContent>
         </Sheet>
