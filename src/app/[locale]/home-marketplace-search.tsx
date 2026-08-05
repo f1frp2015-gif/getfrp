@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Boxes, Building2, Search, Sparkles } from "lucide-react";
+import { ArrowRight, Boxes, Building2, Search } from "lucide-react";
 
 import { Link, useRouter } from "@/i18n/navigation";
 
@@ -10,6 +10,8 @@ type SearchScope = "products" | "suppliers";
 const SCOPE_CONFIG = {
   products: {
     label: "Products",
+    actionLabel: "Search products",
+    searchPath: "/products",
     Icon: Boxes,
     placeholder: "Search FRP products or specifications",
     examples: [
@@ -24,6 +26,8 @@ const SCOPE_CONFIG = {
   },
   suppliers: {
     label: "Suppliers",
+    actionLabel: "Search suppliers",
+    searchPath: "/suppliers/search",
     Icon: Building2,
     placeholder: "Search FRP manufacturers by region",
     examples: [
@@ -58,7 +62,7 @@ export function HomeMarketplaceSearch() {
     const q = nextQuery.trim();
     if (!q || submitting) return;
     setSubmitting(true);
-    router.push({ pathname: "/ai/chat", query: { scope, q } } as never);
+    router.push({ pathname: config.searchPath, query: { q } } as never);
   }
 
   return (
@@ -119,8 +123,8 @@ export function HomeMarketplaceSearch() {
           disabled={!query.trim() || submitting}
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#123f8c] px-6 text-sm font-semibold text-white transition-colors hover:bg-[#0a1f44] disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-16"
         >
-          <Sparkles size={16} />
-          Search with AI
+          <Search size={16} />
+          {config.actionLabel}
           <ArrowRight size={15} />
         </button>
       </form>
