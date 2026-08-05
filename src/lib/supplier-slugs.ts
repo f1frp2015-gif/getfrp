@@ -84,6 +84,7 @@ export function supplierRouteSlug(
   if (supplier.id === "sup-jushi") return "jushi";
   if (supplier.id === "sup-taishan") return "taishan-fiberglass";
   if (supplier.id === "sup-zhongfu") return "zhongfu-shenying";
+  if (supplier.id === "sup-noah-composites") return "noah-composites";
   return supplier.slug?.trim() || baseSupplierSlug(supplier.nameEn, supplier.id);
 }
 

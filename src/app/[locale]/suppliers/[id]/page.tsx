@@ -56,6 +56,12 @@ import {
   ZHONGFU_SHENYING_SUPPLIER_PROFILE,
   ZHONGFU_SHENYING_SUPPLIER_SLUG,
 } from "@/lib/data/zhongfu-shenying-supplier-profile";
+import {
+  NOAH_COMPOSITES_LEGAL_NAME_EN,
+  NOAH_COMPOSITES_SUPPLIER_ID,
+  NOAH_COMPOSITES_SUPPLIER_PROFILE,
+  NOAH_COMPOSITES_SUPPLIER_SLUG,
+} from "@/lib/data/noah-composites-supplier-profile";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -106,6 +112,7 @@ export async function generateStaticParams() {
     JUSHI_SUPPLIER_SLUG,
     TAISHAN_SUPPLIER_SLUG,
     ZHONGFU_SHENYING_SUPPLIER_SLUG,
+    NOAH_COMPOSITES_SUPPLIER_SLUG,
   ];
   try {
     const rows = await db
@@ -214,6 +221,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       if (row.supplier.id === ZHONGFU_SHENYING_SUPPLIER_ID) {
         return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: row.enterprise };
       }
+      if (row.supplier.id === NOAH_COMPOSITES_SUPPLIER_ID) {
+        return { supplier: NOAH_COMPOSITES_SUPPLIER_PROFILE, enterprise: row.enterprise };
+      }
       return row;
     }
   } catch {
@@ -232,6 +242,9 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
   }
   if (id === ZHONGFU_SHENYING_SUPPLIER_ID || id === ZHONGFU_SHENYING_SUPPLIER_SLUG || id === ZHONGFU_SHENYING_LEGACY_SLUG) {
     return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: null };
+  }
+  if (id === NOAH_COMPOSITES_SUPPLIER_ID || id === NOAH_COMPOSITES_SUPPLIER_SLUG) {
+    return { supplier: NOAH_COMPOSITES_SUPPLIER_PROFILE, enterprise: null };
   }
   return null;
 });
@@ -279,9 +292,10 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const isSponsored = supplier.id === "sup-yaoyi";
   const isClaimed = Boolean(enterprise);
   const name = supplier.nameEn ?? "Supplier";
-  const legalName =
-    supplier.id === "sup-yaoyi"
-      ? "Chongqing Yaoyi New Material Technology Co., Ltd."
+  const legalName = supplier.id === "sup-yaoyi"
+    ? "Chongqing Yaoyi New Material Technology Co., Ltd."
+    : supplier.id === NOAH_COMPOSITES_SUPPLIER_ID
+      ? NOAH_COMPOSITES_LEGAL_NAME_EN
       : supplier.nameEn ?? name;
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
