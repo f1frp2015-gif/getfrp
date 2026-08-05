@@ -1,34 +1,31 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
-import { JsonLd } from "@/components/json-ld";
-import { AskAiButton } from "@/components/ask-ai-button";
-import { alternates } from "@/lib/seo";
-import { CURRENT_SITE_URL } from "@/lib/sites";
-import { SUPPLIER_CATEGORY_PAGES } from "@/lib/data/supplier-category-pages";
 import {
-  Atom,
   ArrowRight,
   Building2,
-  Factory,
-  FlaskConical,
+  FolderSearch,
   MapPin,
   Search,
   ShieldCheck,
 } from "lucide-react";
+
+import { JsonLd } from "@/components/json-ld";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import {
   supplierDirectoryPageCount,
   supplierDirectoryPath,
 } from "@/lib/supplier-directory";
 import {
-  SUPPLIER_CAPABILITIES,
-  SUPPLIER_CAPABILITY_GROUPS,
-  supplierMatchesCapability,
-} from "@/lib/data/supplier-capability-directory";
+  SUPPLIER_SOURCING_CATALOG_ITEM_COUNT,
+  SUPPLIER_SOURCING_CATALOGS,
+  type SupplierSourcingCatalogItem,
+} from "@/lib/data/supplier-sourcing-catalogs";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
+import { alternates } from "@/lib/seo";
+import { CURRENT_SITE_URL } from "@/lib/sites";
+
 export const revalidate = 3600;
 
 const SEARCH_FILTER_KEYS = [
@@ -43,6 +40,47 @@ const SEARCH_FILTER_KEYS = [
   "page",
 ] as const;
 
+const POPULAR_SEARCHES = [
+  {
+    label: "FRP grating factories",
+    query: "FRP grating",
+    capability: "resin-vinyl-ester",
+  },
+  {
+    label: "Pultrusion manufacturers",
+    query: "pultrusion",
+    capability: "process-pultrusion",
+  },
+  {
+    label: "Filament winding",
+    query: "filament winding",
+    capability: "process-filament-winding",
+  },
+  {
+    label: "Carbon fiber prepreg",
+    query: "carbon fiber prepreg",
+    capability: "fiber-carbon",
+  },
+  {
+    label: "SMC & BMC molding",
+    query: "SMC BMC",
+    capability: "process-compression-molding",
+  },
+] as const;
+
+function catalogItemHref(
+  item: SupplierSourcingCatalogItem,
+  supplierSearchBasePath: string,
+) {
+  if (item.capability) {
+    return `${supplierSearchBasePath}?capability=${encodeURIComponent(item.capability)}#supplier-results`;
+  }
+  if (item.query) {
+    return `${supplierSearchBasePath}?q=${encodeURIComponent(item.query)}#supplier-results`;
+  }
+  return `/products/${item.productSlug}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -56,7 +94,7 @@ export async function generateMetadata({
         absolute: "China FRP Manufacturers & Suppliers Directory | getfrp",
       },
       description:
-        "Find China FRP manufacturers and suppliers by fiber type, resin system, manufacturing process, product, region and verified capability.",
+        "Search China FRP manufacturers and source by composites catalog, including fibers, resins, intermediates, processes, products, equipment and application markets.",
       alternates: alternates("/suppliers"),
     };
   }
@@ -93,162 +131,156 @@ export default async function SuppliersPage({
     redirect(`${supplierSearchBasePath}?${forwardedFilters.toString()}`);
   }
 
-  const serialized = await getPublicSupplierDirectory(locale);
-  const inLanguage = locale;
+  const suppliers = await getPublicSupplierDirectory(locale);
+  const verifiedCount = suppliers.filter((supplier) => supplier.verified).length;
+  const regionCount = new Set(
+    suppliers.map((supplier) => supplier.location).filter(Boolean),
+  ).size;
   const directoryPages = Array.from(
-    { length: supplierDirectoryPageCount(serialized.length) },
+    { length: supplierDirectoryPageCount(suppliers.length) },
     (_, index) => index + 1,
   );
-  const capabilityCounts = new Map(
-    SUPPLIER_CAPABILITIES.map((capability) => [
-      capability.id,
-      serialized.filter((supplier) =>
-        supplierMatchesCapability(capability.id, [
-          supplier.name,
-          supplier.category,
-          supplier.location,
-          supplier.description,
-          supplier.products,
-          supplier.processList,
-          supplier.certifications,
-        ]),
-      ).length,
-    ]),
-  );
-  const verifiedCount = serialized.filter((supplier) => supplier.verified).length;
-  const glassFiberCount = capabilityCounts.get("fiber-glass") ?? 0;
-  const carbonFiberCount = capabilityCounts.get("fiber-carbon") ?? 0;
-  const resinSupplierCount = serialized.filter((supplier) => supplier.category === "resin").length;
-  const manufacturerCount = serialized.filter((supplier) => supplier.category === "manufacturer").length;
-  const regionCount = new Set(
-    serialized.map((supplier) => supplier.location).filter(Boolean),
-  ).size;
   const supplierSearchAction = `${supplierSearchBasePath}#supplier-results`;
-  const capabilityDirectoryJsonLd = {
+  const catalogItems = SUPPLIER_SOURCING_CATALOGS.flatMap((catalog) =>
+    catalog.items.map((item) => ({
+      name: item.label,
+      href: catalogItemHref(item, supplierSearchBasePath),
+    })),
+  );
+  const catalogDirectoryJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "@id": `${CURRENT_SITE_URL}/suppliers#capability-directory`,
+    "@id": `${CURRENT_SITE_URL}/suppliers#supplier-catalogs`,
     url: `${CURRENT_SITE_URL}/suppliers`,
-    inLanguage,
-    name: "China FRP manufacturer and supplier directory",
+    inLanguage: locale,
+    name: "China FRP supplier sourcing catalogs",
     description:
-      "Browse China FRP suppliers by fiber reinforcement, resin system and composite manufacturing process.",
+      "Browse China FRP suppliers across the composites value chain, manufacturing processes, products and application markets.",
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: SUPPLIER_CAPABILITIES.length,
-      itemListElement: SUPPLIER_CAPABILITIES.map((capability, index) => ({
+      numberOfItems: catalogItems.length,
+      itemListElement: catalogItems.map((item, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        name: capability.label,
-        url: `${CURRENT_SITE_URL}/suppliers/search?capability=${encodeURIComponent(capability.id)}`,
+        name: item.name,
+        url: `${CURRENT_SITE_URL}${item.href}`,
       })),
     },
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <JsonLd data={capabilityDirectoryJsonLd} />
+    <main className="bg-background">
+      <JsonLd data={catalogDirectoryJsonLd} />
 
-      <section className="relative overflow-hidden rounded-2xl bg-[#0a1f44] px-5 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:px-14">
-        <Image
-          src="/images/glass-fiber-strands.webp"
-          alt=""
-          fill
-          preload
-          sizes="(max-width: 1280px) 100vw, 1280px"
-          className="object-cover object-center"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(100deg,rgba(3,35,40,.94)_0%,rgba(5,62,61,.82)_52%,rgba(3,43,48,.76)_100%)]"
-        />
-        <div className="relative max-w-4xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-50">
-            <ShieldCheck size={13} />
-            China FRP supplier directory
-          </div>
-          <h1 className="mt-5 max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
-            Find China FRP manufacturers by material and process
-          </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-emerald-50/80 sm:text-base sm:leading-7">
-            For overseas buyers: search one of China&apos;s most complete FRP supply-chain directories, then sign in to save, compare and send one RFQ using separately reviewed identity and capability evidence.
-          </p>
-
-          <form
-            action={supplierSearchAction}
-            method="get"
-            className="mt-7 flex max-w-3xl flex-col gap-2 rounded-xl bg-white p-2 shadow-xl shadow-black/15 sm:flex-row"
-          >
-            <label htmlFor="supplier-directory-search" className="sr-only">
-              Search suppliers by product, material or process
-            </label>
-            <div className="flex min-w-0 flex-1 items-center gap-3 px-3">
-              <Search size={18} className="shrink-0 text-slate-400" />
-              <input
-                id="supplier-directory-search"
-                name="q"
-                type="search"
-                placeholder="Search product, fiber, resin, process or company..."
-                className="h-11 min-w-0 flex-1 bg-transparent text-sm text-slate-950 outline-none placeholder:text-slate-400"
-              />
+      <section className="border-b border-white/10 bg-[#102840] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7be4e1]">
+              China composites supplier directory
             </div>
-            <button
-              type="submit"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#123f8c] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0a1f44] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#123f8c] focus-visible:ring-offset-2"
-            >
-              Search suppliers
-              <ArrowRight size={15} />
-            </button>
-          </form>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+              Search China&apos;s FRP supply chain
+            </h1>
+            <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-slate-200 sm:text-base">
+              Find manufacturers by product, material, process, company or end-use market—then compare published capability and verification records.
+            </p>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-emerald-50/70">
-            <span className="font-medium text-white">Popular:</span>
-            {[
-              ["ISO 9001 pultrusion factory", "process-pultrusion", "ISO 9001"],
-              ["Filament winding pressure vessel supplier", "process-filament-winding", "pressure vessel"],
-              ["Carbon fiber prepreg manufacturer", "fiber-carbon", "prepreg"],
-              ["Vinyl ester FRP grating factory", "resin-vinyl-ester", "FRP grating"],
-            ].map(([label, capability, query]) => (
-              <a
-                key={capability}
-                href={`${supplierSearchBasePath}?q=${encodeURIComponent(query)}&capability=${capability}#supplier-results`}
-                className="border-b border-white/30 pb-0.5 transition-colors hover:border-white hover:text-white"
+            <div className="mt-9 overflow-hidden rounded-xl border border-white/15 bg-[#0b2035] text-left shadow-2xl shadow-black/20">
+              <nav
+                aria-label="Supplier directory views"
+                className="grid grid-cols-2 border-b border-white/15 sm:grid-cols-4"
               >
-                {label}
-              </a>
-            ))}
-          </div>
+                <Link
+                  href={supplierSearchBasePath as never}
+                  className="border-b-2 border-[#4f70ff] px-3 py-4 text-center text-xs font-semibold text-white sm:text-sm"
+                >
+                  All suppliers
+                </Link>
+                <Link
+                  href={`${supplierSearchBasePath}?profile=verified#supplier-results` as never}
+                  className="border-b-2 border-transparent px-3 py-4 text-center text-xs font-semibold text-slate-300 transition-colors hover:bg-white/5 hover:text-white sm:text-sm"
+                >
+                  Verified suppliers
+                </Link>
+                <a
+                  href="#supplier-catalogs"
+                  className="border-b-2 border-transparent px-3 py-4 text-center text-xs font-semibold text-slate-300 transition-colors hover:bg-white/5 hover:text-white sm:text-sm"
+                >
+                  FRP catalogs
+                </a>
+                <Link
+                  href="/products"
+                  className="border-b-2 border-transparent px-3 py-4 text-center text-xs font-semibold text-slate-300 transition-colors hover:bg-white/5 hover:text-white sm:text-sm"
+                >
+                  Product specifications
+                </Link>
+              </nav>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <AskAiButton
-              prompt="Match a China FRP supplier to my fiber, resin, process, certification, quantity and delivery requirements. Explain the shortlist and any evidence I should verify."
-              label="Ask AI to match suppliers"
-            />
-            <Link
-              href={"/rfq" as never}
-              className={buttonVariants({
-                variant: "secondary",
-                size: "lg",
-                className: "bg-white text-[#0a1f44] hover:bg-emerald-50",
-              })}
-            >
-              Submit one RFQ
-              <ArrowRight />
-            </Link>
+              <form
+                action={supplierSearchAction}
+                method="get"
+                className="flex flex-col gap-2 p-4 sm:flex-row sm:p-5"
+              >
+                <label htmlFor="supplier-directory-search" className="sr-only">
+                  Search suppliers by product, capability, service or company
+                </label>
+                <div className="flex min-h-14 min-w-0 flex-1 items-center gap-3 rounded-lg bg-white px-4">
+                  <Search size={20} className="shrink-0 text-slate-400" />
+                  <input
+                    id="supplier-directory-search"
+                    name="q"
+                    type="search"
+                    placeholder="Search product, capability, process, service or company..."
+                    className="h-12 min-w-0 flex-1 bg-transparent text-sm text-slate-950 outline-none placeholder:text-slate-500 sm:text-[15px]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="inline-flex min-h-14 items-center justify-center gap-2 rounded-lg bg-[#365ce8] px-7 text-sm font-semibold text-white transition-colors hover:bg-[#294bd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                >
+                  Search suppliers
+                  <ArrowRight size={16} />
+                </button>
+              </form>
+            </div>
+
+            <div className="mt-6">
+              <div className="text-[11px] font-medium text-slate-400">
+                Popular searches
+              </div>
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                {POPULAR_SEARCHES.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={`${supplierSearchBasePath}?q=${encodeURIComponent(item.query)}&capability=${item.capability}#supplier-results` as never}
+                    className="rounded-full bg-[#0b2035] px-4 py-2 text-xs text-slate-200 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <dl className="relative mt-10 grid gap-px overflow-hidden rounded-xl border border-white/15 bg-white/15 sm:grid-cols-3">
+      <section className="border-b border-[#d7e0ea] bg-[#eef3f8]">
+        <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 sm:px-6 lg:grid-cols-4 lg:gap-4 lg:py-10">
           {[
             {
               icon: Building2,
-              value: serialized.length.toLocaleString(),
+              value: suppliers.length.toLocaleString(),
               label: "public supplier profiles",
             },
             {
               icon: ShieldCheck,
               value: verifiedCount.toLocaleString(),
               label: "verified business records",
+            },
+            {
+              icon: FolderSearch,
+              value: SUPPLIER_SOURCING_CATALOG_ITEM_COUNT.toLocaleString(),
+              label: "FRP catalog entry points",
             },
             {
               icon: MapPin,
@@ -258,250 +290,185 @@ export default async function SuppliersPage({
           ].map((stat) => {
             const StatIcon = stat.icon;
             return (
-              <div key={stat.label} className="flex items-center gap-3 bg-[#0a1f44]/90 p-4 sm:p-5">
-                <StatIcon size={18} className="text-[#7be4e1]" />
-                <div>
-                  <dt className="font-mono text-xl font-semibold tracking-tight text-white">
-                    {stat.value}
-                  </dt>
-                  <dd className="text-xs text-emerald-50/65">{stat.label}</dd>
-                </div>
+              <div
+                key={stat.label}
+                className="border border-[#d7e0ea] bg-white px-4 py-6 text-center shadow-sm sm:px-6"
+              >
+                <StatIcon size={18} className="mx-auto text-[#365ce8]" />
+                <dt className="mt-3 text-3xl font-semibold tracking-tight text-[#123f8c] sm:text-4xl">
+                  {stat.value}
+                </dt>
+                <dd className="mt-2 text-xs leading-5 text-slate-600">
+                  {stat.label}
+                </dd>
               </div>
             );
           })}
         </dl>
       </section>
 
-      <section className="border-b border-border/70 py-10 sm:py-12">
-        <div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
-              China FRP supply-chain coverage
-            </div>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-              Global-scale material producers to specialized part factories
-            </h2>
+      <section
+        id="supplier-catalogs"
+        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 sm:py-20"
+      >
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#365ce8]">
+            Sourcing by catalog
           </div>
-          <p className="text-sm leading-6 text-muted-foreground">
-            Start with direct search. A free account lets buyers save and compare companies, build a controlled shortlist and submit RFQs; GetFRP keeps business identity, certifications and product evidence as separate review signals.
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#102840] sm:text-4xl">
+            Explore the composites supply chain by catalog
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-[15px]">
+            Start with an industry-defined value-chain category, process, product or application market. Every entry opens a focused supplier result or structured product specification.
           </p>
         </div>
-        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              value: glassFiberCount,
-              title: "Glass fiber",
-              note: "Includes profiles for Jushi, Taishan Fiberglass and CPIC alongside specialist reinforcement suppliers.",
-            },
-            {
-              value: carbonFiberCount,
-              title: "Carbon fiber",
-              note: "Tow, fabric, prepreg and CFRP capability across major producers and downstream converters.",
-            },
-            {
-              value: resinSupplierCount,
-              title: "Resin & chemistry",
-              note: "Epoxy, UPR, vinyl ester, polyurethane, additives and application-specific matrix systems.",
-            },
-            {
-              value: manufacturerCount,
-              title: "Products & processing",
-              note: "Pultrusion, winding, molding, grating, pipe, profiles, tanks, testing and production equipment.",
-            },
-          ].map((item) => (
-            <article key={item.title} className="rounded-xl border border-border/80 bg-muted/20 p-4">
-              <div className="font-mono text-2xl font-semibold text-[#123f8c]">{item.value}</div>
-              <h3 className="mt-1 font-semibold">{item.title} profiles</h3>
-              <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.note}</p>
+
+        <div className="mt-12 grid items-start gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {SUPPLIER_SOURCING_CATALOGS.map((catalog) => (
+            <article key={catalog.id}>
+              <div className="border-b border-[#cfd9e4] pb-4">
+                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#365ce8]">
+                  {catalog.sourceLabel}
+                </div>
+                <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#173a5e]">
+                  {catalog.title}
+                </h3>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  {catalog.description}
+                </p>
+              </div>
+              <ul className="mt-3">
+                {catalog.items.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={catalogItemHref(item, supplierSearchBasePath) as never}
+                      className="group flex items-center justify-between gap-3 border-b border-border/60 py-2.5 text-sm text-[#29445f] transition-colors hover:text-[#365ce8]"
+                    >
+                      <span>{item.label}</span>
+                      <ArrowRight
+                        size={13}
+                        className="shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-[#365ce8]"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
+
+        <div className="mt-12 border-l-2 border-[#365ce8] bg-[#eef3f8] px-5 py-4 text-xs leading-6 text-slate-600 sm:px-6">
+          <span className="font-semibold text-[#173a5e]">Classification basis:</span>{" "}
+          the{" "}
+          <a
+            href="https://www.jeccomposites.com/discover-composites/activities-scope/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-[#123f8c] hover:underline"
+          >
+            JEC composites value chain
+          </a>
+          ,{" "}
+          <a
+            href="https://www.jeccomposites.com/applications/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-[#123f8c] hover:underline"
+          >
+            JEC application sectors
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://acmanet.org/composites-manufacturing-magazine/market-segments/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-[#123f8c] hover:underline"
+          >
+            ACMA market segments
+          </a>
+          . GetFRP condenses those definitions into practical sourcing routes; the organizations do not endorse individual profiles.
+        </div>
       </section>
 
-      <section id="capability-categories" className="scroll-mt-24 py-12 sm:py-16">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
-              Explore suppliers by category
+      <section className="border-y border-[#d7e0ea] bg-[#f7f9fb]">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#365ce8]">
+                Company index
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#102840] sm:text-3xl">
+                Browse every public supplier profile
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                Use interactive search for buyer filters, or open the server-rendered index for stable access to all {suppliers.length.toLocaleString()} public company records.
+              </p>
             </div>
-            <h2 className="mt-2 max-w-3xl text-2xl font-semibold tracking-tight sm:text-3xl">
-              Browse the FRP supply base from material system to manufacturing route
-            </h2>
-          </div>
-          <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-            Select a capability to open a focused search page. Results are
-            matched against each supplier&apos;s products, process list and
-            published profile evidence, with 25 companies shown per page.
-          </p>
-        </div>
-
-        <div className="mt-8 grid items-start gap-5 lg:grid-cols-3">
-          {SUPPLIER_CAPABILITY_GROUPS.map((group, groupIndex) => {
-            const GroupIcon =
-              group.id === "fiber"
-                ? Atom
-                : group.id === "resin"
-                  ? FlaskConical
-                  : Factory;
-            return (
-              <article
-                key={group.id}
-                className="overflow-hidden rounded-xl border border-border/80 bg-background shadow-sm"
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href={supplierSearchBasePath as never}
+                className={buttonVariants({ variant: "outline" })}
               >
-                <header className="border-b border-border/70 bg-muted/25 p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#123f8c]/10 text-[#123f8c]">
-                      <GroupIcon size={19} />
-                    </div>
-                    <span className="font-mono text-xs text-muted-foreground">
-                      0{groupIndex + 1}
-                    </span>
-                  </div>
-                  <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    {group.eyebrow}
-                  </div>
-                  <h3 className="mt-1 text-xl font-semibold tracking-tight">
-                    {group.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {group.description}
-                  </p>
-                </header>
-                <div className="divide-y divide-border/60">
-                  {group.items.map((capability) => {
-                    const count = capabilityCounts.get(capability.id) ?? 0;
-                    return (
-                      <a
-                        key={capability.id}
-                        href={`${supplierSearchBasePath}?capability=${capability.id}#supplier-results`}
-                        className="group flex items-start justify-between gap-4 p-4 transition-colors hover:bg-[#123f8c]/5"
-                      >
-                        <span className="min-w-0">
-                          <span className="flex items-center gap-2 text-sm font-semibold group-hover:text-[#123f8c]">
-                            {capability.label}
-                          </span>
-                          <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                            {capability.description}
-                          </span>
-                          <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-                            {count > 0
-                              ? `${count.toLocaleString()} matching ${count === 1 ? "profile" : "profiles"}`
-                              : "Search directory"}
-                          </span>
-                        </span>
-                        <ArrowRight
-                          size={15}
-                          className="mt-1 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-[#123f8c]"
-                        />
-                      </a>
-                    );
-                  })}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section
-        id="product-categories"
-        className="mb-12 scroll-mt-24 border-y border-border/70 py-9"
-      >
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Browse by product family
+                Search all suppliers <ArrowRight size={14} />
+              </Link>
+              <Link
+                href={supplierDirectoryPath(1) as never}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
+              >
+                Alphabetical index <ArrowRight size={14} />
+              </Link>
             </div>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-              Start with the FRP part or material you need
-            </h2>
           </div>
-          <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Product pages add specification fields, buying checks and
-            capability-specific supplier matching.
-          </p>
-        </div>
-        <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-border/70 bg-border/70 sm:grid-cols-2 lg:grid-cols-4">
-          {SUPPLIER_CATEGORY_PAGES.map((category) => (
-            <Link
-              key={category.slug}
-              href={`/products/${category.slug}` as never}
-              className="group flex min-h-28 flex-col justify-between bg-background p-4 transition-colors hover:bg-muted/40"
-            >
-              <span className="font-semibold">{category.shortName}</span>
-              <span className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-                Compare capabilities
-                <ArrowRight
-                  size={14}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </span>
-            </Link>
-          ))}
+          <nav
+            className="mt-7 flex flex-wrap gap-2"
+            aria-label="Supplier directory pages"
+          >
+            {directoryPages.map((page) => (
+              <Link
+                key={page}
+                href={supplierDirectoryPath(page) as never}
+                className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-[#cfd9e4] bg-white px-3 text-sm text-[#173a5e] hover:border-[#365ce8] hover:text-[#365ce8]"
+              >
+                {page}
+              </Link>
+            ))}
+          </nav>
         </div>
       </section>
 
-      <section className="rounded-xl border border-border/70 bg-muted/20 p-6 sm:p-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <section className="bg-[#102840] text-white">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:py-14">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Crawlable company index
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7be4e1]">
+              Move from catalog to qualified shortlist
             </div>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-              Browse every public supplier profile
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+              Ready to source a defined FRP requirement?
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-              Open the dedicated search page for interactive filtering, or use
-              the server-rendered alphabetical index for a stable route to all {serialized.length.toLocaleString()} company profiles.
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
+              Send the product, process, standards, quantity and destination. GetFRP keeps quotations tied to one controlled specification.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={supplierSearchBasePath}
-              className={buttonVariants({ variant: "outline" })}
-            >
-              Search all suppliers <ArrowRight size={14} />
-            </a>
+          <div className="flex flex-wrap gap-3">
             <Link
-              href={supplierDirectoryPath(1) as never}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
+              href="/rfq"
+              className={buttonVariants({
+                size: "lg",
+                variant: "secondary",
+                className: "bg-white text-[#102840] hover:bg-slate-100",
+              })}
             >
-              Alphabetical index <ArrowRight size={14} />
+              Submit an RFQ <ArrowRight size={15} />
+            </Link>
+            <Link
+              href="/suppliers/claim"
+              className="inline-flex h-11 items-center rounded-md border border-white/25 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Claim your company
             </Link>
           </div>
         </div>
-        <nav
-          className="mt-6 flex flex-wrap gap-2"
-          aria-label="Supplier directory pages"
-        >
-          {directoryPages.map((page) => (
-            <Link
-              key={page}
-              href={supplierDirectoryPath(page) as never}
-              className="inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-border bg-background px-3 text-sm hover:border-foreground/50"
-            >
-              {page}
-            </Link>
-          ))}
-        </nav>
       </section>
-
-      <div className="mt-10 rounded-xl border bg-muted/30 p-8 text-center">
-        <h3 className="text-xl font-bold">
-          Ready to source?
-        </h3>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Send your specification through the RFQ form. First reply within 24 hours, no account required.
-        </p>
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href={"/rfq" as never}
-            className={buttonVariants({ size: "lg" })}
-          >
-            Submit an RFQ
-          </Link>
-        </div>
-      </div>
-    </div>
+    </main>
   );
 }
