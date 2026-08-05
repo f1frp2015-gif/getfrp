@@ -1028,6 +1028,7 @@
       "posts": "My listings",
       "messages": "Inquiries",
       "supplierWorkspace": "Supplier workspace",
+      "supplierProducts": "My product catalog",
       "enterprise": "Company",
       "claims": "Company claims",
       "qualifications": "Qualifications",
@@ -1037,6 +1038,7 @@
       "adminQualifications": "Qualifications",
       "adminEnterprises": "Registration review",
       "adminSuppliers": "Supplier database",
+      "adminProducts": "Product catalog",
       "adminPrices": "Price index"
     },
     "profilePage": {

@@ -47,3 +47,7 @@ export function signedPutUrl(key: string, contentType: string, expiresInSec = 60
 export function signedGetUrl(key: string, expiresInSec = 3600): string {
   return client().signatureUrl(key, { method: "GET", expires: expiresInSec });
 }
+
+export async function deleteObject(key: string): Promise<void> {
+  await client().delete(key);
+}

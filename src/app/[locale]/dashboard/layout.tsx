@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { isAdminUser } from "@/lib/admin";
+import { canEditSupplierProducts } from "@/lib/permissions";
 import { Icon } from "@/components/icon";
 
 export async function generateMetadata({
@@ -25,6 +26,8 @@ export default async function DashboardLayout({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Dashboard" });
+  const me = await getCurrentUser();
+  const showSupplierProducts = me ? canEditSupplierProducts(me) : false;
 
   const baseItems = [
     { href: "/dashboard" as const, label: t("nav.overview"), iconKey: "overview" },
@@ -34,6 +37,9 @@ export default async function DashboardLayout({
     { href: "/dashboard/posts" as const, label: t("nav.posts"), iconKey: "post-list" },
     { href: "/dashboard/messages" as const, label: t("nav.messages"), iconKey: "messages" },
     { href: "/dashboard/supplier" as const, label: t("nav.supplierWorkspace"), iconKey: "enterprise" },
+    ...(showSupplierProducts
+      ? [{ href: "/dashboard/supplier/products" as const, label: t("nav.supplierProducts"), iconKey: "post-list" }]
+      : []),
     { href: "/dashboard/enterprise" as const, label: t("nav.enterprise"), iconKey: "enterprise" },
     { href: "/dashboard/claims" as const, label: t("nav.claims"), iconKey: "claims" },
     { href: "/dashboard/qualifications" as const, label: t("nav.qualifications"), iconKey: "admin-claims" },
@@ -46,11 +52,11 @@ export default async function DashboardLayout({
     { href: "/dashboard/admin/qualifications" as const, label: t("nav.adminQualifications"), iconKey: "admin-claims" },
     { href: "/dashboard/admin/enterprises" as const, label: t("nav.adminEnterprises"), iconKey: "admin-claims" },
     { href: "/dashboard/admin/suppliers" as const, label: t("nav.adminSuppliers"), iconKey: "enterprise" },
+    { href: "/dashboard/admin/products" as const, label: t("nav.adminProducts"), iconKey: "post-list" },
     { href: "/dashboard/admin/articles" as const, label: "资讯草稿箱", iconKey: "post-list" },
     { href: "/dashboard/admin/prices" as const, label: t("nav.adminPrices"), iconKey: "ai-price" },
   ];
 
-  const me = await getCurrentUser();
   const showAdmin = me ? isAdminUser(me) : false;
 
   return (

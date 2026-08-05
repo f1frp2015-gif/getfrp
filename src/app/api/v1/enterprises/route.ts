@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { enterprises, supplierListings, users } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
+import { canEditSupplierProfile } from "@/lib/permissions";
 
 export const runtime = "nodejs";
 
@@ -91,6 +92,12 @@ export async function PATCH(req: NextRequest) {
   const me = await getCurrentUser();
   if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
   if (!me.enterpriseId) return NextResponse.json({ error: "您尚未关联企业" }, { status: 404 });
+  if (!canEditSupplierProfile(me)) {
+    return NextResponse.json(
+      { error: "Your account does not have permission to edit this company." },
+      { status: 403 },
+    );
+  }
   const parsed = EnterpriseBody.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return invalidEnterpriseResponse(parsed.error);
   const body = parsed.data;

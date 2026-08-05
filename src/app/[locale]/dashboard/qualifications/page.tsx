@@ -16,6 +16,7 @@ import {
 } from "@/lib/db/schema";
 
 import { QualificationsUploader } from "./qualifications-uploader";
+import { QualificationDocumentActions } from "./qualification-document-actions";
 
 export async function generateMetadata({
   params,
@@ -151,8 +152,9 @@ export default async function MyQualificationsPage({
                     </div>
                   </div>
                 </CardHeader>
-                {(tagsByDoc.get(d.id)?.length || d.reviewNote) && (
-                  <CardContent className="space-y-2">
+                <CardContent className="space-y-3">
+                  {(tagsByDoc.get(d.id)?.length || d.reviewNote) ? (
+                    <div className="space-y-2">
                     <QualificationLabel
                       tags={tagsByDoc.get(d.id) ?? []}
                       locale={lang}
@@ -163,8 +165,21 @@ export default async function MyQualificationsPage({
                         {d.reviewNote}
                       </div>
                     )}
-                  </CardContent>
-                )}
+                    </div>
+                  ) : null}
+                  <QualificationDocumentActions
+                    document={{
+                      id: d.id,
+                      kind: d.kind,
+                      status: d.status,
+                      fileName: d.fileName ?? d.ossKey.split("/").pop() ?? "document",
+                      issuer: d.issuer ?? "",
+                      certNo: d.certNo ?? "",
+                      validFrom: d.validFrom ?? "",
+                      validTo: d.validTo ?? "",
+                    }}
+                  />
+                </CardContent>
               </Card>
             ))}
           </div>
