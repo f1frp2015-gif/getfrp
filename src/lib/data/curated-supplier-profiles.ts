@@ -3,6 +3,7 @@ import {
   JUSHI_LEGACY_SLUG,
   JUSHI_SUPPLIER_PROFILE,
 } from "@/lib/data/jushi-supplier-profile";
+import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
@@ -17,7 +18,8 @@ type CuratedSupplierProfileEntry = {
 };
 
 // Git-backed public profiles are the resilient fallback for supplier pages and
-// the directory. A matching database row always takes precedence.
+// the directory. Unclaimed database rows retain their identity/trust state but
+// receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
   { profile: WANHUA_SUPPLIER_PROFILE },
   { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
@@ -27,6 +29,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
     legacySlugs: [ZHONGFU_SHENYING_LEGACY_SLUG],
   },
   { profile: NOAH_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: JIUDING_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
@@ -45,4 +48,50 @@ export function getCuratedSupplierSlugs(): string[] {
   return CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) =>
     profile.slug ? [profile.slug] : [],
   );
+}
+
+export function enrichSupplierWithCuratedProfile(
+  databaseProfile: SupplierListing,
+): SupplierListing {
+  // Once a supplier has claimed and linked the profile, its database-managed
+  // content becomes authoritative. Curated content remains a fallback for
+  // public, unclaimed seed records.
+  if (databaseProfile.enterpriseId) return databaseProfile;
+
+  const curatedProfile =
+    getCuratedSupplierProfile(databaseProfile.id) ??
+    (databaseProfile.slug
+      ? getCuratedSupplierProfile(databaseProfile.slug)
+      : null);
+  if (!curatedProfile) return databaseProfile;
+
+  return {
+    ...databaseProfile,
+    location: curatedProfile.location,
+    locationEn: curatedProfile.locationEn,
+    province: curatedProfile.province,
+    category: curatedProfile.category,
+    products: curatedProfile.products,
+    productsEn: curatedProfile.productsEn,
+    processList: curatedProfile.processList,
+    processListEn: curatedProfile.processListEn,
+    established: curatedProfile.established,
+    description: curatedProfile.description,
+    descriptionEn: curatedProfile.descriptionEn,
+    certifications: curatedProfile.certifications,
+    certificationsEn: curatedProfile.certificationsEn,
+    productsServicesSummary: curatedProfile.productsServicesSummary,
+    productsServicesSummaryEn: curatedProfile.productsServicesSummaryEn,
+    ecatalogs: curatedProfile.ecatalogs,
+    profileReviewedAt: curatedProfile.profileReviewedAt,
+    logo: curatedProfile.logo,
+    contactEmail: curatedProfile.contactEmail,
+    contactPhone: curatedProfile.contactPhone,
+    address: curatedProfile.address,
+    website: curatedProfile.website,
+    scaleTier: curatedProfile.scaleTier ?? databaseProfile.scaleTier,
+    capabilities: curatedProfile.capabilities,
+    standardsSupported: curatedProfile.standardsSupported,
+    exportReady: curatedProfile.exportReady,
+  };
 }
