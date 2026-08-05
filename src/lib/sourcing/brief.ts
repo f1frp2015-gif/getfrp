@@ -69,8 +69,8 @@ async function notifyOps(input: SourcingBriefInput, ticketId: string | null): Pr
   const country = b.country ?? "—";
   const row = (k: string, v: unknown) =>
     v == null || v === "" ? "" : `<tr><td style="padding:6px;border:1px solid #ddd;font-weight:600">${k}</td><td style="padding:6px;border:1px solid #ddd">${escapeHtml(String(typeof v === "object" ? JSON.stringify(v) : v))}</td></tr>`;
-  const html = `<!DOCTYPE html><html><body style="font-family:sans-serif;max-width:640px;margin:auto;color:#1a1a1a">
-  <h2 style="color:#0070f3">New Sourcing Brief — ${escapeHtml(product)} → ${escapeHtml(country)}</h2>
+  const html = `<!DOCTYPE html><html><body style="font-family:sans-serif;max-width:640px;margin:auto;color:#1b2430">
+  <h2 style="color:#123f8c">New Sourcing Brief — ${escapeHtml(product)} → ${escapeHtml(country)}</h2>
   <p>A buyer completed the getfrp Sourcing Desk flow. Follow up within 24h.</p>
   <table style="width:100%;border-collapse:collapse;font-size:14px">
     ${row("Ticket", ticketId ?? "(not stored — DB insert failed, see logs)")}

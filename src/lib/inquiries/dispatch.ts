@@ -324,7 +324,7 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
     .filter((row): row is [string, string] => Boolean(row[1]))
     .map(
       ([label, value], index) => `
-    <tr${index % 2 ? ' style="background:#f9f9f9"' : ""}>
+    <tr${index % 2 ? ' style="background:#f4f6f9"' : ""}>
       <td style="padding:8px;border:1px solid #ddd">${escapeHtml(label)}</td>
       <td style="padding:8px;border:1px solid #ddd">${formatValue(value)}</td>
     </tr>`,
@@ -334,12 +334,12 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><title>New RFQ</title></head>
-<body style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px;color:#1a1a1a">
-  <h2 style="color:#0b756f">New RFQ</h2>
+<body style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px;color:#1b2430">
+  <h2 style="color:#123f8c">New RFQ</h2>
   <p>Hello, a new RFQ for <strong>${escapeHtml(rfq.materialName)}</strong> has been submitted through GetFRP.</p>
 
   <table style="width:100%;border-collapse:collapse;margin-top:16px">
-    <tr style="background:#f5f5f5">
+    <tr style="background:#f4f6f9">
       <th style="padding:8px;text-align:left;border:1px solid #ddd">Field</th>
       <th style="padding:8px;text-align:left;border:1px solid #ddd">Value</th>
     </tr>
@@ -347,7 +347,7 @@ function buildEmailHtml(rfq: RfqPayload, targetSupplierName: string | null): str
   </table>
 
   ${productCatalogUrl ? `<p style="margin-top:24px">
-    <a href="${productCatalogUrl}" style="display:inline-block;padding:10px 20px;background:#0b756f;color:#fff;border-radius:6px;text-decoration:none">
+    <a href="${productCatalogUrl}" style="display:inline-block;padding:10px 20px;background:#123f8c;color:#fff;border-radius:6px;text-decoration:none">
       Browse Products
     </a>
   </p>` : ""}

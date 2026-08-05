@@ -156,7 +156,7 @@ export default async function LocaleLayout({
                 name: brand,
                 alternateName: ["getfrp"],
                 url: siteUrl,
-                logo: `${siteUrl}/og-icon.png`,
+                logo: `${siteUrl}/getfrp-logo.png`,
                 description,
                 // sameAs: real, verifiable profiles about the org. Only entries
                 // that actually resolve are emitted — dead/bogus links read as

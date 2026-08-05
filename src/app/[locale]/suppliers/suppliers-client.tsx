@@ -539,7 +539,7 @@ export function SuppliersClient({
     >
       <div className="flex items-center justify-between gap-3 border-b border-border/70 pb-3">
         <div className="flex items-center gap-2 text-sm font-semibold">
-          <SlidersHorizontal size={15} className="text-[#0a756f]" />
+          <SlidersHorizontal size={15} className="text-[#123f8c]" />
           Filters
         </div>
         {hasActiveFilters && (
@@ -556,8 +556,8 @@ export function SuppliersClient({
 
       <div className="mt-4 space-y-4">
         {selectedCapability && (
-          <div className="rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-3">
-            <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#0a756f]">
+          <div className="rounded-lg border border-[#123f8c]/25 bg-[#123f8c]/5 p-3">
+            <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#123f8c]">
               Capability filter
             </div>
             <div className="mt-1 text-sm font-semibold">
@@ -574,7 +574,7 @@ export function SuppliersClient({
                 setCapability("");
                 setPage(1);
               }}
-              className="mt-2 px-0 text-[#0a756f] hover:bg-transparent"
+              className="mt-2 px-0 text-[#123f8c] hover:bg-transparent"
             >
               <X />
               Clear capability
@@ -677,9 +677,9 @@ export function SuppliersClient({
   ) : (
     <div className="mb-6 space-y-3">
       {selectedCapability && (
-        <div className="flex flex-col gap-3 rounded-lg border border-[#0a756f]/25 bg-[#0a756f]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-lg border border-[#123f8c]/25 bg-[#123f8c]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#0a756f]">
+            <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#123f8c]">
               Capability filter
             </div>
             <div className="mt-1 font-semibold">{selectedCapability.label}</div>
@@ -840,7 +840,7 @@ export function SuppliersClient({
               Browse supplier categories
             </Link>
             <div className="mt-4 min-w-0">
-              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
                 Live supplier search
               </div>
               <h1 className="mt-1.5 text-3xl font-semibold tracking-tight lg:whitespace-nowrap">
@@ -1015,7 +1015,7 @@ export function SuppliersClient({
                         <div className="mt-2 flex flex-wrap items-center gap-1.5">
                           <span className="text-[10px] uppercase tracking-[0.08em] text-muted-foreground">Why matched</span>
                           {matchReasons.map((reason) => (
-                            <Badge key={reason} variant="outline" className="border-[#0a756f]/30 bg-[#0a756f]/5 text-[10px] text-[#08645f]">
+                            <Badge key={reason} variant="outline" className="border-[#123f8c]/30 bg-[#123f8c]/5 text-[10px] text-[#0a1f44]">
                               {reason}
                             </Badge>
                           ))}

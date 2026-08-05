@@ -46,13 +46,13 @@ export function FrpWeightCalculator() {
   }, [density, diameter, length, outerDiameter, shape, thickness, wall, width]);
 
   const inputClass =
-    "mt-1.5 h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-[#0a756f] focus:ring-2 focus:ring-[#0a756f]/15";
+    "mt-1.5 h-11 w-full rounded-lg border border-border bg-background px-3 text-sm outline-none focus:border-[#123f8c] focus:ring-2 focus:ring-[#123f8c]/15";
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
       <div className="rounded-xl border border-border/70 bg-background p-5 sm:p-6">
         <div className="flex items-center gap-2">
-          <Calculator size={18} className="text-[#0a756f]" />
+          <Calculator size={18} className="text-[#123f8c]" />
           <h2 className="font-semibold">Dimensions and material</h2>
         </div>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -111,21 +111,21 @@ export function FrpWeightCalculator() {
         </div>
       </div>
 
-      <aside className="rounded-xl border border-[#8dbab5] bg-[#eef7f6] p-6">
-        <div className="flex items-center gap-2 text-[#0a756f]">
+      <aside className="rounded-xl border border-[#7be4e1] bg-[#f4f6f9] p-6">
+        <div className="flex items-center gap-2 text-[#123f8c]">
           <Scale size={18} />
           <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em]">Estimated weight</span>
         </div>
-        <div className="mt-6 text-4xl font-semibold tracking-tight text-[#0b2938]">
+        <div className="mt-6 text-4xl font-semibold tracking-tight text-[#0a1f44]">
           {result.kg.toLocaleString(undefined, { maximumFractionDigits: 3 })} kg
         </div>
-        <div className="mt-2 text-sm text-[#526d75]">
+        <div className="mt-2 text-sm text-[#5d6672]">
           {result.lb.toLocaleString(undefined, { maximumFractionDigits: 3 })} lb
         </div>
-        <div className="mt-6 border-t border-[#bad5d1] pt-4 text-xs leading-6 text-[#60777e]">
+        <div className="mt-6 border-t border-[#7be4e1] pt-4 text-xs leading-6 text-[#5d6672]">
           Volume: {result.volume.toLocaleString(undefined, { maximumFractionDigits: 6 })} m³
         </div>
-        <p className="mt-4 text-[11px] leading-5 text-[#60777e]">
+        <p className="mt-4 text-[11px] leading-5 text-[#5d6672]">
           Planning estimate only. Use the supplier&apos;s mass per meter, mass per square meter or approved sample for purchasing and freight release.
         </p>
       </aside>

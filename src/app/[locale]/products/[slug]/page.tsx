@@ -157,7 +157,7 @@ export default async function ProductDetailPage({
           </nav>
           <div className="mt-7 grid gap-8 lg:grid-cols-[1fr_440px] lg:items-center">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#0a756f]">
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
                 {product.category}
               </div>
               <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
@@ -237,7 +237,7 @@ export default async function ProductDetailPage({
               <Link
                 key={relatedProduct.slug}
                 href={`/products/${relatedProduct.slug}` as never}
-                className="group overflow-hidden rounded-xl border border-border/70 bg-background transition-colors hover:border-[#0a756f]/50"
+                className="group overflow-hidden rounded-xl border border-border/70 bg-background transition-colors hover:border-[#123f8c]/50"
               >
                 <div className="relative aspect-[8/5] bg-muted">
                   <Image
@@ -297,7 +297,7 @@ export default async function ProductDetailPage({
             <ul className="mt-5 space-y-4">
               {product.buyingChecks.map((check) => (
                 <li key={check} className="flex gap-3 text-[13px] leading-6 text-muted-foreground">
-                  <CheckCircle2 size={16} className="mt-1 shrink-0 text-[#0a756f]" />
+                  <CheckCircle2 size={16} className="mt-1 shrink-0 text-[#123f8c]" />
                   <span>{check}</span>
                 </li>
               ))}
@@ -355,7 +355,7 @@ export default async function ProductDetailPage({
               <Link
                 key={href}
                 href={href as never}
-                className="group flex items-center justify-between rounded-xl border border-border/70 bg-background px-4 py-4 text-sm font-medium transition-colors hover:border-[#0a756f]/50"
+                className="group flex items-center justify-between rounded-xl border border-border/70 bg-background px-4 py-4 text-sm font-medium transition-colors hover:border-[#123f8c]/50"
               >
                 {label}<ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
               </Link>

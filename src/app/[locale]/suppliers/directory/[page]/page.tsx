@@ -104,7 +104,7 @@ export default async function SupplierDirectoryPage({
       />
 
       <header className="max-w-3xl">
-        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#0a756f]">
+        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#123f8c]">
           Crawlable supplier index
         </div>
         <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
@@ -121,7 +121,7 @@ export default async function SupplierDirectoryPage({
           <Link
             key={supplier.slug}
             href={`/suppliers/${supplier.slug}` as never}
-            className="group flex min-h-44 flex-col rounded-xl border border-border/70 bg-background p-5 transition-colors hover:border-[#0a756f]/55"
+            className="group flex min-h-44 flex-col rounded-xl border border-border/70 bg-background p-5 transition-colors hover:border-[#123f8c]/55"
           >
             <div className="font-semibold leading-snug">{supplier.name}</div>
             <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
@@ -132,7 +132,7 @@ export default async function SupplierDirectoryPage({
               {supplier.description?.trim() ||
                 "Public China FRP supplier record. Confirm product scope and evidence through a controlled RFQ."}
             </p>
-            <span className="mt-auto flex items-center gap-1 pt-5 text-xs font-medium text-[#0a756f]">
+            <span className="mt-auto flex items-center gap-1 pt-5 text-xs font-medium text-[#123f8c]">
               View supplier profile
               <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
             </span>

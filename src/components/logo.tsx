@@ -1,54 +1,14 @@
-"use client";
+import Image from "next/image";
 
-import { useTranslations } from "next-intl";
-
-export function LogoMark({
-  className = "h-6 w-6",
-}: {
-  className?: string;
-}) {
-  // Three laminate plies at varying weights — reads as "composite layup"
-  // Sharp square with 4px radius for Linear/Vercel-style precision.
+export function Logo({ eager = false }: { eager?: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <rect
-        x="0.5"
-        y="0.5"
-        width="23"
-        height="23"
-        rx="3"
-        className="fill-foreground"
-      />
-      <rect x="5" y="7" width="14" height="2" rx="1" className="fill-background" />
-      <rect
-        x="5"
-        y="11"
-        width="14"
-        height="2"
-        rx="1"
-        className="fill-background/80"
-      />
-      <rect
-        x="5"
-        y="15"
-        width="14"
-        height="2"
-        rx="1"
-        className="fill-background/55"
-      />
-    </svg>
-  );
-}
-
-const brandOverride = process.env.NEXT_PUBLIC_SITE_NAME;
-
-export function Logo() {
-  const t = useTranslations("Site");
-  const brand = brandOverride ?? t("name");
-  return (
-    <div className="flex items-center gap-2">
-      <LogoMark />
-      <span className="text-[14px] font-semibold tracking-tight">{brand}</span>
-    </div>
+    <Image
+      src="/getfrp-logo.png"
+      alt="getfrp"
+      width={620}
+      height={140}
+      className="h-8 w-auto mix-blend-multiply"
+      loading={eager ? "eager" : "lazy"}
+    />
   );
 }

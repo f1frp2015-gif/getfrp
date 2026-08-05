@@ -67,7 +67,7 @@ function LinkGrid({
         <Link
           key={link.href}
           href={link.href as never}
-          className="group flex items-start justify-between gap-3 rounded-lg border border-border/70 bg-background px-4 py-3 text-sm transition-colors hover:border-[#0a756f]/50"
+          className="group flex items-start justify-between gap-3 rounded-lg border border-border/70 bg-background px-4 py-3 text-sm transition-colors hover:border-[#123f8c]/50"
         >
           <span>
             <span className="font-medium">{link.label}</span>
@@ -123,7 +123,7 @@ export default async function HtmlSitemapPage({
       />
 
       <header className="max-w-3xl">
-        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#0a756f]">
+        <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#123f8c]">
           Site directory
         </div>
         <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
