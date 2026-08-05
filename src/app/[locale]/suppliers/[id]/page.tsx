@@ -36,32 +36,13 @@ import {
 } from "@/lib/data/supplier-category-pages";
 import { provincesEn, supplierCategories } from "@/lib/data/suppliers";
 import {
-  WANHUA_SUPPLIER_ID,
-  WANHUA_SUPPLIER_PROFILE,
-} from "@/lib/data/wanhua-supplier-profile";
-import {
-  JUSHI_LEGACY_SLUG,
-  JUSHI_SUPPLIER_ID,
-  JUSHI_SUPPLIER_PROFILE,
-  JUSHI_SUPPLIER_SLUG,
-} from "@/lib/data/jushi-supplier-profile";
-import {
-  TAISHAN_SUPPLIER_ID,
-  TAISHAN_SUPPLIER_PROFILE,
-  TAISHAN_SUPPLIER_SLUG,
-} from "@/lib/data/taishan-supplier-profile";
-import {
-  ZHONGFU_SHENYING_LEGACY_SLUG,
-  ZHONGFU_SHENYING_SUPPLIER_ID,
-  ZHONGFU_SHENYING_SUPPLIER_PROFILE,
-  ZHONGFU_SHENYING_SUPPLIER_SLUG,
-} from "@/lib/data/zhongfu-shenying-supplier-profile";
-import {
   NOAH_COMPOSITES_LEGAL_NAME_EN,
   NOAH_COMPOSITES_SUPPLIER_ID,
-  NOAH_COMPOSITES_SUPPLIER_PROFILE,
-  NOAH_COMPOSITES_SUPPLIER_SLUG,
 } from "@/lib/data/noah-composites-supplier-profile";
+import {
+  getCuratedSupplierProfile,
+  getCuratedSupplierSlugs,
+} from "@/lib/data/curated-supplier-profiles";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -107,13 +88,7 @@ function englishProvince(province: string | null): string {
 }
 
 export async function generateStaticParams() {
-  let profileSlugs: string[] = [
-    supplierRouteSlug(WANHUA_SUPPLIER_PROFILE),
-    JUSHI_SUPPLIER_SLUG,
-    TAISHAN_SUPPLIER_SLUG,
-    ZHONGFU_SHENYING_SUPPLIER_SLUG,
-    NOAH_COMPOSITES_SUPPLIER_SLUG,
-  ];
+  let databaseSlugs: string[] = [];
   try {
     const rows = await db
       .select({ slug: supplierListings.slug })
@@ -125,14 +100,15 @@ export async function generateStaticParams() {
           ne(supplierListings.nameEn, ""),
         ),
       );
-    profileSlugs = rows.flatMap((row) => row.slug ? [row.slug] : []);
+    databaseSlugs = rows.flatMap((row) => row.slug ? [row.slug] : []);
   } catch {
     // Curated Git-backed profiles remain buildable during a DB outage.
   }
   return Array.from(new Set([
     ...SUPPLIER_REGION_SLUGS,
     ...SUPPLIER_CATEGORY_PAGES.map((page) => page.slug),
-    ...profileSlugs,
+    ...getCuratedSupplierSlugs(),
+    ...databaseSlugs,
   ])).map((id) => ({ id }));
 }
 
@@ -212,18 +188,6 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
       )
       .limit(1);
     if (row) {
-      if (row.supplier.id === JUSHI_SUPPLIER_ID) {
-        return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: row.enterprise };
-      }
-      if (row.supplier.id === TAISHAN_SUPPLIER_ID) {
-        return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: row.enterprise };
-      }
-      if (row.supplier.id === ZHONGFU_SHENYING_SUPPLIER_ID) {
-        return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: row.enterprise };
-      }
-      if (row.supplier.id === NOAH_COMPOSITES_SUPPLIER_ID) {
-        return { supplier: NOAH_COMPOSITES_SUPPLIER_PROFILE, enterprise: row.enterprise };
-      }
       return row;
     }
   } catch {
@@ -231,22 +195,8 @@ const loadSupplierProfile = cache(async (id: string): Promise<SupplierProfile | 
     // temporarily unavailable during a build or request.
   }
 
-  if (id === WANHUA_SUPPLIER_ID || id === supplierRouteSlug(WANHUA_SUPPLIER_PROFILE)) {
-    return { supplier: WANHUA_SUPPLIER_PROFILE, enterprise: null };
-  }
-  if (id === JUSHI_SUPPLIER_ID || id === JUSHI_SUPPLIER_SLUG || id === JUSHI_LEGACY_SLUG) {
-    return { supplier: JUSHI_SUPPLIER_PROFILE, enterprise: null };
-  }
-  if (id === TAISHAN_SUPPLIER_ID || id === TAISHAN_SUPPLIER_SLUG) {
-    return { supplier: TAISHAN_SUPPLIER_PROFILE, enterprise: null };
-  }
-  if (id === ZHONGFU_SHENYING_SUPPLIER_ID || id === ZHONGFU_SHENYING_SUPPLIER_SLUG || id === ZHONGFU_SHENYING_LEGACY_SLUG) {
-    return { supplier: ZHONGFU_SHENYING_SUPPLIER_PROFILE, enterprise: null };
-  }
-  if (id === NOAH_COMPOSITES_SUPPLIER_ID || id === NOAH_COMPOSITES_SUPPLIER_SLUG) {
-    return { supplier: NOAH_COMPOSITES_SUPPLIER_PROFILE, enterprise: null };
-  }
-  return null;
+  const curatedSupplier = getCuratedSupplierProfile(id);
+  return curatedSupplier ? { supplier: curatedSupplier, enterprise: null } : null;
 });
 
 function categoryLabel(category: string | null): string {

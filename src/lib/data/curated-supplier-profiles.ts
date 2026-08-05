@@ -1,0 +1,48 @@
+import type { SupplierListing } from "@/lib/db/schema";
+import {
+  JUSHI_LEGACY_SLUG,
+  JUSHI_SUPPLIER_PROFILE,
+} from "@/lib/data/jushi-supplier-profile";
+import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
+import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
+import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
+import {
+  ZHONGFU_SHENYING_LEGACY_SLUG,
+  ZHONGFU_SHENYING_SUPPLIER_PROFILE,
+} from "@/lib/data/zhongfu-shenying-supplier-profile";
+
+type CuratedSupplierProfileEntry = {
+  profile: SupplierListing;
+  legacySlugs?: readonly string[];
+};
+
+// Git-backed public profiles are the resilient fallback for supplier pages and
+// the directory. A matching database row always takes precedence.
+export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
+  { profile: WANHUA_SUPPLIER_PROFILE },
+  { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
+  { profile: TAISHAN_SUPPLIER_PROFILE },
+  {
+    profile: ZHONGFU_SHENYING_SUPPLIER_PROFILE,
+    legacySlugs: [ZHONGFU_SHENYING_LEGACY_SLUG],
+  },
+  { profile: NOAH_COMPOSITES_SUPPLIER_PROFILE },
+];
+
+export function getCuratedSupplierProfile(
+  idOrSlug: string,
+): SupplierListing | null {
+  const entry = CURATED_SUPPLIER_PROFILES.find(
+    ({ profile, legacySlugs }) =>
+      profile.id === idOrSlug ||
+      profile.slug === idOrSlug ||
+      legacySlugs?.includes(idOrSlug),
+  );
+  return entry?.profile ?? null;
+}
+
+export function getCuratedSupplierSlugs(): string[] {
+  return CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) =>
+    profile.slug ? [profile.slug] : [],
+  );
+}
