@@ -17,6 +17,7 @@ import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "./data/shengli-limited-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
+import { TANGSHAN_RUNFENG_SUPPLIER_PROFILE } from "./data/tangshan-runfeng-supplier-profile";
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
@@ -56,6 +57,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "nanjing-spare-composites",
       "wells-advanced-materials",
       "sinauva-composites",
+      "tangshan-runfeng-composite-materials",
       "techstorm-advanced-material",
       "hebei-tengjun-frp",
       "sino-composite-structures",
@@ -175,6 +177,20 @@ test("adds every published Git-backed profile when the database is empty", async
   );
   assert.match(shengli?.description ?? "", /began in 1999/i);
   assert.match(shengli?.description ?? "", /Shengli Xinda in Dongying/i);
+  const tangshanRunfeng = directory.find(
+    ({ id }) => id === TANGSHAN_RUNFENG_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    tangshanRunfeng?.slug,
+    "tangshan-runfeng-composite-materials",
+  );
+  assert.equal(tangshanRunfeng?.location, "Tangshan, Hebei, China");
+  assert.equal(
+    tangshanRunfeng?.logo,
+    "/supplier-assets/tangshan-runfeng-logo.webp",
+  );
+  assert.match(tangshanRunfeng?.description ?? "", /since 2004/i);
+  assert.match(tangshanRunfeng?.products.join(" ") ?? "", /skylight/i);
   const tengjun = directory.find(
     ({ id }) => id === TENGJUN_FRP_SUPPLIER_PROFILE.id,
   );
