@@ -300,8 +300,9 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const logo = supplier.logo ?? enterprise?.logo ?? null;
   const logoNeedsDarkBackground = Boolean(
     logo?.includes("zhongfu-shenying") ||
-      logo?.includes("strongfibre") ||
-      logo?.includes("aoc-logo-white"),
+    logo?.includes("strongfibre") ||
+    logo?.includes("aoc-logo-white") ||
+    logo?.includes("runsing-logo"),
   );
   const structuredLogo = logo
     ? new URL(logo, CURRENT_SITE_URL).toString()

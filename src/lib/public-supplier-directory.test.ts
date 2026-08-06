@@ -5,6 +5,7 @@ import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
+import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
@@ -30,6 +31,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
+      "shandong-runsing-composites",
       "jiangsu-jiuding-new-materials",
       "jufa-new-material",
       "shanghai-crotti",
@@ -99,6 +101,12 @@ test("adds every published Git-backed profile when the database is empty", async
     directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
     "/supplier-assets/techstorm-logo.png",
   );
+  const runsing = directory.find(
+    ({ id }) => id === RUNSING_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(runsing?.slug, "shandong-runsing-composites");
+  assert.equal(runsing?.logo, "/supplier-assets/runsing-logo.png");
+  assert.match(runsing?.description ?? "", /factories in Weifang/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
