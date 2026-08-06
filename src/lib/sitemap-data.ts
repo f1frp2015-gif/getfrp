@@ -21,6 +21,7 @@ import {
   supplierListings,
 } from "@/lib/db/schema";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
@@ -180,14 +181,40 @@ export async function buildSitemapEntries(
       const companyEntries = rows
         .filter((r): r is typeof r & { slug: string } => Boolean(r.slug && (r.nameEn ?? "").trim()))
         .map((r) => toEntry(`/suppliers/${supplierRouteSlug(r)}`, r.updatedAt, 0.7, now));
+      const databaseIds = new Set(rows.map((row) => row.id));
+      const databaseSlugs = new Set(
+        rows.flatMap((row) => row.slug ? [row.slug] : []),
+      );
+      const curatedCompanyEntries = CURATED_SUPPLIER_PROFILES.flatMap(
+        ({ profile }) => {
+          const slug = supplierRouteSlug(profile);
+          if (
+            !profile.profilePublished ||
+            !profile.nameEn?.trim() ||
+            databaseIds.has(profile.id) ||
+            databaseSlugs.has(slug)
+          ) {
+            return [];
+          }
+          return [
+            toEntry(
+              `/suppliers/${slug}`,
+              profile.updatedAt,
+              0.7,
+              now,
+            ),
+          ];
+        },
+      );
+      const allCompanyEntries = [...companyEntries, ...curatedCompanyEntries];
       const directoryEntries = Array.from(
-        { length: supplierDirectoryPageCount(companyEntries.length) },
+        { length: supplierDirectoryPageCount(allCompanyEntries.length) },
         (_, index) => ({
           ...toEntry(supplierDirectoryPath(index + 1), now, 0.75, now),
           changeFrequency: "weekly" as const,
         }),
       );
-      return [...networkEntries, ...directoryEntries, ...companyEntries];
+      return [...networkEntries, ...directoryEntries, ...allCompanyEntries];
     }
 
     case "sourcing": {
