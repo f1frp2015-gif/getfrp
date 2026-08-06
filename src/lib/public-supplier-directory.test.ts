@@ -8,6 +8,7 @@ import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
+import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -34,6 +35,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "strongfibre",
       "nanjing-spare-composites",
       "wells-advanced-materials",
+      "techstorm-advanced-material",
     ]),
   );
   assert.match(
@@ -81,6 +83,10 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
   assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
   assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
+  assert.equal(
+    directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
+    "/supplier-assets/techstorm-logo.png",
+  );
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
