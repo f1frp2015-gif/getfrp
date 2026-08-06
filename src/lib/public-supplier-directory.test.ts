@@ -381,6 +381,58 @@ test("keeps one supplier and preserves database identity and trust state", async
   assert.equal(noahProfiles[0]?.logo, NOAH_COMPOSITES_SUPPLIER_PROFILE.logo);
 });
 
+test("ranks a Git-backed supplier page ahead of unpublished database records", async () => {
+  const { mergePublicSupplierDirectory } = await loadDirectory();
+  const directory = mergePublicSupplierDirectory(
+    [
+      {
+        supplier: {
+          ...NOAH_COMPOSITES_SUPPLIER_PROFILE,
+          profilePublished: false,
+          verified: false,
+          brandPriority: 0,
+          scaleTier: "S",
+          viewCount: 0,
+        },
+        enterpriseLogo: null,
+        enterpriseWebsite: null,
+        employeeCount: null,
+        annualRevenue: null,
+      },
+      {
+        supplier: {
+          ...NOAH_COMPOSITES_SUPPLIER_PROFILE,
+          id: "sup-unpublished-high-rank",
+          slug: "unpublished-high-rank",
+          name: "Unpublished high-rank supplier",
+          nameEn: "Unpublished High-rank Supplier",
+          profilePublished: false,
+          verified: true,
+          brandPriority: 10_000,
+          scaleTier: "XL",
+          viewCount: 10_000,
+        },
+        enterpriseLogo: null,
+        enterpriseWebsite: null,
+        employeeCount: null,
+        annualRevenue: null,
+      },
+    ],
+    "en",
+  );
+  const publishedIndex = directory.findIndex(
+    ({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id,
+  );
+  const unpublishedIndex = directory.findIndex(
+    ({ id }) => id === "sup-unpublished-high-rank",
+  );
+
+  assert.ok(publishedIndex >= 0);
+  assert.ok(unpublishedIndex >= 0);
+  assert.equal(directory[publishedIndex]?.profilePublished, true);
+  assert.ok(publishedIndex < unpublishedIndex);
+});
+
 test("enriches an unclaimed Jiuding database seed without changing its identity", async () => {
   const { mergePublicSupplierDirectory } = await loadDirectory();
   const directory = mergePublicSupplierDirectory(
