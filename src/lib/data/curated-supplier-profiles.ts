@@ -10,6 +10,7 @@ import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
+import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
@@ -50,6 +51,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: WELLS_WAM_SUPPLIER_PROFILE },
   { profile: TECHSTORM_SUPPLIER_PROFILE },
   { profile: TENGJUN_FRP_SUPPLIER_PROFILE },
+  { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
