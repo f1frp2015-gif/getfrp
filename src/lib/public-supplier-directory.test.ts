@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
+import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
 } from "./data/hongfu-tongxin-supplier-profile";
@@ -52,6 +53,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "wanhua-chemical",
       "jushi",
       "chongqing-polycomp-international",
+      "hebei-weitong-frp",
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
@@ -313,6 +315,20 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /98,000 Mingchen-brand/i,
+  );
+  const hebeiWeitong = directory.find(
+    ({ id }) => id === HEBEI_WEITONG_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(hebeiWeitong?.slug, "hebei-weitong-frp");
+  assert.equal(hebeiWeitong?.location, "Hengshui, Hebei, China");
+  assert.equal(
+    hebeiWeitong?.logo,
+    "/supplier-assets/hebei-weitong-logo.png",
+  );
+  assert.match(hebeiWeitong?.description ?? "", /April 30, 2015/i);
+  assert.match(
+    HEBEI_WEITONG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /DN15 to DN4000/i,
   );
 });
 

@@ -2,6 +2,7 @@ import type { SupplierListing } from "@/lib/db/schema";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
+import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
@@ -58,6 +59,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: WANHUA_SUPPLIER_PROFILE },
   { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
   { profile: CPIC_SUPPLIER_PROFILE },
+  { profile: HEBEI_WEITONG_SUPPLIER_PROFILE },
   { profile: TAISHAN_SUPPLIER_PROFILE },
   {
     profile: ZHONGFU_SHENYING_SUPPLIER_PROFILE,
