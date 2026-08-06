@@ -8,6 +8,7 @@ import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
+import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
@@ -40,6 +41,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "wells-advanced-materials",
       "sinauva-composites",
       "techstorm-advanced-material",
+      "hebei-tengjun-frp",
     ]),
   );
   assert.match(
@@ -107,6 +109,13 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(runsing?.slug, "shandong-runsing-composites");
   assert.equal(runsing?.logo, "/supplier-assets/runsing-logo.png");
   assert.match(runsing?.description ?? "", /factories in Weifang/i);
+  const tengjun = directory.find(
+    ({ id }) => id === TENGJUN_FRP_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(tengjun?.slug, "hebei-tengjun-frp");
+  assert.equal(tengjun?.location, "Zaoqiang, Hengshui, Hebei, China");
+  assert.equal(tengjun?.logo, "/supplier-assets/tengjun-frp-logo.png");
+  assert.match(tengjun?.description ?? "", /more than 60 countries/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
