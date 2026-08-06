@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 
@@ -26,6 +27,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "noah-composites",
       "jiangsu-jiuding-new-materials",
       "jufa-new-material",
+      "shanghai-crotti",
       "strongfibre",
       "nanjing-spare-composites",
     ]),
@@ -44,6 +46,12 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(jufa?.logo, "/supplier-assets/jufa-logo.png");
   assert.match(jufa?.products.join(" ") ?? "", /pultrusion/i);
   assert.match(jufa?.description ?? "", /polyurethane-modified resin/i);
+  const crotti = directory.find(
+    ({ id }) => id === CROTTI_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(crotti?.logo, "/supplier-assets/crotti-logo.png");
+  assert.match(crotti?.products.join(" ") ?? "", /TICO 55, 65, 72/);
+  assert.match(crotti?.processList.join(" ") ?? "", /pultrusion/i);
   const strongfibre = directory.find(
     ({ id }) => id === STRONGFIBRE_SUPPLIER_PROFILE.id,
   );
