@@ -22,6 +22,7 @@ import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profil
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
+import { TUOTIAN_SUPPLIER_PROFILE } from "./data/tuotian-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "./data/zhejiang-huafeng-supplier-profile";
 
@@ -61,6 +62,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "tangshan-runfeng-composite-materials",
       "techstorm-advanced-material",
       "hebei-tengjun-frp",
+      "lianyungang-tuotian-aviation-equipment",
       "sino-composite-structures",
       "xiamen-lft-composite-plastic",
       "zhejiang-huafeng-new-material",
@@ -227,6 +229,17 @@ test("adds every published Git-backed profile when the database is empty", async
     xiamenLft?.description ?? "",
     /long-fiber reinforced thermoplastic/i,
   );
+  const tuotian = directory.find(
+    ({ id }) => id === TUOTIAN_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    tuotian?.slug,
+    "lianyungang-tuotian-aviation-equipment",
+  );
+  assert.equal(tuotian?.location, "Lianyungang, Jiangsu, China");
+  assert.equal(tuotian?.logo, "/supplier-assets/tuotian-logo.webp");
+  assert.equal(tuotian?.category, "equipment");
+  assert.match(tuotian?.description ?? "", /30,000 m² production base/i);
   const zhejiangHuafeng = directory.find(
     ({ id }) => id === ZHEJIANG_HUAFENG_SUPPLIER_PROFILE.id,
   );
