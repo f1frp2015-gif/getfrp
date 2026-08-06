@@ -10,6 +10,7 @@ import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-s
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
+import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
 import {
   ZHONGFU_SHENYING_LEGACY_SLUG,
   ZHONGFU_SHENYING_SUPPLIER_PROFILE,
@@ -36,6 +37,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
   { profile: SPARE_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: WELLS_WAM_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
