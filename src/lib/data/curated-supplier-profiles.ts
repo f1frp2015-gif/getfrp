@@ -29,6 +29,7 @@ import { TUOTIAN_SUPPLIER_PROFILE } from "@/lib/data/tuotian-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-profile";
+import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "@/lib/data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-huafeng-supplier-profile";
 import {
   ZHONGFU_SHENYING_LEGACY_SLUG,
@@ -73,6 +74,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: TUOTIAN_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
+  { profile: YUTO_NEW_MATERIAL_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },
 ];
 
