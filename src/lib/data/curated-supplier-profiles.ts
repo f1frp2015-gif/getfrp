@@ -35,6 +35,9 @@ import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-prof
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "@/lib/data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-huafeng-supplier-profile";
 import {
+  ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
+} from "@/lib/data/zhongsheng-fiberglass-supplier-profile";
+import {
   ZHONGFU_SHENYING_LEGACY_SLUG,
   ZHONGFU_SHENYING_SUPPLIER_PROFILE,
 } from "@/lib/data/zhongfu-shenying-supplier-profile";
@@ -82,6 +85,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
   { profile: YUTO_NEW_MATERIAL_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },
+  { profile: ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
