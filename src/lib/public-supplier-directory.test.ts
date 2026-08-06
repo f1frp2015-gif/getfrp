@@ -11,6 +11,7 @@ import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplie
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
+import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
@@ -53,6 +54,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "shengli-limited",
       "jiangsu-jiuding-new-materials",
       "yangzhou-maxtone-composite",
+      "changzhou-matex-composites",
       "jufa-new-material",
       "shanghai-crotti",
       "strongfibre",
@@ -219,6 +221,15 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(maxtone?.location, "Yangzhou, Jiangsu, China");
   assert.equal(maxtone?.logo, "/supplier-assets/maxtone-logo.png");
   assert.match(maxtone?.description ?? "", /since 1996/i);
+  const matex = directory.find(
+    ({ id }) => id === MATEX_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(matex?.slug, "changzhou-matex-composites");
+  assert.equal(matex?.location, "Changzhou, Jiangsu, China");
+  assert.equal(matex?.logo, "/supplier-assets/matex-logo.png");
+  assert.equal(matex?.category, "fiber");
+  assert.match(matex?.description ?? "", /since 2007/i);
+  assert.match(matex?.products.join(" ") ?? "", /multiaxial|biaxial/i);
   const xiamenLft = directory.find(
     ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
   );
