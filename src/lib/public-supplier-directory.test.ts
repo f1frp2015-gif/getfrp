@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -24,6 +25,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "noah-composites",
       "jiangsu-jiuding-new-materials",
       "jufa-new-material",
+      "strongfibre",
     ]),
   );
   assert.match(
@@ -40,6 +42,14 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(jufa?.logo, "/supplier-assets/jufa-logo.png");
   assert.match(jufa?.products.join(" ") ?? "", /pultrusion/i);
   assert.match(jufa?.description ?? "", /polyurethane-modified resin/i);
+  const strongfibre = directory.find(
+    ({ id }) => id === STRONGFIBRE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(strongfibre?.name, "Strongfibre");
+  assert.equal(strongfibre?.verified, false);
+  assert.equal(strongfibre?.location, "Nantong, Jiangsu, China");
+  assert.equal(strongfibre?.logo, "/supplier-assets/strongfibre-logo.png");
+  assert.match(strongfibre?.description ?? "", /Strongworld Group/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
