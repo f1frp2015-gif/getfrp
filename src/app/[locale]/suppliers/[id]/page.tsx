@@ -56,6 +56,7 @@ import {
   STRONGFIBRE_LEGAL_NAME_EN,
   STRONGFIBRE_SUPPLIER_ID,
 } from "@/lib/data/strongfibre-supplier-profile";
+import { SHENGLI_LIMITED_SUPPLIER_ID } from "@/lib/data/shengli-limited-supplier-profile";
 import {
   enrichSupplierWithCuratedProfile,
   getCuratedSupplierProfile,
@@ -272,6 +273,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const isVerified = Boolean(supplier.verified && enterprise);
   const isSponsored = supplier.id === "sup-yaoyi";
   const isClaimed = Boolean(enterprise);
+  const isShengliLimited = supplier.id === SHENGLI_LIMITED_SUPPLIER_ID;
   const name = supplier.nameEn ?? "Supplier";
   const legalName = supplier.id === "sup-yaoyi"
     ? "Chongqing Yaoyi New Material Technology Co., Ltd."
@@ -349,7 +351,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             "@type": "PostalAddress",
             streetAddress: address ?? undefined,
             addressLocality: location,
-            addressCountry: "CN",
+            addressCountry: isShengliLimited ? "NZ" : "CN",
           }
         : undefined,
       knowsAbout: productNames,
@@ -383,7 +385,11 @@ async function renderSupplierProfile(profile: SupplierProfile) {
         eyebrow: isVerified ? "VERIFIED COMPANY PROFILE" : isClaimed ? "CLAIMED COMPANY PROFILE" : "PUBLIC COMPANY PROFILE",
         verified: isVerified ? "Verified business profile" : isClaimed ? "Claimed company profile" : "Public profile · Not claimed",
         legal: "Legal entity",
-        established: isVerified ? "Legal entity established" : "Manufacturing since (company statement)",
+        established: isVerified
+          ? "Legal entity established"
+          : isShengliLimited
+            ? "Operating since (company statement)"
+            : "Manufacturing since (company statement)",
         location: "Location",
         category: "Business type",
         about: "Company overview",
@@ -834,9 +840,11 @@ export async function generateMetadata({
     : `${normalizedDescription.slice(0, 162).replace(/\s+\S*$/, "")}…`;
   const routeSlug = supplierRouteSlug(profile.supplier);
   const primaryProduct = supplierSeoKeyword(profile.supplier);
-  const businessKeyword = profile.supplier.category === "manufacturer"
-    ? "Manufacturer China"
-    : "Supplier China";
+  const businessKeyword = profile.supplier.id === SHENGLI_LIMITED_SUPPLIER_ID
+    ? "Sourcing & Supply Partner"
+    : profile.supplier.category === "manufacturer"
+      ? "Manufacturer China"
+      : "Supplier China";
   const title = `${supplierName} — ${primaryProduct} ${businessKeyword} | getfrp`;
   return {
     title: { absolute: title },
