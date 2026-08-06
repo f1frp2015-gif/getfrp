@@ -8,6 +8,7 @@ import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
+import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
@@ -36,6 +37,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
+      "pulwell-composites",
       "shandong-runsing-composites",
       "jiangsu-jiuding-new-materials",
       "yangzhou-maxtone-composite",
@@ -116,6 +118,13 @@ test("adds every published Git-backed profile when the database is empty", async
     directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
     "/supplier-assets/techstorm-logo.png",
   );
+  const pulwell = directory.find(
+    ({ id }) => id === PULWELL_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(pulwell?.slug, "pulwell-composites");
+  assert.equal(pulwell?.location, "Zhongshan, Guangdong, China");
+  assert.equal(pulwell?.logo, "/supplier-assets/pulwell-logo.png");
+  assert.match(pulwell?.description ?? "", /since 2001/i);
   const runsing = directory.find(
     ({ id }) => id === RUNSING_SUPPLIER_PROFILE.id,
   );
