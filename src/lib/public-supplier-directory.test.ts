@@ -23,6 +23,7 @@ import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
+import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "./data/zhejiang-huafeng-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -62,6 +63,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "hebei-tengjun-frp",
       "sino-composite-structures",
       "xiamen-lft-composite-plastic",
+      "zhejiang-huafeng-new-material",
     ]),
   );
   assert.match(
@@ -225,6 +227,19 @@ test("adds every published Git-backed profile when the database is empty", async
     xiamenLft?.description ?? "",
     /long-fiber reinforced thermoplastic/i,
   );
+  const zhejiangHuafeng = directory.find(
+    ({ id }) => id === ZHEJIANG_HUAFENG_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    zhejiangHuafeng?.slug,
+    "zhejiang-huafeng-new-material",
+  );
+  assert.equal(zhejiangHuafeng?.location, "Hangzhou, Zhejiang, China");
+  assert.equal(
+    zhejiangHuafeng?.logo,
+    "/supplier-assets/zhejiang-huafeng-logo.webp",
+  );
+  assert.match(zhejiangHuafeng?.description ?? "", /since 1998/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {

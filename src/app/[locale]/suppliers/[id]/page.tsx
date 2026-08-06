@@ -310,7 +310,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
     logo?.includes("aoc-logo-white") ||
     logo?.includes("runsing-logo") ||
     logo?.includes("tengjun-frp-logo") ||
-    logo?.includes("pulwell-logo"),
+    logo?.includes("pulwell-logo") ||
+    logo?.includes("zhejiang-huafeng-logo"),
   );
   const structuredLogo = logo
     ? new URL(logo, CURRENT_SITE_URL).toString()
