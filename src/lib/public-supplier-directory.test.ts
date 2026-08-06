@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
+import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
@@ -42,6 +43,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "sinauva-composites",
       "techstorm-advanced-material",
       "hebei-tengjun-frp",
+      "sino-composite-structures",
     ]),
   );
   assert.match(
@@ -116,6 +118,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(tengjun?.location, "Zaoqiang, Hengshui, Hebei, China");
   assert.equal(tengjun?.logo, "/supplier-assets/tengjun-frp-logo.png");
   assert.match(tengjun?.description ?? "", /more than 60 countries/i);
+  const sinoComposite = directory.find(
+    ({ id }) => id === SINO_COMPOSITE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(sinoComposite?.slug, "sino-composite-structures");
+  assert.equal(sinoComposite?.location, "Wuxi, Jiangsu, China");
+  assert.equal(
+    sinoComposite?.logo,
+    "/supplier-assets/sino-composite-logo.png",
+  );
+  assert.match(sinoComposite?.description ?? "", /since 2002/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
