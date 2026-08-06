@@ -7,6 +7,7 @@ import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
+import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -32,6 +33,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "strongfibre",
       "nanjing-spare-composites",
       "wells-advanced-materials",
+      "sinauva-composites",
     ]),
   );
   assert.match(
@@ -74,6 +76,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(wellsWam?.slug, "wells-advanced-materials");
   assert.equal(wellsWam?.logo, "/supplier-assets/wells-wam-logo.png");
   assert.match(wellsWam?.description ?? "", /stock code 301555/i);
+  const sinauva = directory.find(
+    ({ id }) => id === SINAUVA_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(sinauva?.slug, "sinauva-composites");
+  assert.equal(
+    sinauva?.logo,
+    "/supplier-assets/sinauva-composites-logo.webp",
+  );
+  assert.match(sinauva?.products.join(" ") ?? "", /sandwich panels/i);
+  assert.match(sinauva?.description ?? "", /associated factories/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
