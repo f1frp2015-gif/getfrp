@@ -40,6 +40,10 @@ import {
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
 import {
+  SPARE_COMPOSITES_LEGAL_NAME_EN,
+  SPARE_COMPOSITES_SUPPLIER_ID,
+} from "@/lib/data/spare-composites-supplier-profile";
+import {
   STRONGFIBRE_LEGAL_NAME_EN,
   STRONGFIBRE_SUPPLIER_ID,
 } from "@/lib/data/strongfibre-supplier-profile";
@@ -256,7 +260,9 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       ? NOAH_COMPOSITES_LEGAL_NAME_EN
       : supplier.id === STRONGFIBRE_SUPPLIER_ID
         ? STRONGFIBRE_LEGAL_NAME_EN
-        : supplier.nameEn ?? name;
+        : supplier.id === SPARE_COMPOSITES_SUPPLIER_ID
+          ? SPARE_COMPOSITES_LEGAL_NAME_EN
+          : supplier.nameEn ?? name;
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
   const productNames = (supplier.productsEn ?? []) as string[];

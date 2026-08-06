@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
@@ -24,6 +25,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "noah-composites",
       "jiangsu-jiuding-new-materials",
       "strongfibre",
+      "nanjing-spare-composites",
     ]),
   );
   assert.match(
@@ -44,6 +46,12 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(strongfibre?.location, "Nantong, Jiangsu, China");
   assert.equal(strongfibre?.logo, "/supplier-assets/strongfibre-logo.png");
   assert.match(strongfibre?.description ?? "", /Strongworld Group/i);
+  const spare = directory.find(
+    ({ id }) => id === SPARE_COMPOSITES_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(spare?.logo, "/supplier-assets/spare-composites-logo.png");
+  assert.match(spare?.products.join(" ") ?? "", /grating/i);
+  assert.match(spare?.processList.join(" ") ?? "", /pultrusion/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
