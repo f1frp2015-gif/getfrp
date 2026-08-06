@@ -10,6 +10,7 @@ import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
+import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "./data/shengli-limited-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profile";
@@ -39,6 +40,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "zhongfu-shenying",
       "noah-composites",
       "shandong-runsing-composites",
+      "shengli-limited",
       "jiangsu-jiuding-new-materials",
       "yangzhou-maxtone-composite",
       "jufa-new-material",
@@ -134,6 +136,17 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(runsing?.slug, "shandong-runsing-composites");
   assert.equal(runsing?.logo, "/supplier-assets/runsing-logo.png");
   assert.match(runsing?.description ?? "", /factories in Weifang/i);
+  const shengli = directory.find(
+    ({ id }) => id === SHENGLI_LIMITED_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(shengli?.slug, "shengli-limited");
+  assert.equal(shengli?.location, "Napier, New Zealand");
+  assert.equal(
+    shengli?.logo,
+    "/supplier-assets/shengli-limited-logo.png",
+  );
+  assert.match(shengli?.description ?? "", /began in 1999/i);
+  assert.match(shengli?.description ?? "", /Shengli Xinda in Dongying/i);
   const tengjun = directory.find(
     ({ id }) => id === TENGJUN_FRP_SUPPLIER_PROFILE.id,
   );

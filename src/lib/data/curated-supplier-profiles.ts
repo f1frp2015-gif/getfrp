@@ -12,6 +12,7 @@ import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
+import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
@@ -48,6 +49,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: NOAH_COMPOSITES_SUPPLIER_PROFILE },
   { profile: SINAUVA_SUPPLIER_PROFILE },
   { profile: RUNSING_SUPPLIER_PROFILE },
+  { profile: SHENGLI_LIMITED_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
   { profile: MAXTONE_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
