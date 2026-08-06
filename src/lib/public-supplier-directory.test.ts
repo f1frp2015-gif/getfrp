@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
+import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
@@ -28,6 +29,7 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set(directory.map(({ slug }) => slug)),
     new Set([
       "aoc",
+      "haining-anjie-composite-materials",
       "wanhua-chemical",
       "jushi",
       "taishan-fiberglass",
@@ -101,6 +103,13 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
   assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
   assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
+  const anjie = directory.find(
+    ({ id }) => id === ANJIE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(anjie?.slug, "haining-anjie-composite-materials");
+  assert.equal(anjie?.location, "Haining, Zhejiang, China");
+  assert.equal(anjie?.logo, "/supplier-assets/anjie-logo.jpg");
+  assert.match(anjie?.description ?? "", /NONGCHAOER Composite Materials/i);
   assert.equal(
     directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
     "/supplier-assets/techstorm-logo.png",
