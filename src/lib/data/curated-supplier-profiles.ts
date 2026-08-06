@@ -19,6 +19,7 @@ import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-suppl
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
+import { TANGSHAN_RUNFENG_SUPPLIER_PROFILE } from "@/lib/data/tangshan-runfeng-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "@/lib/data/techstorm-supplier-profile";
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "@/lib/data/tengjun-frp-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
@@ -60,6 +61,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
   { profile: SPARE_COMPOSITES_SUPPLIER_PROFILE },
   { profile: WELLS_WAM_SUPPLIER_PROFILE },
+  { profile: TANGSHAN_RUNFENG_SUPPLIER_PROFILE },
   { profile: TECHSTORM_SUPPLIER_PROFILE },
   { profile: TENGJUN_FRP_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
