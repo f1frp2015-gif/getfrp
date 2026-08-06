@@ -28,6 +28,9 @@ import { TUOTIAN_SUPPLIER_PROFILE } from "./data/tuotian-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "./data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "./data/zhejiang-huafeng-supplier-profile";
+import {
+  ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
+} from "./data/zhongsheng-fiberglass-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -73,6 +76,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "xiamen-lft-composite-plastic",
       "dongguan-yuto-new-material",
       "zhejiang-huafeng-new-material",
+      "taizhou-zhongsheng-glass-fiber-products",
     ]),
   );
   assert.match(
@@ -293,6 +297,23 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/zhejiang-huafeng-logo.webp",
   );
   assert.match(zhejiangHuafeng?.description ?? "", /since 1998/i);
+  const zhongshengFiberglass = directory.find(
+    ({ id }) => id === ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    zhongshengFiberglass?.slug,
+    "taizhou-zhongsheng-glass-fiber-products",
+  );
+  assert.equal(zhongshengFiberglass?.location, "Taizhou, Jiangsu, China");
+  assert.equal(
+    zhongshengFiberglass?.logo,
+    "/supplier-assets/zhongsheng-fiberglass-logo.png",
+  );
+  assert.match(zhongshengFiberglass?.description ?? "", /November 18, 2013/i);
+  assert.match(
+    ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /98,000 Mingchen-brand/i,
+  );
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {

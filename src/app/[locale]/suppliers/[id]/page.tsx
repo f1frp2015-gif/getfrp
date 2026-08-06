@@ -46,6 +46,9 @@ import {
 } from "@/lib/data/noah-composites-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_ID } from "@/lib/data/xiamen-lft-supplier-profile";
 import {
+  ZHONGSHENG_FIBERGLASS_SUPPLIER_ID,
+} from "@/lib/data/zhongsheng-fiberglass-supplier-profile";
+import {
   CROTTI_LEGAL_NAME_EN,
   CROTTI_SUPPLIER_ID,
 } from "@/lib/data/crotti-supplier-profile";
@@ -242,6 +245,9 @@ function supplierSeoKeyword(
 ): string {
   if (supplier.id === AOC_SUPPLIER_ID) return "Composite Resin & Gelcoat";
   if (supplier.id === CPIC_SUPPLIER_ID) return "Glass Fiber";
+  if (supplier.id === ZHONGSHENG_FIBERGLASS_SUPPLIER_ID) {
+    return "Fiberglass Fabrics & Fire Blankets";
+  }
   if (supplier.id === XIAMEN_LFT_SUPPLIER_ID) {
     return "Long Fiber Thermoplastic Compounds";
   }
