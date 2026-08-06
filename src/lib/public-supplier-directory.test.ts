@@ -12,6 +12,7 @@ import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
+import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
@@ -47,6 +48,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "shanghai-horse-construction",
       "wanhua-chemical",
       "jushi",
+      "chongqing-polycomp-international",
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
@@ -56,6 +58,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "jiangsu-jiuding-new-materials",
       "yangzhou-maxtone-composite",
       "changzhou-matex-composites",
+      "nanjing-efg",
       "jufa-new-material",
       "shanghai-crotti",
       "strongfibre",
@@ -235,6 +238,17 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(matex?.category, "fiber");
   assert.match(matex?.description ?? "", /since 2007/i);
   assert.match(matex?.products.join(" ") ?? "", /multiaxial|biaxial/i);
+  const nanjingEfg = directory.find(
+    ({ id }) => id === NANJING_EFG_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(nanjingEfg?.slug, "nanjing-efg");
+  assert.equal(nanjingEfg?.location, "Nanjing, Jiangsu, China");
+  assert.equal(nanjingEfg?.category, "fiber");
+  assert.equal(
+    nanjingEfg?.logo,
+    "/supplier-assets/nanjing-efg-logo.png",
+  );
+  assert.match(nanjingEfg?.description ?? "", /incorporation year/i);
   const xiamenLft = directory.find(
     ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
   );
