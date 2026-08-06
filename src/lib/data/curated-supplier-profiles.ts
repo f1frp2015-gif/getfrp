@@ -5,6 +5,7 @@ import {
 } from "@/lib/data/jushi-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
+import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import {
@@ -30,6 +31,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   },
   { profile: NOAH_COMPOSITES_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
+  { profile: STRONGFIBRE_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(

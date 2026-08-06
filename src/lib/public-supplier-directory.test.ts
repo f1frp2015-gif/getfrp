@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -22,6 +23,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "zhongfu-shenying",
       "noah-composites",
       "jiangsu-jiuding-new-materials",
+      "strongfibre",
     ]),
   );
   assert.match(
@@ -34,6 +36,14 @@ test("adds every published Git-backed profile when the database is empty", async
       ?.slug,
     "noah-composites",
   );
+  const strongfibre = directory.find(
+    ({ id }) => id === STRONGFIBRE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(strongfibre?.name, "Strongfibre");
+  assert.equal(strongfibre?.verified, false);
+  assert.equal(strongfibre?.location, "Nantong, Jiangsu, China");
+  assert.equal(strongfibre?.logo, "/supplier-assets/strongfibre-logo.png");
+  assert.match(strongfibre?.description ?? "", /Strongworld Group/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
