@@ -22,6 +22,7 @@ import { TECHSTORM_SUPPLIER_PROFILE } from "@/lib/data/techstorm-supplier-profil
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "@/lib/data/tengjun-frp-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
+import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-profile";
 import {
   ZHONGFU_SHENYING_LEGACY_SLUG,
   ZHONGFU_SHENYING_SUPPLIER_PROFILE,
@@ -60,6 +61,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: TECHSTORM_SUPPLIER_PROFILE },
   { profile: TENGJUN_FRP_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
