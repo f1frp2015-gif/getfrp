@@ -39,6 +39,7 @@ import {
   AOC_LEGAL_NAME_EN,
   AOC_SUPPLIER_ID,
 } from "@/lib/data/aoc-supplier-profile";
+import { CPIC_SUPPLIER_ID } from "@/lib/data/cpic-supplier-profile";
 import {
   NOAH_COMPOSITES_LEGAL_NAME_EN,
   NOAH_COMPOSITES_SUPPLIER_ID,
@@ -240,6 +241,7 @@ function supplierSeoKeyword(
   supplier: typeof supplierListings.$inferSelect,
 ): string {
   if (supplier.id === AOC_SUPPLIER_ID) return "Composite Resin & Gelcoat";
+  if (supplier.id === CPIC_SUPPLIER_ID) return "Glass Fiber";
   if (supplier.id === XIAMEN_LFT_SUPPLIER_ID) {
     return "Long Fiber Thermoplastic Compounds";
   }
