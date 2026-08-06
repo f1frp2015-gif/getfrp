@@ -11,6 +11,7 @@ import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-sup
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
+import { TECHSTORM_SUPPLIER_PROFILE } from "@/lib/data/techstorm-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
 import {
@@ -42,6 +43,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
   { profile: SPARE_COMPOSITES_SUPPLIER_PROFILE },
   { profile: WELLS_WAM_SUPPLIER_PROFILE },
+  { profile: TECHSTORM_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
