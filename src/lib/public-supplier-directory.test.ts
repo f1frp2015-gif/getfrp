@@ -24,6 +24,7 @@ import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-pro
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "./data/tuotian-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
+import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "./data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "./data/zhejiang-huafeng-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
@@ -65,6 +66,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "lianyungang-tuotian-aviation-equipment",
       "sino-composite-structures",
       "xiamen-lft-composite-plastic",
+      "dongguan-yuto-new-material",
       "zhejiang-huafeng-new-material",
     ]),
   );
@@ -193,7 +195,10 @@ test("adds every published Git-backed profile when the database is empty", async
     tangshanRunfeng?.logo,
     "/supplier-assets/tangshan-runfeng-logo.webp",
   );
-  assert.match(tangshanRunfeng?.description ?? "", /since 2004/i);
+  assert.match(
+    tangshanRunfeng?.description ?? "",
+    /(?:since|founded in) 2004/i,
+  );
   assert.match(tangshanRunfeng?.products.join(" ") ?? "", /skylight/i);
   const tengjun = directory.find(
     ({ id }) => id === TENGJUN_FRP_SUPPLIER_PROFILE.id,
@@ -240,6 +245,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(tuotian?.logo, "/supplier-assets/tuotian-logo.webp");
   assert.equal(tuotian?.category, "equipment");
   assert.match(tuotian?.description ?? "", /30,000 m² production base/i);
+  const yutoNewMaterial = directory.find(
+    ({ id }) => id === YUTO_NEW_MATERIAL_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(yutoNewMaterial?.slug, "dongguan-yuto-new-material");
+  assert.equal(yutoNewMaterial?.location, "Dongguan, Guangdong, China");
+  assert.equal(
+    yutoNewMaterial?.logo,
+    "/supplier-assets/yuto-new-material-logo.png",
+  );
+  assert.match(yutoNewMaterial?.description ?? "", /3K plain-/i);
   const zhejiangHuafeng = directory.find(
     ({ id }) => id === ZHEJIANG_HUAFENG_SUPPLIER_PROFILE.id,
   );
