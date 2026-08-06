@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
+import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "./data/chongqing-dujiang-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
 } from "./data/hongfu-tongxin-supplier-profile";
@@ -54,6 +55,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "jushi",
       "chongqing-polycomp-international",
       "hebei-weitong-frp",
+      "chongqing-dujiang-composites",
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
@@ -329,6 +331,20 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     HEBEI_WEITONG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /DN15 to DN4000/i,
+  );
+  const chongqingDujiang = directory.find(
+    ({ id }) => id === CHONGQING_DUJIANG_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(chongqingDujiang?.slug, "chongqing-dujiang-composites");
+  assert.equal(chongqingDujiang?.location, "Chongqing, China");
+  assert.equal(
+    chongqingDujiang?.logo,
+    "/supplier-assets/chongqing-dujiang-logo.png",
+  );
+  assert.match(chongqingDujiang?.description ?? "", /adopted in 2002/i);
+  assert.match(
+    CHONGQING_DUJIANG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /past their printed validity dates/i,
   );
 });
 
