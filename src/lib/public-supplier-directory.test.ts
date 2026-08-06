@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
+import {
+  HONGFU_TONGXIN_SUPPLIER_PROFILE,
+} from "./data/hongfu-tongxin-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "./data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
@@ -35,6 +38,7 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set([
       "aoc",
       "haining-anjie-composite-materials",
+      "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
       "wanhua-chemical",
       "jushi",
@@ -120,6 +124,19 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(anjie?.location, "Haining, Zhejiang, China");
   assert.equal(anjie?.logo, "/supplier-assets/anjie-logo.jpg");
   assert.match(anjie?.description ?? "", /NONGCHAOER Composite Materials/i);
+  const hongfuTongxin = directory.find(
+    ({ id }) => id === HONGFU_TONGXIN_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(hongfuTongxin?.slug, "shenzhen-hongfu-tongxin");
+  assert.equal(hongfuTongxin?.location, "Shenzhen, Guangdong, China");
+  assert.equal(
+    hongfuTongxin?.logo,
+    "/supplier-assets/hongfu-tongxin-logo.png",
+  );
+  assert.match(
+    hongfuTongxin?.description ?? "",
+    /FRP production factory in Dongguan/i,
+  );
   const horse = directory.find(
     ({ id }) => id === HORSE_CONSTRUCTION_SUPPLIER_PROFILE.id,
   );
