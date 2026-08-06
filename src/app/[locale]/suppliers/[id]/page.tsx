@@ -40,6 +40,10 @@ import {
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
 import {
+  CROTTI_LEGAL_NAME_EN,
+  CROTTI_SUPPLIER_ID,
+} from "@/lib/data/crotti-supplier-profile";
+import {
   SPARE_COMPOSITES_LEGAL_NAME_EN,
   SPARE_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/spare-composites-supplier-profile";
@@ -258,11 +262,13 @@ async function renderSupplierProfile(profile: SupplierProfile) {
     ? "Chongqing Yaoyi New Material Technology Co., Ltd."
     : supplier.id === NOAH_COMPOSITES_SUPPLIER_ID
       ? NOAH_COMPOSITES_LEGAL_NAME_EN
-      : supplier.id === STRONGFIBRE_SUPPLIER_ID
-        ? STRONGFIBRE_LEGAL_NAME_EN
-        : supplier.id === SPARE_COMPOSITES_SUPPLIER_ID
-          ? SPARE_COMPOSITES_LEGAL_NAME_EN
-          : supplier.nameEn ?? name;
+      : supplier.id === CROTTI_SUPPLIER_ID
+        ? CROTTI_LEGAL_NAME_EN
+        : supplier.id === STRONGFIBRE_SUPPLIER_ID
+          ? STRONGFIBRE_LEGAL_NAME_EN
+          : supplier.id === SPARE_COMPOSITES_SUPPLIER_ID
+            ? SPARE_COMPOSITES_LEGAL_NAME_EN
+            : supplier.nameEn ?? name;
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
   const productNames = (supplier.productsEn ?? []) as string[];
@@ -429,7 +435,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                     {name.slice(0, 2).toUpperCase()}
                   </div>
                 )}
-                <div>
+                <div className="min-w-0">
                   <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                     {labels.eyebrow}
                   </div>
@@ -527,13 +533,13 @@ async function renderSupplierProfile(profile: SupplierProfile) {
 
       <section id="company-profile" className="scroll-mt-20 border-b border-border/80">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_340px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <div><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.about}</div><p className="mt-4 text-[15px] leading-7 text-muted-foreground">{description}</p></div>
             <div id="products-services" className="scroll-mt-20">
               <h2 className="text-xl font-semibold">{labels.productsServices}</h2>
               <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{productsServicesSummary}</p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-sm font-semibold">{labels.products}</h3>
                   <div className="mt-3 grid gap-2">
                     {structuredProducts.map((product) => (
@@ -564,14 +570,14 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                   </div>
                   {productNames.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {productNames.map((item) => <Badge key={item} variant="outline" className="px-3 py-1.5">{item}</Badge>)}
+                      {productNames.map((item) => <Badge key={item} variant="outline" className="h-auto max-w-full whitespace-normal break-words px-3 py-1.5 text-left leading-snug">{item}</Badge>)}
                     </div>
                   )}
                 </div>
-                <div><h3 className="text-sm font-semibold">{labels.processes}</h3><div className="mt-3 flex flex-wrap gap-2">{processes.map((item) => <Badge key={item} variant="secondary" className="px-3 py-1.5">{item}</Badge>)}</div></div>
+                <div className="min-w-0"><h3 className="text-sm font-semibold">{labels.processes}</h3><div className="mt-3 flex flex-wrap gap-2">{processes.map((item) => <Badge key={item} variant="secondary" className="h-auto max-w-full whitespace-normal break-words px-3 py-1.5 text-left leading-snug">{item}</Badge>)}</div></div>
               </div>
             </div>
-            <div><h2 className="text-xl font-semibold">{labels.certifications}</h2>{certifications.length > 0 ? <div className="mt-4 flex flex-wrap gap-2">{certifications.map((item) => <Badge key={item} variant="outline" className="border-amber-400 px-3 py-1.5 text-amber-700">{item}</Badge>)}</div> : <p className="mt-3 text-sm text-muted-foreground">{labels.noCerts}</p>}</div>
+            <div><h2 className="text-xl font-semibold">{labels.certifications}</h2>{certifications.length > 0 ? <div className="mt-4 flex flex-wrap gap-2">{certifications.map((item) => <Badge key={item} variant="outline" className="h-auto max-w-full whitespace-normal break-words border-amber-400 px-3 py-1.5 text-left leading-snug text-amber-700">{item}</Badge>)}</div> : <p className="mt-3 text-sm text-muted-foreground">{labels.noCerts}</p>}</div>
 
             <div id="ecatalog" className="scroll-mt-20">
               <h2 className="text-xl font-semibold">{labels.ecatalog}</h2>
@@ -606,7 +612,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             </div>
           </div>
 
-          <aside id="contact" className="h-fit scroll-mt-20 rounded-xl border border-border/70 bg-background p-6">
+          <aside id="contact" className="h-fit min-w-0 scroll-mt-20 rounded-xl border border-border/70 bg-background p-6">
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.contact}</div>
             <Link href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never} className={`${buttonVariants()} mt-5 w-full`}>
               {labels.contactSupplier} <ArrowRight size={15} />
