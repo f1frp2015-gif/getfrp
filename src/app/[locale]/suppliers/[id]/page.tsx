@@ -302,7 +302,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
     logo?.includes("zhongfu-shenying") ||
     logo?.includes("strongfibre") ||
     logo?.includes("aoc-logo-white") ||
-    logo?.includes("runsing-logo"),
+    logo?.includes("runsing-logo") ||
+    logo?.includes("tengjun-frp-logo"),
   );
   const structuredLogo = logo
     ? new URL(logo, CURRENT_SITE_URL).toString()
