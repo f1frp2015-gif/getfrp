@@ -7,6 +7,7 @@ import {
   JUSHI_SUPPLIER_PROFILE,
 } from "@/lib/data/jushi-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
+import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
@@ -44,6 +45,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: SINAUVA_SUPPLIER_PROFILE },
   { profile: RUNSING_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
+  { profile: MAXTONE_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: CROTTI_SUPPLIER_PROFILE },
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
