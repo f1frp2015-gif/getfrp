@@ -6,6 +6,7 @@ import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
+import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -30,6 +31,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "shanghai-crotti",
       "strongfibre",
       "nanjing-spare-composites",
+      "wells-advanced-materials",
     ]),
   );
   assert.match(
@@ -66,6 +68,12 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(spare?.logo, "/supplier-assets/spare-composites-logo.png");
   assert.match(spare?.products.join(" ") ?? "", /grating/i);
   assert.match(spare?.processList.join(" ") ?? "", /pultrusion/i);
+  const wellsWam = directory.find(
+    ({ id }) => id === WELLS_WAM_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(wellsWam?.slug, "wells-advanced-materials");
+  assert.equal(wellsWam?.logo, "/supplier-assets/wells-wam-logo.png");
+  assert.match(wellsWam?.description ?? "", /stock code 301555/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {

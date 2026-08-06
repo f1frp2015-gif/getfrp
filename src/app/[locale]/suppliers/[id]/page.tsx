@@ -233,6 +233,13 @@ function categoryLabel(category: string | null): string {
 function supplierSeoKeyword(
   supplier: typeof supplierListings.$inferSelect,
 ): string {
+  const primaryProduct = ((supplier.productsEn ?? []) as string[])[0]?.trim();
+  if (
+    supplier.category === "resin" &&
+    primaryProduct?.toLowerCase().includes("epoxy")
+  ) {
+    return "Epoxy Resin";
+  }
   const categoryKeywords: Record<string, string> = {
     fiber: "Composite Fiber",
     resin: "Polyurethane & Composite Resin",
@@ -245,7 +252,6 @@ function supplierSeoKeyword(
   if (supplier.category && categoryKeywords[supplier.category]) {
     return categoryKeywords[supplier.category];
   }
-  const primaryProduct = ((supplier.productsEn ?? []) as string[])[0]?.trim();
   if (!primaryProduct) return "FRP Products";
   return primaryProduct.length <= 48
     ? primaryProduct
