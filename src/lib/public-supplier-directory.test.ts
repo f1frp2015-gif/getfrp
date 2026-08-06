@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 
@@ -22,6 +23,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "zhongfu-shenying",
       "noah-composites",
       "jiangsu-jiuding-new-materials",
+      "jufa-new-material",
     ]),
   );
   assert.match(
@@ -34,6 +36,10 @@ test("adds every published Git-backed profile when the database is empty", async
       ?.slug,
     "noah-composites",
   );
+  const jufa = directory.find(({ id }) => id === JUFA_SUPPLIER_PROFILE.id);
+  assert.equal(jufa?.logo, "/supplier-assets/jufa-logo.png");
+  assert.match(jufa?.products.join(" ") ?? "", /pultrusion/i);
+  assert.match(jufa?.description ?? "", /polyurethane-modified resin/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {

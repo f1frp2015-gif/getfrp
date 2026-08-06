@@ -1,4 +1,5 @@
 import type { SupplierListing } from "@/lib/db/schema";
+import { JUFA_SUPPLIER_PROFILE } from "@/lib/data/jufa-supplier-profile";
 import {
   JUSHI_LEGACY_SLUG,
   JUSHI_SUPPLIER_PROFILE,
@@ -30,6 +31,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   },
   { profile: NOAH_COMPOSITES_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
+  { profile: JUFA_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
