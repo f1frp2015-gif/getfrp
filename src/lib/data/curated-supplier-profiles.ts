@@ -1,5 +1,6 @@
 import type { SupplierListing } from "@/lib/db/schema";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
+import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "@/lib/data/jufa-supplier-profile";
 import {
@@ -34,6 +35,7 @@ type CuratedSupplierProfileEntry = {
 // receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
   { profile: AOC_SUPPLIER_PROFILE },
+  { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
   { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
   { profile: TAISHAN_SUPPLIER_PROFILE },
