@@ -17,6 +17,7 @@ import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profil
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
+import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -52,6 +53,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "techstorm-advanced-material",
       "hebei-tengjun-frp",
       "sino-composite-structures",
+      "xiamen-lft-composite-plastic",
     ]),
   );
   assert.match(
@@ -167,6 +169,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(maxtone?.location, "Yangzhou, Jiangsu, China");
   assert.equal(maxtone?.logo, "/supplier-assets/maxtone-logo.png");
   assert.match(maxtone?.description ?? "", /since 1996/i);
+  const xiamenLft = directory.find(
+    ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(xiamenLft?.slug, "xiamen-lft-composite-plastic");
+  assert.equal(xiamenLft?.location, "Xiamen, Fujian, China");
+  assert.equal(xiamenLft?.logo, "/supplier-assets/xiamen-lft-logo.webp");
+  assert.match(
+    xiamenLft?.description ?? "",
+    /long-fiber reinforced thermoplastic/i,
+  );
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {

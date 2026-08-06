@@ -43,6 +43,7 @@ import {
   NOAH_COMPOSITES_LEGAL_NAME_EN,
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
+import { XIAMEN_LFT_SUPPLIER_ID } from "@/lib/data/xiamen-lft-supplier-profile";
 import {
   CROTTI_LEGAL_NAME_EN,
   CROTTI_SUPPLIER_ID,
@@ -238,6 +239,9 @@ function supplierSeoKeyword(
   supplier: typeof supplierListings.$inferSelect,
 ): string {
   if (supplier.id === AOC_SUPPLIER_ID) return "Composite Resin & Gelcoat";
+  if (supplier.id === XIAMEN_LFT_SUPPLIER_ID) {
+    return "Long Fiber Thermoplastic Compounds";
+  }
   const primaryProduct = ((supplier.productsEn ?? []) as string[])[0]?.trim();
   if (
     supplier.category === "resin" &&
