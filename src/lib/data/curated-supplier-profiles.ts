@@ -1,5 +1,6 @@
 import type { SupplierListing } from "@/lib/db/schema";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
+import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "@/lib/data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "@/lib/data/jufa-supplier-profile";
@@ -8,6 +9,7 @@ import {
   JUSHI_SUPPLIER_PROFILE,
 } from "@/lib/data/jushi-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
+import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
@@ -34,6 +36,7 @@ type CuratedSupplierProfileEntry = {
 // receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
   { profile: AOC_SUPPLIER_PROFILE },
+  { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
   { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
@@ -46,6 +49,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: SINAUVA_SUPPLIER_PROFILE },
   { profile: RUNSING_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
+  { profile: MAXTONE_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: CROTTI_SUPPLIER_PROFILE },
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },

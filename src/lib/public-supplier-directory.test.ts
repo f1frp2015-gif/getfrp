@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
+import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "./data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
@@ -29,6 +31,7 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set(directory.map(({ slug }) => slug)),
     new Set([
       "aoc",
+      "haining-anjie-composite-materials",
       "shanghai-horse-construction",
       "wanhua-chemical",
       "jushi",
@@ -37,6 +40,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "noah-composites",
       "shandong-runsing-composites",
       "jiangsu-jiuding-new-materials",
+      "yangzhou-maxtone-composite",
       "jufa-new-material",
       "shanghai-crotti",
       "strongfibre",
@@ -103,6 +107,13 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
   assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
   assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
+  const anjie = directory.find(
+    ({ id }) => id === ANJIE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(anjie?.slug, "haining-anjie-composite-materials");
+  assert.equal(anjie?.location, "Haining, Zhejiang, China");
+  assert.equal(anjie?.logo, "/supplier-assets/anjie-logo.jpg");
+  assert.match(anjie?.description ?? "", /NONGCHAOER Composite Materials/i);
   const horse = directory.find(
     ({ id }) => id === HORSE_CONSTRUCTION_SUPPLIER_PROFILE.id,
   );
@@ -140,6 +151,13 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/sino-composite-logo.png",
   );
   assert.match(sinoComposite?.description ?? "", /since 2002/i);
+  const maxtone = directory.find(
+    ({ id }) => id === MAXTONE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(maxtone?.slug, "yangzhou-maxtone-composite");
+  assert.equal(maxtone?.location, "Yangzhou, Jiangsu, China");
+  assert.equal(maxtone?.logo, "/supplier-assets/maxtone-logo.png");
+  assert.match(maxtone?.description ?? "", /since 1996/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
