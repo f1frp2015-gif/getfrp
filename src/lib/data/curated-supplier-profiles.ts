@@ -127,6 +127,11 @@ export function enrichSupplierWithCuratedProfile(
 
   return {
     ...databaseProfile,
+    // The Git-backed profile is the page content source, so its published
+    // state must also drive directory filtering and ranking. Otherwise an old
+    // database seed can have a live profile page but still rank as unpublished.
+    profilePublished:
+      databaseProfile.profilePublished || curatedProfile.profilePublished,
     location: curatedProfile.location,
     locationEn: curatedProfile.locationEn,
     province: curatedProfile.province,
