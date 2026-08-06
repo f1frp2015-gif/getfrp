@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
@@ -8,6 +9,7 @@ import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-suppl
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
+import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -22,6 +24,7 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.deepEqual(
     new Set(directory.map(({ slug }) => slug)),
     new Set([
+      "aoc",
       "wanhua-chemical",
       "jushi",
       "taishan-fiberglass",
@@ -34,6 +37,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "nanjing-spare-composites",
       "wells-advanced-materials",
       "sinauva-composites",
+      "techstorm-advanced-material",
     ]),
   );
   assert.match(
@@ -86,6 +90,15 @@ test("adds every published Git-backed profile when the database is empty", async
   );
   assert.match(sinauva?.products.join(" ") ?? "", /sandwich panels/i);
   assert.match(sinauva?.description ?? "", /associated factories/i);
+  const aoc = directory.find(({ id }) => id === AOC_SUPPLIER_PROFILE.id);
+  assert.equal(aoc?.slug, "aoc");
+  assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
+  assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
+  assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
+  assert.equal(
+    directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
+    "/supplier-assets/techstorm-logo.png",
+  );
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
