@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
@@ -21,6 +22,7 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.deepEqual(
     new Set(directory.map(({ slug }) => slug)),
     new Set([
+      "aoc",
       "wanhua-chemical",
       "jushi",
       "taishan-fiberglass",
@@ -74,6 +76,11 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(wellsWam?.slug, "wells-advanced-materials");
   assert.equal(wellsWam?.logo, "/supplier-assets/wells-wam-logo.png");
   assert.match(wellsWam?.description ?? "", /stock code 301555/i);
+  const aoc = directory.find(({ id }) => id === AOC_SUPPLIER_PROFILE.id);
+  assert.equal(aoc?.slug, "aoc");
+  assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
+  assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
+  assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
 });
 
 test("keeps one supplier and preserves database identity and trust state", async () => {
