@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
+import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "./data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
@@ -28,6 +29,7 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set(directory.map(({ slug }) => slug)),
     new Set([
       "aoc",
+      "shanghai-horse-construction",
       "wanhua-chemical",
       "jushi",
       "taishan-fiberglass",
@@ -101,6 +103,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
   assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
   assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
+  const horse = directory.find(
+    ({ id }) => id === HORSE_CONSTRUCTION_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(horse?.slug, "shanghai-horse-construction");
+  assert.equal(horse?.location, "Shanghai, China");
+  assert.equal(
+    horse?.logo,
+    "/supplier-assets/horse-construction-logo.png",
+  );
+  assert.match(horse?.description ?? "", /since 2006/i);
   assert.equal(
     directory.find(({ id }) => id === TECHSTORM_SUPPLIER_PROFILE.id)?.logo,
     "/supplier-assets/techstorm-logo.png",
