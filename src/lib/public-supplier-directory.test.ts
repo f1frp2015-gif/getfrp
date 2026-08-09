@@ -16,6 +16,7 @@ import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
+import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./data/nanjing-loyalty-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
@@ -69,6 +70,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "yangzhou-maxtone-composite",
       "changzhou-matex-composites",
       "nanjing-efg",
+      "nanjing-loyalty-composite-equipment",
       "jufa-new-material",
       "nanjing-keerda-mould",
       "shanghai-crotti",
@@ -291,6 +293,28 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/nanjing-efg-logo.png",
   );
   assert.match(nanjingEfg?.description ?? "", /incorporation year/i);
+  const nanjingLoyalty = directory.find(
+    ({ id }) => id === NANJING_LOYALTY_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    nanjingLoyalty?.slug,
+    "nanjing-loyalty-composite-equipment",
+  );
+  assert.equal(nanjingLoyalty?.location, "Nanjing, Jiangsu, China");
+  assert.equal(nanjingLoyalty?.category, "equipment");
+  assert.equal(
+    nanjingLoyalty?.logo,
+    "/supplier-assets/nanjing-loyalty-logo.jpg",
+  );
+  assert.match(nanjingLoyalty?.description ?? "", /established in 2000/i);
+  assert.match(
+    nanjingLoyalty?.products.join(" ") ?? "",
+    /composite conductor-core production lines/i,
+  );
+  assert.match(
+    NANJING_LOYALTY_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /past their printed validity dates/i,
+  );
   const xiamenLft = directory.find(
     ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
   );
