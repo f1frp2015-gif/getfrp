@@ -42,7 +42,8 @@ historical RFQ/payment logs and all non-supplier knowledge chunks.
    pnpm exec tsx scripts/migrate-getfrp-database.ts --apply
    ```
 
-6. Point only the Vercel Preview environment at the new database, deploy and
+6. Point only the Vercel Preview environment at the new database. Ensure
+   `GOOGLE_GENERATIVE_AI_API_KEY` is also available to Preview, then deploy and
    verify supplier directory, product/supplier relationships, authentication,
    sitemap output, RFQ submission and AI supplier retrieval.
 7. After Preview passes, update Production and redeploy from the merged `main`
