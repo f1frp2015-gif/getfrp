@@ -7,6 +7,10 @@ import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplie
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "@/lib/data/fanghua-supplier-profile";
 import {
+  F1_COMPOSITE_SUPPLIER_ID,
+  F1_COMPOSITE_SUPPLIER_PROFILE,
+} from "@/lib/data/f1-composite-supplier-profile";
+import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
 } from "@/lib/data/hongfu-tongxin-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "@/lib/data/horse-construction-supplier-profile";
@@ -57,6 +61,7 @@ type CuratedSupplierProfileEntry = {
 // the directory. Unclaimed database rows retain their identity/trust state but
 // receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
+  { profile: F1_COMPOSITE_SUPPLIER_PROFILE },
   { profile: AOC_SUPPLIER_PROFILE },
   { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
@@ -121,17 +126,20 @@ export function getCuratedSupplierSlugs(): string[] {
 export function enrichSupplierWithCuratedProfile(
   databaseProfile: SupplierListing,
 ): SupplierListing {
-  // Once a supplier has claimed and linked the profile, its database-managed
-  // content becomes authoritative. Curated content remains a fallback for
-  // public, unclaimed seed records.
-  if (databaseProfile.enterpriseId) return databaseProfile;
-
   const curatedProfile =
     getCuratedSupplierProfile(databaseProfile.id) ??
     (databaseProfile.slug
       ? getCuratedSupplierProfile(databaseProfile.slug)
       : null);
   if (!curatedProfile) return databaseProfile;
+
+  const isF1Composite = databaseProfile.id === F1_COMPOSITE_SUPPLIER_ID;
+
+  // Once a supplier has claimed and linked the profile, its database-managed
+  // content becomes authoritative. F1 Composite is the deliberate exception:
+  // its verified sponsored identity and public presentation are also reviewed
+  // in Git so a broken enterprise join cannot remove the logo or trust state.
+  if (databaseProfile.enterpriseId && !isF1Composite) return databaseProfile;
 
   return {
     ...databaseProfile,
@@ -166,5 +174,17 @@ export function enrichSupplierWithCuratedProfile(
     capabilities: curatedProfile.capabilities,
     standardsSupported: curatedProfile.standardsSupported,
     exportReady: curatedProfile.exportReady,
+    verified: isF1Composite
+      ? Boolean(databaseProfile.verified || curatedProfile.verified)
+      : databaseProfile.verified,
+    enterpriseId: isF1Composite
+      ? databaseProfile.enterpriseId ?? curatedProfile.enterpriseId
+      : databaseProfile.enterpriseId,
+    brandPriority: isF1Composite
+      ? Math.max(
+          databaseProfile.brandPriority ?? 0,
+          curatedProfile.brandPriority ?? 0,
+        )
+      : databaseProfile.brandPriority,
   };
 }

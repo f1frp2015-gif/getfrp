@@ -19,6 +19,11 @@ import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profil
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./data/nanjing-loyalty-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
+import {
+  F1_COMPOSITE_ENTERPRISE_ID,
+  F1_COMPOSITE_SUPPLIER_ID,
+  F1_COMPOSITE_SUPPLIER_PROFILE,
+} from "./data/f1-composite-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "./data/shengli-limited-supplier-profile";
@@ -51,6 +56,7 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.deepEqual(
     new Set(directory.map(({ slug }) => slug)),
     new Set([
+      "f1-composite",
       "aoc",
       "haining-anjie-composite-materials",
       "shenzhen-hongfu-tongxin",
@@ -91,6 +97,17 @@ test("adds every published Git-backed profile when the database is empty", async
       "taizhou-zhongsheng-glass-fiber-products",
     ]),
   );
+  const f1Composite = directory.find(
+    ({ id }) => id === F1_COMPOSITE_SUPPLIER_ID,
+  );
+  assert.equal(directory[0]?.id, F1_COMPOSITE_SUPPLIER_ID);
+  assert.equal(f1Composite?.verified, true);
+  assert.equal(f1Composite?.sponsored, true);
+  assert.equal(
+    f1Composite?.logo,
+    "/supplier-assets/f1-composite-logo.png",
+  );
+  assert.equal(f1Composite?.enterpriseId, F1_COMPOSITE_ENTERPRISE_ID);
   assert.match(
     directory.find(({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id)
       ?.description ?? "",
@@ -403,6 +420,40 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     CHONGQING_DUJIANG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /past their printed validity dates/i,
+  );
+});
+
+test("restores F1 Composite trust presentation from Git when the database row is degraded", async () => {
+  const { mergePublicSupplierDirectory } = await loadDirectory();
+  const directory = mergePublicSupplierDirectory(
+    [
+      {
+        supplier: {
+          ...F1_COMPOSITE_SUPPLIER_PROFILE,
+          verified: false,
+          profilePublished: false,
+          logo: null,
+          brandPriority: 0,
+        },
+        enterpriseLogo: "https://www.f1composite.com/brand/f1-logo.png",
+        enterpriseWebsite: "https://www.f1composite.com",
+        employeeCount: "10-50",
+        annualRevenue: null,
+      },
+    ],
+    "en",
+  );
+  const f1Composite = directory.find(
+    ({ id }) => id === F1_COMPOSITE_SUPPLIER_ID,
+  );
+
+  assert.equal(directory[0]?.id, F1_COMPOSITE_SUPPLIER_ID);
+  assert.equal(f1Composite?.verified, true);
+  assert.equal(f1Composite?.profilePublished, true);
+  assert.equal(f1Composite?.sponsored, true);
+  assert.equal(
+    f1Composite?.logo,
+    "/supplier-assets/f1-composite-logo.png",
   );
 });
 
