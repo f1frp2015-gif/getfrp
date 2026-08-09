@@ -5,6 +5,7 @@ import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
+import { FANGHUA_SUPPLIER_PROFILE } from "@/lib/data/fanghua-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
 } from "@/lib/data/hongfu-tongxin-supplier-profile";
@@ -78,6 +79,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: NANJING_EFG_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: CROTTI_SUPPLIER_PROFILE },
+  { profile: FANGHUA_SUPPLIER_PROFILE },
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
   { profile: SPARE_COMPOSITES_SUPPLIER_PROFILE },
   { profile: WELLS_WAM_SUPPLIER_PROFILE },
