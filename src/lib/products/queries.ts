@@ -13,6 +13,8 @@ import {
   getSupplierCategoryPage,
   supplierMatchesCategory,
 } from "@/lib/data/supplier-category-pages";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
+import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export type CatalogProduct = {
@@ -171,37 +173,40 @@ export async function loadSuppliersForProduct(
         desc(supplierListings.brandPriority),
         asc(supplierListings.nameEn),
       );
-    return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
-      id: supplier.id,
-      slug: supplierRouteSlug(supplier),
-      name: supplier.nameEn ?? supplier.name,
-      category: supplier.category ?? "",
-      location: supplier.locationEn ?? supplier.location ?? "China",
-      established: supplier.established ?? null,
-      description: supplier.descriptionEn ?? supplier.description ?? "",
-      products: (supplier.productsEn ?? supplier.products ?? []) as string[],
-      processList: (supplier.processListEn ?? supplier.processList ?? []) as string[],
-      certifications: (supplier.certificationsEn ?? supplier.certifications ?? []) as string[],
-      logo: supplier.logo ?? enterpriseLogo ?? null,
-      website: supplier.website ?? enterpriseWebsite ?? null,
-      verified: Boolean(supplier.verified),
-      profilePublished: Boolean(supplier.profilePublished),
-      enterpriseId: supplier.enterpriseId ?? null,
-      scaleTier: supplier.scaleTier,
-      employeeCount: employeeCount ?? null,
-      annualRevenue: annualRevenue ?? null,
-      capabilities: supplier.capabilities ?? [],
-      standardsSupported: supplier.standardsSupported ?? [],
-      moqKg: relation.moqUnit === "kg" ? relation.moq : supplier.moqKg,
-      exportReady: supplier.exportReady,
-      sponsored: supplier.id === "sup-yaoyi",
-      relationshipType: relation.relationshipType,
-      supplierProductName: relation.supplierProductName,
-      customAvailable: relation.customAvailable,
-      moq: relation.moq,
-      moqUnit: relation.moqUnit,
-      leadTimeDays: relation.leadTimeDays ?? supplier.leadTimeDays,
-    }));
+    return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
+      const displayedSupplier = enrichSupplierWithCuratedProfile(supplier);
+      return {
+        id: displayedSupplier.id,
+        slug: supplierRouteSlug(displayedSupplier),
+        name: displayedSupplier.nameEn ?? displayedSupplier.name,
+        category: displayedSupplier.category ?? "",
+        location: displayedSupplier.locationEn ?? displayedSupplier.location ?? "China",
+        established: displayedSupplier.established ?? null,
+        description: displayedSupplier.descriptionEn ?? displayedSupplier.description ?? "",
+        products: (displayedSupplier.productsEn ?? displayedSupplier.products ?? []) as string[],
+        processList: (displayedSupplier.processListEn ?? displayedSupplier.processList ?? []) as string[],
+        certifications: (displayedSupplier.certificationsEn ?? displayedSupplier.certifications ?? []) as string[],
+        logo: displayedSupplier.logo ?? enterpriseLogo ?? null,
+        website: displayedSupplier.website ?? enterpriseWebsite ?? null,
+        verified: Boolean(displayedSupplier.verified),
+        profilePublished: Boolean(displayedSupplier.profilePublished),
+        enterpriseId: displayedSupplier.enterpriseId ?? null,
+        scaleTier: displayedSupplier.scaleTier,
+        employeeCount: employeeCount ?? null,
+        annualRevenue: annualRevenue ?? null,
+        capabilities: displayedSupplier.capabilities ?? [],
+        standardsSupported: displayedSupplier.standardsSupported ?? [],
+        moqKg: relation.moqUnit === "kg" ? relation.moq : displayedSupplier.moqKg,
+        exportReady: displayedSupplier.exportReady,
+        sponsored: displayedSupplier.id === F1_COMPOSITE_SUPPLIER_ID,
+        relationshipType: relation.relationshipType,
+        supplierProductName: relation.supplierProductName,
+        customAvailable: relation.customAvailable,
+        moq: relation.moq,
+        moqUnit: relation.moqUnit,
+        leadTimeDays: relation.leadTimeDays ?? displayedSupplier.leadTimeDays,
+      };
+    });
   } catch {
     const page = getSupplierCategoryPage(product.slug);
     if (!page) return [];
@@ -218,40 +223,43 @@ export async function loadSuppliersForProduct(
         .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id));
       return rows
         .filter(({ supplier }) => supplierMatchesCategory(page, supplier))
-        .map(({ supplier, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => ({
-          id: supplier.id,
-          slug: supplierRouteSlug(supplier),
-          name: supplier.nameEn ?? supplier.name,
-          category: supplier.category ?? "",
-          location: supplier.locationEn ?? supplier.location ?? "China",
-          established: supplier.established ?? null,
-          description: supplier.descriptionEn ?? supplier.description ?? "",
-          products: (supplier.productsEn ?? supplier.products ?? []) as string[],
-          processList: (supplier.processListEn ?? supplier.processList ?? []) as string[],
-          certifications: (supplier.certificationsEn ?? supplier.certifications ?? []) as string[],
-          logo: supplier.logo ?? enterpriseLogo ?? null,
-          website: supplier.website ?? enterpriseWebsite ?? null,
-          verified: Boolean(supplier.verified),
-          profilePublished: Boolean(supplier.profilePublished),
-          enterpriseId: supplier.enterpriseId ?? null,
-          scaleTier: supplier.scaleTier,
-          employeeCount: employeeCount ?? null,
-          annualRevenue: annualRevenue ?? null,
-          capabilities: supplier.capabilities ?? [],
-          standardsSupported: supplier.standardsSupported ?? [],
-          moqKg: supplier.moqKg ?? null,
-          exportReady: supplier.exportReady,
-          sponsored: supplier.id === "sup-yaoyi",
-          relationshipType:
-            supplier.category === "resin" || supplier.category === "fiber"
-              ? "supplier"
-              : "manufacturer",
-          supplierProductName: product.shortName,
-          customAvailable: supplier.category === "manufacturer",
-          moq: supplier.moqKg,
-          moqUnit: supplier.moqKg == null ? null : "kg",
-          leadTimeDays: supplier.leadTimeDays,
-        }));
+        .map(({ supplier, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
+          const displayedSupplier = enrichSupplierWithCuratedProfile(supplier);
+          return {
+            id: displayedSupplier.id,
+            slug: supplierRouteSlug(displayedSupplier),
+            name: displayedSupplier.nameEn ?? displayedSupplier.name,
+            category: displayedSupplier.category ?? "",
+            location: displayedSupplier.locationEn ?? displayedSupplier.location ?? "China",
+            established: displayedSupplier.established ?? null,
+            description: displayedSupplier.descriptionEn ?? displayedSupplier.description ?? "",
+            products: (displayedSupplier.productsEn ?? displayedSupplier.products ?? []) as string[],
+            processList: (displayedSupplier.processListEn ?? displayedSupplier.processList ?? []) as string[],
+            certifications: (displayedSupplier.certificationsEn ?? displayedSupplier.certifications ?? []) as string[],
+            logo: displayedSupplier.logo ?? enterpriseLogo ?? null,
+            website: displayedSupplier.website ?? enterpriseWebsite ?? null,
+            verified: Boolean(displayedSupplier.verified),
+            profilePublished: Boolean(displayedSupplier.profilePublished),
+            enterpriseId: displayedSupplier.enterpriseId ?? null,
+            scaleTier: displayedSupplier.scaleTier,
+            employeeCount: employeeCount ?? null,
+            annualRevenue: annualRevenue ?? null,
+            capabilities: displayedSupplier.capabilities ?? [],
+            standardsSupported: displayedSupplier.standardsSupported ?? [],
+            moqKg: displayedSupplier.moqKg ?? null,
+            exportReady: displayedSupplier.exportReady,
+            sponsored: displayedSupplier.id === F1_COMPOSITE_SUPPLIER_ID,
+            relationshipType:
+              displayedSupplier.category === "resin" || displayedSupplier.category === "fiber"
+                ? "supplier"
+                : "manufacturer",
+            supplierProductName: product.shortName,
+            customAvailable: displayedSupplier.category === "manufacturer",
+            moq: displayedSupplier.moqKg,
+            moqUnit: displayedSupplier.moqKg == null ? null : "kg",
+            leadTimeDays: displayedSupplier.leadTimeDays,
+          };
+        });
     } catch {
       return [];
     }

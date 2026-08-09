@@ -44,6 +44,11 @@ import {
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
 import {
+  F1_COMPOSITE_ENTERPRISE_ID,
+  F1_COMPOSITE_LEGAL_NAME_EN,
+  F1_COMPOSITE_SUPPLIER_ID,
+} from "@/lib/data/f1-composite-supplier-profile";
+import {
   CROTTI_LEGAL_NAME_EN,
   CROTTI_SUPPLIER_ID,
 } from "@/lib/data/crotti-supplier-profile";
@@ -146,7 +151,7 @@ type JoinedNetworkRow = {
   annualRevenue: string | null;
 };
 
-const PINNED_SUPPLIER_ID = "sup-yaoyi";
+const PINNED_SUPPLIER_ID = F1_COMPOSITE_SUPPLIER_ID;
 const DIRECTORY_CATEGORIES = supplierCategories.map((category) => ({
   id: category.id,
   name: category.nameEn,
@@ -241,13 +246,18 @@ function categoryLabel(category: string | null): string {
 async function renderSupplierProfile(profile: SupplierProfile) {
   const { supplier, enterprise } = profile;
   const seoBrief = buildSupplierSeoBrief(supplier);
-  const isVerified = Boolean(supplier.verified && enterprise);
-  const isSponsored = supplier.id === "sup-yaoyi";
-  const isClaimed = Boolean(enterprise);
+  const isSponsored = supplier.id === F1_COMPOSITE_SUPPLIER_ID;
+  const hasGitBackedF1Identity = Boolean(
+    isSponsored && supplier.enterpriseId === F1_COMPOSITE_ENTERPRISE_ID,
+  );
+  const isVerified = Boolean(
+    supplier.verified && (enterprise || hasGitBackedF1Identity),
+  );
+  const isClaimed = Boolean(enterprise || hasGitBackedF1Identity);
   const isShengliLimited = supplier.id === SHENGLI_LIMITED_SUPPLIER_ID;
   const name = supplier.nameEn ?? "Supplier";
-  const legalName = supplier.id === "sup-yaoyi"
-    ? "Chongqing Yaoyi New Material Technology Co., Ltd."
+  const legalName = supplier.id === F1_COMPOSITE_SUPPLIER_ID
+    ? F1_COMPOSITE_LEGAL_NAME_EN
     : supplier.id === AOC_SUPPLIER_ID
       ? AOC_LEGAL_NAME_EN
       : supplier.id === NOAH_COMPOSITES_SUPPLIER_ID

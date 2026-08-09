@@ -10,10 +10,11 @@ import {
   CURATED_SUPPLIER_PROFILES,
   enrichSupplierWithCuratedProfile,
 } from "@/lib/data/curated-supplier-profiles";
+import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
-const PINNED_SUPPLIER_ID = "sup-yaoyi";
+const PINNED_SUPPLIER_ID = F1_COMPOSITE_SUPPLIER_ID;
 const SCALE_RANK: Record<string, number> = { XL: 4, L: 3, M: 2, S: 1 };
 
 type PublicSupplierRow = {
