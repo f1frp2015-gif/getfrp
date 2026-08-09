@@ -441,14 +441,14 @@ async function renderSupplierProfile(profile: SupplierProfile) {
           </nav>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_340px]">
-            <div>
-              <div className="flex items-start gap-5">
+            <div className="min-w-0">
+              <div className="flex flex-col items-start gap-5 sm:flex-row">
                 {logo ? (
                   // Supplier logos have very different source aspect ratios.
                   // Use a generous, centered box and preserve each source's
                   // intrinsic ratio so wide wordmarks remain legible without
                   // stretching or cropping.
-                  <div className={`flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 p-3 sm:h-28 sm:w-64 sm:p-4 ${logoNeedsDarkBackground ? "bg-[#1b2430]" : "bg-white"}`}>
+                  <div className={`flex h-24 w-full shrink-0 items-center justify-center rounded-xl border border-border/70 p-3 sm:h-28 sm:w-64 sm:p-4 ${logoNeedsDarkBackground ? "bg-[#1b2430]" : "bg-white"}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={logo}
@@ -457,7 +457,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                     />
                   </div>
                 ) : (
-                  <div className="flex h-24 w-48 shrink-0 items-center justify-center rounded-xl border border-border/70 bg-muted text-2xl font-semibold sm:h-28 sm:w-64">
+                  <div className="flex h-24 w-full shrink-0 items-center justify-center rounded-xl border border-border/70 bg-muted text-2xl font-semibold sm:h-28 sm:w-64">
                     {name.slice(0, 2).toUpperCase()}
                   </div>
                 )}
