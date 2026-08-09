@@ -30,6 +30,7 @@ import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
 import { TANGSHAN_RUNFENG_SUPPLIER_PROFILE } from "@/lib/data/tangshan-runfeng-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "@/lib/data/techstorm-supplier-profile";
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "@/lib/data/tengjun-frp-supplier-profile";
+import { TLB_SUPPLIER_PROFILE } from "@/lib/data/tlb-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "@/lib/data/tuotian-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
@@ -84,6 +85,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: TANGSHAN_RUNFENG_SUPPLIER_PROFILE },
   { profile: TECHSTORM_SUPPLIER_PROFILE },
   { profile: TENGJUN_FRP_SUPPLIER_PROFILE },
+  { profile: TLB_SUPPLIER_PROFILE },
   { profile: TUOTIAN_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },

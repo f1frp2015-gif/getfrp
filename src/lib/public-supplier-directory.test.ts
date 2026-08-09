@@ -26,6 +26,7 @@ import { TENGJUN_FRP_SUPPLIER_PROFILE } from "./data/tengjun-frp-supplier-profil
 import { WELLS_WAM_SUPPLIER_PROFILE } from "./data/wells-wam-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "./data/sinauva-composites-supplier-profile";
 import { TECHSTORM_SUPPLIER_PROFILE } from "./data/techstorm-supplier-profile";
+import { TLB_SUPPLIER_PROFILE } from "./data/tlb-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "./data/tuotian-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "./data/yuto-new-material-supplier-profile";
@@ -75,6 +76,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "tangshan-runfeng-composite-materials",
       "techstorm-advanced-material",
       "hebei-tengjun-frp",
+      "jiangsu-tianlong-basalt-fiber",
       "lianyungang-tuotian-aviation-equipment",
       "sino-composite-structures",
       "xiamen-lft-composite-plastic",
@@ -220,6 +222,14 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(tengjun?.location, "Zaoqiang, Hengshui, Hebei, China");
   assert.equal(tengjun?.logo, "/supplier-assets/tengjun-frp-logo.png");
   assert.match(tengjun?.description ?? "", /more than 60 countries/i);
+  const tlb = directory.find(({ id }) => id === TLB_SUPPLIER_PROFILE.id);
+  assert.equal(tlb?.slug, "jiangsu-tianlong-basalt-fiber");
+  assert.equal(tlb?.location, "Yizheng, Yangzhou, Jiangsu, China");
+  assert.equal(tlb?.category, "fiber");
+  assert.equal(tlb?.verified, false);
+  assert.equal(tlb?.logo, "/supplier-assets/tlb-logo.png");
+  assert.match(tlb?.products.join(" ") ?? "", /basalt fiber/i);
+  assert.match(tlb?.description ?? "", /established in Yizheng/i);
   const sinoComposite = directory.find(
     ({ id }) => id === SINO_COMPOSITE_SUPPLIER_PROFILE.id,
   );
