@@ -16,6 +16,7 @@ import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
+import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "./data/shengli-limited-supplier-profile";
@@ -68,6 +69,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "nanjing-efg",
       "jufa-new-material",
       "shanghai-crotti",
+      "yuyao-fanghua-mould",
       "strongfibre",
       "nanjing-spare-composites",
       "wells-advanced-materials",
@@ -103,6 +105,17 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(crotti?.logo, "/supplier-assets/crotti-logo.png");
   assert.match(crotti?.products.join(" ") ?? "", /TICO 55, 65, 72/);
   assert.match(crotti?.processList.join(" ") ?? "", /pultrusion/i);
+  const fanghua = directory.find(
+    ({ id }) => id === FANGHUA_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(fanghua?.name, "Fanghua Mould");
+  assert.equal(fanghua?.slug, "yuyao-fanghua-mould");
+  assert.equal(fanghua?.verified, false);
+  assert.equal(fanghua?.category, "mold");
+  assert.equal(fanghua?.location, "Yuyao, Ningbo, Zhejiang, China");
+  assert.equal(fanghua?.logo, "/supplier-assets/fanghua-logo.png");
+  assert.match(fanghua?.products.join(" ") ?? "", /pultrusion molds/i);
+  assert.match(fanghua?.processList.join(" ") ?? "", /cavity machining/i);
   const strongfibre = directory.find(
     ({ id }) => id === STRONGFIBRE_SUPPLIER_PROFILE.id,
   );
