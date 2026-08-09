@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   ArrowRight,
@@ -27,18 +26,6 @@ import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const revalidate = 3600;
-
-const SEARCH_FILTER_KEYS = [
-  "q",
-  "category",
-  "region",
-  "certification",
-  "profile",
-  "capability",
-  "readiness",
-  "sort",
-  "page",
-] as const;
 
 const POPULAR_SEARCHES = [
   {
@@ -107,30 +94,14 @@ export async function generateMetadata({
 
 export default async function SuppliersPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [{ locale }, sp] = await Promise.all([params, searchParams]);
+  const { locale } = await params;
   setRequestLocale(locale);
 
-  const firstParam = (value: string | string[] | undefined) =>
-    Array.isArray(value) ? value[0] ?? "" : value ?? "";
   const supplierSearchBasePath =
     locale === "en" ? "/suppliers/search" : `/${locale}/suppliers/search`;
-  const forwardedFilters = new URLSearchParams();
-  SEARCH_FILTER_KEYS.forEach((key) => {
-    const value = firstParam(sp[key]).slice(0, 200);
-    if (value) forwardedFilters.set(key, value);
-  });
-  if (firstParam(sp.verified) === "1") {
-    forwardedFilters.set("profile", "verified");
-  }
-  if (forwardedFilters.size > 0) {
-    redirect(`${supplierSearchBasePath}?${forwardedFilters.toString()}`);
-  }
-
   const suppliers = await getPublicSupplierDirectory(locale);
   const verifiedCount = suppliers.filter((supplier) => supplier.verified).length;
   const regionCount = new Set(

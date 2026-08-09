@@ -8,6 +8,7 @@ import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 import { sourcingTopics } from "@/lib/data/sourcing-topics";
 import { SUPPLIER_REGION_PAGES } from "@/lib/data/supplier-region-pages";
 import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
+import { PROCESS_PAGES } from "@/lib/data/process-pages";
 import {
   CORE_SITEMAP_ROUTES,
   DATA_SITEMAP_ROUTES,
@@ -27,6 +28,8 @@ const CORE_LABELS: Record<string, string> = {
   "/": "Home",
   "/products": "FRP product specifications",
   "/suppliers": "China supplier directory",
+  "/services/frp-engineering-qa": "FRP engineering & QA services",
+  "/methodology": "Research and supplier verification methodology",
   "/ai": "Composite sourcing AI",
   "/about": "About GetFRP",
   "/source-from-china": "China sourcing process",
@@ -180,6 +183,17 @@ export default async function HtmlSitemapPage({
               href: `/${page.group}/${page.slug}`,
               label: page.shortTitle,
               note: page.group,
+            }))}
+          />
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold">FRP manufacturing processes</h2>
+          <LinkGrid
+            links={PROCESS_PAGES.map((process) => ({
+              href: `/processes/${process.slug}`,
+              label: process.name,
+              note: "Process controls, failure modes and supplier evidence",
             }))}
           />
         </section>

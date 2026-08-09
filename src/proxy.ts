@@ -6,7 +6,19 @@ import { SESSION_COOKIE, verifySession } from "@/lib/auth/session";
 
 const handleIntlRouting = createIntlMiddleware(routing);
 
-const REMOVED_PUBLIC_SECTIONS = ["/papers", "/standards"] as const;
+const REMOVED_PUBLIC_SECTIONS = [
+  "/articles",
+  "/community",
+  "/formulas",
+  "/hp-rtm",
+  "/materials",
+  "/news",
+  "/papers",
+  "/patents",
+  "/platform",
+  "/standards",
+  "/trade",
+] as const;
 
 function strippedPath(pathname: string): string {
   return pathname.replace(/^\/en(?=\/|$)/, "") || "/";

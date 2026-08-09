@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   description:
     "Claim an existing China FRP supplier profile, submit company information and upload verification documents for GetFRP review.",
   alternates: alternates("/suppliers/claim"),
+  robots: { index: false, follow: true },
 };
 
 function firstParam(value: string | string[] | undefined): string {

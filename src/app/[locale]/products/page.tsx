@@ -27,33 +27,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ProductsPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const { locale } = await params;
   setRequestLocale(locale);
-  const rawQuery = Array.isArray(query.q) ? query.q[0] : query.q;
-  const search = (rawQuery ?? "").trim().toLowerCase().slice(0, 120);
   const products = await loadPublishedProducts();
-  const filtered = search
-    ? products.filter((product) =>
-        [
-          product.nameEn,
-          product.category,
-          product.summary,
-          ...product.materials,
-          ...product.manufacturingProcesses,
-          ...product.applications,
-          ...product.standards,
-          ...product.searchTerms,
-        ]
-          .join(" ")
-          .toLowerCase()
-          .includes(search),
-      )
-    : products;
   const supplierRelationships = products.reduce(
     (total, product) => total + product.supplierCount,
     0,
@@ -78,14 +57,10 @@ export default async function ProductsPage({
               "@type": "ListItem",
               position: index + 1,
               item: {
-                "@type": "Product",
-                "@id": `${pageUrl}/${product.slug}#product`,
+                "@type": "DefinedTerm",
+                "@id": `${pageUrl}/${product.slug}#product-family`,
                 name: product.nameEn,
                 description: product.summary,
-                category: product.category,
-                image: product.imageUrl
-                  ? `${CURRENT_SITE_URL}${product.imageUrl}`
-                  : undefined,
                 url: `${pageUrl}/${product.slug}`,
               },
             })),
@@ -135,15 +110,14 @@ export default async function ProductsPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-        <form action="/products" method="get" className="flex max-w-2xl flex-col gap-2 sm:flex-row">
+        <form action="/suppliers/search" method="get" className="flex max-w-2xl flex-col gap-2 sm:flex-row">
           <label className="flex min-h-12 flex-1 items-center gap-3 rounded-lg border border-border bg-background px-4 focus-within:border-[#19c3c8]">
             <Search size={18} className="text-muted-foreground" />
             <span className="sr-only">Search products</span>
             <input
               type="search"
               name="q"
-              defaultValue={rawQuery ?? ""}
-              placeholder="Search FRP products or specifications"
+              placeholder="Search suppliers by product, process or specification"
               className="min-w-0 flex-1 bg-transparent text-sm outline-none"
             />
           </label>
@@ -151,7 +125,7 @@ export default async function ProductsPage({
             type="submit"
             className="min-h-12 rounded-lg bg-[#123f8c] px-5 text-sm font-semibold text-white hover:bg-[#0a1f44]"
           >
-            Search
+            Search suppliers
           </button>
         </form>
 
@@ -161,19 +135,14 @@ export default async function ProductsPage({
               Product catalog
             </div>
             <h2 className="mt-2 text-2xl font-semibold">
-              {search ? `${filtered.length} matching products` : "Browse all product families"}
+              Browse all product families
             </h2>
           </div>
-          {search && (
-            <Link href="/products" className="text-sm font-medium text-[#123f8c] hover:underline">
-              Clear search
-            </Link>
-          )}
         </div>
 
-        {filtered.length > 0 ? (
+        {products.length > 0 ? (
           <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((product) => (
+            {products.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product.slug}` as never}
@@ -219,9 +188,9 @@ export default async function ProductsPage({
           </div>
         ) : (
           <div className="mt-7 rounded-xl border border-dashed border-border p-12 text-center">
-            <h3 className="font-semibold">No product family matches this search.</h3>
+            <h3 className="font-semibold">No product families are currently published.</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Try a material, process, standard or application term.
+              Use supplier search or submit an RFQ while the catalog is updated.
             </p>
           </div>
         )}

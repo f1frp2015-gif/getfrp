@@ -31,6 +31,9 @@ export async function generateMetadata({
     description:
       "Book a 15-minute call with the getfrp sourcing desk to walk through your FRP sourcing-from-China project. US / EU / APAC windows available, no obligation.",
     alternates: alternates("/book"),
+    robots: CAL_EMBED_URL
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
   };
 }
 

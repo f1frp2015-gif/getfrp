@@ -40,14 +40,10 @@ const nextConfig: NextConfig = {
         destination: "/en/products",
         statusCode: 301,
       },
-      { source: "/materials/:path*", destination: "/products", statusCode: 301 },
-      { source: "/en/materials/:path*", destination: "/en/products", statusCode: 301 },
-      { source: "/patents/:path*", destination: "/products", statusCode: 301 },
-      { source: "/en/patents/:path*", destination: "/en/products", statusCode: 301 },
-      { source: "/articles/:path*", destination: "/products", statusCode: 301 },
-      { source: "/en/articles/:path*", destination: "/en/products", statusCode: 301 },
-      { source: "/formulas/:path*", destination: "/products", statusCode: 301 },
-      { source: "/en/formulas/:path*", destination: "/en/products", statusCode: 301 },
+      { source: "/fibers/:path*", destination: "/products/fiber-glass", statusCode: 301 },
+      { source: "/en/fibers/:path*", destination: "/en/products/fiber-glass", statusCode: 301 },
+      { source: "/pultrusion", destination: "/processes/pultrusion", statusCode: 301 },
+      { source: "/en/pultrusion", destination: "/en/processes/pultrusion", statusCode: 301 },
       ...legacyProductSlugs.flatMap((slug) => [
         {
           source: `/suppliers/${slug}`,

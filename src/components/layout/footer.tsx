@@ -37,6 +37,9 @@ export function Footer() {
             <Link href="/source-from-china" className="transition-colors hover:text-[#19c3c8]">
               How to source
             </Link>
+            <Link href="/services/frp-engineering-qa" className="transition-colors hover:text-[#19c3c8]">
+              Engineering &amp; QA
+            </Link>
             <Link href="/guides" className="transition-colors hover:text-[#19c3c8]">
               Guides
             </Link>
@@ -59,6 +62,7 @@ export function Footer() {
             <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
             <Link href="/sitemap" className="hover:text-foreground">Sitemap</Link>
+            <Link href="/methodology" className="hover:text-foreground">Methodology</Link>
             <Link href="/image-credits" className="hover:text-foreground">
               {t("imageCredits")}
             </Link>

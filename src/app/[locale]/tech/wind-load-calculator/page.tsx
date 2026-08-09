@@ -14,6 +14,7 @@ export async function generateMetadata({
     title: t("windLoad.metaTitle"),
     description: t("windLoad.metaDescription"),
     alternates: alternates("/tech/wind-load-calculator"),
+    robots: { index: false, follow: true },
   };
 }
 

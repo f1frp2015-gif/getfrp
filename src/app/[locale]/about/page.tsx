@@ -17,7 +17,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TeamBlock } from "@/components/team-block";
 import { CONTACT } from "@/lib/contact";
 import { alternates } from "@/lib/seo";
 
@@ -51,7 +50,6 @@ export default async function AboutPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       {locale === "en" && <EnglishTrustBlock />}
-      {locale === "en" && <TeamBlock className="mb-12" />}
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold">{t("h1")}</h1>
         <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
@@ -184,9 +182,9 @@ function EnglishTrustBlock() {
         <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-muted-foreground">
           getfrp is operated by the getfrp team. It is not operated by or
           affiliated with Chongqing Yaoyi Advanced Materials Technology Co.,
-          Ltd. We maintain the supplier, material and standards workspace,
-          help buyers structure RFQs, and identify the actual commercial
-          counterparty for each matched project before any order is placed.
+          Ltd. We maintain the public supplier and product workspace, help
+          buyers structure RFQs, and identify the commercial counterparty for
+          each matched project before any order is placed.
         </p>
       </div>
 
@@ -244,11 +242,14 @@ function EnglishTrustBlock() {
               HOW WE VERIFY SUPPLIERS
             </div>
             <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
-              <li>· Business license &amp; USCC cross-checked against PRC registry</li>
-              <li>· Production scale tier (Major / Large / Mid / Small) field-validated</li>
-              <li>· Certifications (ISO 9001, CE, FDA, …) original copies on file</li>
-              <li>· Plant visit photos / video — available before PO</li>
+              <li>· Public profiles distinguish directory records from reviewed sources</li>
+              <li>· Company claims are attributed to official sites or catalogs</li>
+              <li>· Certificate scope and product evidence are rechecked per RFQ</li>
+              <li>· Open deviations remain visible until the buyer accepts or closes them</li>
             </ul>
+            <Link href="/methodology" className="mt-3 inline-block text-xs font-medium underline underline-offset-4">
+              Read the full publication and verification method
+            </Link>
           </div>
         </div>
       </div>
