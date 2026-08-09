@@ -4,6 +4,7 @@ import {
   BadgeCheck,
   BookOpenCheck,
   Boxes,
+  ChevronDown,
   ClipboardCheck,
   Factory,
   FileSearch,
@@ -824,25 +825,6 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d9dfe8] bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#123f8c]">
-            <FileSearch size={15} /> FRP SOURCING FAQ
-          </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
-            Questions overseas FRP buyers ask first.
-          </h2>
-          <div className="mt-8 grid gap-x-10 border-y border-[#d9dfe8] md:grid-cols-2">
-            {HOME_FAQS.map((faq) => (
-              <article key={faq.question} className="border-b border-[#d9dfe8] py-6 md:[&:nth-last-child(-n+2)]:border-b-0">
-                <h3 className="font-semibold leading-6 text-[#0a1f44]">{faq.question}</h3>
-                <p className="mt-2 text-[13px] leading-7 text-[#5d6672]">{faq.answer}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[#f4f6f9]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -870,6 +852,37 @@ export async function HomePageEnglish() {
                 <p className="mt-3 text-[12px] leading-6 text-[#5d6672]">{item.description}</p>
                 <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#123f8c]">Read insight <ArrowUpRight size={12} className="ml-1 inline" /></div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9dfe8] bg-white">
+        <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20">
+          <div className="flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#123f8c]">
+            <FileSearch size={15} /> FRP SOURCING FAQ
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
+            Questions overseas FRP buyers ask first.
+          </h2>
+          <div className="mt-8 grid gap-x-10 border-y border-[#d9dfe8] md:grid-cols-2">
+            {HOME_FAQS.map((faq) => (
+              <details
+                key={faq.question}
+                className="group border-b border-[#d9dfe8] last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+              >
+                <summary className="flex min-h-20 cursor-pointer items-center justify-between gap-4 rounded-sm py-5 font-semibold leading-6 text-[#0a1f44] outline-none focus-visible:ring-2 focus-visible:ring-[#123f8c] focus-visible:ring-offset-2">
+                  <span>{faq.question}</span>
+                  <ChevronDown
+                    size={16}
+                    aria-hidden="true"
+                    className="shrink-0 text-[#5d6672] transition-transform duration-200 group-open:rotate-180"
+                  />
+                </summary>
+                <p className="pb-5 pr-8 text-[13px] leading-7 text-[#5d6672]">
+                  {faq.answer}
+                </p>
+              </details>
             ))}
           </div>
         </div>
