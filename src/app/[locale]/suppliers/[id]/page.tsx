@@ -461,7 +461,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                     {name.slice(0, 2).toUpperCase()}
                   </div>
                 )}
-                <div className="min-w-0">
+                <div className="min-w-0 sm:flex-1">
                   <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                     {labels.eyebrow}
                   </div>
