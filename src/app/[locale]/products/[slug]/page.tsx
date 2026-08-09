@@ -101,27 +101,21 @@ export default async function ProductDetailPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Product",
-          "@id": `${pageUrl}#product`,
+          "@type": "WebPage",
+          "@id": `${pageUrl}#webpage`,
           url: pageUrl,
           name: product.nameEn,
           description: product.summary,
-          category: product.category,
-          image: product.imageUrl ? `${CURRENT_SITE_URL}${product.imageUrl}` : undefined,
-          material: product.materials,
-          additionalProperty: [
-            ...product.manufacturingProcesses.map((value) => ({
-              "@type": "PropertyValue",
-              name: "Manufacturing process",
-              value,
-            })),
-            ...product.standards.map((value) => ({
-              "@type": "PropertyValue",
-              name: "Relevant standard",
-              value,
-            })),
-          ],
-          manufacturer: suppliers.map((supplier) => ({
+          inLanguage: "en",
+          dateModified: "2026-08-09",
+          mainEntity: {
+            "@type": "DefinedTerm",
+            "@id": `${pageUrl}#product-family`,
+            name: product.nameEn,
+            description: product.summary,
+            inDefinedTermSet: `${CURRENT_SITE_URL}/products`,
+          },
+          mentions: suppliers.map((supplier) => ({
             "@type": "Organization",
             "@id": `${CURRENT_SITE_URL}/suppliers/${supplier.slug}#organization`,
             name: supplier.name,
@@ -199,6 +193,48 @@ export default async function ProductDetailPage({
               </div>
             )}
           </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border/80 bg-[#f4f6f9]">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_360px]">
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
+              Evidence and review method
+            </div>
+            <h2 className="mt-2 text-2xl font-semibold">
+              A product-family brief, not a purchasable SKU
+            </h2>
+            <p className="mt-4 max-w-3xl text-[14px] leading-7 text-muted-foreground">
+              GetFRP separates generally used engineering ranges from a
+              supplier&apos;s commercial offer. Standards, properties and buying
+              checks on this page define the questions for an RFQ; the linked
+              company profiles identify the published source and the supplier-
+              product relationship records the offer-specific evidence.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium text-[#123f8c]">
+              <Link href="/methodology" className="underline underline-offset-4">
+                Read the research methodology
+              </Link>
+              <Link href="/services/frp-engineering-qa" className="underline underline-offset-4">
+                Engineering &amp; QA service scope
+              </Link>
+            </div>
+          </div>
+          <dl className="rounded-xl border border-border/70 bg-white p-6 text-sm">
+            <div className="flex justify-between gap-5 border-b border-border/70 pb-3">
+              <dt className="text-muted-foreground">Last editorial review</dt>
+              <dd className="font-medium">9 August 2026</dd>
+            </div>
+            <div className="flex justify-between gap-5 border-b border-border/70 py-3">
+              <dt className="text-muted-foreground">Supplier records linked</dt>
+              <dd className="font-medium">{suppliers.length}</dd>
+            </div>
+            <div className="flex justify-between gap-5 pt-3">
+              <dt className="text-muted-foreground">Evidence status</dt>
+              <dd className="text-right font-medium">Rechecked per RFQ</dd>
+            </div>
+          </dl>
         </div>
       </section>
 

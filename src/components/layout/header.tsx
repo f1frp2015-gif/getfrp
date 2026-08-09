@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, PackageSearch, PanelsTopLeft, ScrollText, ShieldCheck } from "lucide-react";
+import { ChevronDown, ClipboardCheck, PackageSearch, PanelsTopLeft, ScrollText, ShieldCheck } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -28,6 +28,12 @@ const navigationGroups = [
         label: "Product catalogs",
         description: "Browse FRP products, materials and processes.",
         icon: PanelsTopLeft,
+      },
+      {
+        href: "/services/frp-engineering-qa",
+        label: "Engineering & QA",
+        description: "Control specifications, suppliers and inspection evidence.",
+        icon: ClipboardCheck,
       },
     ],
   },

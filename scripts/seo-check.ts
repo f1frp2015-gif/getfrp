@@ -211,24 +211,29 @@ function checkStandaloneGetfrpSeo(): Violation[] {
   }
   if (
     !supplierSitemap.includes("supplierListings.slug") ||
-    supplierSitemap.includes("eq(supplierListings.profilePublished, true)")
+    !supplierSitemap.includes("isSupplierProfileIndexable")
   ) {
     out.push({
       page: "/sitemaps/suppliers.xml",
       field: "supplier-coverage",
       severity: "error",
-      message: "supplier sitemap must include every English supplier slug",
+      message: "supplier sitemap must apply the shared evidence-based index quality gate",
     });
   }
+  const supplierDirectoryRoute = readFileSync(
+    resolve("src/app/[locale]/suppliers/directory/[page]/page.tsx"),
+    "utf8",
+  );
   if (
-    !supplierSitemap.includes("supplierDirectoryPageCount") ||
-    !supplierSitemap.includes("supplierDirectoryPath")
+    !supplierSitemap.includes("supplierDirectoryPath(1)") ||
+    !supplierDirectoryRoute.includes("page === 1") ||
+    !supplierDirectoryRoute.includes("index: false, follow: true")
   ) {
     out.push({
       page: "/sitemaps/suppliers.xml",
       field: "directory-pages",
       severity: "error",
-      message: "supplier sitemap must include the crawlable directory pagination",
+      message: "supplier sitemap must include only directory page 1; later pagination must be noindex,follow",
     });
   }
 
@@ -280,15 +285,15 @@ function checkStandaloneGetfrpSeo(): Violation[] {
 
 function checkIndexCleanup(): Violation[] {
   const out: Violation[] = [];
-  const redirectedRoutes = [
+  const goneRoutes = [
     "materials",
     "formulas",
     "patents",
     "articles",
+    "papers",
+    "standards",
   ] as const;
-  const goneRoutes = ["papers", "standards"] as const;
   const sitemapSource = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
-  const redirectsSource = readFileSync(resolve("next.config.ts"), "utf8");
   const termsSource = readFileSync(
     resolve("src/app/[locale]/terms/page.tsx"),
     "utf8",
@@ -305,47 +310,6 @@ function checkIndexCleanup(): Violation[] {
       severity: "error",
       message: "Terms must remain noindex for both generic crawlers and Googlebot",
     });
-  }
-
-  for (const route of redirectedRoutes) {
-    const publicPage = resolve(`src/app/[locale]/${route}/page.tsx`);
-    if (existsSync(publicPage)) {
-      out.push({
-        page: `/${route}`,
-        field: "public-route",
-        severity: "error",
-        message: "removed corpus routes must not have a public page",
-      });
-    }
-
-    if (sitemapSource.includes(`\"/${route}`)) {
-      out.push({
-        page: `/${route}`,
-        field: "sitemap",
-        severity: "error",
-        message: "removed corpus routes must not appear in sitemap sources",
-      });
-    }
-    if (
-      sitemapSource.includes(`| \"${route}\"`) ||
-      sitemapSource.includes(`    \"${route}\",`)
-    ) {
-      out.push({
-        page: `/${route}`,
-        field: "sitemap-child",
-        severity: "error",
-        message: "410 content sections must not retain child sitemap types",
-      });
-    }
-
-    if (!redirectsSource.includes(`source: \"/${route}/:path*\"`)) {
-      out.push({
-        page: `/${route}`,
-        field: "redirect",
-        severity: "error",
-        message: "removed corpus routes must permanently consolidate to a live page",
-      });
-    }
   }
 
   const proxySource = readFileSync(resolve("src/proxy.ts"), "utf8");

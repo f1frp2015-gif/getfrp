@@ -84,6 +84,7 @@ import {
 } from "../suppliers-client";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import { SupplierClaimButton } from "@/components/supplier-claim-button";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -339,10 +340,13 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       : "public company profile";
   const profileJsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfilePage",
+    "@type": "AboutPage",
+    "@id": `${pageUrl}#webpage`,
     url: pageUrl,
     name: `${name} — ${profileKind}`,
     inLanguage: "en",
+    dateModified: (supplier.profileReviewedAt ?? supplier.updatedAt).toISOString(),
+    isPartOf: { "@id": `${CURRENT_SITE_URL}/#website` },
     mainEntity: {
       "@type": "Organization",
       "@id": `${pageUrl}#organization`,
@@ -364,21 +368,6 @@ async function renderSupplierProfile(profile: SupplierProfile) {
           }
         : undefined,
       knowsAbout: productNames,
-      hasOfferCatalog: structuredProducts.length
-        ? {
-            "@type": "OfferCatalog",
-            name: `${name} product range`,
-            itemListElement: structuredProducts.map((product) => ({
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Product",
-                "@id": `${CURRENT_SITE_URL}/products/${product.slug}#product`,
-                name: product.nameEn,
-                url: `${CURRENT_SITE_URL}/products/${product.slug}`,
-              },
-            })),
-          }
-        : undefined,
       subjectOf: ecatalogs.map((catalog) => ({
         "@type": "CreativeWork",
         name: catalog.titleEn ?? "Product catalog",
@@ -855,6 +844,7 @@ export async function generateMetadata({
       ? "Manufacturer China"
       : "Supplier China";
   const title = `${supplierName} — ${primaryProduct} ${businessKeyword} | getfrp`;
+  const indexable = isSupplierProfileIndexable(profile.supplier);
   return {
     title: { absolute: title },
     description,
@@ -863,6 +853,9 @@ export async function generateMetadata({
       title,
       description,
     }),
+    robots: indexable
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
   };
 }
 

@@ -84,31 +84,37 @@ const PROCESS_LINKS = [
     name: "Pultrusion",
     detail: "Profiles · rods · cable tray",
     query: "pultrusion",
+    href: "/processes/pultrusion",
   },
   {
     name: "Compression molding",
     detail: "SMC · BMC · matched tooling",
     query: "compression molding",
+    href: "/processes/compression-molding",
   },
   {
     name: "Filament winding",
     detail: "Pipe · tanks · pressure vessels",
     query: "filament winding",
+    href: "/processes/filament-winding",
   },
   {
     name: "Vacuum infusion",
     detail: "Large parts · marine · wind",
     query: "vacuum infusion",
+    href: "/suppliers/search?q=vacuum%20infusion",
   },
   {
     name: "Hand lay-up / RTM",
     detail: "Low-volume complex components",
     query: "hand lay-up RTM",
+    href: "/suppliers/search?q=hand%20lay-up%20RTM",
   },
   {
     name: "CNC & assembly",
     detail: "Cutting · drilling · bonded kits",
     query: "CNC assembly",
+    href: "/suppliers/search?q=CNC%20assembly",
   },
 ] as const;
 
@@ -438,6 +444,15 @@ export async function HomePageEnglish() {
               ))}
             </div>
 
+            <div className="border-t border-white/10 px-4 py-3 text-[10px] leading-5 text-[#d9dfe8] sm:px-6">
+              Source trail: official company disclosures summarized in the reviewed profiles for{" "}
+              <Link href="/suppliers/jushi" className="underline underline-offset-2">China Jushi</Link>,{" "}
+              <Link href="/suppliers/taishan-fiberglass" className="underline underline-offset-2">Taishan Fiberglass</Link>,{" "}
+              <Link href="/suppliers/chongqing-polycomp-international" className="underline underline-offset-2">CPIC</Link> and{" "}
+              <Link href="/suppliers/zhongfu-shenying" className="underline underline-offset-2">Zhongfu Shenying</Link>.{" "}
+              <Link href="/methodology" className="font-semibold text-[#7be4e1] underline underline-offset-2">Review methodology</Link>.
+            </div>
+
             <div className="grid gap-5 border-t border-white/10 bg-[#0a1f44]/35 px-4 py-5 sm:px-6 md:grid-cols-[1fr_auto] md:items-center">
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7be4e1]">
@@ -667,7 +682,7 @@ export async function HomePageEnglish() {
                 {PROCESS_LINKS.map((process) => (
                   <Link
                     key={process.name}
-                    href={`/suppliers/search?q=${encodeURIComponent(process.query)}` as never}
+                    href={process.href as never}
                     className="group flex items-center justify-between gap-4 py-3.5"
                   >
                     <div>

@@ -13,11 +13,9 @@ import {
 export const revalidate = 3600;
 
 export async function GET() {
-  const lastmod = new Date().toISOString();
   const types = await indexedChildSitemapTypes();
   const children = types.map((type) => ({
     loc: `${CURRENT_SITE_URL}/sitemaps/${type}.xml`,
-    lastmod,
   }));
 
   return new Response(renderSitemapIndex(children), {

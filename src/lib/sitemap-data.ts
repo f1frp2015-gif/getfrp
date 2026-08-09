@@ -22,15 +22,16 @@ import {
 } from "@/lib/db/schema";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
 import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
 import {
-  supplierDirectoryPageCount,
   supplierDirectoryPath,
 } from "@/lib/supplier-directory";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 
 export type SitemapType =
   | "core"
@@ -58,33 +59,35 @@ function urlFor(path: string): string {
 
 export type StaticRoute = {
   path: string;
-  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
-  priority: number;
+  lastModified: string;
 };
 
+const CONTENT_REVIEW_DATE = "2026-08-09";
+
 export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
-  { path: "/", changeFrequency: "daily", priority: 1.0 },
-  { path: "/products", changeFrequency: "weekly", priority: 0.95 },
-  { path: "/suppliers", changeFrequency: "daily", priority: 0.9 },
-  { path: "/ai", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/about", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/source-from-china", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/sitemap", changeFrequency: "weekly", priority: 0.4 },
+  { path: "/", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/products", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/suppliers", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/services/frp-engineering-qa", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/methodology", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/ai", lastModified: "2026-08-04" },
+  { path: "/about", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/source-from-china", lastModified: "2026-08-04" },
+  { path: "/sitemap", lastModified: CONTENT_REVIEW_DATE },
 ];
 
 export const DATA_SITEMAP_ROUTES: StaticRoute[] = [
-  { path: "/data/china-frp-trade-remedies", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/data/china-frp-trade-remedies", lastModified: "2026-08-04" },
 ];
 
 export const TOOL_SITEMAP_ROUTES: StaticRoute[] = [
-  { path: "/tools", changeFrequency: "monthly", priority: 0.75 },
-  { path: "/tools/buy-america-frp-checker", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/tools/frp-weight-calculator", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/tools/frp-cost-estimator", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/tech", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/tech/calculator", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/tech/u-value-calculator", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/tech/wind-load-calculator", changeFrequency: "monthly", priority: 0.75 },
+  { path: "/tools", lastModified: "2026-08-04" },
+  { path: "/tools/buy-america-frp-checker", lastModified: "2026-08-04" },
+  { path: "/tools/frp-weight-calculator", lastModified: "2026-08-04" },
+  { path: "/tools/frp-cost-estimator", lastModified: "2026-08-04" },
+  { path: "/tech", lastModified: "2026-08-04" },
+  { path: "/tech/calculator", lastModified: "2026-08-04" },
+  { path: "/tech/u-value-calculator", lastModified: "2026-08-04" },
 ];
 
 export const RESOURCE_SITEMAP_PATHS = [
@@ -92,29 +95,26 @@ export const RESOURCE_SITEMAP_PATHS = [
   "/technical",
   "/guides",
   "/suppliers/resources",
+  "/processes/pultrusion",
+  "/processes/filament-winding",
+  "/processes/compression-molding",
   ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
 ];
 
 const toEntry = (
   path: string,
-  updatedAt: Date | null,
-  priority: number,
-  now: Date,
+  updatedAt?: Date | string | null,
 ): MetadataRoute.Sitemap[number] => ({
   url: urlFor(path),
-  lastModified: updatedAt ?? now,
-  changeFrequency: "monthly",
-  priority,
+  ...(updatedAt ? { lastModified: updatedAt } : {}),
 });
 
 // ── per-type entry builders ───────────────────────────────────────────────
 
-function coreEntries(now: Date): MetadataRoute.Sitemap {
+function coreEntries(): MetadataRoute.Sitemap {
   const staticEntries = CORE_SITEMAP_ROUTES.map((r) => ({
       url: urlFor(r.path),
-      lastModified: now,
-      changeFrequency: r.changeFrequency,
-      priority: r.priority,
+      lastModified: r.lastModified,
     }));
 
   // Matrix combinations are supporting engineering tools, not primary search
@@ -126,12 +126,11 @@ function coreEntries(now: Date): MetadataRoute.Sitemap {
 export async function buildSitemapEntries(
   type: SitemapType,
 ): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
   const isEn = true;
 
   switch (type) {
     case "core":
-      return coreEntries(now);
+      return coreEntries();
 
     case "products": {
       const rows = (await safeFetch(() =>
@@ -148,26 +147,20 @@ export async function buildSitemapEntries(
         ? rows
         : PRODUCT_SEED_RECORDS.map((product) => ({
             slug: product.slug,
-            updatedAt: now,
+            updatedAt: CONTENT_REVIEW_DATE,
           }));
       return publishedRows.map((row) =>
-        toEntry(`/products/${row.slug}`, row.updatedAt, 0.85, now),
+        toEntry(`/products/${row.slug}`, row.updatedAt),
       );
     }
 
     case "suppliers": {
-      const networkEntries = SUPPLIER_REGION_SLUGS.map((slug) => ({
-          ...toEntry(`/suppliers/${slug}`, now, 0.85, now),
-          changeFrequency: "weekly" as const,
-        }));
+      const networkEntries = SUPPLIER_REGION_SLUGS.map((slug) =>
+        toEntry(`/suppliers/${slug}`, CONTENT_REVIEW_DATE),
+      );
       const rows = (await safeFetch(() =>
         db
-          .select({
-            id: supplierListings.id,
-            slug: supplierListings.slug,
-            nameEn: supplierListings.nameEn,
-            updatedAt: supplierListings.updatedAt,
-          })
+          .select()
           .from(supplierListings)
           .where(
             and(
@@ -177,10 +170,16 @@ export async function buildSitemapEntries(
             ),
           )
           .limit(MAX_PER_SITEMAP),
-      )) as Array<{ id: string; slug: string | null; nameEn: string | null; updatedAt: Date | null }>;
-      const companyEntries = rows
-        .filter((r): r is typeof r & { slug: string } => Boolean(r.slug && (r.nameEn ?? "").trim()))
-        .map((r) => toEntry(`/suppliers/${supplierRouteSlug(r)}`, r.updatedAt, 0.7, now));
+      )) as Array<typeof supplierListings.$inferSelect>;
+      const enrichedRows = rows.map(enrichSupplierWithCuratedProfile);
+      const companyEntries = enrichedRows
+        .filter(isSupplierProfileIndexable)
+        .map((row) =>
+          toEntry(
+            `/suppliers/${supplierRouteSlug(row)}`,
+            row.profileReviewedAt ?? row.updatedAt,
+          ),
+        );
       const databaseIds = new Set(rows.map((row) => row.id));
       const databaseSlugs = new Set(
         rows.flatMap((row) => row.slug ? [row.slug] : []),
@@ -199,21 +198,16 @@ export async function buildSitemapEntries(
           return [
             toEntry(
               `/suppliers/${slug}`,
-              profile.updatedAt,
-              0.7,
-              now,
+              profile.profileReviewedAt ?? profile.updatedAt,
             ),
           ];
         },
       );
       const allCompanyEntries = [...companyEntries, ...curatedCompanyEntries];
-      const directoryEntries = Array.from(
-        { length: supplierDirectoryPageCount(allCompanyEntries.length) },
-        (_, index) => ({
-          ...toEntry(supplierDirectoryPath(index + 1), now, 0.75, now),
-          changeFrequency: "weekly" as const,
-        }),
-      );
+      const totalBrowsableCompanies = rows.length + curatedCompanyEntries.length;
+      const directoryEntries = totalBrowsableCompanies > 0
+        ? [toEntry(supplierDirectoryPath(1), CONTENT_REVIEW_DATE)]
+        : [];
       return [...networkEntries, ...directoryEntries, ...allCompanyEntries];
     }
 
@@ -221,29 +215,25 @@ export async function buildSitemapEntries(
       // Curated English long-tail hubs — EN deploy only.
       if (!isEn) return [];
       return sourcingTopicSlugs.map((slug) => ({
-        ...toEntry(`/sourcing/${slug}`, now, 0.75, now),
-        changeFrequency: "weekly" as const,
+        ...toEntry(`/sourcing/${slug}`, "2026-08-04"),
       }));
     }
 
     case "resources": {
       if (!isEn) return [];
       return RESOURCE_SITEMAP_PATHS.map((path) => ({
-        ...toEntry(path, now, path.split("/").length === 2 ? 0.75 : 0.7, now),
-        changeFrequency: "monthly" as const,
+        ...toEntry(path, path.startsWith("/processes/") ? CONTENT_REVIEW_DATE : "2026-08-04"),
       }));
     }
 
     case "data":
       return DATA_SITEMAP_ROUTES.map((route) => ({
-        ...toEntry(route.path, now, route.priority, now),
-        changeFrequency: route.changeFrequency,
+        ...toEntry(route.path, route.lastModified),
       }));
 
     case "tools":
       return TOOL_SITEMAP_ROUTES.map((route) => ({
-        ...toEntry(route.path, now, route.priority, now),
-        changeFrequency: route.changeFrequency,
+        ...toEntry(route.path, route.lastModified),
       }));
 
     default:
@@ -299,14 +289,14 @@ export function renderUrlset(entries: MetadataRoute.Sitemap): string {
 }
 
 export function renderSitemapIndex(
-  children: { loc: string; lastmod: string }[],
+  children: { loc: string; lastmod?: string }[],
 ): string {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   for (const c of children) {
     xml += "  <sitemap>\n";
     xml += `    <loc>${xmlEscape(c.loc)}</loc>\n`;
-    xml += `    <lastmod>${c.lastmod}</lastmod>\n`;
+    if (c.lastmod) xml += `    <lastmod>${c.lastmod}</lastmod>\n`;
     xml += "  </sitemap>\n";
   }
   xml += "</sitemapindex>\n";
