@@ -9,6 +9,7 @@ import {
 } from "./data/hongfu-tongxin-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "./data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
+import { KEERDA_SUPPLIER_PROFILE } from "./data/keerda-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
@@ -67,6 +68,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "changzhou-matex-composites",
       "nanjing-efg",
       "jufa-new-material",
+      "nanjing-keerda-mould",
       "shanghai-crotti",
       "strongfibre",
       "nanjing-spare-composites",
@@ -97,6 +99,15 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(jufa?.logo, "/supplier-assets/jufa-logo.png");
   assert.match(jufa?.products.join(" ") ?? "", /pultrusion/i);
   assert.match(jufa?.description ?? "", /polyurethane-modified resin/i);
+  const keerda = directory.find(
+    ({ id }) => id === KEERDA_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(keerda?.slug, "nanjing-keerda-mould");
+  assert.equal(keerda?.verified, false);
+  assert.equal(keerda?.category, "mold");
+  assert.equal(keerda?.logo, "/supplier-assets/keerda-logo.png");
+  assert.match(keerda?.products.join(" ") ?? "", /pultrusion dies/i);
+  assert.match(keerda?.description ?? "", /established in 1993/i);
   const crotti = directory.find(
     ({ id }) => id === CROTTI_SUPPLIER_PROFILE.id,
   );

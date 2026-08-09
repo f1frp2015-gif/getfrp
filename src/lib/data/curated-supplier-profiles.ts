@@ -10,6 +10,7 @@ import {
 } from "@/lib/data/hongfu-tongxin-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "@/lib/data/horse-construction-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "@/lib/data/jufa-supplier-profile";
+import { KEERDA_SUPPLIER_PROFILE } from "@/lib/data/keerda-supplier-profile";
 import {
   JUSHI_LEGACY_SLUG,
   JUSHI_SUPPLIER_PROFILE,
@@ -77,6 +78,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: MATEX_SUPPLIER_PROFILE },
   { profile: NANJING_EFG_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
+  { profile: KEERDA_SUPPLIER_PROFILE },
   { profile: CROTTI_SUPPLIER_PROFILE },
   { profile: STRONGFIBRE_SUPPLIER_PROFILE },
   { profile: SPARE_COMPOSITES_SUPPLIER_PROFILE },
