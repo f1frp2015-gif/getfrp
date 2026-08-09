@@ -39,15 +39,10 @@ import {
   AOC_LEGAL_NAME_EN,
   AOC_SUPPLIER_ID,
 } from "@/lib/data/aoc-supplier-profile";
-import { CPIC_SUPPLIER_ID } from "@/lib/data/cpic-supplier-profile";
 import {
   NOAH_COMPOSITES_LEGAL_NAME_EN,
   NOAH_COMPOSITES_SUPPLIER_ID,
 } from "@/lib/data/noah-composites-supplier-profile";
-import { XIAMEN_LFT_SUPPLIER_ID } from "@/lib/data/xiamen-lft-supplier-profile";
-import {
-  ZHONGSHENG_FIBERGLASS_SUPPLIER_ID,
-} from "@/lib/data/zhongsheng-fiberglass-supplier-profile";
 import {
   CROTTI_LEGAL_NAME_EN,
   CROTTI_SUPPLIER_ID,
@@ -62,10 +57,12 @@ import {
 } from "@/lib/data/strongfibre-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_ID } from "@/lib/data/shengli-limited-supplier-profile";
 import {
+  CURATED_SUPPLIER_PROFILES,
   enrichSupplierWithCuratedProfile,
   getCuratedSupplierProfile,
   getCuratedSupplierSlugs,
 } from "@/lib/data/curated-supplier-profiles";
+import { buildSupplierSeoBrief } from "@/lib/data/supplier-seo-briefs";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -241,44 +238,9 @@ function categoryLabel(category: string | null): string {
   return value ?? category ?? "Supplier";
 }
 
-function supplierSeoKeyword(
-  supplier: typeof supplierListings.$inferSelect,
-): string {
-  if (supplier.id === AOC_SUPPLIER_ID) return "Composite Resin & Gelcoat";
-  if (supplier.id === CPIC_SUPPLIER_ID) return "Glass Fiber";
-  if (supplier.id === ZHONGSHENG_FIBERGLASS_SUPPLIER_ID) {
-    return "Fiberglass Fabrics & Fire Blankets";
-  }
-  if (supplier.id === XIAMEN_LFT_SUPPLIER_ID) {
-    return "Long Fiber Thermoplastic Compounds";
-  }
-  const primaryProduct = ((supplier.productsEn ?? []) as string[])[0]?.trim();
-  if (
-    supplier.category === "resin" &&
-    primaryProduct?.toLowerCase().includes("epoxy")
-  ) {
-    return "Epoxy Resin";
-  }
-  const categoryKeywords: Record<string, string> = {
-    fiber: "Composite Fiber",
-    resin: "Polyurethane & Composite Resin",
-    additive: "Composite Additives",
-    equipment: "FRP Manufacturing Equipment",
-    mold: "Composite Molds & Tooling",
-    tooling: "Composite Tooling & NDT Equipment",
-    service: "Composite Testing & Certification",
-  };
-  if (supplier.category && categoryKeywords[supplier.category]) {
-    return categoryKeywords[supplier.category];
-  }
-  if (!primaryProduct) return "FRP Products";
-  return primaryProduct.length <= 48
-    ? primaryProduct
-    : `${primaryProduct.slice(0, 45).replace(/\s+\S*$/, "")}…`;
-}
-
 async function renderSupplierProfile(profile: SupplierProfile) {
   const { supplier, enterprise } = profile;
+  const seoBrief = buildSupplierSeoBrief(supplier);
   const isVerified = Boolean(supplier.verified && enterprise);
   const isSponsored = supplier.id === "sup-yaoyi";
   const isClaimed = Boolean(enterprise);
@@ -304,6 +266,23 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const relatedProductPages = structuredProducts.length === 0
     ? inferProductPagesForSupplier(supplier)
     : [];
+  const supplierCategoryPage = SUPPLIER_CATEGORY_PAGES.find((page) =>
+    supplierMatchesCategory(page, supplier),
+  );
+  const supplierRegionPage = getSupplierRegionByName(
+    englishProvince(supplier.province),
+  );
+  const relatedSuppliers = CURATED_SUPPLIER_PROFILES
+    .map(({ profile: relatedSupplier }) => relatedSupplier)
+    .filter((relatedSupplier) => {
+      if (relatedSupplier.id === supplier.id) return false;
+      if (supplierCategoryPage) {
+        return supplierMatchesCategory(supplierCategoryPage, relatedSupplier);
+      }
+      return relatedSupplier.category === supplier.category;
+    })
+    .sort((a, b) => b.brandPriority - a.brandPriority)
+    .slice(0, 3);
   const processes = (supplier.processListEn ?? []) as string[];
   const certifications = (supplier.certificationsEn ?? []) as string[];
   const productsServicesSummary =
@@ -344,6 +323,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
     "@id": `${pageUrl}#webpage`,
     url: pageUrl,
     name: `${name} — ${profileKind}`,
+    abstract: seoBrief.searchIntent,
     inLanguage: "en",
     dateModified: (supplier.profileReviewedAt ?? supplier.updatedAt).toISOString(),
     isPartOf: { "@id": `${CURRENT_SITE_URL}/#website` },
@@ -367,7 +347,10 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             addressCountry: isShengliLimited ? "NZ" : "CN",
           }
         : undefined,
-      knowsAbout: productNames,
+      knowsAbout: [
+        ...productNames,
+        ...processes,
+      ],
       subjectOf: ecatalogs.map((catalog) => ({
         "@type": "CreativeWork",
         name: catalog.titleEn ?? "Product catalog",
@@ -396,6 +379,10 @@ async function renderSupplierProfile(profile: SupplierProfile) {
         certifications: isVerified ? "Document-backed certifications" : "Company-published certifications",
         noCerts: "No company-level certification is listed on this profile.",
         productsServices: "Products & services summary",
+        sourcingReview: "Procurement review",
+        applications: "Application fit to evaluate",
+        qualification: "Supplier qualification checks",
+        evidence: "Evidence and review scope",
         ecatalog: "eCatalog",
         ecatalogSub: "Official product catalogs, web directories and technical guides published by the supplier.",
         openCatalog: "Open catalog",
@@ -476,6 +463,9 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                     )}
                   </div>
                   <div className="mt-2 text-sm text-muted-foreground">{legalName}{location ? ` · ${location}` : ""}</div>
+                  <p className="mt-3 max-w-2xl text-sm font-medium leading-relaxed text-foreground/85">
+                    {seoBrief.positioning}
+                  </p>
                 </div>
               </div>
               <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">{description}</p>
@@ -543,6 +533,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
         <div className="mx-auto flex max-w-6xl gap-6 overflow-x-auto px-4 py-3 text-sm font-medium sm:px-6">
           <a href="#company-profile" className="whitespace-nowrap hover:text-primary">{labels.about}</a>
           <a href="#products-services" className="whitespace-nowrap hover:text-primary">{labels.productsServices}</a>
+          <a href="#sourcing-review" className="whitespace-nowrap hover:text-primary">{labels.sourcingReview}</a>
+          <a href="#qualification" className="whitespace-nowrap hover:text-primary">{labels.qualification}</a>
           <a href="#ecatalog" className="whitespace-nowrap hover:text-primary">{labels.ecatalog}</a>
           <a href="#contact" className="whitespace-nowrap hover:text-primary">{labels.contact}</a>
         </div>
@@ -560,7 +552,12 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       <section id="company-profile" className="scroll-mt-20 border-b border-border/80">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_340px]">
           <div className="min-w-0 space-y-10">
-            <div><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.about}</div><p className="mt-4 text-[15px] leading-7 text-muted-foreground">{description}</p></div>
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.about}</div>
+              <div className="mt-4 space-y-4 text-[15px] leading-7 text-muted-foreground">
+                {seoBrief.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            </div>
             <div id="products-services" className="scroll-mt-20">
               <h2 className="text-xl font-semibold">{labels.productsServices}</h2>
               <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{productsServicesSummary}</p>
@@ -604,6 +601,120 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               </div>
             </div>
             <div><h2 className="text-xl font-semibold">{labels.certifications}</h2>{certifications.length > 0 ? <div className="mt-4 flex flex-wrap gap-2">{certifications.map((item) => <Badge key={item} variant="outline" className="h-auto max-w-full whitespace-normal break-words border-amber-400 px-3 py-1.5 text-left leading-snug text-amber-700">{item}</Badge>)}</div> : <p className="mt-3 text-sm text-muted-foreground">{labels.noCerts}</p>}</div>
+
+            <section id="sourcing-review" className="scroll-mt-20 space-y-9 border-t border-border/70 pt-10">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">SOURCE-REVIEWED PROCUREMENT PROFILE</div>
+                <h2 className="mt-3 text-2xl font-semibold">How to evaluate {name} for {seoBrief.topicLabel}</h2>
+                <p className="mt-4 text-[15px] leading-7 text-muted-foreground">{seoBrief.searchIntent}</p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold">Published product scope, translated into buying checks</h3>
+                <div className="mt-4 grid gap-4">
+                  {seoBrief.productNotes.map((item) => (
+                    <article key={item.title} className="rounded-xl border border-border/70 bg-muted/15 p-5">
+                      <h4 className="font-semibold leading-snug">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.body}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold">Manufacturing and service capability review</h3>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {seoBrief.capabilityNotes.map((item) => (
+                    <article key={item.title} className="rounded-xl border border-border/70 p-5">
+                      <h4 className="font-semibold leading-snug">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.body}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold">{labels.applications}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  These are sourcing contexts suggested by the published product scope, not confirmed project references. Validate the exact application, design basis and evidence in the RFQ.
+                </p>
+                <div className="mt-4 grid gap-4 sm:grid-cols-3">
+                  {seoBrief.applicationNotes.map((item) => (
+                    <article key={item.title} className="rounded-xl border border-border/70 bg-background p-5">
+                      <h4 className="text-sm font-semibold leading-snug">{item.title}</h4>
+                      <p className="mt-2 text-xs leading-5 text-muted-foreground">{item.body}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section id="qualification" className="scroll-mt-20 space-y-9 border-t border-border/70 pt-10">
+              <div>
+                <h2 className="text-2xl font-semibold">{labels.qualification}</h2>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {seoBrief.qualificationChecks.map((check) => (
+                    <div key={check} className="flex gap-3 rounded-xl border border-border/70 p-4 text-sm leading-6 text-muted-foreground">
+                      <CheckCircle2 size={16} className="mt-1 shrink-0 text-foreground" />
+                      <span>{check}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {seoBrief.supplementalGuidance.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold">Category-specific sourcing guidance</h3>
+                  <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
+                    {seoBrief.supplementalGuidance.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <h3 className="text-lg font-semibold">What to include in an RFQ</h3>
+                <ol className="mt-4 space-y-3">
+                  {seoBrief.rfqChecklist.map((item, index) => (
+                    <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[11px] font-semibold text-foreground">{index + 1}</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </section>
+
+            <section className="space-y-7 border-t border-border/70 pt-10">
+              <div>
+                <h2 className="text-2xl font-semibold">{labels.evidence}</h2>
+                <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
+                  {seoBrief.evidenceNotes.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </div>
+              </div>
+
+              {(supplierCategoryPage || supplierRegionPage || relatedSuppliers.length > 0) && (
+                <div>
+                  <h3 className="text-lg font-semibold">Continue the sourcing comparison</h3>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    {supplierCategoryPage && (
+                      <Link href={`/suppliers/${supplierCategoryPage.slug}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
+                        Compare China {supplierCategoryPage.shortName} suppliers <ArrowRight size={14} className="ml-1 inline" />
+                      </Link>
+                    )}
+                    {supplierRegionPage && (
+                      <Link href={`/suppliers/${supplierRegionPage.slug}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
+                        Explore {supplierRegionPage.name} composite suppliers <ArrowRight size={14} className="ml-1 inline" />
+                      </Link>
+                    )}
+                    {relatedSuppliers.map((relatedSupplier) => (
+                      <Link key={relatedSupplier.id} href={`/suppliers/${supplierRouteSlug(relatedSupplier)}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
+                        {relatedSupplier.nameEn} <ArrowRight size={14} className="ml-1 inline" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
 
             <div id="ecatalog" className="scroll-mt-20">
               <h2 className="text-xl font-semibold">{labels.ecatalog}</h2>
@@ -829,21 +940,10 @@ export async function generateMetadata({
       alternates: alternates(`/suppliers/${id}`),
     };
   }
-  const supplierName = profile.supplier.nameEn ?? "Supplier";
-  const rawDescription =
-    profile.supplier.descriptionEn ?? `${supplierName} supplier profile.`;
-  const normalizedDescription = rawDescription.replace(/\s+/g, " ").trim();
-  const description = normalizedDescription.length <= 165
-    ? normalizedDescription
-    : `${normalizedDescription.slice(0, 162).replace(/\s+\S*$/, "")}…`;
+  const seoBrief = buildSupplierSeoBrief(profile.supplier);
   const routeSlug = supplierRouteSlug(profile.supplier);
-  const primaryProduct = supplierSeoKeyword(profile.supplier);
-  const businessKeyword = profile.supplier.id === SHENGLI_LIMITED_SUPPLIER_ID
-    ? "Sourcing & Supply Partner"
-    : profile.supplier.category === "manufacturer"
-      ? "Manufacturer China"
-      : "Supplier China";
-  const title = `${supplierName} — ${primaryProduct} ${businessKeyword} | getfrp`;
+  const title = seoBrief.pageTitle;
+  const description = seoBrief.metaDescription;
   const indexable = isSupplierProfileIndexable(profile.supplier);
   return {
     title: { absolute: title },
