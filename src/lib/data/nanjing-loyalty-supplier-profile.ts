@@ -11,7 +11,7 @@ export const NANJING_LOYALTY_SUPPLIER_SLUG =
 // are past their printed validity dates and are therefore recorded as archive
 // evidence rather than current qualifications. Official logo source
 // (downloaded 2026-08-09 from the current English website header):
-// https://en.njloyalty.net/picture/logo.jpg
+// http://en.njloyalty.net/picture/logo.jpg
 export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
   id: NANJING_LOYALTY_SUPPLIER_ID,
   name: "南京诺尔泰复合材料设备制造有限公司",
@@ -86,7 +86,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "公司、主要产品系列、案例与联系方式总览。",
       descriptionEn:
         "Official overview of the company, principal product families, cases and contact details.",
-      url: "https://en.njloyalty.net/",
+      url: "http://en.njloyalty.net/",
       format: "Official website",
     },
     {
@@ -95,7 +95,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "成立年份、研发中心、试验线、市场覆盖与服务承诺。",
       descriptionEn:
         "Official establishment, R&D center, test-line, market-coverage and service statements.",
-      url: "https://en.njloyalty.net/about.php?categoryID=920",
+      url: "http://en.njloyalty.net/about.php?categoryID=920",
       format: "Company profile",
     },
     {
@@ -104,7 +104,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "拉挤设备、模具、复合芯导线、光伏边框与复材制品入口。",
       descriptionEn:
         "Official directory for pultrusion equipment, dies, composite conductor cores, photovoltaic frames and composite products.",
-      url: "https://en.njloyalty.net/pro.php",
+      url: "http://en.njloyalty.net/pro.php",
       format: "Product directory",
     },
     {
@@ -113,7 +113,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "专利、荣誉及已超过印载有效期的管理体系、CE 与高新技术企业文件。",
       descriptionEn:
         "Supplier-hosted patents, honors and management-system, CE and High-Tech Enterprise documents that are past their printed validity dates.",
-      url: "https://en.njloyalty.net/honor.php?categoryID=921",
+      url: "http://en.njloyalty.net/honor.php?categoryID=921",
       format: "Archived certificate directory",
     },
     {
@@ -122,7 +122,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "官网公开的复合芯导线与西班牙液压拉挤设备案例。",
       descriptionEn:
         "Supplier-published composite conductor-core and Spanish hydraulic-pultrusion cases.",
-      url: "https://en.njloyalty.net/cases.php?categoryID=929",
+      url: "http://en.njloyalty.net/cases.php?categoryID=929",
       format: "Case directory",
     },
     {
@@ -131,7 +131,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
       description: "南京江北新区地址、电话、邮箱与销售联系人。",
       descriptionEn:
         "Official Nanjing Jiangbei address, telephone, email and sales contact.",
-      url: "https://en.njloyalty.net/contact.php?categoryID=917",
+      url: "http://en.njloyalty.net/contact.php?categoryID=917",
       format: "Contact directory",
     },
   ],
@@ -142,7 +142,7 @@ export const NANJING_LOYALTY_SUPPLIER_PROFILE: SupplierListing = {
   contactPhone: "+86 25 5880 4462",
   address:
     "No. 26 Bofu Road, Zhongshan Area, Intelligent Manufacturing Industrial Park, Jiangbei New Area, Nanjing, Jiangsu, China",
-  website: "https://en.njloyalty.net/",
+  website: "http://njloyalty.net/",
   enterpriseId: null,
   scaleTier: "M",
   brandPriority: 19,
