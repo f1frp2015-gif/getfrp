@@ -11,6 +11,7 @@ import {
   enrichSupplierWithCuratedProfile,
 } from "@/lib/data/curated-supplier-profiles";
 import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
@@ -93,11 +94,14 @@ export function mergePublicSupplierDirectory(
     ...row,
     supplier: enrichSupplierWithCuratedProfile(row.supplier),
   }));
+  const publicDatabaseRows = enrichedDatabaseRows.filter(({ supplier }) =>
+    isSupplierProfileIndexable(supplier),
+  );
   const databaseIds = new Set(
-    enrichedDatabaseRows.map(({ supplier }) => supplier.id),
+    publicDatabaseRows.map(({ supplier }) => supplier.id),
   );
   const databaseSlugs = new Set(
-    enrichedDatabaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
+    publicDatabaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
   );
   const curatedFallbackRows = CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) => {
     const slug = supplierRouteSlug(profile);
@@ -118,7 +122,7 @@ export function mergePublicSupplierDirectory(
     } satisfies PublicSupplierRow];
   });
 
-  return [...enrichedDatabaseRows, ...curatedFallbackRows]
+  return [...publicDatabaseRows, ...curatedFallbackRows]
     .sort(compareSupplierRows)
     .map((row) => serializeSupplierRow(row, locale));
 }

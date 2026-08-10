@@ -1,8 +1,5 @@
-import { and, asc, count, isNotNull, ne } from "drizzle-orm";
 import { cache } from "react";
-import { db } from "@/lib/db";
-import { supplierListings } from "@/lib/db/schema";
-import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { SUPPLIER_RESULTS_PAGE_SIZE } from "@/lib/supplier-directory-config";
 
 export const SUPPLIER_DIRECTORY_PAGE_SIZE = SUPPLIER_RESULTS_PAGE_SIZE;
@@ -16,12 +13,6 @@ export type SupplierDirectoryItem = {
   updatedAt: Date | null;
 };
 
-const publicSupplierWhere = and(
-  isNotNull(supplierListings.slug),
-  isNotNull(supplierListings.nameEn),
-  ne(supplierListings.nameEn, ""),
-);
-
 export function supplierDirectoryPageCount(total: number): number {
   return total > 0 ? Math.ceil(total / SUPPLIER_DIRECTORY_PAGE_SIZE) : 0;
 }
@@ -31,15 +22,8 @@ export function supplierDirectoryPath(page: number): `/suppliers/directory/${num
 }
 
 export const getSupplierDirectoryCount = cache(async (): Promise<number> => {
-  try {
-    const [{ total = 0 } = { total: 0 }] = await db
-      .select({ total: count() })
-      .from(supplierListings)
-      .where(publicSupplierWhere);
-    return Number(total);
-  } catch {
-    return 0;
-  }
+  const suppliers = await getPublicSupplierDirectory("en");
+  return suppliers.length;
 });
 
 export const getSupplierDirectoryPage = cache(async (page: number): Promise<{
@@ -51,42 +35,18 @@ export const getSupplierDirectoryPage = cache(async (page: number): Promise<{
     return { items: [], total: 0, pageCount: 0 };
   }
 
-  try {
-    const [countRows, rows] = await Promise.all([
-      db
-        .select({ total: count() })
-        .from(supplierListings)
-        .where(publicSupplierWhere),
-      db
-        .select({
-          id: supplierListings.id,
-          slug: supplierListings.slug,
-          name: supplierListings.nameEn,
-          location: supplierListings.locationEn,
-          category: supplierListings.category,
-          description: supplierListings.descriptionEn,
-          updatedAt: supplierListings.updatedAt,
-        })
-        .from(supplierListings)
-        .where(publicSupplierWhere)
-        .orderBy(asc(supplierListings.nameEn), asc(supplierListings.id))
-        .limit(SUPPLIER_DIRECTORY_PAGE_SIZE)
-        .offset((page - 1) * SUPPLIER_DIRECTORY_PAGE_SIZE),
-    ]);
-    const total = Number(countRows[0]?.total ?? 0);
-    const items = rows.filter(
-      (row): row is typeof row & { slug: string; name: string } =>
-        Boolean(row.slug && row.name?.trim()),
-    ).map((row) => ({
-      ...row,
-      slug: supplierRouteSlug({
-        id: row.id,
-        nameEn: row.name,
-        slug: row.slug,
-      }),
+  const suppliers = await getPublicSupplierDirectory("en");
+  const total = suppliers.length;
+  const offset = (page - 1) * SUPPLIER_DIRECTORY_PAGE_SIZE;
+  const items = suppliers
+    .slice(offset, offset + SUPPLIER_DIRECTORY_PAGE_SIZE)
+    .map((supplier) => ({
+      slug: supplier.slug,
+      name: supplier.name,
+      location: supplier.location || null,
+      category: supplier.category || null,
+      description: supplier.description || null,
+      updatedAt: null,
     }));
-    return { items, total, pageCount: supplierDirectoryPageCount(total) };
-  } catch {
-    return { items: [], total: 0, pageCount: 0 };
-  }
+  return { items, total, pageCount: supplierDirectoryPageCount(total) };
 });

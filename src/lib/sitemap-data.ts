@@ -204,8 +204,7 @@ export async function buildSitemapEntries(
         },
       );
       const allCompanyEntries = [...companyEntries, ...curatedCompanyEntries];
-      const totalBrowsableCompanies = rows.length + curatedCompanyEntries.length;
-      const directoryEntries = totalBrowsableCompanies > 0
+      const directoryEntries = allCompanyEntries.length > 0
         ? [toEntry(supplierDirectoryPath(1), CONTENT_REVIEW_DATE)]
         : [];
       return [...networkEntries, ...directoryEntries, ...allCompanyEntries];

@@ -2,13 +2,12 @@ import type { SupplierListing } from "@/lib/db/schema";
 import { getCuratedSupplierProfile } from "@/lib/data/curated-supplier-profiles";
 
 /**
- * Search index quality gate for individual supplier profiles.
+ * Public-page quality gate for individual supplier profiles.
  *
- * A company may remain visible in the browsable directory without being a
- * useful standalone search result. Git-curated profiles already have an
- * official-source review. Database-managed profiles must meet the same
- * minimum evidence and completeness standard before entering metadata and
- * sitemaps.
+ * Git-curated profiles already have an official-source review.
+ * Database-managed profiles must meet the same minimum evidence and
+ * completeness standard before they receive a route, directory link,
+ * metadata entry, or sitemap entry.
  */
 export function isSupplierProfileIndexable(
   supplier: SupplierListing,
