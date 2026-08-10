@@ -18,6 +18,7 @@ import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./data/nanjing-loyalty-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
+import { EASTFRP_SUPPLIER_PROFILE } from "./data/eastfrp-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
 import {
   F1_COMPOSITE_ENTERPRISE_ID,
@@ -66,6 +67,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "chongqing-polycomp-international",
       "hebei-weitong-frp",
       "chongqing-dujiang-composites",
+      "anhui-anche-east-frp",
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
@@ -113,6 +115,14 @@ test("adds every published Git-backed profile when the database is empty", async
       ?.description ?? "",
     /Jin Hong Company/,
   );
+  const eastfrp = directory.find(
+    ({ id }) => id === EASTFRP_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(eastfrp?.slug, "anhui-anche-east-frp");
+  assert.equal(eastfrp?.location, "Xuancheng, Anhui, China");
+  assert.equal(eastfrp?.logo, "/supplier-assets/eastfrp-logo.jpg");
+  assert.match(eastfrp?.products.join(" ") ?? "", /FRP wall panels/i);
+  assert.match(eastfrp?.description ?? "", /20,000 m²/i);
   assert.equal(
     directory.filter(({ name }) => name.toLowerCase().includes("noah"))[0]
       ?.slug,

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { CROTTI_SUPPLIER_PROFILE } from "./crotti-supplier-profile";
 import { CURATED_SUPPLIER_PROFILES } from "./curated-supplier-profiles";
+import { EASTFRP_SUPPLIER_PROFILE } from "./eastfrp-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./nanjing-loyalty-supplier-profile";
 import {
   buildSupplierSeoBrief,
@@ -15,7 +16,7 @@ test("assigns every curated supplier a unique, evidence-led SEO brief", () => {
     brief: buildSupplierSeoBrief(profile),
   }));
 
-  assert.equal(briefs.length, 39);
+  assert.equal(briefs.length, 40);
   assert.equal(
     new Set(briefs.map(({ brief }) => brief.primaryKeyword.toLowerCase())).size,
     briefs.length,
@@ -56,4 +57,32 @@ test("keeps supplier-specific product intent in priority profiles", () => {
   assert.match(loyalty.primaryKeyword, /Loyalty/i);
   assert.match(loyalty.primaryKeyword, /pultrusion machine/i);
   assert.match(loyalty.searchIntent, /equipment supplier/i);
+
+  const eastfrp = buildSupplierSeoBrief(EASTFRP_SUPPLIER_PROFILE);
+  assert.match(eastfrp.primaryKeyword, /Anhui Anche/i);
+  assert.match(eastfrp.primaryKeyword, /FRP Wall Panels/i);
+  assert.match(eastfrp.pageTitle, /FRP Wall Panels/i);
+  assert.ok(
+    eastfrp.secondaryKeywords.some((keyword) =>
+      /FRP Flat Sheets for Transport/i.test(keyword),
+    ),
+  );
+  assert.ok(
+    eastfrp.secondaryKeywords.some((keyword) =>
+      /Embossed FRP Panels/i.test(keyword),
+    ),
+  );
+  assert.ok(
+    eastfrp.secondaryKeywords.some((keyword) =>
+      /FRP Corrugated Sheets/i.test(keyword),
+    ),
+  );
+  assert.deepEqual(
+    eastfrp.applicationNotes.map(({ title }) => title),
+    [
+      "Hygienic interior wall and ceiling systems",
+      "Refrigerated truck, dry-van and RV body panels",
+      "Cooling-tower and industrial corrugated panels",
+    ],
+  );
 });

@@ -303,6 +303,9 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /epoxy resin.*filament|filament.*epoxy resin/i, label: "Filament Winding Epoxy Resins" },
   { pattern: /long-(?:glass|carbon).*fiber|long fiber thermoplastic/i, label: "Long Fiber Thermoplastic Compounds" },
   { pattern: /skylight|corrugated roofing/i, label: "FRP Skylight Roofing Sheets" },
+  { pattern: /frp wall panels?|fiberglass wall panels?|grp wall panels?/i, label: "FRP Wall Panels" },
+  { pattern: /embossed frp|frp decorative panel/i, label: "Embossed FRP Panels" },
+  { pattern: /frp corrugated (?:sheets?|panels?)/i, label: "FRP Corrugated Sheets" },
   { pattern: /sandwich panel/i, label: "FRP Sandwich Panels" },
   { pattern: /flat sheet.*(?:rv|truck|vehicle)/i, label: "FRP Flat Sheets for Transport" },
   { pattern: /flat sheet/i, label: "FRP Flat Sheets" },
@@ -353,6 +356,24 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Concrete reinforcement and civil infrastructure",
     body: (name) =>
       `${name}'s listed reinforcement products may be relevant to corrosion-sensitive concrete or civil works. Buyers should state fiber type, nominal area, guaranteed tensile property, modulus, bond surface, bend geometry, test method, design code, lot traceability and packaging. FRP reinforcement should not be specified or handled as if it were interchangeable with steel.`,
+  },
+  {
+    pattern: /wall panel|hospital|laborator|clean space|food processing/i,
+    title: "Hygienic interior wall and ceiling systems",
+    body: (name) =>
+      `${name}'s published wall-panel scope may be relevant to commercial interiors, food-processing spaces, hospitals, laboratories and other cleanable surfaces. Buyers should define the resin and gel coat, reinforcement construction, thickness and flatness tolerance, joint and trim system, cleaning chemicals, color and texture, fire or hygiene evidence, substrate preparation and installation responsibility for the complete wall or ceiling assembly.`,
+  },
+  {
+    pattern: /refrigerated truck|dry van|\brv\b|vehicle body|bus(?:es)?\b/i,
+    title: "Refrigerated truck, dry-van and RV body panels",
+    body: (name) =>
+      `${name}'s listed transport sheets can be screened for refrigerated trucks, dry vans, RVs, buses or other vehicle bodies. The RFQ should state the skin and core construction, sheet or roll dimensions, surface class, color, UV exposure, adhesive and lamination route, thermal requirement, impact and peel evidence, fabrication details, annual volume and protective packing for cosmetic panels.`,
+  },
+  {
+    pattern: /corrugated.*cooling.?tower|cooling.?tower.*corrugated/i,
+    title: "Cooling-tower and industrial corrugated panels",
+    body: (name) =>
+      `${name}'s corrugated FRP range may support cooling-tower or industrial cladding discussions when the offered profile matches the existing support and fastening layout. Buyers should specify the corrugation geometry, resin and gel coat, thickness, span and load basis, UV and chemical exposure, cut lengths, drilling, edge finish, nesting and transport supports, then request evidence for the exact construction rather than a generic flat-sheet value.`,
   },
   {
     pattern: /carbon.?fiber|basalt|fiberglass|glass.?fiber|fabric|roving|yarn|mat|tissue/i,
