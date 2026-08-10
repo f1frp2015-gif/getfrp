@@ -117,7 +117,7 @@ export async function generateStaticParams() {
   let databaseSlugs: string[] = [];
   try {
     const rows = await db
-      .select({ slug: supplierListings.slug })
+      .select()
       .from(supplierListings)
       .where(
         and(
@@ -126,7 +126,10 @@ export async function generateStaticParams() {
           ne(supplierListings.nameEn, ""),
         ),
       );
-    databaseSlugs = rows.flatMap((row) => row.slug ? [row.slug] : []);
+    databaseSlugs = rows
+      .map(enrichSupplierWithCuratedProfile)
+      .filter(isSupplierProfileIndexable)
+      .map(supplierRouteSlug);
   } catch {
     // Curated Git-backed profiles remain buildable during a DB outage.
   }
@@ -186,6 +189,15 @@ function serializeNetworkRow(row: JoinedNetworkRow): NetworkRow {
     province: englishProvince(supplier.province),
     exportReady: Boolean(supplier.exportReady),
   };
+}
+
+function publicNetworkRows(rows: JoinedNetworkRow[]): JoinedNetworkRow[] {
+  return rows
+    .map((row) => ({
+      ...row,
+      supplier: enrichSupplierWithCuratedProfile(row.supplier),
+    }))
+    .filter(({ supplier }) => isSupplierProfileIndexable(supplier));
 }
 
 function directoryProvinces(rows: NetworkRow[]): string[] {
@@ -813,7 +825,7 @@ async function loadCategoryNetwork(
         desc(supplierListings.viewCount),
         asc(supplierListings.name),
       );
-    return rows
+    return publicNetworkRows(rows)
       .filter((row) => supplierMatchesCategory(category, row.supplier))
       .map(serializeNetworkRow);
   } catch {
@@ -955,6 +967,12 @@ export async function generateMetadata({
   const title = seoBrief.pageTitle;
   const description = seoBrief.metaDescription;
   const indexable = isSupplierProfileIndexable(profile.supplier);
+  if (!indexable) {
+    return {
+      robots: { index: false, follow: false },
+      alternates: alternates(`/suppliers/${id}`),
+    };
+  }
   return {
     title: { absolute: title },
     description,
@@ -963,9 +981,7 @@ export async function generateMetadata({
       title,
       description,
     }),
-    robots: indexable
-      ? { index: true, follow: true }
-      : { index: false, follow: true },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -993,7 +1009,7 @@ async function loadRegionNetwork(region: SupplierRegionPage): Promise<NetworkRow
         desc(supplierListings.viewCount),
         asc(supplierListings.name),
       );
-    return rows.map(serializeNetworkRow);
+    return publicNetworkRows(rows).map(serializeNetworkRow);
   } catch {
     return [];
   }
@@ -1146,7 +1162,7 @@ export default async function SupplierCategoryPageRoute({
   }
   if (!category) {
     const profile = await loadSupplierProfile(id);
-    if (!profile) notFound();
+    if (!profile || !isSupplierProfileIndexable(profile.supplier)) notFound();
     const canonicalSlug = supplierRouteSlug(profile.supplier);
     if (id !== canonicalSlug) permanentRedirect(`/suppliers/${canonicalSlug}`);
     return await renderSupplierProfile(profile);

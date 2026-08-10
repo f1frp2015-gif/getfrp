@@ -15,6 +15,7 @@ import {
 } from "@/lib/data/supplier-category-pages";
 import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export type CatalogProduct = {
@@ -173,9 +174,10 @@ export async function loadSuppliersForProduct(
         desc(supplierListings.brandPriority),
         asc(supplierListings.nameEn),
       );
-    return rows.map(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
+    return rows.flatMap(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
       const displayedSupplier = enrichSupplierWithCuratedProfile(supplier);
-      return {
+      if (!isSupplierProfileIndexable(displayedSupplier)) return [];
+      return [{
         id: displayedSupplier.id,
         slug: supplierRouteSlug(displayedSupplier),
         name: displayedSupplier.nameEn ?? displayedSupplier.name,
@@ -205,7 +207,7 @@ export async function loadSuppliersForProduct(
         moq: relation.moq,
         moqUnit: relation.moqUnit,
         leadTimeDays: relation.leadTimeDays ?? displayedSupplier.leadTimeDays,
-      };
+      }];
     });
   } catch {
     const page = getSupplierCategoryPage(product.slug);
@@ -222,9 +224,16 @@ export async function loadSuppliersForProduct(
         .from(supplierListings)
         .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id));
       return rows
-        .filter(({ supplier }) => supplierMatchesCategory(page, supplier))
+        .map((row) => ({
+          ...row,
+          supplier: enrichSupplierWithCuratedProfile(row.supplier),
+        }))
+        .filter(({ supplier }) =>
+          isSupplierProfileIndexable(supplier) &&
+          supplierMatchesCategory(page, supplier),
+        )
         .map(({ supplier, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
-          const displayedSupplier = enrichSupplierWithCuratedProfile(supplier);
+          const displayedSupplier = supplier;
           return {
             id: displayedSupplier.id,
             slug: supplierRouteSlug(displayedSupplier),

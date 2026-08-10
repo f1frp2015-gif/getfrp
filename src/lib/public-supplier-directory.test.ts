@@ -490,7 +490,7 @@ test("keeps one supplier and preserves database identity and trust state", async
   assert.equal(noahProfiles[0]?.logo, NOAH_COMPOSITES_SUPPLIER_PROFILE.logo);
 });
 
-test("ranks a Git-backed supplier page ahead of unpublished database records", async () => {
+test("excludes database records that do not qualify for a public profile", async () => {
   const { mergePublicSupplierDirectory } = await loadDirectory();
   const directory = mergePublicSupplierDirectory(
     [
@@ -511,11 +511,15 @@ test("ranks a Git-backed supplier page ahead of unpublished database records", a
       {
         supplier: {
           ...NOAH_COMPOSITES_SUPPLIER_PROFILE,
-          id: "sup-unpublished-high-rank",
-          slug: "unpublished-high-rank",
-          name: "Unpublished high-rank supplier",
-          nameEn: "Unpublished High-rank Supplier",
-          profilePublished: false,
+          id: "sup-legacy-no-homepage",
+          slug: "legacy-no-homepage",
+          name: "Legacy supplier without a homepage",
+          nameEn: "Legacy Supplier Without a Homepage",
+          profilePublished: true,
+          profileReviewedAt: null,
+          descriptionEn: "Short legacy directory record.",
+          website: null,
+          ecatalogs: [],
           verified: true,
           brandPriority: 10_000,
           scaleTier: "XL",
@@ -529,17 +533,23 @@ test("ranks a Git-backed supplier page ahead of unpublished database records", a
     ],
     "en",
   );
-  const publishedIndex = directory.findIndex(
-    ({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id,
+  assert.equal(
+    directory.filter(
+      ({ id }) =>
+        id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id ||
+        id === "sup-legacy-no-homepage",
+    ).length,
+    1,
   );
-  const unpublishedIndex = directory.findIndex(
-    ({ id }) => id === "sup-unpublished-high-rank",
+  assert.equal(
+    directory.some(({ id }) => id === "sup-legacy-no-homepage"),
+    false,
   );
-
-  assert.ok(publishedIndex >= 0);
-  assert.ok(unpublishedIndex >= 0);
-  assert.equal(directory[publishedIndex]?.profilePublished, true);
-  assert.ok(publishedIndex < unpublishedIndex);
+  assert.equal(
+    directory.find(({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id)
+      ?.profilePublished,
+    true,
+  );
 });
 
 test("enriches an unclaimed Jiuding database seed without changing its identity", async () => {
