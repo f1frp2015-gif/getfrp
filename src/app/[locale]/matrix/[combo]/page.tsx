@@ -364,7 +364,7 @@ export default async function ComboPage({
             />
           </Link>
           <Link
-            href={"/tech/calculator" as never}
+            href={"/tools" as never}
             className="group flex items-center justify-between gap-3 rounded-md border bg-background p-4 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-muted/30"
           >
             {t("ctaCalcTitle")}

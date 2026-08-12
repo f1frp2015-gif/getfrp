@@ -1,5 +1,5 @@
 // Shared profile mechanics — single source of truth for both the on-site
-// /tech/calculator UI and the AI `profile_mechanics` tool, mirroring how
+// the AI `profile_mechanics` tool, mirroring how
 // jgt571.ts backs both the U-value calculator and its tool. The AI and the
 // calculator must never disagree, so the geometry/beam/equivalence math lives
 // here and both callers import it.

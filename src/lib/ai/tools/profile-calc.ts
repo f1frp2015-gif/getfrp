@@ -10,7 +10,7 @@ import {
 
 // FRP profile engineering calculator, exposed to the chat LLM. Backed by the
 // SAME @/lib/data/profile-mechanics module that powers the on-site
-// /tech/calculator, so the AI and the calculator never disagree (same pattern
+// the AI profile checks, keeping one calculation source (same pattern
 // as window_u_value ↔ jgt571). Two modes:
 //   - "beam": single-span / cantilever bending check (stress + deflection)
 //   - "equivalence": metal → FRP equal-stiffness / equal-strength resizing
@@ -119,7 +119,7 @@ export function makeProfileCalcTool() {
             `建议截面约 H${r.governingIsStiffness ? r.stiffH : r.strengthH}×B${r.governingIsStiffness ? r.stiffB : r.strengthB} mm; ` +
             `米重 ${round(r.srcWeight, 1)}→${round(r.tgtWeight, 1)} kg/m, 减重约 ${round(r.weightSaving, 0)}%.`,
           caveat:
-            "初步几何相似估算 (I∝k⁴, W∝k³)，未含 FRP 蠕变/温度/连接/局部稳定。正式选型须按 EN 13706 / ASCE / GB/T 31539 复核并取安全系数；可让用户在 /tech/calculator 复算。",
+            "初步几何相似估算 (I∝k⁴, W∝k³)，未含 FRP 蠕变/温度/连接/局部稳定。正式选型须按 EN 13706 / ASCE / GB/T 31539 复核并取安全系数；可通过 /tools 打开 F1 Composite 工程计算工具复算。",
         };
       }
 
@@ -160,7 +160,7 @@ export function makeProfileCalcTool() {
           `σ_max=${round(r.sigma_max, 1)}MPa (许用 ${r.material.sigma}, 利用率 ${round((r.sigma_max / r.material.sigma) * 100, 0)}%, ${r.stressOk ? "通过" : "超限"}); ` +
           `挠度=${round(r.defl, 1)}mm = L/${round(r.deflRatio, 0)} (限 L/${a.deflLimit ?? 250}, ${r.deflOk ? "通过" : "超限"}); 米重 ${round(r.weightPerM, 2)} kg/m.`,
         caveat:
-          "初步单跨/悬臂估算，未含 FRP 剪切变形、蠕变、温度、局部屈曲与连接。正式设计须按 EN 13706 / ASCE / GB/T 31539 取安全系数复核；可让用户在 /tech/calculator 复算。",
+          "初步单跨/悬臂估算，未含 FRP 剪切变形、蠕变、温度、局部屈曲与连接。正式设计须按 EN 13706 / ASCE / GB/T 31539 取安全系数复核；可通过 /tools 打开 F1 Composite 工程计算工具复算。",
       };
     },
   });

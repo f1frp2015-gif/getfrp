@@ -37,14 +37,8 @@ const CORE_LABELS: Record<string, string> = {
 };
 
 const TOOL_LABELS: Record<string, string> = {
-  "/tools": "Procurement tools",
-  "/tools/buy-america-frp-checker": "Buy America FRP checker",
-  "/tools/frp-weight-calculator": "FRP weight calculator",
-  "/tools/frp-cost-estimator": "FRP landed-cost estimator",
-  "/tech": "Engineering tools",
-  "/tech/calculator": "Pultrusion calculator",
-  "/tech/u-value-calculator": "U-value calculator",
-  "/tech/wind-load-calculator": "Wind-load calculator",
+  "/tools": "F1 Composite external engineering tools",
+  "/tech": "Composite process knowledge base",
 };
 
 export async function generateMetadata(): Promise<Metadata> {

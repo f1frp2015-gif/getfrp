@@ -7,7 +7,7 @@ import { lookupWindowUValue } from "@/lib/data/jgt571";
 // both the domestic (DeepSeek) and overseas (Gemini) providers. The point is
 // to give the model EXACT standard values instead of letting it estimate /
 // hallucinate window Uw. The same lib/data/jgt571 table powers the on-site
-// /tech/u-value-calculator, so the AI and the calculator never disagree.
+// the shared U-value engine used by the AI.
 export function makeWindowUValueTool() {
   return tool({
     description:

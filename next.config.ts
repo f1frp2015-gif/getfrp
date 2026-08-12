@@ -25,6 +25,45 @@ const legacyProductSlugs = [
   "fiber-glass",
 ];
 
+const retiredToolRedirects = [
+  {
+    source: "/tools/frp-weight-calculator",
+    destination: "https://www.f1composite.com/frp-profile-calculator",
+  },
+  {
+    source: "/tools/frp-cost-estimator",
+    destination: "https://www.f1composite.com/fiberglass-pultruded-profile-price",
+  },
+  {
+    source: "/tools/buy-america-frp-checker",
+    destination: "https://www.f1composite.com/regions/frp-pultrusion-supplier-usa",
+  },
+  {
+    source: "/tech/calculator",
+    destination: "https://www.f1composite.com/frp-profile-calculator",
+  },
+  {
+    source: "/tech/wind-load-calculator",
+    destination: "https://www.f1composite.com/frp-profile-calculator",
+  },
+  {
+    source: "/tech/u-value-calculator",
+    destination: "https://www.f1composite.com/technology/frp-u-value-calculator",
+  },
+  {
+    source: "/tools/frp-window-calculator.html",
+    destination: "https://www.f1composite.com/technology/frp-u-value-calculator",
+  },
+  {
+    source: "/tools/frp-mechanics-calculator.html",
+    destination: "https://www.f1composite.com/frp-profile-calculator",
+  },
+  {
+    source: "/pultrusion/calc",
+    destination: "https://www.f1composite.com/frp-profile-calculator",
+  },
+] as const;
+
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./messages/**/*.json"],
@@ -62,16 +101,10 @@ const nextConfig: NextConfig = {
         destination: "/en/suppliers",
         statusCode: 301,
       },
-      {
-        source: "/pultrusion/calc",
-        destination: "/tech/calculator",
-        statusCode: 301,
-      },
-      {
-        source: "/en/pultrusion/calc",
-        destination: "/en/tech/calculator",
-        statusCode: 301,
-      },
+      ...retiredToolRedirects.flatMap(({ source, destination }) => [
+        { source, destination, permanent: true },
+        { source: `/en${source}`, destination, permanent: true },
+      ]),
     ];
   },
   async headers() {

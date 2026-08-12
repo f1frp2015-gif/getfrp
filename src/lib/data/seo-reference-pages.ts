@@ -488,7 +488,7 @@ export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
       },
     ],
     related: [
-      { label: "Open the FRP weight calculator", href: "/tools/frp-weight-calculator" },
+      { label: "Open F1 Composite engineering tools", href: "/tools" },
       { label: "FRP vs aluminum", href: "/compare/frp-vs-aluminum" },
       { label: "FRP properties", href: "/technical/frp-properties" },
     ],

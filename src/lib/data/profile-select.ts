@@ -1,5 +1,5 @@
 // Reverse profile selection — "given span + load + deflection limit, which of
-// OUR catalog profiles passes?" — the piece the existing /tech/calculator and
+// OUR catalog profiles passes?" — the piece the AI profile tools and
 // profile_mechanics tool lack (they CHECK a section you type; this RECOMMENDS a
 // section from the catalog). Maps to the white-space competitors don't cover
 // (only Treadwell TreadSpec does load→profile selection) and grounds the answer
