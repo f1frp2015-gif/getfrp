@@ -732,7 +732,7 @@ export const sourcingTopics: SourcingTopic[] = [
       },
     ],
     related: [
-      { label: "Buy America (BABA) checker — can you use imported FRP?", href: "/tools/buy-america-frp-checker" },
+      { label: "F1 Composite US project guidance", href: "/tools" },
       { label: "China FRP import tariffs, AD/CVD & Section 301", href: "/sourcing/china-frp-import-tariffs" },
       { label: "CBAM & FRP — what actually applies", href: "/sourcing/cbam-frp-china" },
       { label: "Source FRP from China — directory & playbook", href: "/source-from-china" },

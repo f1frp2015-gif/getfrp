@@ -386,7 +386,7 @@ export default async function ProductDetailPage({
               ["FRP vs steel", "/compare/frp-vs-steel"],
               ["FRP material properties", "/technical/frp-properties"],
               ["Supplier quality inspection", "/guides/frp-quality-inspection"],
-              ["FRP landed cost estimator", "/tools/frp-cost-estimator"],
+              ["F1 Composite engineering tools", "/tools"],
             ].map(([label, href]) => (
               <Link
                 key={href}

@@ -81,13 +81,8 @@ export const DATA_SITEMAP_ROUTES: StaticRoute[] = [
 ];
 
 export const TOOL_SITEMAP_ROUTES: StaticRoute[] = [
-  { path: "/tools", lastModified: "2026-08-04" },
-  { path: "/tools/buy-america-frp-checker", lastModified: "2026-08-04" },
-  { path: "/tools/frp-weight-calculator", lastModified: "2026-08-04" },
-  { path: "/tools/frp-cost-estimator", lastModified: "2026-08-04" },
+  { path: "/tools", lastModified: "2026-08-12" },
   { path: "/tech", lastModified: "2026-08-04" },
-  { path: "/tech/calculator", lastModified: "2026-08-04" },
-  { path: "/tech/u-value-calculator", lastModified: "2026-08-04" },
 ];
 
 export const RESOURCE_SITEMAP_PATHS = [
