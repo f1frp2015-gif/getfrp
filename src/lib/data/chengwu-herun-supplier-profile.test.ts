@@ -79,6 +79,6 @@ test("keeps Herun in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Chengzi Tainuo (Shandong) New Material Technology Co., Ltd.",
   );
 });
