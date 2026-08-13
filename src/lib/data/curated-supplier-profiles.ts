@@ -20,6 +20,7 @@ import { CHANGZHOU_SAIRUI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sairui-s
 import { CHANGZHOU_SHANGKE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-shangke-supplier-profile";
 import { CHANGZHOU_SHENYING_SUPPLIER_PROFILE } from "@/lib/data/changzhou-shenying-supplier-profile";
 import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sinajet-supplier-profile";
+import { CHANGZHOU_TENTOL_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tentol-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "@/lib/data/changzhou-utek-supplier-profile";
 import { CHANGZHOU_XINGAO_SUPPLIER_PROFILE } from "@/lib/data/changzhou-xingao-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
@@ -112,6 +113,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_SHANGKE_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SHENYING_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SINAJET_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_TENTOL_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_UTEK_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_XINGAO_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
