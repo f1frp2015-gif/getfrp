@@ -7,6 +7,7 @@ import { ATCC_SUPPLIER_PROFILE } from "./data/atcc-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
 import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "./data/changzhou-putai-supplier-profile";
 import { CHANGZHOU_RIXIN_GROUP_SUPPLIER_PROFILE } from "./data/changzhou-rixin-group-supplier-profile";
+import { CHANGZHOU_RIXIN_MOLDING_SUPPLIER_PROFILE } from "./data/changzhou-rixin-molding-supplier-profile";
 import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "./data/changzhou-sinajet-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "./data/changzhou-utek-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
@@ -81,6 +82,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "changzhou-panwang-frp-composite-materials",
       "changzhou-putai-pro-tech",
       "changzhou-rixin-group",
+      "changzhou-rixin-molding-technology",
       "changzhou-sinajet-digital-cutting",
       "changzhou-utek-composite",
       "shenzhen-hongfu-tongxin",
@@ -168,6 +170,12 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(
     directory.filter(
       ({ id }) => id === CHANGZHOU_RIXIN_GROUP_SUPPLIER_PROFILE.id,
+    ).length,
+    1,
+  );
+  assert.equal(
+    directory.filter(
+      ({ id }) => id === CHANGZHOU_RIXIN_MOLDING_SUPPLIER_PROFILE.id,
     ).length,
     1,
   );
