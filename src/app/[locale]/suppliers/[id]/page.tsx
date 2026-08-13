@@ -402,6 +402,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
         legal: "Legal entity",
         established: isVerified
           ? "Legal entity established"
+          : supplier.category === "distributor"
+            ? "Legal entity established"
           : isShengliLimited
             ? "Operating since (company statement)"
             : "Manufacturing since (company statement)",

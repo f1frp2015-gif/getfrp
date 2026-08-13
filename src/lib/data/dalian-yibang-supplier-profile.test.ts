@@ -109,6 +109,11 @@ test("builds a distribution-focused SEO brief in the page range", () => {
       "Application trials and controlled repeat supply",
     ],
   );
+  assert.match(brief.overview[1], /distribution, technical-support or coordination services/i);
+  assert.match(brief.productNotes[0].body, /legal manufacturer/i);
+  assert.match(brief.capabilityNotes[0].body, /authorization or channel evidence/i);
+  assert.doesNotMatch(brief.capabilityNotes[0].body, /site and equipment|production route/i);
+  assert.match(brief.rfqChecklist[2], /legal manufacturer/i);
   assert.equal(brief.evidenceNotes.length, 3);
   assert.equal(brief.rfqChecklist.length, 7);
   assert.ok(brief.estimatedPageWordCount >= SUPPLIER_SEO_MIN_WORDS);
