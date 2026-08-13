@@ -271,6 +271,11 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   );
   const isClaimed = Boolean(enterprise || hasGitBackedF1Identity);
   const isShengliLimited = supplier.id === SHENGLI_LIMITED_SUPPLIER_ID;
+  const addressCountry = supplier.id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_ID
+    ? "GB"
+    : isShengliLimited
+      ? "NZ"
+      : "CN";
   const name = supplier.nameEn ?? "Supplier";
   const legalName = supplier.id === F1_COMPOSITE_SUPPLIER_ID
     ? F1_COMPOSITE_LEGAL_NAME_EN
@@ -373,7 +378,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             "@type": "PostalAddress",
             streetAddress: address ?? undefined,
             addressLocality: location,
-            addressCountry: isShengliLimited ? "NZ" : "CN",
+            addressCountry,
           }
         : undefined,
       knowsAbout: [
