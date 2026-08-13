@@ -1,0 +1,150 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const SHANGHAI_TRONXT_SUPPLIER_ID = "sup-shanghai-tronxt";
+export const SHANGHAI_TRONXT_SUPPLIER_SLUG = "shanghai-tronxt";
+
+// Curated from the current company-owned website, China Composites Expo's
+// Net Show and exhibitor list, and Shanghai government enterprise/project
+// disclosures. Performance, customer, scale and award statements remain
+// attributed claims. Official logo downloaded 2026-08-13 from:
+// https://www.tronxt.com/uploads/images/20231113/eaf32467789204bd72bff4e1f871f629.png
+export const SHANGHAI_TRONXT_SUPPLIER_PROFILE: SupplierListing = {
+  id: SHANGHAI_TRONXT_SUPPLIER_ID,
+  name: "上海创轲新材料科技有限公司",
+  nameEn: "Shanghai TRONXT New Material Technology Co., Ltd.",
+  slug: SHANGHAI_TRONXT_SUPPLIER_SLUG,
+  location: "上海",
+  locationEn: "Shanghai, China",
+  province: "上海",
+  category: "equipment",
+  products: [
+    "HP-RTM 全自动预成型机",
+    "CFRTP 热塑复合板材模压成型专机",
+    "WCM 湿法模压全自动高速成型专机",
+    "PCM 预浸料自动化模压成型专机",
+    "STM 聚氨酯喷涂传递模塑成型专机",
+    "热塑复合板材注塑一体成型专机",
+    "复材裁切自动上下料及分拣系统",
+    "复合材料制造信息化管理和设备监控系统",
+  ],
+  productsEn: [
+    "Automated HP-RTM preforming machines",
+    "CFRTP thermoplastic-sheet compression-moulding cells",
+    "Automated high-speed wet-compression-moulding (WCM) cells",
+    "Automated prepreg compression moulding (PCM) cells",
+    "Polyurethane spray-transfer moulding (STM) cells",
+    "Thermoplastic-sheet overmoulding cells",
+    "Automated composite cutting, unloading and sorting systems",
+    "Composite-production MES and equipment-monitoring systems",
+  ],
+  processList: [
+    "复材自动化产线方案与工艺集成",
+    "纤维布放卷、裁切、焊接和预成型",
+    "干纤维洒胶、搬运、模压与冷却",
+    "预浸料裁切、撕膜、铺层和模压",
+    "连续纤维热塑板红外预热和快速转运",
+    "聚氨酯喷涂、脱模剂喷洒和模压固化",
+    "机器人上下料、视觉识别与柔性分拣",
+    "设备联机、数据采集和制造信息化",
+  ],
+  processListEn: [
+    "Composite automation-line design and process integration",
+    "Fabric unwinding, cutting, welding and preforming",
+    "Dry-fabric resin application, handling, pressing and cooling",
+    "Prepreg cutting, film removal, lay-up and compression moulding",
+    "Infrared preheating and rapid transfer of continuous-fiber thermoplastic sheet",
+    "Polyurethane spraying, release-agent application and press curing",
+    "Robotic handling, vision recognition and flexible sorting",
+    "Machine connectivity, data acquisition and manufacturing information systems",
+  ],
+  established: 2017,
+  verified: false,
+  description:
+    "上海创轲新材料科技有限公司（TRONXT）是中国大陆复合材料成型智能装备和自动化产线供应商。现行官网以该上海法律主体运行，发布上海金山制造地址、太仓交付地址、沪 ICP 备案、企业联系方式及持续更新至 2026 年的新闻。官网将创轲品牌起点记为 2017 年，发展历程将公司成立列在 2018 年；本页采用企业公开的品牌起始年 2017，并提示采购方以营业执照核对法律实体成立日。公开产品覆盖 HP-RTM 预成型、CFRTP、WCM、PCM、STM、热塑板材注塑一体化和自动裁切分拣等七类装备，也包括复材制造信息化管理系统。中国国际复材展网上展厅以“创轲科技”收录同类技术范围，2026 展商名单以 SHANGHAI TRONXT NEW MATERIAL TECHNOLOGY CO., LTD. 列示展位 6J12。本页将品牌简称和中英文法律主体去重为一个上海供应商，不把 2025 年新设太仓公司另行并入或重复建页。",
+  descriptionEn:
+    "Shanghai TRONXT New Material Technology Co., Ltd. is a mainland-China supplier of intelligent composite-forming equipment and automated production lines. Its current official website operates under the Shanghai legal entity and publishes a Jinshan manufacturing address, a Taicang delivery address, Shanghai ICP filing, company contacts and news updated into 2026. The site dates the TRONXT business lineage to 2017 while its timeline places company establishment in 2018; this profile uses the published 2017 brand start and advises buyers to confirm the legal incorporation date from the current business licence. The range covers seven equipment families: HP-RTM preforming, CFRTP, WCM, PCM, STM, thermoplastic-sheet overmoulding, and automated cutting and sorting, plus composite manufacturing information systems. China Composites Expo lists the matching business as TRONXT, and the 2026 exhibitor list publishes SHANGHAI TRONXT NEW MATERIAL TECHNOLOGY CO., LTD. at booth 6J12. This page deduplicates the brand shorthand and Chinese/English legal identity as one Shanghai supplier without separately merging the Taicang entity established in 2025.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "创轲官网公开七类成型装备。HP-RTM 预成型机把多层纤维布放卷、裁切、焊接、加热、预成型和修边串联为自动线；CFRTP 专机由上料滑台、红外加热炉、机器人、伺服压机、模具温控和电控组成；WCM 线覆盖干纤维裁切后的搬运、洒胶、加热、模压和冷却；PCM 线覆盖预浸料裁切、撕膜、铺层、模压和冷却；STM 线用于连续纤维增强聚氨酯制品的放卷、裁切、喷涂、脱模剂喷洒、模压固化和下料；热塑板材注塑一体线覆盖片材上料、预热、快速流转、注塑和下料；裁切分拣系统结合自动裁切机、机器人或桁架、对中台和下料台处理预浸布、编织布、薄膜等柔性材料。RFQ 不应只写工艺名称，而应提供目标制件 CAD、材料体系、干布/预浸料/热塑板牌号与幅宽、层数/铺层、树脂混配与计量、节拍、年产量、设备综合效率、废品率、洁净和温湿度要求。还需定义压机吨位/行程/台面、模具界面、加热功率与温度均匀性、转运时间、机器人负载/工作半径/精度、视觉和安全等级、PLC/机器人品牌、通信协议、MES/SCADA 接口、数据所有权和网络安全。技术协议应列明 FAT/SAT 样件与连续运行时长、工艺能力指标、验收量具和试验、易损件、备件、能源介质、基础和公用工程、包装运输、安装调试、培训、文档语言、软件许可、远程服务、响应时限、质保和全生命周期支持；用于航空、汽车或其他受控项目时，还要确认出口管制、最终用户/用途和技术资料传输限制。官网称 2022 年通过 ISO 9001，但所审阅页面未展示可完整核对主体、证书号、范围、发证机构和当前有效期的证书，因此本页不列为已核实认证。官网发布的客户、订单、3000 平方米、30 人以上等数据均为企业自述，应在供应商准入时通过合同范围、设备清单、现场审厂和客户授权证明核验。",
+  productsServicesSummaryEn:
+    "TRONXT publishes seven equipment families. Its HP-RTM preforming cell links multilayer-fabric unwinding, cutting, welding, heating, preforming and trimming. The CFRTP cell combines loading tables, infrared heating, robots, a servo press, mould-temperature control and line controls. WCM covers handling, resin application, heating, pressing and cooling after dry-fabric cutting; PCM covers prepreg cutting, film removal, lay-up, pressing and cooling; STM covers unwinding, cutting, polyurethane spraying, release-agent application, press curing and unloading. The thermoplastic overmoulding cell links sheet loading, preheating, rapid transfer, injection moulding and unloading. The cutting and sorting system combines an automatic cutter, robot or gantry, centring table and unloading station for prepreg, woven fabric, film and other flexible materials. An RFQ should go beyond a process acronym: provide part CAD, material system, dry fabric, prepreg or thermoplastic-sheet grade and width, ply count and lay-up, resin mixing and metering, takt time, annual volume, OEE, scrap target, and cleanroom or climate requirements. Define press force, stroke and platen; mould interface; heating power and uniformity; transfer time; robot payload, reach and accuracy; vision and functional-safety targets; PLC and robot preferences; communications; MES or SCADA integration; data ownership and cybersecurity. The technical agreement should define FAT and SAT parts, continuous-run duration, capability metrics, acceptance gauges and tests, wear parts, spares, utilities, foundations, packing, installation, commissioning, training, document language, software licensing, remote support, response time, warranty and lifecycle service. For aerospace, automotive or other controlled programs, confirm export-control, end-user, end-use and technical-data-transfer restrictions. The site states that the company passed ISO 9001 in 2022, but the reviewed pages do not expose a certificate with complete legal entity, number, scope, issuer and current validity, so it is not recorded here as verified. Customer, order, 3,000 m² and 30-plus employee figures are company-published claims to be checked through contract scope, equipment registers, site audit and customer-authorized evidence.",
+  ecatalogs: [
+    {
+      title: "创轲科技官网",
+      titleEn: "Official Shanghai TRONXT Website",
+      description: "上海主体、产品、应用、新闻和联系方式。",
+      descriptionEn: "Shanghai identity, equipment, applications, news and contacts.",
+      url: "https://www.tronxt.com/",
+      format: "Official website",
+    },
+    {
+      title: "创轲公司介绍",
+      titleEn: "Official TRONXT Company Profile",
+      description: "企业沿革、基地、团队和企业自述项目经验。",
+      descriptionEn: "Company history, sites, team and claimed project experience.",
+      url: "https://www.tronxt.com/lists/25.html",
+      format: "Company profile",
+    },
+    {
+      title: "创轲复材成型装备目录",
+      titleEn: "Official TRONXT Composite Equipment Directory",
+      description: "七类自动化成型和裁切分拣装备入口。",
+      descriptionEn: "Seven automated forming, cutting and sorting equipment families.",
+      url: "https://www.tronxt.com/lists/65.html",
+      format: "Product directory",
+    },
+    {
+      title: "创轲联系方式",
+      titleEn: "Official TRONXT Contact Page",
+      description: "上海和太仓地址、电话、邮箱及在线留言。",
+      descriptionEn: "Shanghai and Taicang addresses, telephone, email and inquiry form.",
+      url: "https://www.tronxt.com/lists/39.html",
+      format: "Contact page",
+    },
+    {
+      title: "中国国际复材展创轲网上展厅",
+      titleEn: "China Composites Expo TRONXT Net Show",
+      description: "品牌简称、技术范围和展会分类来源。",
+      descriptionEn: "Organizer-published brand shorthand, technology scope and categories.",
+      url: "https://www.chinacompositesexpo.com/cn/netshow.php?key_word=%E5%88%9B%E8%BD%B2",
+      format: "Exhibitor profile",
+    },
+    {
+      title: "2026 中国国际复材展展商名单",
+      titleEn: "China Composites Expo 2026 Exhibitor List",
+      description: "列示上海创轲英文主体和展位 6J12。",
+      descriptionEn: "Lists the English Shanghai legal identity and booth 6J12.",
+      url: "https://www.chinacompositesexpo.com/cn/news.php?c_id=107",
+      format: "Exhibitor list",
+    },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
+  logo: "/supplier-assets/shanghai-tronxt-logo.png",
+  contactEmail: "info@tronxt.com",
+  contactPhone: "+86 21 3468 8512",
+  address:
+    "Building A, Phase II, Lane 45 Yujiang Road, Shanyang Town, Jinshan District, Shanghai, China",
+  website: "https://www.tronxt.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 18,
+  viewCount: 0,
+  capabilities: [
+    "automated HP-RTM preforming",
+    "CFRTP infrared preheating and compression moulding",
+    "wet compression moulding automation",
+    "prepreg compression moulding automation",
+    "polyurethane spray-transfer moulding automation",
+    "thermoplastic-sheet overmoulding",
+    "robotic composite cutting and sorting",
+    "line controls and composite manufacturing information systems",
+  ],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+};
