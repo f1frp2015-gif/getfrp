@@ -484,6 +484,14 @@ function capabilityDetail(name: string, supplierName: string, index: number): De
 }
 
 function applicationNotes(supplier: SupplierListing, name: string): DetailItem[] {
+  const playbook = profileCategory(supplier);
+  if (supplier.category === "equipment") {
+    return playbook.applicationFallbacks.slice(0, 3).map((item) => ({
+      title: item.title,
+      body: `${name}: ${item.body}`,
+    }));
+  }
+
   const haystack = [
     ...(supplier.productsEn ?? []),
     ...(supplier.processListEn ?? []),
@@ -495,7 +503,7 @@ function applicationNotes(supplier: SupplierListing, name: string): DetailItem[]
     .map(({ title, body }) => ({ title, body: body(name) }));
   if (matched.length >= 3) return matched;
 
-  const fallbacks = profileCategory(supplier).applicationFallbacks.map((item) => ({
+  const fallbacks = playbook.applicationFallbacks.map((item) => ({
     title: item.title,
     body: `${name}: ${item.body}`,
   }));
