@@ -20,7 +20,7 @@ export const DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE: SupplierListing = {
   province: "辽宁",
   category: "fiber",
   products: [
-    "1K、3K、6K、12K 至 360K 碳纤维丝",
+    "碳纤维丝（官网列示 1K、3K、6K、12K 至 360K）",
     "碳纤维粉",
     "碳纤维线",
     "碳纤维纸",
@@ -31,7 +31,8 @@ export const DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE: SupplierListing = {
     "按客户要求提供的特殊碳纤维制品",
   ],
   productsEn: [
-    "1K, 3K, 6K and 12K through 360K carbon-fiber tow",
+    "Carbon-fiber tow",
+    "Published tow range: 1K, 3K, 6K, 12K through 360K",
     "Carbon-fiber powder",
     "Carbon-fiber thread",
     "Carbon-fiber paper",
@@ -48,7 +49,6 @@ export const DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE: SupplierListing = {
     "电气电热用碳纤维制品开发",
     "防火保温用碳纤维制品开发",
     "特殊碳纤维制品定制",
-    "碳纤维生产装备自主设计（企业自述）",
     "碳纤维及复合材料应用开发",
   ],
   processListEn: [
@@ -58,7 +58,6 @@ export const DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE: SupplierListing = {
     "Carbon-fiber product development for electrical heating",
     "Carbon-fiber product development for fire insulation",
     "Custom specialty carbon-fiber products",
-    "In-house carbon-fiber production-equipment design (company claim)",
     "Carbon-fiber and composite application development",
   ],
   established: 2001,
@@ -66,7 +65,7 @@ export const DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE: SupplierListing = {
   description:
     "大连兴科碳纤维有限公司是兴科控股官网列示的中国大陆辽宁大连碳纤维企业。现行集团官网中英文分公司页直接显示中文主体名称，并称公司于 2001 年注册成立、注册资本 3000 万元，是国内较早实现工业化生产的碳纤维企业。官网公开产品范围从 1K、3K、6K、12K 延伸至 360K 碳纤维丝，并包括粉、线、纸、布、毡、电气电热与防火保温用碳纤维及复合材料，以及客户定制的特殊碳纤维制品。中国国际复材展网上展厅以 DALIAN SINKE CARBON FIBER CO., LTD. 列示该企业，产品类别为 Carbon Fiber；其英文简介同样写作 Dalian Xingke，并称主要生产设备基于企业自身技术设计制造，可提供 1K 至 320K 丝束、碳纤维布和定制制品。官网 360K 与展会 320K 的上限并不一致，本页保留来源差异，采购时必须按当前牌号、单丝性能、丝束规格和实际产线确认。中文法律主体“大连兴科碳纤维有限公司”、展会拼写 Dalian Sinke、正文拼写 Dalian Xingke、SINKE / 兴科控股品牌、chinasinke.net 域名及历史 dlxk.com 域名已作为同一企业线索去重；兴科控股列出的国瑞炭材料、天久复合材料、创兴科技新材料和金丰材料科技均为独立公司，不合并为本页主体。",
   descriptionEn:
-    "Dalian Sinke Carbon Fiber Co., Ltd. is a mainland-China carbon-fiber company identified on Xingke Holdings' current subsidiary pages. The Chinese and English group website identifies the subsidiary and says it was incorporated in 2001 with RMB 30 million registered capital. Its published range covers 1K, 3K, 6K and 12K through 360K carbon-fiber tow; powder, thread, paper, cloth and felt; carbon-fiber materials for electrical heating and fire insulation; composites; and customer-specified products. China Composites Expo lists DALIAN SINKE CARBON FIBER CO., LTD. under Carbon Fiber. The exhibitor description also uses the spelling Dalian Xingke, says its principal production equipment was designed from internal technical know-how, and lists 1K through 320K tow, cloth and custom products. The 320K exhibition limit differs from the 360K current group-page claim, so buyers must confirm the currently manufactured grade, line, tow size and test basis. The Chinese legal identity, Dalian Sinke exhibitor spelling, Dalian Xingke text spelling, SINKE group mark, chinasinke.net domain and historical dlxk.com domain have been deduplicated as one company trail. Other subsidiaries named by the group remain separate legal entities and are not merged into this profile.",
+    "Dalian Sinke Carbon Fiber Co., Ltd. is a mainland-China carbon-fiber company identified on Xingke Holdings' current subsidiary pages. The Chinese and English group website identifies the subsidiary and says it was incorporated in 2001 with RMB 30 million registered capital. Its published range covers 1K, 3K, 6K and 12K through 360K carbon-fiber tow; powder, thread, paper, cloth and felt; carbon-fiber materials for electrical heating and fire insulation; composites; and customer-specified products. China Composites Expo lists DALIAN SINKE CARBON FIBER CO., LTD. under Carbon Fiber. The exhibitor description also uses the spelling Dalian Xingke, attributes the design of key manufacturing assets to internal technical know-how, and lists 1K through 320K tow, cloth and custom products. The 320K exhibition limit differs from the 360K current group-page claim, so buyers must confirm the currently manufactured grade, line, tow size and test basis. The Chinese legal identity, Dalian Sinke exhibitor spelling, Dalian Xingke text spelling, SINKE group mark, chinasinke.net domain and historical dlxk.com domain have been deduplicated as one company trail. Other subsidiaries named by the group remain separate legal entities and are not merged into this profile.",
   certifications: [],
   certificationsEn: [],
   productsServicesSummary:
