@@ -16,6 +16,7 @@ import { CHANGZHOU_RONGYU_ROLLER_SUPPLIER_PROFILE } from "@/lib/data/changzhou-r
 import { CHANGZHOU_RUISHUN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-ruishun-supplier-profile";
 import { CHANGZHOU_RUNFENGYUAN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-runfengyuan-supplier-profile";
 import { CHANGZHOU_SAIRUI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sairui-supplier-profile";
+import { CHANGZHOU_SHANGKE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-shangke-supplier-profile";
 import { CHANGZHOU_SHENYING_SUPPLIER_PROFILE } from "@/lib/data/changzhou-shenying-supplier-profile";
 import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sinajet-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "@/lib/data/changzhou-utek-supplier-profile";
@@ -105,6 +106,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_RUISHUN_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_RUNFENGYUAN_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SAIRUI_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_SHANGKE_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SHENYING_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SINAJET_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_UTEK_SUPPLIER_PROFILE },
