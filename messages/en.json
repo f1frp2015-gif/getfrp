@@ -534,7 +534,8 @@
     "moreItems": "{count} more items",
     "claimed": "✓ Claimed",
     "areYouOwner": "Is this your company?",
-    "claim": "Claim this company"
+    "claim": "Claim this company",
+    "claimYourCompany": "Claim your company"
   },
   "Tech": {
     "pageTitle": "Process Wiki",

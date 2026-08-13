@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import {
   ArrowLeft,
   ArrowRight,
+  Building2,
   Check,
   ExternalLink,
   GitCompareArrows,
@@ -922,6 +923,8 @@ export function SuppliersClient({
               const selected = selectedIds.includes(supplier.id);
               const productTags = getProductTags(supplier);
               const matchReasons = getMatchReasons(supplier);
+              const showVerificationBadge =
+                supplier.profilePublished && supplier.verified;
               const selectionDisabled =
                 !selected && selectedIds.length >= COMPARE_MAX;
 
@@ -956,12 +959,12 @@ export function SuppliersClient({
                           </div>
                         </div>
                         <div className="flex shrink-0 flex-col items-end gap-1">
-                          {supplier.sponsored && supplier.verified && (
+                          {supplier.sponsored && showVerificationBadge && (
                             <Badge className="border border-amber-300 bg-amber-50 text-amber-900 shadow-none hover:bg-amber-50">
                               {t("sponsoredVerified")}
                             </Badge>
                           )}
-                          {supplier.verified && !supplier.sponsored && (
+                          {showVerificationBadge && !supplier.sponsored && (
                             <Badge variant="signal">{t("verified")}</Badge>
                           )}
                         </div>
@@ -1095,6 +1098,18 @@ export function SuppliersClient({
                       >
                         {t("viewProfile")}
                         <ArrowRight />
+                      </Link>
+                      <Link
+                        href={`/suppliers/claim?supplier=${encodeURIComponent(supplier.slug)}` as never}
+                        prefetch={false}
+                        className={buttonVariants({
+                          variant: "secondary",
+                          size: "sm",
+                          className: "w-full",
+                        })}
+                      >
+                        <Building2 />
+                        {t("claimYourCompany")}
                       </Link>
                     </div>
                   </CardContent>
