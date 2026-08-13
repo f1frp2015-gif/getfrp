@@ -86,7 +86,7 @@ test("keeps Dalian Yuxing in reviewed exhibitor source order", () => {
   assert.equal(names[index - 1], "Dalian Yibang Technology Co., Ltd.");
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Danyang Yixun Machinery Co., Ltd.",
   );
 });
 
