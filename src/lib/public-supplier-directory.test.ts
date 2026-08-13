@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
+import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "./data/chongqing-dujiang-supplier-profile";
 import {
@@ -60,6 +61,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "f1-composite",
       "aoc",
       "haining-anjie-composite-materials",
+      "changsheng-carbon",
       "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
       "wanhua-chemical",
@@ -200,6 +202,21 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(anjie?.location, "Haining, Zhejiang, China");
   assert.equal(anjie?.logo, "/supplier-assets/anjie-logo.jpg");
   assert.match(anjie?.description ?? "", /NONGCHAOER Composite Materials/i);
+  const changshengCarbon = directory.find(
+    ({ id }) => id === CHANGSHENG_CARBON_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(changshengCarbon?.slug, "changsheng-carbon");
+  assert.equal(changshengCarbon?.location, "Langfang, Hebei, China");
+  assert.equal(changshengCarbon?.category, "fiber");
+  assert.equal(
+    changshengCarbon?.logo,
+    "/supplier-assets/changsheng-carbon-logo.jpg",
+  );
+  assert.match(changshengCarbon?.description ?? "", /December 2, 2021/i);
+  assert.match(
+    CHANGSHENG_CARBON_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /ZA60XC-12K/i,
+  );
   const hongfuTongxin = directory.find(
     ({ id }) => id === HONGFU_TONGXIN_SUPPLIER_PROFILE.id,
   );
