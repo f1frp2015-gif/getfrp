@@ -80,7 +80,7 @@ test("keeps Dalian Yatai in reviewed exhibitor source order", () => {
   assert.equal(names[index - 1], "Dalian Sinke Carbon Fiber Co., Ltd.");
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dalian Yibang Technology Co., Ltd.",
   );
 });
 

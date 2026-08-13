@@ -249,6 +249,7 @@ function categoryLabel(category: string | null): string {
     fiber: "Fiber supplier",
     resin: "Resin supplier",
     additive: "Additives supplier",
+    distributor: "Specialty materials distributor",
     equipment: "Equipment supplier",
     mold: "Mold maker",
     tooling: "Tooling / NDT equipment",
@@ -401,6 +402,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
         legal: "Legal entity",
         established: isVerified
           ? "Legal entity established"
+          : supplier.category === "distributor"
+            ? "Legal entity established"
           : isShengliLimited
             ? "Operating since (company statement)"
             : "Manufacturing since (company statement)",
@@ -431,7 +434,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             ]
           : [
               "GetFRP compiled this profile from the company's official website.",
-              "The website, company-domain emails and telephone are published as contact references.",
+              "The website, published contact email and telephone are provided as contact references.",
               "The company has not claimed or completed business-identity verification for this profile.",
             ],
         note: isVerified
@@ -655,7 +658,11 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold">Manufacturing and service capability review</h3>
+                <h3 className="text-lg font-semibold">
+                  {supplier.category === "distributor"
+                    ? "Distribution and technical-service review"
+                    : "Manufacturing and service capability review"}
+                </h3>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {seoBrief.capabilityNotes.map((item) => (
                     <article key={item.title} className="rounded-xl border border-border/70 p-5">

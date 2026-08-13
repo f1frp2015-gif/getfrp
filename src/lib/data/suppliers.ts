@@ -17,6 +17,7 @@ export const supplierCategories = [
   { id: "fiber", name: "纤维供应商", nameEn: "Fiber supplier" },
   { id: "resin", name: "树脂供应商", nameEn: "Resin supplier" },
   { id: "additive", name: "助剂供应商", nameEn: "Additives supplier" },
+  { id: "distributor", name: "材料分销商", nameEn: "Materials distributor" },
   { id: "equipment", name: "设备供应商", nameEn: "Equipment supplier" },
   { id: "mold", name: "模具制造商", nameEn: "Mold maker" },
   { id: "tooling", name: "工装/检测装备", nameEn: "Tooling / NDT equipment" },

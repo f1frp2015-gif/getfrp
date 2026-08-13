@@ -184,6 +184,41 @@ const CATEGORY_PLAYBOOKS: Record<string, CategoryPlaybook> = {
       "Regulatory declarations need current composition and supply-chain identity. Ask the supplier to identify restricted substances, intentional additives, impurities and applicable inventory status, and to notify the buyer before changes to chemistry, treatment, raw-material source or production site. Finished-product compliance remains the responsibility of the complete formulation and use case.",
     ],
   },
+  distributor: {
+    label: "specialty composite-material distributor",
+    audience:
+      "materials engineers and procurement teams qualifying brand authorization, chain of custody, grade identity, storage, documentation and application support for distributed composite materials",
+    applicationFallbacks: [
+      {
+        title: "Authorized and traceable material supply",
+        body:
+          "A distributor should identify the legal manufacturer, exact grade, origin, current authorization, inventory owner and chain of custody for every offer. Buyers should require producer-linked TDS, SDS and batch evidence and verify that storage, shelf life and transport remained within the manufacturer's limits.",
+      },
+      {
+        title: "Aerospace and performance-critical material programs",
+        body:
+          "Performance-critical supply requires more than a catalog match. Confirm whether the distributor and its site fall within the required quality-system scope, how counterfeit risk is controlled, which records trace the shipment to the producer and whether the exact product has the application-specific approval or test evidence required by the buyer.",
+      },
+      {
+        title: "Application trials and controlled repeat supply",
+        body:
+          "Technical support can help shortlist a material, but the buyer should approve a producer grade through a representative trial and then control the grade, manufacturing site, revision and supply channel. The purchase order should require notification before any substitution, reformulation, authorization or source change.",
+      },
+    ],
+    qualificationChecks: [
+      "Identify the brand, legal manufacturer, production site, exact grade, revision and country of origin for every quoted line.",
+      "Obtain current producer authorization or traceable channel evidence, including territory and product scope where relevant.",
+      "Request producer TDS and SDS, a lot-linked COA or conformity record, manufacture date, shelf life and storage history.",
+      "Define counterfeit-prevention, incoming verification, segregation, relabeling and chain-of-custody controls.",
+      "Tie every fire, lightning, aerospace, environmental or regulatory claim to the exact product and report scope.",
+      "Confirm stock status, minimum pack, MOQ, lead time, transport conditions, Incoterm and change-notification obligations.",
+    ],
+    supplementalGuidance: [
+      "The supplier name on a quotation may differ from the manufacturer named on the datasheet or certificate. Record both legal entities and the role of each party. A useful approval also captures the manufacturer part number, revision, lot format, original label and authorized supply route so incoming inspection can detect substitutions or gray-market material.",
+      "Shelf-life materials require an unbroken storage history. Request manufacture and expiry dates, temperature limits, dangerous-goods classification, original packaging and any remaining-life requirement at delivery. If repacking or relabeling is permitted, define who performs it, how original lot identity is preserved and which records accompany each smaller unit.",
+      "Distributor quality-system certification and product qualification answer different questions. A management-system certificate can support purchasing and traceability controls, but it does not prove that a coating, mesh, filler or film meets the buyer's final application. Product evidence must still match the manufacturer, grade, construction, test method and intended use.",
+    ],
+  },
   equipment: {
     label: "composite manufacturing equipment supplier",
     audience:
@@ -556,7 +591,21 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.map(normalize).filter(Boolean)));
 }
 
-function productDetail(name: string, supplierName: string, index: number): DetailItem {
+function productDetail(
+  name: string,
+  supplierName: string,
+  index: number,
+  category?: string | null,
+): DetailItem {
+  if (category === "distributor") {
+    const distributorTemplates = [
+      `${supplierName} includes this item in its published distribution scope. Ask for the legal manufacturer, current brand authorization or traceable channel evidence, exact grade and revision, country of origin, producer datasheet, lot-linked conformity record, manufacture date, shelf life, storage history and quotation validity.`,
+      `For ${name}, convert the catalog description into a distributor-controlled offer. Confirm producer and production site, exact model or grade, stock ownership and location, minimum pack, MOQ, lead time, transport conditions and whether any relabeling, repacking or substitution is proposed.`,
+      `This listing is evidence of a published supply scope, not proof of producer approval or application fitness. Ask ${supplierName} to identify the manufacturer, authorization territory and product scope, batch traceability, current TDS and SDS, relevant test evidence and the limits of its technical-support responsibility.`,
+      `A comparable RFQ for ${name} should state the application and measurable requirements, then require ${supplierName} to quote the exact producer grade and supply channel. Treat alternatives as separate offers and control any change of brand, formulation, production site, revision or source.`,
+    ];
+    return { title: name, body: distributorTemplates[index % distributorTemplates.length] };
+  }
   const templates = [
     `${supplierName} includes this product in its published supply scope. Treat that listing as a starting point: request the current datasheet or drawing, material and construction, available grades or dimensions, guaranteed properties, production site, quotation revision and evidence that represents the exact item offered.`,
     `For ${name}, buyers should convert the catalog description into an acceptance specification. Confirm standard and custom options, raw-material system, critical tolerances, surface or finish, test basis, sample route, MOQ, lead time and packing. Any alternative proposed by ${supplierName} should be identified explicitly rather than treated as automatically equivalent.`,
@@ -566,7 +615,21 @@ function productDetail(name: string, supplierName: string, index: number): Detai
   return { title: name, body: templates[index % templates.length] };
 }
 
-function capabilityDetail(name: string, supplierName: string, index: number): DetailItem {
+function capabilityDetail(
+  name: string,
+  supplierName: string,
+  index: number,
+  category?: string | null,
+): DetailItem {
+  if (category === "distributor") {
+    const distributorTemplates = [
+      `${supplierName} publishes ${name} as part of its service scope. Buyers should confirm the named brands and grades, current authorization or channel evidence, inventory location, storage and handling controls, lot traceability, delivery records and responsibility for any subcontracted logistics or processing.`,
+      `The value of ${name} depends on the offered product and the distributor's documented controls. Request a representative order trail from producer or authorized source through receipt, storage and release, together with personnel responsibilities, nonconformance handling and change-notification rules.`,
+      `For sourcing purposes, ${name} is a service claim rather than independent proof of product approval. Define the technical question, response owner, producer involvement, sample or trial route, records supplied with the shipment and limitations on recommendations or substitutions.`,
+      `Buyers evaluating ${name} should connect the claim to current producer authorization, trained support personnel, controlled product and batch records, suitable storage, a recent representative delivery and a clear escalation route to the legal manufacturer.`,
+    ];
+    return { title: name, body: distributorTemplates[index % distributorTemplates.length] };
+  }
   const templates = [
     `${supplierName} publishes ${name} as part of its capability scope. Buyers should ask which site and equipment perform the work, the practical size or material limits, the normal control records and whether the proposed order uses the same route. Subcontracted stages should be visible in the quality plan.`,
     `The relevance of ${name} depends on the requested product and acceptance criteria. During qualification, request a process flow, critical control points, inspection or test method, operator or equipment qualification where applicable, nonconformance handling and a recent example that represents the offered production route.`,
@@ -578,7 +641,7 @@ function capabilityDetail(name: string, supplierName: string, index: number): De
 
 function applicationNotes(supplier: SupplierListing, name: string): DetailItem[] {
   const playbook = profileCategory(supplier);
-  if (supplier.category === "equipment") {
+  if (supplier.category === "equipment" || supplier.category === "distributor") {
     return playbook.applicationFallbacks.slice(0, 3).map((item) => ({
       title: item.title,
       body: `${name}: ${item.body}`,
@@ -640,6 +703,19 @@ function rfqChecklist(supplier: SupplierListing, name: string): string[] {
   const products = supplier.productsEn ?? [];
   const processes = supplier.processListEn ?? [];
   const standards = supplier.standardsSupported ?? [];
+  if (supplier.category === "distributor") {
+    return [
+      `Product definition: identify the requested ${products[0] ?? "product"}, producer, exact grade and revision, dimensions or pack, quantity, application and expected annual demand.`,
+      "Performance and approvals: state the required properties, environment, test evidence, customer approvals and regulatory constraints that control acceptance.",
+      `Manufacturer and channel: require ${name} to identify the legal manufacturer, production site, country of origin, authorization or traceable supply route and every subcontracted processing or logistics stage.`,
+      standards.length > 0
+        ? `Standards and evidence: the profile references ${standards.slice(0, 3).join(", ")}; identify the exact edition, product grade, report scope and acceptance values required by the project.`
+        : "Standards and evidence: name the required standard edition, test methods, report scope, laboratory or witness expectation and acceptance values.",
+      "Quality and traceability: require producer TDS and SDS, lot-linked COA or conformity evidence, manufacture date, shelf life, storage history, incoming checks, segregation and counterfeit controls.",
+      "Commercial boundary: request stock status, minimum pack, MOQ, lead time, payment, warranty, Incoterm, export documents, transport conditions and responsibility for damage or expired material.",
+      "Change control: require written approval before any change to producer, grade, formulation, production site, authorization, revision, pack, storage route or supply channel.",
+    ];
+  }
   return [
     `Product definition: identify the requested ${products[0] ?? "product"}, drawing or grade revision, dimensions, material construction, quantity and expected annual demand.`,
     `Performance: state the loads, environment, temperature, chemical, fire, electrical, appearance or service-life requirements that actually control selection.`,
@@ -703,9 +779,12 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
     `Source-reviewed ${name} profile for ${primaryProduct}, capabilities, certificates, official catalogs and RFQ qualification in ${location}.`,
     160,
   );
+  const capabilityLabel = supplier.category === "distributor"
+    ? "distribution, technical-support or coordination services"
+    : "manufacturing or support capabilities";
   const overview = [
     `This procurement profile is built for ${playbook.audience}. It organizes ${name}'s published products, processes, certificate references and official sources around the primary topic “${primaryKeyword}.” The objective is to help a buyer decide whether to open a controlled RFQ, not to turn a broad company catalog into an unsupported approval.`,
-    `${name} currently lists ${products.length} product or service groups and ${processes.length} manufacturing or support capabilities in this reviewed record. The public scope indicates what to investigate, while the buyer remains responsible for drawings, design calculations, standards, current certificates, sample approval and order-specific commercial confirmation. Claims below are attributed to the attached source set unless GetFRP explicitly labels them as qualification guidance.`,
+    `${name} currently lists ${products.length} product or service groups and ${processes.length} ${capabilityLabel} in this reviewed record. The public scope indicates what to investigate, while the buyer remains responsible for drawings, design calculations, standards, current certificates, sample approval and order-specific commercial confirmation. Claims below are attributed to the attached source set unless GetFRP explicitly labels them as qualification guidance.`,
   ];
   const baseBrief: Omit<SupplierSeoBrief, "estimatedPageWordCount"> = {
     pageTitle,
@@ -716,8 +795,10 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
     positioning: `${shortName} is presented as a source-reviewed supplier profile centered on ${topicLabel}, with company-published capability separated from buyer-side verification requirements.`,
     topicLabel,
     overview,
-    productNotes: products.slice(0, 4).map((product, index) => productDetail(product, name, index)),
-    capabilityNotes: processes.slice(0, 4).map((process, index) => capabilityDetail(process, name, index)),
+    productNotes: products.slice(0, 4).map((product, index) =>
+      productDetail(product, name, index, supplier.category)),
+    capabilityNotes: processes.slice(0, 4).map((process, index) =>
+      capabilityDetail(process, name, index, supplier.category)),
     applicationNotes: applicationNotes(supplier, name),
     qualificationChecks: playbook.qualificationChecks,
     evidenceNotes: evidenceNotes(supplier, name),
