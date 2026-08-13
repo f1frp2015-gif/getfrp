@@ -4,6 +4,7 @@ import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
+import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "./data/hongyu-composite-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "./data/chongqing-dujiang-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
@@ -69,6 +70,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "jushi",
       "chongqing-polycomp-international",
       "hebei-weitong-frp",
+      "hongyu-composite-materials-technology-jiaxing",
       "chongqing-dujiang-composites",
       "anhui-anche-east-frp",
       "taishan-fiberglass",
@@ -453,6 +455,20 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     HEBEI_WEITONG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /DN15 to DN4000/i,
+  );
+  const hongyuComposite = directory.find(
+    ({ id }) => id === HONGYU_COMPOSITE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    hongyuComposite?.slug,
+    "hongyu-composite-materials-technology-jiaxing",
+  );
+  assert.equal(hongyuComposite?.location, "Jiaxing, Zhejiang, China");
+  assert.equal(hongyuComposite?.category, "equipment");
+  assert.equal(hongyuComposite?.logo, null);
+  assert.match(
+    HONGYU_COMPOSITE_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /16 independent/i,
   );
   const chongqingDujiang = directory.find(
     ({ id }) => id === CHONGQING_DUJIANG_SUPPLIER_PROFILE.id,
