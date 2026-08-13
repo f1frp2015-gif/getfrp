@@ -30,7 +30,7 @@ function supplierRank(row: PublicSupplierRow): [number, number, number, number, 
   const supplier = row.supplier;
   return [
     supplier.id === PINNED_SUPPLIER_ID ? 1 : 0,
-    supplier.profilePublished ? 1 : 0,
+    isSupplierProfileIndexable(supplier) ? 1 : 0,
     supplier.verified ? 1 : 0,
     supplier.brandPriority ?? 0,
     SCALE_RANK[supplier.scaleTier ?? ""] ?? 0,
@@ -70,7 +70,10 @@ function serializeSupplierRow(
       ? supplier.certificationsEn ?? []
       : supplier.certifications ?? []) as string[],
     verified: Boolean(supplier.verified),
-    profilePublished: Boolean(supplier.profilePublished),
+    // This UI flag represents a completed, indexable company homepage rather
+    // than the looser database publication switch. Incomplete legacy records
+    // remain visible in the directory but sort below completed profiles.
+    profilePublished: isSupplierProfileIndexable(supplier),
     enterpriseId: supplier.enterpriseId ?? null,
     website: supplier.website ?? row.enterpriseWebsite,
     logo: supplier.logo ?? row.enterpriseLogo,
@@ -94,14 +97,11 @@ export function mergePublicSupplierDirectory(
     ...row,
     supplier: enrichSupplierWithCuratedProfile(row.supplier),
   }));
-  const publicDatabaseRows = enrichedDatabaseRows.filter(({ supplier }) =>
-    isSupplierProfileIndexable(supplier),
-  );
   const databaseIds = new Set(
-    publicDatabaseRows.map(({ supplier }) => supplier.id),
+    enrichedDatabaseRows.map(({ supplier }) => supplier.id),
   );
   const databaseSlugs = new Set(
-    publicDatabaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
+    enrichedDatabaseRows.map(({ supplier }) => supplierRouteSlug(supplier)),
   );
   const curatedFallbackRows = CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) => {
     const slug = supplierRouteSlug(profile);
@@ -122,7 +122,7 @@ export function mergePublicSupplierDirectory(
     } satisfies PublicSupplierRow];
   });
 
-  return [...publicDatabaseRows, ...curatedFallbackRows]
+  return [...enrichedDatabaseRows, ...curatedFallbackRows]
     .sort(compareSupplierRows)
     .map((row) => serializeSupplierRow(row, locale));
 }
