@@ -90,7 +90,7 @@ test("keeps Dalian Yibang in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dalian Yuxing Water Treatment Equipment Co., Ltd.",
   );
 });
 
