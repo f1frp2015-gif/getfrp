@@ -42,6 +42,7 @@ import { DALIAN_LIANSHENG_SUPPLIER_PROFILE } from "@/lib/data/dalian-liansheng-s
 import { DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE } from "@/lib/data/dalian-xingke-carbon-fiber-supplier-profile";
 import { DALIAN_YATAI_SUPPLIER_PROFILE } from "@/lib/data/dalian-yatai-supplier-profile";
 import { DALIAN_YIBANG_SUPPLIER_PROFILE } from "@/lib/data/dalian-yibang-supplier-profile";
+import { DALIAN_YUXING_SUPPLIER_PROFILE } from "@/lib/data/dalian-yuxing-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
@@ -154,6 +155,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: DALIAN_XINGKE_CARBON_FIBER_SUPPLIER_PROFILE },
   { profile: DALIAN_YATAI_SUPPLIER_PROFILE },
   { profile: DALIAN_YIBANG_SUPPLIER_PROFILE },
+  { profile: DALIAN_YUXING_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },

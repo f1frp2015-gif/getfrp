@@ -383,6 +383,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /flat sheet/i, label: "FRP Flat Sheets" },
   { pattern: /continuous.*(?:mortar|pressure).*pipe|grp.*pressure pipe/i, label: "Continuous-Wound GRP Pipe" },
   { pattern: /continuous-wound.*pipe/i, label: "Continuous-Wound FRP Pipe" },
+  { pattern: /membrane.*(?:pressure vessel|housing)|(?:pressure vessel|housing).*membrane/i, label: "FRP Membrane Housings" },
   { pattern: /frp\s*\/\s*grp pipe|frp pipe.*fitting/i, label: "FRP Pipe and Fittings" },
   { pattern: /phenolic grating/i, label: "Phenolic and FRP Grating" },
   { pattern: /grating/i, label: "FRP Grating" },
@@ -405,6 +406,24 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
 ];
 
 const APPLICATION_SIGNALS: ApplicationSignal[] = [
+  {
+    pattern: /membrane.*(?:pressure vessel|housing)|(?:pressure vessel|housing).*membrane|reverse osmosis|\bRO\b.*membrane/i,
+    title: "RO, ultrafiltration and desalination pressure-vessel systems",
+    body: (name) =>
+      `${name}: Membrane-housing qualification should lock model, membrane count, port arrangement, pressure, temperature, media, cleaning chemistry, end assembly, seals, supports and cyclic duty. Require design basis, pressure and leak testing, burst and fatigue evidence, material traceability, installation instructions, spares and destination-specific pressure or drinking-water approvals for the exact housing offered.`,
+  },
+  {
+    pattern: /radome|radio-transparent|antenna enclosure/i,
+    title: "Communication radomes and radio-transparent structures",
+    body: (name) =>
+      `${name}: A radome RFQ should define frequency bands, transmission loss, reflection, dielectric properties, antenna clearance, section drawing, material, finish, wind and ice loads, UV and weather exposure, mounting, drainage and dimensional tolerance. Require representative radio-frequency, mechanical and environmental test evidence for the offered construction rather than a generic material statement.`,
+  },
+  {
+    pattern: /utility pole|electrical infrastructure|insulation structure|railway crossarm/i,
+    title: "Composite utility and electrical infrastructure",
+    body: (name) =>
+      `${name}: Utility poles, crossarms and insulation structures need a controlled design basis covering geometry, load cases, deflection, connection details, electrical insulation, tracking and erosion, fire, UV, moisture, temperature, fatigue and installation. Buyers should identify the governing utility or railway specification and require type, routine and lot evidence for the exact product family.`,
+  },
   {
     pattern: /flame.?retard|fire.?retard|halogen.?free|low.?smoke/i,
     title: "Flame-retardant composite and polymer formulations",
