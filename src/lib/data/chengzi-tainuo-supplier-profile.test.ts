@@ -83,6 +83,6 @@ test("keeps Chengzi Tainuo in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Topglow Advanced Materials (Shanghai) Co., Ltd.",
   );
 });
