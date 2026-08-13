@@ -147,6 +147,41 @@ const CATEGORY_PLAYBOOKS: Record<string, CategoryPlaybook> = {
       "Shelf life and logistics are part of resin quality. Confirm manufacturing date, storage temperature, inhibitor or settling behavior, drum or IBC closure, dangerous-goods classification and the procedure for material exposed outside its permitted range. The purchase order should also define change notification for formulation, raw-material source and manufacturing site.",
     ],
   },
+  additive: {
+    label: "composite additive and functional-filler supplier",
+    audience:
+      "formulators, compounders and procurement teams comparing additive chemistry, dispersion, process compatibility, finished-material performance and regulatory evidence",
+    applicationFallbacks: [
+      {
+        title: "Flame-retardant composite and polymer formulations",
+        body:
+          "A flame-retardant additive must be qualified in the actual polymer, reinforcement, filler package, thickness and process. Buyers should define the target fire, smoke, electrical, mechanical and aging requirements and request current evidence for the complete tested formulation rather than treating an additive description as finished-product compliance.",
+      },
+      {
+        title: "Functional fillers and surface-modified minerals",
+        body:
+          "Mineral additives can affect viscosity, dispersion, surface finish, density and mechanical performance as well as cost. Confirm chemistry, impurity limits, particle-size distribution, surface treatment, moisture, loading and compatibility with the intended resin, hardener, reinforcement and processing window.",
+      },
+      {
+        title: "Compounding and masterbatch programs",
+        body:
+          "For masterbatch or compound supply, define carrier, active content, let-down ratio, pellet or powder form, dispersion, color, volatiles and batch tolerance. A representative processing trial should reproduce the intended equipment and record both process stability and finished-part properties.",
+      },
+    ],
+    qualificationChecks: [
+      "Specify additive chemistry, grade, active content, particle size, surface treatment and intended polymer or resin system.",
+      "Request current TDS, SDS, lot-linked COA fields, impurity limits and the test method behind each guaranteed value.",
+      "Define loading, mixing sequence, dispersion equipment, temperature and the processing behavior required at production scale.",
+      "Test the final formulation at the intended thickness, reinforcement level, cure or molding cycle and conditioning.",
+      "Tie fire, smoke, electrical, environmental or regulatory claims to the exact formulation and current report scope.",
+      "Confirm change control, shelf life, moisture-barrier packing, MOQ, lead time and destination-market documentation.",
+    ],
+    supplementalGuidance: [
+      "Additive performance is formulation-dependent. A published flame rating, mechanical value or environmental claim may represent one polymer, loading and specimen thickness and should not be transferred to another system without testing. Record the complete trial formulation, process settings and conditioning so the approved result can be reproduced and investigated after any change.",
+      "Powders and mineral fillers require incoming controls beyond a trade name. Particle-size distribution, agglomeration, moisture, impurities, whiteness or color, bulk density and surface treatment can affect feeding, dispersion and finished properties. Agree which fields appear on every batch certificate and which are monitored periodically.",
+      "Regulatory declarations need current composition and supply-chain identity. Ask the supplier to identify restricted substances, intentional additives, impurities and applicable inventory status, and to notify the buyer before changes to chemistry, treatment, raw-material source or production site. Finished-product compliance remains the responsibility of the complete formulation and use case.",
+    ],
+  },
   equipment: {
     label: "composite manufacturing equipment supplier",
     audience:
@@ -376,7 +411,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
       `${name}'s corrugated FRP range may support cooling-tower or industrial cladding discussions when the offered profile matches the existing support and fastening layout. Buyers should specify the corrugation geometry, resin and gel coat, thickness, span and load basis, UV and chemical exposure, cut lengths, drilling, edge finish, nesting and transport supports, then request evidence for the exact construction rather than a generic flat-sheet value.`,
   },
   {
-    pattern: /carbon.?fiber|basalt|fiberglass|glass.?fiber|fabric|roving|yarn|mat|tissue/i,
+    pattern: /carbon.?fiber|basalt|fiberglass|glass.?fiber|fabric|roving|yarn|\bmats?\b|tissue/i,
     title: "Composite reinforcement and laminate production",
     body: (name) =>
       `${name}'s reinforcement range can be screened for laminating, pultrusion, winding, molding or conversion programs. Buyers should confirm grade, sizing, architecture, width, tex or areal weight, package, splice and moisture limits, then run a representative processing trial before approving the material for repeat production.`,
@@ -412,7 +447,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
       `${name}'s product references indicate a possible fit for transport applications. Qualification should address part revision, material and process, appearance class, dimensional capability, inserts and secondary operations, validation plan, change control, annual volume, service-part obligations and packaging that prevents cosmetic or structural damage.`,
   },
   {
-    pattern: /phone|consumer electronics|aramid/i,
+    pattern: /\bphone\b|consumer electronics|aramid/i,
     title: "Consumer-electronics composite parts",
     body: (name) =>
       `${name}'s listed products may be relevant to lightweight consumer-electronics parts. Buyers should define cosmetic standards, fiber orientation, resin and coating, radio or thermal requirements, tool and color approval, dimensional gauges, drop or durability tests, assembly interfaces, high-volume process controls and intellectual-property boundaries.`,
