@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "./data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
+import { ATCC_SUPPLIER_PROFILE } from "./data/atcc-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
 import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "./data/changzhou-putai-supplier-profile";
 import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "./data/changzhou-sinajet-supplier-profile";
@@ -73,6 +74,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "alta-performance-materials",
       "aoc",
       "haining-anjie-composite-materials",
+      "advanced-technik-composite-atcc",
       "changsheng-carbon",
       "beijing-jinghua-parker",
       "changzhou-panwang-frp-composite-materials",
@@ -151,6 +153,10 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/f1-composite-logo.png",
   );
   assert.equal(f1Composite?.enterpriseId, F1_COMPOSITE_ENTERPRISE_ID);
+  assert.equal(
+    directory.filter(({ id }) => id === ATCC_SUPPLIER_PROFILE.id).length,
+    1,
+  );
   assert.equal(
     directory.filter(
       ({ id }) => id === CHANGZHOU_PUTAI_SUPPLIER_PROFILE.id,
