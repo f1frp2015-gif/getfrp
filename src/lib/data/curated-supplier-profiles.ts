@@ -2,6 +2,7 @@ import type { SupplierListing } from "@/lib/db/schema";
 import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
+import { ATCC_SUPPLIER_PROFILE } from "@/lib/data/atcc-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
 import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
 import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-putai-supplier-profile";
@@ -79,6 +80,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE },
   { profile: AOC_SUPPLIER_PROFILE },
   { profile: ANJIE_SUPPLIER_PROFILE },
+  { profile: ATCC_SUPPLIER_PROFILE },
   { profile: CHANGSHENG_CARBON_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PUTAI_SUPPLIER_PROFILE },
