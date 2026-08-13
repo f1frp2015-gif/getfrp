@@ -33,6 +33,7 @@ import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
+import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "@/lib/data/suzhou-greentech-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
@@ -104,6 +105,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: TLB_SUPPLIER_PROFILE },
   { profile: TUOTIAN_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: SUZHOU_GREENTECH_SUPPLIER_PROFILE },
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
   { profile: YUTO_NEW_MATERIAL_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },

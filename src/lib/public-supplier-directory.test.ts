@@ -13,6 +13,7 @@ import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { KEERDA_SUPPLIER_PROFILE } from "./data/keerda-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
+import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "./data/suzhou-greentech-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
@@ -96,6 +97,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "jiangsu-tianlong-basalt-fiber",
       "lianyungang-tuotian-aviation-equipment",
       "sino-composite-structures",
+      "suzhou-greentech",
       "xiamen-lft-composite-plastic",
       "dongguan-yuto-new-material",
       "zhejiang-huafeng-new-material",
@@ -312,6 +314,20 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/sino-composite-logo.png",
   );
   assert.match(sinoComposite?.description ?? "", /since 2002/i);
+  const suzhouGreentech = directory.find(
+    ({ id }) => id === SUZHOU_GREENTECH_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(suzhouGreentech?.slug, "suzhou-greentech");
+  assert.equal(suzhouGreentech?.location, "Taicang, Jiangsu, China");
+  assert.equal(suzhouGreentech?.category, "manufacturer");
+  assert.equal(
+    suzhouGreentech?.logo,
+    "/supplier-assets/suzhou-greentech-logo.jpg",
+  );
+  assert.match(
+    SUZHOU_GREENTECH_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /TPO\/TPU\/PU/i,
+  );
   const maxtone = directory.find(
     ({ id }) => id === MAXTONE_SUPPLIER_PROFILE.id,
   );
