@@ -77,6 +77,7 @@ import { TANGSHAN_RUNFENG_SUPPLIER_PROFILE } from "@/lib/data/tangshan-runfeng-s
 import { TECHSTORM_SUPPLIER_PROFILE } from "@/lib/data/techstorm-supplier-profile";
 import { TENGJUN_FRP_SUPPLIER_PROFILE } from "@/lib/data/tengjun-frp-supplier-profile";
 import { TLB_SUPPLIER_PROFILE } from "@/lib/data/tlb-supplier-profile";
+import { TOPGLOW_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/topglow-shanghai-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "@/lib/data/tuotian-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
@@ -136,6 +137,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHENGDU_ZHENGXI_SUPPLIER_PROFILE },
   { profile: CHENGWU_HERUN_SUPPLIER_PROFILE },
   { profile: CHENGZI_TAINUO_SUPPLIER_PROFILE },
+  { profile: TOPGLOW_SHANGHAI_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
