@@ -45,6 +45,7 @@ import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profil
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "@/lib/data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-huafeng-supplier-profile";
+import { ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-tianhe-resin-supplier-profile";
 import {
   ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
 } from "@/lib/data/zhongsheng-fiberglass-supplier-profile";
@@ -104,6 +105,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
   { profile: YUTO_NEW_MATERIAL_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },
+  { profile: ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE },
   { profile: ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE },
 ];
 
