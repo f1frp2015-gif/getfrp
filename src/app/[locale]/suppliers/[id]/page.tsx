@@ -249,6 +249,7 @@ function categoryLabel(category: string | null): string {
     fiber: "Fiber supplier",
     resin: "Resin supplier",
     additive: "Additives supplier",
+    distributor: "Specialty materials distributor",
     equipment: "Equipment supplier",
     mold: "Mold maker",
     tooling: "Tooling / NDT equipment",

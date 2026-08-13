@@ -184,6 +184,41 @@ const CATEGORY_PLAYBOOKS: Record<string, CategoryPlaybook> = {
       "Regulatory declarations need current composition and supply-chain identity. Ask the supplier to identify restricted substances, intentional additives, impurities and applicable inventory status, and to notify the buyer before changes to chemistry, treatment, raw-material source or production site. Finished-product compliance remains the responsibility of the complete formulation and use case.",
     ],
   },
+  distributor: {
+    label: "specialty composite-material distributor",
+    audience:
+      "materials engineers and procurement teams qualifying brand authorization, chain of custody, grade identity, storage, documentation and application support for distributed composite materials",
+    applicationFallbacks: [
+      {
+        title: "Authorized and traceable material supply",
+        body:
+          "A distributor should identify the legal manufacturer, exact grade, origin, current authorization, inventory owner and chain of custody for every offer. Buyers should require producer-linked TDS, SDS and batch evidence and verify that storage, shelf life and transport remained within the manufacturer's limits.",
+      },
+      {
+        title: "Aerospace and performance-critical material programs",
+        body:
+          "Performance-critical supply requires more than a catalog match. Confirm whether the distributor and its site fall within the required quality-system scope, how counterfeit risk is controlled, which records trace the shipment to the producer and whether the exact product has the application-specific approval or test evidence required by the buyer.",
+      },
+      {
+        title: "Application trials and controlled repeat supply",
+        body:
+          "Technical support can help shortlist a material, but the buyer should approve a producer grade through a representative trial and then control the grade, manufacturing site, revision and supply channel. The purchase order should require notification before any substitution, reformulation, authorization or source change.",
+      },
+    ],
+    qualificationChecks: [
+      "Identify the brand, legal manufacturer, production site, exact grade, revision and country of origin for every quoted line.",
+      "Obtain current producer authorization or traceable channel evidence, including territory and product scope where relevant.",
+      "Request producer TDS and SDS, a lot-linked COA or conformity record, manufacture date, shelf life and storage history.",
+      "Define counterfeit-prevention, incoming verification, segregation, relabeling and chain-of-custody controls.",
+      "Tie every fire, lightning, aerospace, environmental or regulatory claim to the exact product and report scope.",
+      "Confirm stock status, minimum pack, MOQ, lead time, transport conditions, Incoterm and change-notification obligations.",
+    ],
+    supplementalGuidance: [
+      "The supplier name on a quotation may differ from the manufacturer named on the datasheet or certificate. Record both legal entities and the role of each party. A useful approval also captures the manufacturer part number, revision, lot format, original label and authorized supply route so incoming inspection can detect substitutions or gray-market material.",
+      "Shelf-life materials require an unbroken storage history. Request manufacture and expiry dates, temperature limits, dangerous-goods classification, original packaging and any remaining-life requirement at delivery. If repacking or relabeling is permitted, define who performs it, how original lot identity is preserved and which records accompany each smaller unit.",
+      "Distributor quality-system certification and product qualification answer different questions. A management-system certificate can support purchasing and traceability controls, but it does not prove that a coating, mesh, filler or film meets the buyer's final application. Product evidence must still match the manufacturer, grade, construction, test method and intended use.",
+    ],
+  },
   equipment: {
     label: "composite manufacturing equipment supplier",
     audience:
@@ -578,7 +613,7 @@ function capabilityDetail(name: string, supplierName: string, index: number): De
 
 function applicationNotes(supplier: SupplierListing, name: string): DetailItem[] {
   const playbook = profileCategory(supplier);
-  if (supplier.category === "equipment") {
+  if (supplier.category === "equipment" || supplier.category === "distributor") {
     return playbook.applicationFallbacks.slice(0, 3).map((item) => ({
       title: item.title,
       body: `${name}: ${item.body}`,
