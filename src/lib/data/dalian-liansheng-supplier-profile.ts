@@ -1,0 +1,161 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const DALIAN_LIANSHENG_SUPPLIER_ID = "sup-dalian-liansheng";
+export const DALIAN_LIANSHENG_SUPPLIER_SLUG =
+  "dalian-liansheng-new-materials-group";
+
+// Curated from the current company-owned Chinese and English websites and China
+// Composites Expo's Net Show. Company scale, product, partnership, manufacturing
+// and technical-service statements remain attributed claims. Official logo
+// downloaded 2026-08-13 from the current website header:
+// http://www.dlliansheng.com/images/head_01.png
+export const DALIAN_LIANSHENG_SUPPLIER_PROFILE: SupplierListing = {
+  id: DALIAN_LIANSHENG_SUPPLIER_ID,
+  name: "大连连晟新材料集团有限公司",
+  nameEn: "Dalian Liansheng New Materials Group Co., Ltd.",
+  slug: DALIAN_LIANSHENG_SUPPLIER_SLUG,
+  location: "辽宁大连",
+  locationEn: "Dalian, Liaoning, China",
+  province: "辽宁",
+  category: "resin",
+  products: [
+    "环氧树脂及特种环氧树脂",
+    "环氧固化剂及特种固化剂",
+    "酚醛树脂（展会列示类别）",
+    "促进剂",
+    "反应型及非反应型稀释剂",
+    "增韧剂",
+    "功能添加剂",
+    "毕克化学助剂及合作品牌化工原料",
+    "聚氨酯原料",
+  ],
+  productsEn: [
+    "Epoxy resins and specialty epoxy resins",
+    "Epoxy curing agents and specialty hardeners",
+    "Phenolic resins (exhibition-listed category)",
+    "Accelerators",
+    "Reactive and non-reactive diluents",
+    "Toughening agents",
+    "Functional additives",
+    "BYK additives and partner-brand chemical raw materials",
+    "Polyurethane raw materials",
+  ],
+  processList: [
+    "特种环氧树脂和固化剂研发及生产",
+    "树脂、固化剂和添加剂组合选型",
+    "复合材料配方及应用技术支持",
+    "涂料、胶黏剂和密封胶配方支持",
+    "实验室配方筛选和应用验证",
+    "客户定制产品及差异化配方指导",
+    "国内外化工原料采购和分销",
+    "全国仓储物流及技术服务协调",
+  ],
+  processListEn: [
+    "Specialty epoxy-resin and curing-agent R&D and production",
+    "Resin, curing-agent and additive package selection",
+    "Composite formulation and application support",
+    "Coating, adhesive and sealant formulation support",
+    "Laboratory formulation screening and application validation",
+    "Customer-specific products and differentiated formulation guidance",
+    "Domestic and international chemical sourcing and distribution",
+    "Nationwide warehousing, logistics and technical-service coordination",
+  ],
+  established: 2006,
+  verified: false,
+  description:
+    "大连连晟新材料集团有限公司（连晟集团 / LIANSHENG GROUP）是总部位于中国大陆辽宁省大连经济技术开发区的化工原料、树脂和应用技术供应商。现行中英文官网直接展示法律主体名称、大连地址、400 电话、同域名邮箱、辽 ICP 备案及连晟集团标识。官网称集团 2006 年成立，集研发、生产、贸易和集采于一体；沿革页称 2021 年大连工厂投产，公司新闻进一步称其在自有工厂生产特种环氧树脂和固化剂。官网同时介绍大连、常州两地研发及应用实验室、15 名应用技术工程师，以及覆盖涂料、胶黏剂、复合材料、金属加工液、纺织和聚合物改性的技术支持。复合材料事业部面向风电、覆铜板、塑封料、储罐容器和管道客户，提供基础树脂、固化剂和添加剂配套原料。中国国际复材展网上展厅以 Dalian Liansheng New Materials Group Co., Ltd. 列示该企业，展品类别为环氧树脂、酚醛树脂和添加剂，展位号 6H07。官网还列出南亚、亨斯迈、卡博特、BYK、三菱瓦斯、锦湖、PQ 等合作品牌；这些品牌产品按合作或分销组合处理，不自动视为连晟自产。中文法律名称、英文展商名称、连晟集团品牌、LIANSHENG GROUP 标识、早期资料中的大连连晟贸易名称以及 dlliansheng.com 域名已审查并合并为一个集团主页；集团旗下大连连昇新材料、常州和苏州公司仍是独立法律主体，不另行冒充本页主体。",
+  descriptionEn:
+    "Dalian Liansheng New Materials Group Co., Ltd. (Liansheng Group / LIANSHENG GROUP) is a mainland-China resin supplier headquartered in Dalian, Liaoning. Its current Chinese and English websites present the legal identity, address, telephone, company-domain email, Liaoning ICP filing and group mark. The site says the group was established in 2006; its history records the Dalian factory entering production in 2021, while company news says specialty epoxy resins and curing agents are made at its own factory. It also describes Dalian and Changzhou laboratories, 15 application engineers, and technical support for coatings, adhesives, composites, metalworking fluids, textiles and polymer modification. The composite division serves wind-energy, copper-clad-laminate, encapsulant, vessel and pipeline customers with resins, curing agents and additives. China Composites Expo lists the company at booth 6H07 under epoxy resin, phenolic resin and additives. The site also lists partner brands including Nanya, Huntsman, Cabot, BYK, Mitsubishi Gas Chemical, Kumho and PQ. Those materials are treated as cooperative or distributed products and are not automatically attributed to Liansheng manufacturing. The Chinese legal name, English exhibitor name, group brands, older Dalian Liansheng Trading wording and dlliansheng.com domain have been reviewed as one group profile. Named subsidiaries remain separate legal entities.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "连晟官网公开的产品组包括树脂、固化剂、稀释剂、增韧剂、功能添加剂、助剂、促进剂、毕克化学助剂、聚氨酯及金属加工液添加剂，并按复合材料、涂料、胶黏剂与密封胶、金属加工液、纺织和聚合物改性等行业组织解决方案。官网产品库同时包含集团自产和合作品牌牌号，因此 RFQ 必须逐项确认报价牌号的制造商、法律生产主体、实际生产地点、原产地、品牌授权或经销资格，以及连晟是制造商、授权代理、经销商还是技术服务商。对自产特种环氧或固化剂，应索取当前 TDS、SDS、COA 模板、配方或原料变更控制、生产批号、留样及投诉追溯；对合作品牌，应核验品牌方当前授权、交货渠道和防伪追溯，避免把经销商数据当作连晟工厂能力。复合材料项目应明确树脂化学类型和牌号、固化剂与促进体系、混配比例、黏度及温度窗口、适用期/凝胶时间、峰值放热、固化和后固化条件、增强材料及上浆兼容性、工艺方式、层合厚度、纤维含量、空隙率和表面要求；并锁定拉伸、弯曲、冲击、热变形或玻璃化温度、耐化学品、吸水、耐候、阻燃与烟毒等适用验收项目。风电、覆铜板、电子封装、储罐和管道用途还需分别确认电性能、离子杂质、耐热、阻燃、疲劳、耐介质、长期浸泡和法规要求，不能用通用环氧数据替代最终配方或层合板报告。官网称应用技术中心在大连和常州设点并有 15 名工程师，可进行定制产品和差异化配方指导；采购方仍应要求用实际增强材料、填料、颜料和设备做代表性小试/中试，记录批次、环境、混合、凝胶、固化和缺陷，再把通过的配方与样品纳入书面变更控制。商业评审还应锁定包装规格、危险品分类、储存温度、保质期、制造日期、MOQ、交期、国内仓库、运输温控、Incoterm、出口危险品文件及目的国 REACH、RoHS、TSCA 或其他适用合规资料。官网提供英文入口，但公开业务介绍以国内客户和全国销售网络为主，未见足以确认稳定出口交付经验的项目、目的国合规包、英文批次文件或出口包装证据，因此本页不标记为已具备出口准备度。官网 HTTP 当前可访问，但 2026-08-13 核验时 HTTPS 证书已过期；买方不应通过未加密页面提交配方、账户或付款资料，应另行核实邮箱、银行账户和收款主体。所审阅官网及展会页没有足以确认当前管理体系认证的证书号、标准版本、范围、发证机构记录和有效期，本页不列示已核实认证。官网关于 240 人、年营业额、服务客户、合作品牌、工厂和技术团队的陈述，以及展会产品类别，均应通过营业执照、品牌授权、当前证书、近期批次文件、审厂和代表订单复核。",
+  productsServicesSummaryEn:
+    "Liansheng's official catalog covers resins, curing agents, diluents, tougheners, accelerators, functional additives, BYK additives and polyurethane. It combines group-produced and partner-brand grades. Every RFQ should therefore identify the manufacturer, legal producer, production site, origin, brand authorization and whether Liansheng acts as manufacturer, agent, distributor or technical-service provider. For Liansheng-produced specialty epoxies or hardeners, request the current TDS, SDS, COA template, change controls, lot identity, retention sample and complaint traceability. For partner brands, verify current authorization, delivery channel and anti-counterfeit traceability rather than treating distributor data as Liansheng factory capability. A composite RFQ should define resin chemistry and grade; curing and accelerator package; mix ratio; viscosity and temperature window; pot life or gel time; exotherm; cure and post-cure; reinforcement and sizing compatibility; process; laminate construction; and applicable mechanical, thermal, chemical, weathering, fire and smoke tests. Wind, copper-clad-laminate, electronic-encapsulant, tank and pipe projects need use-specific evidence; generic neat-resin values do not validate a final formulation or laminate. The site describes Dalian and Changzhou application centers with 15 engineers, but buyers should still run a representative trial with the actual reinforcement, filler, pigment and equipment, then control the approved formula and sample. Lock packaging, dangerous-goods status, storage, shelf life, manufacturing date, MOQ, lead time, transport temperature, Incoterm and destination compliance documents. The site has an English entry but public evidence emphasizes domestic users and a Chinese sales network; no references or documentation sufficient to establish repeatable export delivery was found, so this profile is not marked export-ready. HTTP content is available, but the HTTPS certificate was expired during the 2026-08-13 review. Do not submit formulas or payment data through the unencrypted site; independently verify the email, account and payee. No current management-system certificate with number, edition, scope, issuer record and validity was found, so none is recorded. Company scale, partner, factory and product claims require license, authorization, batch-record and audit verification.",
+  ecatalogs: [
+    {
+      title: "大连连晟官网",
+      titleEn: "Official Dalian Liansheng Website",
+      description: "法律主体、集团品牌、产品入口、电话、邮箱和辽 ICP 备案。",
+      descriptionEn: "Legal identity, group brand, product access, telephone, email and Liaoning ICP filing.",
+      url: "http://www.dlliansheng.com/",
+      format: "Official website",
+    },
+    {
+      title: "连晟英文官网",
+      titleEn: "Official Liansheng English Website",
+      description: "英文企业介绍、产品与技术服务入口。",
+      descriptionEn: "English company, product and technical-service entry.",
+      url: "http://www.dlliansheng.com/en/index.html",
+      format: "Official website",
+    },
+    {
+      title: "连晟集团介绍与发展历程",
+      titleEn: "Official Liansheng Group Profile and History",
+      description: "2006 年成立、集团结构、实验室及 2021 年大连工厂投产。",
+      descriptionEn: "2006 establishment, group structure, laboratories and 2021 Dalian factory start-up.",
+      url: "http://www.dlliansheng.com/about.html?s=3",
+      format: "Company profile",
+    },
+    {
+      title: "连晟产品中心",
+      titleEn: "Official Liansheng Product Center",
+      description: "树脂、固化剂、稀释剂、增韧剂、助剂、促进剂和合作品牌牌号。",
+      descriptionEn: "Resins, curing agents, diluents, tougheners, additives, accelerators and partner-brand grades.",
+      url: "http://www.dlliansheng.com/product.html?s=2",
+      format: "Product directory",
+    },
+    {
+      title: "连晟技术支持中心",
+      titleEn: "Official Liansheng Technical Support Center",
+      description: "大连和常州应用技术中心、实验室及技术资料入口。",
+      descriptionEn: "Dalian and Changzhou application centers, laboratories and technical downloads.",
+      url: "http://www.dlliansheng.com/technology.html?s=4",
+      format: "Capability page",
+    },
+    {
+      title: "连晟联系方式",
+      titleEn: "Official Liansheng Contact Page",
+      description: "大连地址、400 电话和同域名邮箱。",
+      descriptionEn: "Dalian address, 400 telephone and company-domain email.",
+      url: "http://www.dlliansheng.com/contact.html?s=6",
+      format: "Contact page",
+    },
+    {
+      title: "中国国际复材展连晟网上展厅",
+      titleEn: "China Composites Expo Dalian Liansheng Net Show",
+      description: "英文主体、6H07 展位及环氧、酚醛和添加剂类别。",
+      descriptionEn: "English identity, booth 6H07, and epoxy, phenolic-resin and additive categories.",
+      url: "https://www.chinacompositesexpo.com/en/netshow.php?_MULTI_PAGE_START=300",
+      format: "Exhibitor profile",
+    },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
+  logo: "/supplier-assets/dalian-liansheng-logo.png",
+  contactEmail: "liansheng116@dlliansheng.com",
+  contactPhone: "400 998 0903",
+  address:
+    "Room B28-6, Building 1, Zone A, Wucaicheng, Dalian Economic and Technological Development Zone, Dalian, Liaoning, China",
+  website: "http://www.dlliansheng.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 18,
+  viewCount: 0,
+  capabilities: [
+    "specialty epoxy resins and curing agents",
+    "resin, hardener and additive package supply",
+    "composite formulation and application support",
+    "coating, adhesive and sealant raw materials",
+    "application laboratory and custom formulation guidance",
+    "partner-brand chemical distribution",
+    "domestic warehousing and logistics coordination",
+    "technical data and grade-selection support",
+  ],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: false,
+  createdAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+};
