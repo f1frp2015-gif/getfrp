@@ -3,6 +3,7 @@ import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/alta-per
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
+import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
@@ -72,6 +73,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: AOC_SUPPLIER_PROFILE },
   { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: CHANGSHENG_CARBON_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },

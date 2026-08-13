@@ -67,6 +67,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "aoc",
       "haining-anjie-composite-materials",
       "changsheng-carbon",
+      "changzhou-panwang-frp-composite-materials",
       "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
       "wanhua-chemical",
