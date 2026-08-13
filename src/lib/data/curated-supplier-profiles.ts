@@ -4,6 +4,7 @@ import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
 import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
+import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-putai-supplier-profile";
 import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sinajet-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "@/lib/data/changzhou-utek-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
@@ -80,6 +81,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: CHANGSHENG_CARBON_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_PUTAI_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_SINAJET_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_UTEK_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
