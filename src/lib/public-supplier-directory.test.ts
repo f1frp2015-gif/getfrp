@@ -40,6 +40,7 @@ import { TUOTIAN_SUPPLIER_PROFILE } from "./data/tuotian-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "./data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "./data/yuto-new-material-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "./data/zhejiang-huafeng-supplier-profile";
+import { ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE } from "./data/zhejiang-tianhe-resin-supplier-profile";
 import {
   ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
 } from "./data/zhongsheng-fiberglass-supplier-profile";
@@ -96,6 +97,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "xiamen-lft-composite-plastic",
       "dongguan-yuto-new-material",
       "zhejiang-huafeng-new-material",
+      "zhejiang-tianhe-resin",
       "taizhou-zhongsheng-glass-fiber-products",
     ]),
   );
@@ -386,6 +388,24 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/zhejiang-huafeng-logo.webp",
   );
   assert.match(zhejiangHuafeng?.description ?? "", /since 1998/i);
+  const zhejiangTianheResin = directory.find(
+    ({ id }) => id === ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(zhejiangTianheResin?.slug, "zhejiang-tianhe-resin");
+  assert.equal(
+    zhejiangTianheResin?.location,
+    "Linhai, Taizhou, Zhejiang, China",
+  );
+  assert.equal(zhejiangTianheResin?.category, "resin");
+  assert.equal(
+    zhejiangTianheResin?.logo,
+    "/supplier-assets/zhejiang-tianhe-resin-logo.png",
+  );
+  assert.match(zhejiangTianheResin?.description ?? "", /135,000 tonnes/i);
+  assert.match(
+    ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /not consistent across all pages/i,
+  );
   const zhongshengFiberglass = directory.find(
     ({ id }) => id === ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE.id,
   );
