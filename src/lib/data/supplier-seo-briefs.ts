@@ -386,6 +386,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /membrane.*(?:pressure vessel|housing)|(?:pressure vessel|housing).*membrane/i, label: "FRP Membrane Housings" },
   { pattern: /(?:multiaxial|biaxial).*warp-knitting|warp-knitting.*(?:glass|carbon|composite)/i, label: "Composite Warp-Knitting Machines" },
   { pattern: /structural adhesives?.*(?:composite|high-end equipment)|(?:composite|high-end equipment).*structural adhesives?/i, label: "Industrial Structural Adhesives" },
+  { pattern: /composite compression molds?|SMC.*(?:molds?|moulds?)/i, label: "Composite Compression Molds" },
   { pattern: /frp\s*\/\s*grp pipe|frp pipe.*fitting/i, label: "FRP Pipe and Fittings" },
   { pattern: /phenolic grating/i, label: "Phenolic and FRP Grating" },
   { pattern: /grating/i, label: "FRP Grating" },
