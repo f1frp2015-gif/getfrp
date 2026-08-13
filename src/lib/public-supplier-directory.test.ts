@@ -34,6 +34,7 @@ import {
 } from "./data/f1-composite-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "./data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "./data/runsing-supplier-profile";
+import { SHANGHAI_MOYAN_SUPPLIER_PROFILE } from "./data/shanghai-moyan-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "./data/shengli-limited-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "./data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "./data/strongfibre-supplier-profile";
@@ -87,6 +88,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "noah-composites",
       "pulwell-composites",
       "shandong-runsing-composites",
+      "shanghai-moyan-instrument",
       "shengli-limited",
       "jiangsu-jiuding-new-materials",
       "yangzhou-maxtone-composite",
@@ -307,6 +309,18 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(runsing?.slug, "shandong-runsing-composites");
   assert.equal(runsing?.logo, "/supplier-assets/runsing-logo.png");
   assert.match(runsing?.description ?? "", /factories in Weifang/i);
+  const shanghaiMoyan = directory.find(
+    ({ id }) => id === SHANGHAI_MOYAN_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(shanghaiMoyan?.slug, "shanghai-moyan-instrument");
+  assert.equal(shanghaiMoyan?.location, "Shanghai, China");
+  assert.equal(shanghaiMoyan?.category, "equipment");
+  assert.equal(
+    shanghaiMoyan?.logo,
+    "/supplier-assets/shanghai-moyan-logo.png",
+  );
+  assert.match(shanghaiMoyan?.products.join(" ") ?? "", /pultrusion/i);
+  assert.match(shanghaiMoyan?.description ?? "", /1,200 m²/i);
   const shengli = directory.find(
     ({ id }) => id === SHENGLI_LIMITED_SUPPLIER_PROFILE.id,
   );
