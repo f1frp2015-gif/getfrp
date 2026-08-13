@@ -11,6 +11,7 @@ import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplie
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "@/lib/data/fanghua-supplier-profile";
+import { FEILIHUA_SUPPLIER_PROFILE } from "@/lib/data/feilihua-supplier-profile";
 import {
   F1_COMPOSITE_SUPPLIER_ID,
   F1_COMPOSITE_SUPPLIER_PROFILE,
@@ -85,6 +86,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: HEBEI_WEITONG_SUPPLIER_PROFILE },
   { profile: HONGYU_COMPOSITE_SUPPLIER_PROFILE },
   { profile: CHONGQING_DUJIANG_SUPPLIER_PROFILE },
+  { profile: FEILIHUA_SUPPLIER_PROFILE },
   { profile: TAISHAN_SUPPLIER_PROFILE },
   {
     profile: ZHONGFU_SHENYING_SUPPLIER_PROFILE,

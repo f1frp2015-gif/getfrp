@@ -26,6 +26,7 @@ import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "./data/newtech-group-supplier-pr
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "./data/eastfrp-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
+import { FEILIHUA_SUPPLIER_PROFILE } from "./data/feilihua-supplier-profile";
 import {
   F1_COMPOSITE_ENTERPRISE_ID,
   F1_COMPOSITE_SUPPLIER_ID,
@@ -80,6 +81,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "hongyu-composite-materials-technology-jiaxing",
       "chongqing-dujiang-composites",
       "anhui-anche-east-frp",
+      "hubei-feilihua-quartz-glass",
       "taishan-fiberglass",
       "zhongfu-shenying",
       "noah-composites",
@@ -246,6 +248,15 @@ test("adds every published Git-backed profile when the database is empty", async
     CHANGSHENG_CARBON_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /ZA60XC-12K/i,
   );
+  const feilihua = directory.find(
+    ({ id }) => id === FEILIHUA_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(feilihua?.slug, "hubei-feilihua-quartz-glass");
+  assert.equal(feilihua?.location, "Jingzhou, Hubei, China");
+  assert.equal(feilihua?.category, "fiber");
+  assert.equal(feilihua?.logo, "/supplier-assets/feilihua-logo.png");
+  assert.match(feilihua?.products.join(" ") ?? "", /hollow quartz-fiber/i);
+  assert.match(feilihua?.description ?? "", /stock code 300395/i);
   const jhpk = directory.find(({ id }) => id === JHPK_SUPPLIER_PROFILE.id);
   assert.equal(jhpk?.slug, "beijing-jinghua-parker");
   assert.equal(jhpk?.location, "Beijing and Handan, Hebei, China");
