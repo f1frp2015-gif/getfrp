@@ -4,6 +4,7 @@ import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "./data/alta-perform
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
+import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "./data/changzhou-utek-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "./data/hongyu-composite-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "./data/chongqing-dujiang-supplier-profile";
@@ -72,6 +73,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "changsheng-carbon",
       "beijing-jinghua-parker",
       "changzhou-panwang-frp-composite-materials",
+      "changzhou-utek-composite",
       "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
       "wanhua-chemical",
@@ -143,6 +145,12 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/f1-composite-logo.png",
   );
   assert.equal(f1Composite?.enterpriseId, F1_COMPOSITE_ENTERPRISE_ID);
+  assert.equal(
+    directory.filter(
+      ({ id }) => id === CHANGZHOU_UTEK_SUPPLIER_PROFILE.id,
+    ).length,
+    1,
+  );
   assert.match(
     directory.find(({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id)
       ?.description ?? "",
