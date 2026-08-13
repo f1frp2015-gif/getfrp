@@ -79,6 +79,6 @@ test("keeps Shanghai TRONXT in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Cixi Sunrise Sealing Material Co., Ltd.",
   );
 });
