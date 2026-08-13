@@ -7,6 +7,7 @@ import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon
 import { CHANGZHOU_AOLANTE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-aolante-supplier-profile";
 import { CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-hongfa-zongheng-supplier-profile";
 import { CHANGZHOU_JIANLIN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-jianlin-supplier-profile";
+import { CHANGZHOU_KEREN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-keren-supplier-profile";
 import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
 import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-putai-supplier-profile";
 import { CHANGZHOU_RIXIN_GROUP_SUPPLIER_PROFILE } from "@/lib/data/changzhou-rixin-group-supplier-profile";
@@ -93,6 +94,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_AOLANTE_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_JIANLIN_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_KEREN_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PUTAI_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_RIXIN_GROUP_SUPPLIER_PROFILE },
