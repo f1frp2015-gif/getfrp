@@ -8,6 +8,7 @@ import { CHANGZHOU_AOLANTE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-aolante
 import { CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-hongfa-zongheng-supplier-profile";
 import { CHANGZHOU_JIANLIN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-jianlin-supplier-profile";
 import { CHANGZHOU_KEREN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-keren-supplier-profile";
+import { CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE } from "@/lib/data/changzhou-newtech-aviation-supplier-profile";
 import { CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE } from "@/lib/data/changzhou-newtech-smart-supplier-profile";
 import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
 import { CHANGZHOU_PUTAI_SUPPLIER_PROFILE } from "@/lib/data/changzhou-putai-supplier-profile";
@@ -103,6 +104,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_JIANLIN_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_KEREN_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_PUTAI_SUPPLIER_PROFILE },
