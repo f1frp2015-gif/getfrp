@@ -18,6 +18,7 @@ import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./data/nanjing-loyalty-supplier-profile";
+import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "./data/newtech-group-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "./data/eastfrp-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
@@ -82,6 +83,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "changzhou-matex-composites",
       "nanjing-efg",
       "nanjing-loyalty-composite-equipment",
+      "newtech-group",
       "jufa-new-material",
       "nanjing-keerda-mould",
       "shanghai-crotti",
@@ -361,6 +363,17 @@ test("adds every published Git-backed profile when the database is empty", async
     NANJING_LOYALTY_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /past their printed validity dates/i,
   );
+  const newtechGroup = directory.find(
+    ({ id }) => id === NEWTECH_GROUP_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(newtechGroup?.slug, "newtech-group");
+  assert.equal(newtechGroup?.location, "Changzhou, Jiangsu, China");
+  assert.equal(newtechGroup?.category, "fiber");
+  assert.equal(
+    newtechGroup?.logo,
+    "/supplier-assets/newtech-group-logo.png",
+  );
+  assert.match(newtechGroup?.description ?? "", /18,000 tonnes/i);
   const xiamenLft = directory.find(
     ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
   );
