@@ -12,6 +12,8 @@ type ApplicationSignal = {
   pattern: RegExp;
   title: string;
   body: (name: string) => string;
+  categories?: string[];
+  excludedCategories?: string[];
 };
 
 type CategoryPlaybook = {
@@ -145,6 +147,41 @@ const CATEGORY_PLAYBOOKS: Record<string, CategoryPlaybook> = {
       "Resin comparisons should be made at the processing condition that the factory can control. A low initial viscosity is not useful if pot life, exotherm or cure creates voids and distortion in the intended thickness. Record material temperature, ambient conditions, mix accuracy, gel behavior and post-cure so the material trial can be reproduced during production and investigated if performance changes.",
       "Cured-property tables require context. Neat-resin values, cast plaques and reinforced laminates answer different questions, while conditioning and cure can materially change results. Buyers should identify the relevant construction and test method, distinguish typical from guaranteed values, and agree which certificate fields or periodic tests will demonstrate ongoing conformity after approval.",
       "Shelf life and logistics are part of resin quality. Confirm manufacturing date, storage temperature, inhibitor or settling behavior, drum or IBC closure, dangerous-goods classification and the procedure for material exposed outside its permitted range. The purchase order should also define change notification for formulation, raw-material source and manufacturing site.",
+    ],
+  },
+  additive: {
+    label: "composite additive and functional-filler supplier",
+    audience:
+      "formulators, compounders and procurement teams comparing additive chemistry, dispersion, process compatibility, finished-material performance and regulatory evidence",
+    applicationFallbacks: [
+      {
+        title: "Flame-retardant composite and polymer formulations",
+        body:
+          "A flame-retardant additive must be qualified in the actual polymer, reinforcement, filler package, thickness and process. Buyers should define the target fire, smoke, electrical, mechanical and aging requirements and request current evidence for the complete tested formulation rather than treating an additive description as finished-product compliance.",
+      },
+      {
+        title: "Functional fillers and surface-modified minerals",
+        body:
+          "Mineral additives can affect viscosity, dispersion, surface finish, density and mechanical performance as well as cost. Confirm chemistry, impurity limits, particle-size distribution, surface treatment, moisture, loading and compatibility with the intended resin, hardener, reinforcement and processing window.",
+      },
+      {
+        title: "Compounding and masterbatch programs",
+        body:
+          "For masterbatch or compound supply, define carrier, active content, let-down ratio, pellet or powder form, dispersion, color, volatiles and batch tolerance. A representative processing trial should reproduce the intended equipment and record both process stability and finished-part properties.",
+      },
+    ],
+    qualificationChecks: [
+      "Specify additive chemistry, grade, active content, particle size, surface treatment and intended polymer or resin system.",
+      "Request current TDS, SDS, lot-linked COA fields, impurity limits and the test method behind each guaranteed value.",
+      "Define loading, mixing sequence, dispersion equipment, temperature and the processing behavior required at production scale.",
+      "Test the final formulation at the intended thickness, reinforcement level, cure or molding cycle and conditioning.",
+      "Tie fire, smoke, electrical, environmental or regulatory claims to the exact formulation and current report scope.",
+      "Confirm change control, shelf life, moisture-barrier packing, MOQ, lead time and destination-market documentation.",
+    ],
+    supplementalGuidance: [
+      "Additive performance is formulation-dependent. A published flame rating, mechanical value or environmental claim may represent one polymer, loading and specimen thickness and should not be transferred to another system without testing. Record the complete trial formulation, process settings and conditioning so the approved result can be reproduced and investigated after any change.",
+      "Powders and mineral fillers require incoming controls beyond a trade name. Particle-size distribution, agglomeration, moisture, impurities, whiteness or color, bulk density and surface treatment can affect feeding, dispersion and finished properties. Agree which fields appear on every batch certificate and which are monitored periodically.",
+      "Regulatory declarations need current composition and supply-chain identity. Ask the supplier to identify restricted substances, intentional additives, impurities and applicable inventory status, and to notify the buyer before changes to chemistry, treatment, raw-material source or production site. Finished-product compliance remains the responsibility of the complete formulation and use case.",
     ],
   },
   equipment: {
@@ -334,6 +371,55 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
 
 const APPLICATION_SIGNALS: ApplicationSignal[] = [
   {
+    pattern: /flame.?retard|fire.?retard|halogen.?free|low.?smoke/i,
+    title: "Flame-retardant composite and polymer formulations",
+    body: (name) =>
+      `${name}: A flame-retardant additive must be qualified in the actual polymer, reinforcement, filler package, thickness and process. Buyers should define the target fire, smoke, electrical, mechanical and aging requirements and request current evidence for the complete tested formulation rather than treating an additive description as finished-product compliance.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /mineral|magnesium.?hydroxide|functional filler|surface.?modif|powder/i,
+    title: "Functional fillers and surface-modified minerals",
+    body: (name) =>
+      `${name}: Mineral additives can affect viscosity, dispersion, surface finish, density and mechanical performance as well as cost. Confirm chemistry, impurity limits, particle-size distribution, surface treatment, moisture, loading and compatibility with the intended resin, hardener, reinforcement and processing window.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /masterbatch|masterbatches|compound|concentrate/i,
+    title: "Compounding and masterbatch programs",
+    body: (name) =>
+      `${name}: For masterbatch or compound supply, define carrier, active content, let-down ratio, pellet or powder form, dispersion, color, volatiles and batch tolerance. A representative processing trial should reproduce the intended equipment and record both process stability and finished-part properties.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /polyurea|protective coating|waterproof|anticorrosion|anti-corrosion/i,
+    title: "Protective coating and surface-treatment formulations",
+    body: (name) =>
+      `${name}'s coating chemistry should be evaluated as a complete applied system. Define substrate preparation, primer, mix ratio, pot life, film build, cure conditions, adhesion, chemical and weather exposure, repair method and the current test evidence for the proposed formulation and thickness.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /accelerator|promoter|curing agent|peroxide|catalyst|resin/i,
+    title: "Composite matrix and process-chemistry programs",
+    body: (name) =>
+      `${name}'s chemistry portfolio can be evaluated for the named composite process only after the processing window and cured-property basis are aligned. Request current data sheets, grade and site identity, viscosity or mix control, cure and exotherm, storage, batch certificate fields and test evidence based on the intended reinforcement and construction.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /pigment|colorant|colourant|color paste|colour paste/i,
+    title: "Composite coloration and pigment-paste programs",
+    body: (name) =>
+      `${name}'s pigment or color-paste range should be qualified in the actual resin, cure package, thickness and surface process. Define target color and tolerance, dispersion, opacity, weathering, heat and chemical stability, batch controls, approved sample and change-notification requirements.`,
+    categories: ["additive"],
+  },
+  {
+    pattern: /release agent|mold release|mould release/i,
+    title: "Molding and pultrusion process aids",
+    body: (name) =>
+      `${name}'s release-agent scope can be screened only against the intended resin, mold surface, temperature and cycle. Buyers should define internal or external use, dosage, application method, buildup and cleaning limits, effects on bonding or coating, trial acceptance and controls for formulation changes.`,
+    categories: ["additive"],
+  },
+  {
     pattern: /window|door|thermal break|building envelope/i,
     title: "Energy-efficient window and building-envelope systems",
     body: (name) =>
@@ -356,6 +442,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Concrete reinforcement and civil infrastructure",
     body: (name) =>
       `${name}'s listed reinforcement products may be relevant to corrosion-sensitive concrete or civil works. Buyers should state fiber type, nominal area, guaranteed tensile property, modulus, bond surface, bend geometry, test method, design code, lot traceability and packaging. FRP reinforcement should not be specified or handled as if it were interchangeable with steel.`,
+    excludedCategories: ["additive"],
   },
   {
     pattern: /wall panel|hospital|laborator|clean space|food processing/i,
@@ -376,16 +463,18 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
       `${name}'s corrugated FRP range may support cooling-tower or industrial cladding discussions when the offered profile matches the existing support and fastening layout. Buyers should specify the corrugation geometry, resin and gel coat, thickness, span and load basis, UV and chemical exposure, cut lengths, drilling, edge finish, nesting and transport supports, then request evidence for the exact construction rather than a generic flat-sheet value.`,
   },
   {
-    pattern: /carbon.?fiber|basalt|fiberglass|glass.?fiber|fabric|roving|yarn|mat|tissue/i,
+    pattern: /carbon.?fiber|basalt|fiberglass|glass.?fiber|fabric|roving|yarn|\bmats?\b|tissue/i,
     title: "Composite reinforcement and laminate production",
     body: (name) =>
       `${name}'s reinforcement range can be screened for laminating, pultrusion, winding, molding or conversion programs. Buyers should confirm grade, sizing, architecture, width, tex or areal weight, package, splice and moisture limits, then run a representative processing trial before approving the material for repeat production.`,
+    excludedCategories: ["additive"],
   },
   {
     pattern: /sheet|panel|laminate|sandwich|skin|roof|skylight/i,
     title: "Composite panels, laminates and surface systems",
     body: (name) =>
       `${name}'s listed sheets or panels may suit transport, building or industrial surfaces depending on construction. Qualification should identify the manufacturing process, resin, reinforcement orientation, core where applicable, thickness and flatness tolerance, surface and color standard, UV or fire evidence, fabrication details and packing that protects edges and finish.`,
+    excludedCategories: ["additive"],
   },
   {
     pattern: /resin|gelcoat|polyurethane|epoxy|polyester|vinyl ester/i,
@@ -398,24 +487,28 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Composite manufacturing line investment",
     body: (name) =>
       `${name}'s listed machinery can enter a line comparison when the buyer supplies a written product and process requirement. The proposal should define the complete line boundary, controls, utilities, safety, throughput, acceptance test, installation, training, spares, documentation and the responsibility for proving product quality with representative material.`,
+    excludedCategories: ["additive"],
   },
   {
     pattern: /mold|mould|die|tooling/i,
     title: "Composite molds, dies and production tooling",
     body: (name) =>
       `${name}'s tooling scope can be considered for new or replacement production tools. Buyers should release controlled product and interface drawings, material and process assumptions, critical datums, tool material and treatment, heating or flow requirements, trial conditions, acceptance measurements, ownership, maintenance and protected transport.`,
+    excludedCategories: ["additive"],
   },
   {
     pattern: /automotive|vehicle|truck|rv/i,
     title: "Automotive and transport composite components",
     body: (name) =>
       `${name}'s product references indicate a possible fit for transport applications. Qualification should address part revision, material and process, appearance class, dimensional capability, inserts and secondary operations, validation plan, change control, annual volume, service-part obligations and packaging that prevents cosmetic or structural damage.`,
+    excludedCategories: ["additive"],
   },
   {
-    pattern: /phone|consumer electronics|aramid/i,
+    pattern: /\bphone\b|consumer electronics|aramid/i,
     title: "Consumer-electronics composite parts",
     body: (name) =>
       `${name}'s listed products may be relevant to lightweight consumer-electronics parts. Buyers should define cosmetic standards, fiber orientation, resin and coating, radio or thermal requirements, tool and color approval, dimensional gauges, drop or durability tests, assembly interfaces, high-volume process controls and intellectual-property boundaries.`,
+    excludedCategories: ["additive"],
   },
 ];
 
@@ -498,7 +591,12 @@ function applicationNotes(supplier: SupplierListing, name: string): DetailItem[]
     ...(supplier.capabilities ?? []),
     supplier.descriptionEn ?? "",
   ].join(" ");
-  const matched = APPLICATION_SIGNALS.filter(({ pattern }) => pattern.test(haystack))
+  const matched = APPLICATION_SIGNALS.filter(
+    ({ pattern, categories, excludedCategories }) =>
+      pattern.test(haystack) &&
+      (!categories || categories.includes(supplier.category ?? "")) &&
+      !excludedCategories?.includes(supplier.category ?? ""),
+  )
     .slice(0, 3)
     .map(({ title, body }) => ({ title, body: body(name) }));
   if (matched.length >= 3) return matched;
