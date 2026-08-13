@@ -94,9 +94,9 @@ test("builds a magnesium flame-retardant SEO brief in the page range", () => {
   assert.deepEqual(
     brief.applicationNotes.map(({ title }) => title),
     [
-      "Composite panels, laminates and surface systems",
       "Flame-retardant composite and polymer formulations",
       "Functional fillers and surface-modified minerals",
+      "Compounding and masterbatch programs",
     ],
   );
   assert.equal(brief.evidenceNotes.length, 3);
