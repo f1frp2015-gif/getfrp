@@ -23,6 +23,7 @@ import {
   JUSHI_SUPPLIER_PROFILE,
 } from "@/lib/data/jushi-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
+import { JHPK_SUPPLIER_PROFILE } from "@/lib/data/jhpk-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -87,6 +88,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: RUNSING_SUPPLIER_PROFILE },
   { profile: SHENGLI_LIMITED_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
+  { profile: JHPK_SUPPLIER_PROFILE },
   { profile: MAXTONE_SUPPLIER_PROFILE },
   { profile: MATEX_SUPPLIER_PROFILE },
   { profile: NANJING_EFG_SUPPLIER_PROFILE },

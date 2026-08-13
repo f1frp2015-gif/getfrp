@@ -16,7 +16,7 @@ test("assigns every curated supplier a unique, evidence-led SEO brief", () => {
     brief: buildSupplierSeoBrief(profile),
   }));
 
-  assert.equal(briefs.length, 40);
+  assert.equal(briefs.length, 43);
   assert.equal(
     new Set(briefs.map(({ brief }) => brief.primaryKeyword.toLowerCase())).size,
     briefs.length,
