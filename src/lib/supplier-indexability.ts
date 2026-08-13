@@ -6,8 +6,9 @@ import { getCuratedSupplierProfile } from "@/lib/data/curated-supplier-profiles"
  *
  * Git-curated profiles already have an official-source review.
  * Database-managed profiles must meet the same minimum evidence and
- * completeness standard before they receive a route, directory link,
- * metadata entry, or sitemap entry.
+ * completeness standard before search engines may index the standalone
+ * homepage or the URL may enter the supplier sitemap. Less-complete records
+ * can still be opened from the public search directory with `noindex`.
  */
 export function isSupplierProfileIndexable(
   supplier: SupplierListing,

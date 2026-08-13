@@ -601,7 +601,7 @@ test("keeps one supplier and preserves database identity and trust state", async
   assert.equal(noahProfiles[0]?.logo, NOAH_COMPOSITES_SUPPLIER_PROFILE.logo);
 });
 
-test("excludes database records that do not qualify for a public profile", async () => {
+test("keeps incomplete database records visible after completed homepages", async () => {
   const { mergePublicSupplierDirectory } = await loadDirectory();
   const directory = mergePublicSupplierDirectory(
     [
@@ -650,12 +650,17 @@ test("excludes database records that do not qualify for a public profile", async
         id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id ||
         id === "sup-legacy-no-homepage",
     ).length,
-    1,
+    2,
   );
-  assert.equal(
-    directory.some(({ id }) => id === "sup-legacy-no-homepage"),
-    false,
+  const completedIndex = directory.findIndex(
+    ({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id,
   );
+  const incompleteIndex = directory.findIndex(
+    ({ id }) => id === "sup-legacy-no-homepage",
+  );
+  assert.ok(completedIndex >= 0);
+  assert.ok(incompleteIndex > completedIndex);
+  assert.equal(directory[incompleteIndex]?.profilePublished, false);
   assert.equal(
     directory.find(({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id)
       ?.profilePublished,

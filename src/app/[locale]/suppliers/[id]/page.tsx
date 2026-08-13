@@ -132,7 +132,6 @@ export async function generateStaticParams() {
       );
     databaseSlugs = rows
       .map(enrichSupplierWithCuratedProfile)
-      .filter(isSupplierProfileIndexable)
       .map(supplierRouteSlug);
   } catch {
     // Curated Git-backed profiles remain buildable during a DB outage.
@@ -979,12 +978,6 @@ export async function generateMetadata({
   const title = seoBrief.pageTitle;
   const description = seoBrief.metaDescription;
   const indexable = isSupplierProfileIndexable(profile.supplier);
-  if (!indexable) {
-    return {
-      robots: { index: false, follow: false },
-      alternates: alternates(`/suppliers/${id}`),
-    };
-  }
   return {
     title: { absolute: title },
     description,
@@ -993,7 +986,7 @@ export async function generateMetadata({
       title,
       description,
     }),
-    robots: { index: true, follow: true },
+    robots: { index: indexable, follow: true },
   };
 }
 
@@ -1174,7 +1167,7 @@ export default async function SupplierCategoryPageRoute({
   }
   if (!category) {
     const profile = await loadSupplierProfile(id);
-    if (!profile || !isSupplierProfileIndexable(profile.supplier)) notFound();
+    if (!profile) notFound();
     const canonicalSlug = supplierRouteSlug(profile.supplier);
     if (id !== canonicalSlug) permanentRedirect(`/suppliers/${canonicalSlug}`);
     return await renderSupplierProfile(profile);
