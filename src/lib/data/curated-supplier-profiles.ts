@@ -36,6 +36,7 @@ import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "@/lib/data/newtech-group-supplie
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
+import { SHANGHAI_MOYAN_SUPPLIER_PROFILE } from "@/lib/data/shanghai-moyan-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
@@ -96,6 +97,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: PULWELL_SUPPLIER_PROFILE },
   { profile: SINAUVA_SUPPLIER_PROFILE },
   { profile: RUNSING_SUPPLIER_PROFILE },
+  { profile: SHANGHAI_MOYAN_SUPPLIER_PROFILE },
   { profile: SHENGLI_LIMITED_SUPPLIER_PROFILE },
   { profile: JIUDING_SUPPLIER_PROFILE },
   { profile: JHPK_SUPPLIER_PROFILE },
