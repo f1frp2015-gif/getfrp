@@ -31,6 +31,7 @@ import { CHENGDU_CHANGYUANSHUN_SUPPLIER_PROFILE } from "@/lib/data/chengdu-chang
 import { CHENGDU_LUCHEN_SUPPLIER_PROFILE } from "@/lib/data/chengdu-luchen-supplier-profile";
 import { CHENGDU_YULONG_SUPPLIER_PROFILE } from "@/lib/data/chengdu-yulong-supplier-profile";
 import { CHENGDU_ZHENGXI_SUPPLIER_PROFILE } from "@/lib/data/chengdu-zhengxi-supplier-profile";
+import { CHENGWU_HERUN_SUPPLIER_PROFILE } from "@/lib/data/chengwu-herun-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
@@ -132,6 +133,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHENGDU_LUCHEN_SUPPLIER_PROFILE },
   { profile: CHENGDU_YULONG_SUPPLIER_PROFILE },
   { profile: CHENGDU_ZHENGXI_SUPPLIER_PROFILE },
+  { profile: CHENGWU_HERUN_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
