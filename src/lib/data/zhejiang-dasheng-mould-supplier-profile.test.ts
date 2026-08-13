@@ -70,7 +70,7 @@ test("keeps Dasheng in reviewed exhibitor source order", () => {
 
   assert.ok(index > 0);
   assert.equal(names[index - 1], "Darbond Technology Co., Ltd.");
-  assert.equal(names[index + 1], "Shenzhen Hongfu Tongxin Technology Co., Ltd.");
+  assert.equal(names[index + 1], "Maikos Composites Co., Ltd.");
 });
 
 test("builds a composite-compression-mold SEO brief in the page range", () => {
