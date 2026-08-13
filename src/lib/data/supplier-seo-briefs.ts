@@ -484,6 +484,14 @@ function capabilityDetail(name: string, supplierName: string, index: number): De
 }
 
 function applicationNotes(supplier: SupplierListing, name: string): DetailItem[] {
+  const playbook = profileCategory(supplier);
+  if (supplier.category === "equipment") {
+    return playbook.applicationFallbacks.slice(0, 3).map((item) => ({
+      title: item.title,
+      body: `${name}: ${item.body}`,
+    }));
+  }
+
   const haystack = [
     ...(supplier.productsEn ?? []),
     ...(supplier.processListEn ?? []),
@@ -495,7 +503,7 @@ function applicationNotes(supplier: SupplierListing, name: string): DetailItem[]
     .map(({ title, body }) => ({ title, body: body(name) }));
   if (matched.length >= 3) return matched;
 
-  const fallbacks = profileCategory(supplier).applicationFallbacks.map((item) => ({
+  const fallbacks = playbook.applicationFallbacks.map((item) => ({
     title: item.title,
     body: `${name}: ${item.body}`,
   }));
@@ -588,7 +596,11 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
     `${shortName} official catalog`,
   ]).slice(0, 8);
   const titleName = supplierShortName(name);
-  const pageTitle = `${titleName} — ${topicLabel} | GetFRP`;
+  const titleTopic = compactPhrase(
+    topicLabel,
+    Math.max(24, 100 - titleName.length - " —  | GetFRP".length),
+  );
+  const pageTitle = `${titleName} — ${titleTopic} | GetFRP`;
   const metaDescription = truncateAtWord(
     `Source-reviewed ${name} profile for ${primaryProduct}, capabilities, certificates, official catalogs and RFQ qualification in ${location}.`,
     160,

@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { CROTTI_SUPPLIER_PROFILE } from "./crotti-supplier-profile";
 import { CURATED_SUPPLIER_PROFILES } from "./curated-supplier-profiles";
 import { EASTFRP_SUPPLIER_PROFILE } from "./eastfrp-supplier-profile";
+import { JHPK_SUPPLIER_PROFILE } from "./jhpk-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./nanjing-loyalty-supplier-profile";
 import {
   buildSupplierSeoBrief,
@@ -16,7 +17,7 @@ test("assigns every curated supplier a unique, evidence-led SEO brief", () => {
     brief: buildSupplierSeoBrief(profile),
   }));
 
-  assert.equal(briefs.length, 40);
+  assert.equal(briefs.length, 48);
   assert.equal(
     new Set(briefs.map(({ brief }) => brief.primaryKeyword.toLowerCase())).size,
     briefs.length,
@@ -83,6 +84,16 @@ test("keeps supplier-specific product intent in priority profiles", () => {
       "Hygienic interior wall and ceiling systems",
       "Refrigerated truck, dry-van and RV body panels",
       "Cooling-tower and industrial corrugated panels",
+    ],
+  );
+
+  const jhpk = buildSupplierSeoBrief(JHPK_SUPPLIER_PROFILE);
+  assert.deepEqual(
+    jhpk.applicationNotes.map(({ title }) => title),
+    [
+      "New composite production lines",
+      "Capacity expansion and process modernization",
+      "Commissioning and long-term support",
     ],
   );
 });

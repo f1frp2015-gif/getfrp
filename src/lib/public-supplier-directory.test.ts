@@ -17,6 +17,7 @@ import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplie
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
 import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "./data/suzhou-greentech-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
+import { JHPK_SUPPLIER_PROFILE } from "./data/jhpk-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
@@ -68,6 +69,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "aoc",
       "haining-anjie-composite-materials",
       "changsheng-carbon",
+      "beijing-jinghua-parker",
       "changzhou-panwang-frp-composite-materials",
       "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
@@ -243,6 +245,16 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     CHANGSHENG_CARBON_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /ZA60XC-12K/i,
+  );
+  const jhpk = directory.find(({ id }) => id === JHPK_SUPPLIER_PROFILE.id);
+  assert.equal(jhpk?.slug, "beijing-jinghua-parker");
+  assert.equal(jhpk?.location, "Beijing and Handan, Hebei, China");
+  assert.equal(jhpk?.category, "equipment");
+  assert.equal(jhpk?.logo, "/supplier-assets/jhpk-logo.png");
+  assert.match(jhpk?.description ?? "", /established in Beijing in 2003/i);
+  assert.match(
+    JHPK_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /JHPK-G20A/i,
   );
   const hongfuTongxin = directory.find(
     ({ id }) => id === HONGFU_TONGXIN_SUPPLIER_PROFILE.id,
