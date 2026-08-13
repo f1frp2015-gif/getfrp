@@ -36,6 +36,10 @@ import {
 } from "@/lib/data/supplier-category-pages";
 import { provincesEn, supplierCategories } from "@/lib/data/suppliers";
 import {
+  ALTA_PERFORMANCE_MATERIALS_LEGAL_NAME_EN,
+  ALTA_PERFORMANCE_MATERIALS_SUPPLIER_ID,
+} from "@/lib/data/alta-performance-materials-supplier-profile";
+import {
   AOC_LEGAL_NAME_EN,
   AOC_SUPPLIER_ID,
 } from "@/lib/data/aoc-supplier-profile";
@@ -270,17 +274,19 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const name = supplier.nameEn ?? "Supplier";
   const legalName = supplier.id === F1_COMPOSITE_SUPPLIER_ID
     ? F1_COMPOSITE_LEGAL_NAME_EN
-    : supplier.id === AOC_SUPPLIER_ID
-      ? AOC_LEGAL_NAME_EN
-      : supplier.id === NOAH_COMPOSITES_SUPPLIER_ID
-        ? NOAH_COMPOSITES_LEGAL_NAME_EN
-        : supplier.id === CROTTI_SUPPLIER_ID
-          ? CROTTI_LEGAL_NAME_EN
-          : supplier.id === STRONGFIBRE_SUPPLIER_ID
-            ? STRONGFIBRE_LEGAL_NAME_EN
-            : supplier.id === SPARE_COMPOSITES_SUPPLIER_ID
-              ? SPARE_COMPOSITES_LEGAL_NAME_EN
-              : supplier.nameEn ?? name;
+    : supplier.id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_ID
+      ? ALTA_PERFORMANCE_MATERIALS_LEGAL_NAME_EN
+      : supplier.id === AOC_SUPPLIER_ID
+        ? AOC_LEGAL_NAME_EN
+        : supplier.id === NOAH_COMPOSITES_SUPPLIER_ID
+          ? NOAH_COMPOSITES_LEGAL_NAME_EN
+          : supplier.id === CROTTI_SUPPLIER_ID
+            ? CROTTI_LEGAL_NAME_EN
+            : supplier.id === STRONGFIBRE_SUPPLIER_ID
+              ? STRONGFIBRE_LEGAL_NAME_EN
+              : supplier.id === SPARE_COMPOSITES_SUPPLIER_ID
+                ? SPARE_COMPOSITES_LEGAL_NAME_EN
+                : supplier.nameEn ?? name;
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
   const productNames = (supplier.productsEn ?? []) as string[];
@@ -316,6 +322,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const logo = supplier.logo ?? enterprise?.logo ?? null;
   const logoNeedsDarkBackground = Boolean(
     logo?.includes("zhongfu-shenying") ||
+    logo?.includes("alta-performance-materials-logo") ||
     logo?.includes("strongfibre") ||
     logo?.includes("aoc-logo-white") ||
     logo?.includes("runsing-logo") ||

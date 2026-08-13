@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "./data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
@@ -60,6 +61,7 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set(directory.map(({ slug }) => slug)),
     new Set([
       "f1-composite",
+      "alta-performance-materials",
       "aoc",
       "haining-anjie-composite-materials",
       "changsheng-carbon",
@@ -102,6 +104,22 @@ test("adds every published Git-backed profile when the database is empty", async
       "zhejiang-tianhe-resin",
       "taizhou-zhongsheng-glass-fiber-products",
     ]),
+  );
+  const alta = directory.find(
+    ({ id }) => id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(alta?.slug, "alta-performance-materials");
+  assert.equal(alta?.location, "London, United Kingdom");
+  assert.equal(alta?.category, "resin");
+  assert.equal(
+    alta?.logo,
+    "/supplier-assets/alta-performance-materials-logo.png",
+  );
+  assert.match(alta?.description ?? "", /20 sites across/i);
+  assert.match(
+    ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE.productsServicesSummaryEn ??
+      "",
+    /DERAKANE SIGNIA/i,
   );
   const f1Composite = directory.find(
     ({ id }) => id === F1_COMPOSITE_SUPPLIER_ID,

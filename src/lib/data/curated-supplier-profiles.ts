@@ -1,4 +1,5 @@
 import type { SupplierListing } from "@/lib/db/schema";
+import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
@@ -65,6 +66,7 @@ type CuratedSupplierProfileEntry = {
 // receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
   { profile: F1_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE },
   { profile: AOC_SUPPLIER_PROFILE },
   { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: CHANGSHENG_CARBON_SUPPLIER_PROFILE },
