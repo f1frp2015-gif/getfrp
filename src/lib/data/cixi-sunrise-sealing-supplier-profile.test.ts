@@ -79,6 +79,6 @@ test("keeps Cixi Sunrise in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dalian HLB New Material Technology Co., Ltd.",
   );
 });
