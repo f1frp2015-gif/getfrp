@@ -596,7 +596,11 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
     `${shortName} official catalog`,
   ]).slice(0, 8);
   const titleName = supplierShortName(name);
-  const pageTitle = `${titleName} — ${topicLabel} | GetFRP`;
+  const titleTopic = compactPhrase(
+    topicLabel,
+    Math.max(24, 100 - titleName.length - " —  | GetFRP".length),
+  );
+  const pageTitle = `${titleName} — ${titleTopic} | GetFRP`;
   const metaDescription = truncateAtWord(
     `Source-reviewed ${name} profile for ${primaryProduct}, capabilities, certificates, official catalogs and RFQ qualification in ${location}.`,
     160,

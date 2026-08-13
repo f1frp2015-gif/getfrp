@@ -1,11 +1,14 @@
 import type { SupplierListing } from "@/lib/db/schema";
+import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
+import { CHANGZHOU_PANWANG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-panwang-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
+import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "@/lib/data/fanghua-supplier-profile";
 import {
@@ -28,12 +31,14 @@ import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "@/lib/data/nanjing-loyalty-supplier-profile";
+import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "@/lib/data/newtech-group-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
+import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "@/lib/data/suzhou-greentech-supplier-profile";
 import { SPARE_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/spare-composites-supplier-profile";
 import { STRONGFIBRE_SUPPLIER_PROFILE } from "@/lib/data/strongfibre-supplier-profile";
 import { TAISHAN_SUPPLIER_PROFILE } from "@/lib/data/taishan-supplier-profile";
@@ -66,9 +71,11 @@ type CuratedSupplierProfileEntry = {
 // receive reviewed public content from the matching Git profile.
 export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] = [
   { profile: F1_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE },
   { profile: AOC_SUPPLIER_PROFILE },
   { profile: ANJIE_SUPPLIER_PROFILE },
   { profile: CHANGSHENG_CARBON_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_PANWANG_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
@@ -76,6 +83,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CPIC_SUPPLIER_PROFILE },
   { profile: EASTFRP_SUPPLIER_PROFILE },
   { profile: HEBEI_WEITONG_SUPPLIER_PROFILE },
+  { profile: HONGYU_COMPOSITE_SUPPLIER_PROFILE },
   { profile: CHONGQING_DUJIANG_SUPPLIER_PROFILE },
   { profile: TAISHAN_SUPPLIER_PROFILE },
   {
@@ -93,6 +101,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: MATEX_SUPPLIER_PROFILE },
   { profile: NANJING_EFG_SUPPLIER_PROFILE },
   { profile: NANJING_LOYALTY_SUPPLIER_PROFILE },
+  { profile: NEWTECH_GROUP_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: KEERDA_SUPPLIER_PROFILE },
   { profile: CROTTI_SUPPLIER_PROFILE },
@@ -106,6 +115,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: TLB_SUPPLIER_PROFILE },
   { profile: TUOTIAN_SUPPLIER_PROFILE },
   { profile: SINO_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: SUZHOU_GREENTECH_SUPPLIER_PROFILE },
   { profile: XIAMEN_LFT_SUPPLIER_PROFILE },
   { profile: YUTO_NEW_MATERIAL_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },

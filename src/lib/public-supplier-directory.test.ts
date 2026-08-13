@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "./data/alta-performance-materials-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "./data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "./data/anjie-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "./data/changsheng-carbon-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "./data/hebei-weitong-supplier-profile";
+import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "./data/hongyu-composite-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "./data/chongqing-dujiang-supplier-profile";
 import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
@@ -13,12 +15,14 @@ import { JUFA_SUPPLIER_PROFILE } from "./data/jufa-supplier-profile";
 import { KEERDA_SUPPLIER_PROFILE } from "./data/keerda-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "./data/noah-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "./data/sino-composite-supplier-profile";
+import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "./data/suzhou-greentech-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "./data/jiuding-supplier-profile";
 import { JHPK_SUPPLIER_PROFILE } from "./data/jhpk-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "./data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "./data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "./data/nanjing-efg-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "./data/nanjing-loyalty-supplier-profile";
+import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "./data/newtech-group-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "./data/crotti-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "./data/eastfrp-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "./data/fanghua-supplier-profile";
@@ -61,16 +65,19 @@ test("adds every published Git-backed profile when the database is empty", async
     new Set(directory.map(({ slug }) => slug)),
     new Set([
       "f1-composite",
+      "alta-performance-materials",
       "aoc",
       "haining-anjie-composite-materials",
       "changsheng-carbon",
       "beijing-jinghua-parker",
+      "changzhou-panwang-frp-composite-materials",
       "shenzhen-hongfu-tongxin",
       "shanghai-horse-construction",
       "wanhua-chemical",
       "jushi",
       "chongqing-polycomp-international",
       "hebei-weitong-frp",
+      "hongyu-composite-materials-technology-jiaxing",
       "chongqing-dujiang-composites",
       "anhui-anche-east-frp",
       "taishan-fiberglass",
@@ -84,6 +91,7 @@ test("adds every published Git-backed profile when the database is empty", async
       "changzhou-matex-composites",
       "nanjing-efg",
       "nanjing-loyalty-composite-equipment",
+      "newtech-group",
       "jufa-new-material",
       "nanjing-keerda-mould",
       "shanghai-crotti",
@@ -98,12 +106,29 @@ test("adds every published Git-backed profile when the database is empty", async
       "jiangsu-tianlong-basalt-fiber",
       "lianyungang-tuotian-aviation-equipment",
       "sino-composite-structures",
+      "suzhou-greentech",
       "xiamen-lft-composite-plastic",
       "dongguan-yuto-new-material",
       "zhejiang-huafeng-new-material",
       "zhejiang-tianhe-resin",
       "taizhou-zhongsheng-glass-fiber-products",
     ]),
+  );
+  const alta = directory.find(
+    ({ id }) => id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(alta?.slug, "alta-performance-materials");
+  assert.equal(alta?.location, "London, United Kingdom");
+  assert.equal(alta?.category, "resin");
+  assert.equal(
+    alta?.logo,
+    "/supplier-assets/alta-performance-materials-logo.png",
+  );
+  assert.match(alta?.description ?? "", /20 sites across/i);
+  assert.match(
+    ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE.productsServicesSummaryEn ??
+      "",
+    /DERAKANE SIGNIA/i,
   );
   const f1Composite = directory.find(
     ({ id }) => id === F1_COMPOSITE_SUPPLIER_ID,
@@ -324,6 +349,20 @@ test("adds every published Git-backed profile when the database is empty", async
     "/supplier-assets/sino-composite-logo.png",
   );
   assert.match(sinoComposite?.description ?? "", /since 2002/i);
+  const suzhouGreentech = directory.find(
+    ({ id }) => id === SUZHOU_GREENTECH_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(suzhouGreentech?.slug, "suzhou-greentech");
+  assert.equal(suzhouGreentech?.location, "Taicang, Jiangsu, China");
+  assert.equal(suzhouGreentech?.category, "manufacturer");
+  assert.equal(
+    suzhouGreentech?.logo,
+    "/supplier-assets/suzhou-greentech-logo.jpg",
+  );
+  assert.match(
+    SUZHOU_GREENTECH_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /TPO\/TPU\/PU/i,
+  );
   const maxtone = directory.find(
     ({ id }) => id === MAXTONE_SUPPLIER_PROFILE.id,
   );
@@ -373,6 +412,17 @@ test("adds every published Git-backed profile when the database is empty", async
     NANJING_LOYALTY_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /past their printed validity dates/i,
   );
+  const newtechGroup = directory.find(
+    ({ id }) => id === NEWTECH_GROUP_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(newtechGroup?.slug, "newtech-group");
+  assert.equal(newtechGroup?.location, "Changzhou, Jiangsu, China");
+  assert.equal(newtechGroup?.category, "fiber");
+  assert.equal(
+    newtechGroup?.logo,
+    "/supplier-assets/newtech-group-logo.png",
+  );
+  assert.match(newtechGroup?.description ?? "", /18,000 tonnes/i);
   const xiamenLft = directory.find(
     ({ id }) => id === XIAMEN_LFT_SUPPLIER_PROFILE.id,
   );
@@ -466,6 +516,20 @@ test("adds every published Git-backed profile when the database is empty", async
     HEBEI_WEITONG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /DN15 to DN4000/i,
   );
+  const hongyuComposite = directory.find(
+    ({ id }) => id === HONGYU_COMPOSITE_SUPPLIER_PROFILE.id,
+  );
+  assert.equal(
+    hongyuComposite?.slug,
+    "hongyu-composite-materials-technology-jiaxing",
+  );
+  assert.equal(hongyuComposite?.location, "Jiaxing, Zhejiang, China");
+  assert.equal(hongyuComposite?.category, "equipment");
+  assert.equal(hongyuComposite?.logo, null);
+  assert.match(
+    HONGYU_COMPOSITE_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
+    /16 independent/i,
+  );
   const chongqingDujiang = directory.find(
     ({ id }) => id === CHONGQING_DUJIANG_SUPPLIER_PROFILE.id,
   );
@@ -549,7 +613,7 @@ test("keeps one supplier and preserves database identity and trust state", async
   assert.equal(noahProfiles[0]?.logo, NOAH_COMPOSITES_SUPPLIER_PROFILE.logo);
 });
 
-test("excludes database records that do not qualify for a public profile", async () => {
+test("keeps incomplete database records visible after completed homepages", async () => {
   const { mergePublicSupplierDirectory } = await loadDirectory();
   const directory = mergePublicSupplierDirectory(
     [
@@ -598,12 +662,17 @@ test("excludes database records that do not qualify for a public profile", async
         id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id ||
         id === "sup-legacy-no-homepage",
     ).length,
-    1,
+    2,
   );
-  assert.equal(
-    directory.some(({ id }) => id === "sup-legacy-no-homepage"),
-    false,
+  const completedIndex = directory.findIndex(
+    ({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id,
   );
+  const incompleteIndex = directory.findIndex(
+    ({ id }) => id === "sup-legacy-no-homepage",
+  );
+  assert.ok(completedIndex >= 0);
+  assert.ok(incompleteIndex > completedIndex);
+  assert.equal(directory[incompleteIndex]?.profilePublished, false);
   assert.equal(
     directory.find(({ id }) => id === NOAH_COMPOSITES_SUPPLIER_PROFILE.id)
       ?.profilePublished,
