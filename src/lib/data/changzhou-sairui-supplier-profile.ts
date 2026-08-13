@@ -134,7 +134,10 @@ export const CHANGZHOU_SAIRUI_SUPPLIER_PROFILE: SupplierListing = {
   profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
   logo: null,
   contactEmail: "xin.ren@orit.cn",
-  contactPhone: "+86 10 8586 1032 ext. 11",
+  // The official page publishes extension 11; keep the clickable field to the
+  // switchboard number so the page's tel: sanitizer cannot append the extension
+  // as if it were part of the subscriber number.
+  contactPhone: "+86 10 8586 1032",
   address:
     "Buildings 5 and 9, Binjiang International Enterprise Port, No. 202 Donghai Road, Xinbei District, Changzhou, Jiangsu, China",
   website: "http://www.orit.cn/product/orit.aspx",
