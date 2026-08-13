@@ -26,6 +26,7 @@ import { CHANGZHOU_TIANMA_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tianma-s
 import { CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tiansheng-composite-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "@/lib/data/changzhou-utek-supplier-profile";
 import { CHANGZHOU_XINGAO_SUPPLIER_PROFILE } from "@/lib/data/changzhou-xingao-supplier-profile";
+import { CHENHECHEN_INTELLIGENT_EQUIPMENT_SUPPLIER_PROFILE } from "@/lib/data/chenhechen-intelligent-equipment-supplier-profile";
 import { CHONGQING_DUJIANG_SUPPLIER_PROFILE } from "@/lib/data/chongqing-dujiang-supplier-profile";
 import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
@@ -122,6 +123,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_UTEK_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_XINGAO_SUPPLIER_PROFILE },
+  { profile: CHENHECHEN_INTELLIGENT_EQUIPMENT_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
