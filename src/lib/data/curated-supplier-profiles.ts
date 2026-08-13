@@ -38,6 +38,7 @@ import { CPIC_SUPPLIER_PROFILE } from "@/lib/data/cpic-supplier-profile";
 import { CIXI_SUNRISE_SEALING_SUPPLIER_PROFILE } from "@/lib/data/cixi-sunrise-sealing-supplier-profile";
 import { DALIAN_HLB_SUPPLIER_PROFILE } from "@/lib/data/dalian-hlb-supplier-profile";
 import { DALIAN_KUANDA_SUPPLIER_PROFILE } from "@/lib/data/dalian-kuanda-supplier-profile";
+import { DALIAN_LIANSHENG_SUPPLIER_PROFILE } from "@/lib/data/dalian-liansheng-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
@@ -146,6 +147,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CIXI_SUNRISE_SEALING_SUPPLIER_PROFILE },
   { profile: DALIAN_HLB_SUPPLIER_PROFILE },
   { profile: DALIAN_KUANDA_SUPPLIER_PROFILE },
+  { profile: DALIAN_LIANSHENG_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
