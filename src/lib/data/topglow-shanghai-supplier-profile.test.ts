@@ -83,6 +83,6 @@ test("keeps Topglow in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Shanghai TRONXT New Material Technology Co., Ltd.",
   );
 });

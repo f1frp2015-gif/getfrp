@@ -67,6 +67,7 @@ import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
 import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SHANGHAI_MOYAN_SUPPLIER_PROFILE } from "@/lib/data/shanghai-moyan-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
+import { SHANGHAI_TRONXT_SUPPLIER_PROFILE } from "@/lib/data/shanghai-tronxt-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
 import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "@/lib/data/suzhou-greentech-supplier-profile";
@@ -138,6 +139,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHENGWU_HERUN_SUPPLIER_PROFILE },
   { profile: CHENGZI_TAINUO_SUPPLIER_PROFILE },
   { profile: TOPGLOW_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: SHANGHAI_TRONXT_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
