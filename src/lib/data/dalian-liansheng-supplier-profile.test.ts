@@ -89,7 +89,7 @@ test("keeps Dalian Liansheng in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dalian Sinke Carbon Fiber Co., Ltd.",
   );
 });
 
