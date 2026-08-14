@@ -25,6 +25,12 @@ Option 2 — apply SQL directly (use only if `db:push` is unavailable):
 psql "$DATABASE_URL" -f scripts/migrations/0001_factory_product.sql
 ```
 
+The guarded `db:supplier-product-pages` runner expects the local database name
+`getfrp` by default. For the Vercel Marketplace Neon production resource, run
+it from an environment that does not load local overrides and explicitly set
+`MIGRATION_DATABASE_NAME=neondb`. The runner still checks `current_database()`
+before applying any SQL.
+
 ## Files
 
 | File | Adds | Notes |

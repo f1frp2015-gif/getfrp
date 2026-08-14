@@ -73,11 +73,11 @@ pnpm db:seed:seo-ugc-demo
 pnpm db:delete:seo-ugc-demo
 ```
 
-The migration runner refuses to change any database whose `current_database()` is not exactly `getfrp`.
-
-Current environment finding: the local `getfrp` connection can read the database but its role cannot create tables in the public schema. The Vercel `DATABASE_URL_UNPOOLED` integration value resolves to a different database named `neondb`, so the safety guard correctly refused to run there. No partial migration was applied. Production UGC upload/review must not be declared operational until an owner/DDL credential for the canonical `getfrp` database is supplied or the Vercel integration is corrected.
-
-Until then, public pages fail closed: they show no UGC products, public requests do not crash, and dashboard/API surfaces report that the product-page service is temporarily unavailable.
+The migration runner checks `current_database()` before changing schema. It
+expects `getfrp` for the legacy local environment and requires an explicit
+`MIGRATION_DATABASE_NAME=neondb` declaration for the Vercel Marketplace Neon
+production resource. This prevents a local `.env.local` value from silently
+selecting the wrong database during deployment.
 
 ## Priority launch pages and keyword validation queue
 
@@ -120,6 +120,6 @@ Search volume is intentionally marked `待核`; no unsupported volume figures we
 - [x] Homepage category, supplier, product, region and RFQ modules
 - [x] Mobile navigation and no-horizontal-overflow browser checks
 - [x] Lint, type checking, automated architecture tests, strict SEO check and production build
-- [ ] Canonical production DB migration (blocked by database ownership/connection identity)
-- [ ] Authenticated end-to-end upload, moderation and public publishing proof (depends on migration)
+- [ ] Vercel Marketplace Neon production migration
+- [ ] Authenticated end-to-end upload, moderation and public publishing proof
 - [ ] Production merge/deployment (must follow successful preview and database resolution)

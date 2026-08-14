@@ -1,18 +1,25 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { neon } from "@neondatabase/serverless";
 
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+  const databaseUrl = process.env.MIGRATION_DATABASE_URL
+    ?? process.env.DATABASE_URL_UNPOOLED
+    ?? process.env.DATABASE_URL;
   if (!databaseUrl) throw new Error("DATABASE_URL_UNPOOLED or DATABASE_URL is required");
   const sql = neon(databaseUrl);
   const [database] = await sql`select current_database() as name`;
-  if (database?.name !== "getfrp") {
-    throw new Error(`Refusing to migrate database ${String(database?.name ?? "unknown")}`);
+  const expectedDatabase = process.env.MIGRATION_DATABASE_NAME ?? "getfrp";
+  if (database?.name !== expectedDatabase) {
+    throw new Error(
+      `Refusing to migrate database ${String(database?.name ?? "unknown")}; expected ${expectedDatabase}`,
+    );
   }
 
+  const scriptDirectory = dirname(fileURLToPath(import.meta.url));
   const migration = await readFile(
-    resolve("scripts/migrations/0003_supplier_product_pages.sql"),
+    resolve(scriptDirectory, "migrations/0003_supplier_product_pages.sql"),
     "utf8",
   );
   const statements = migration
@@ -30,7 +37,7 @@ async function main() {
     order by table_name
   `;
   if (rows.length !== 2) throw new Error(`Migration verification failed: ${JSON.stringify(rows)}`);
-  console.log(`[apply-supplier-product-pages] database=getfrp tables=${rows.map((row) => row.table_name).join(",")}`);
+  console.log(`[apply-supplier-product-pages] database=${expectedDatabase} tables=${rows.map((row) => row.table_name).join(",")}`);
 }
 
 main().catch((error: unknown) => {
