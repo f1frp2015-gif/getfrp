@@ -408,9 +408,9 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /direct roving/i, label: "Fiberglass Direct Roving" },
   { pattern: /fiberglass rovings?.*chopped|chopped strands/i, label: "Fiberglass Roving and Chopped Strands" },
   { pattern: /e-glass.*(?:roving|yarn)/i, label: "E-Glass Roving and Yarn" },
+  { pattern: /carbon-fiber fabrics?|carbon fiber fabrics?|carbon[- ]fiber reinforcement/i, label: "Carbon Fiber Reinforcement Products" },
   { pattern: /fiberglass yarn|reinforcement fabrics/i, label: "Fiberglass Reinforcements" },
   { pattern: /fiberglass fabrics?/i, label: "Fiberglass Fabrics" },
-  { pattern: /carbon-fiber fabrics?|carbon fiber fabrics?/i, label: "Carbon Fiber Reinforcement Products" },
 ];
 
 const APPLICATION_SIGNALS: ApplicationSignal[] = [
