@@ -76,7 +76,7 @@ test("keeps Dezhou Hongyu in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dezhou JunTeng Material Technology Co., Ltd.",
   );
 });
 
