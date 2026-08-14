@@ -78,6 +78,7 @@ import {
   inferProductPagesForSupplier,
   loadProductsForSupplier,
 } from "@/lib/products/queries";
+import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 import {
   getSupplierRegionByName,
   getSupplierRegionPage,
@@ -110,6 +111,14 @@ const EXTRA_PROVINCES_EN: Record<string, string> = {
   "\u5e7f\u897f": "Guangxi",
   "\u6d77\u5357": "Hainan",
   "\u7518\u8083": "Gansu",
+};
+
+const REGION_CHINESE: Record<string, { name: string; summary: string }> = {
+  jiangsu: { name: "江苏 FRP 产业带工厂", summary: "江苏是中国 FRP 与复合材料产业聚集地。欢迎本省真实工厂入驻 GetFRP，建立英文产品页并获取海外询盘。" },
+  shandong: { name: "山东 FRP 产业带工厂", summary: "山东拥有玻纤、碳纤维、管道与工业玻璃钢制造集群。欢迎真实工厂入驻并展示可审核的出口产品。" },
+  guangdong: { name: "广东 FRP 产业带工厂", summary: "广东聚集电气、汽车、船舶、建筑与模压复材企业。欢迎工厂提交真实产品资料，连接海外采购商。" },
+  hebei: { name: "河北 FRP 产业带工厂", summary: "河北是管道、储罐、格栅与防腐设备的重要产业带。欢迎生产企业入驻 GetFRP 获取海外订单。" },
+  zhejiang: { name: "浙江 FRP 产业带工厂", summary: "浙江拥有型材、板材、纤维转化与定制复材能力。欢迎真实工厂建立深度档案并面向海外买家展示。" },
 };
 
 function englishProvince(province: string | null): string {
@@ -295,7 +304,11 @@ async function renderSupplierProfile(profile: SupplierProfile) {
   const description = supplier.descriptionEn ?? "";
   const location = supplier.locationEn ?? "China";
   const productNames = (supplier.productsEn ?? []) as string[];
-  const structuredProducts = await loadProductsForSupplier(supplier);
+  const supplierPublicSlug = supplierRouteSlug(supplier);
+  const [structuredProducts, approvedProductPages] = await Promise.all([
+    loadProductsForSupplier(supplier),
+    loadApprovedSupplierProducts({ supplierSlug: supplierPublicSlug }),
+  ]);
   const relatedProductPages = structuredProducts.length === 0
     ? inferProductPagesForSupplier(supplier)
     : [];
@@ -353,7 +366,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       : "public company profile";
   const profileJsonLd = {
     "@context": "https://schema.org",
-    "@type": "AboutPage",
+    "@type": "ProfilePage",
     "@id": `${pageUrl}#webpage`,
     url: pageUrl,
     name: `${name} — ${profileKind}`,
@@ -601,6 +614,16 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                 <div className="min-w-0">
                   <h3 className="text-sm font-semibold">{labels.products}</h3>
                   <div className="mt-3 grid gap-2">
+                    {approvedProductPages.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/suppliers/${product.supplier.slug}/${product.slug}` as never}
+                        className="flex items-center justify-between rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5 text-sm font-medium hover:border-primary"
+                      >
+                        <span>{product.name}<span className="mt-0.5 block text-[10px] font-normal text-muted-foreground">Approved supplier product · {product.material}</span></span>
+                        <ArrowRight size={14} />
+                      </Link>
+                    ))}
                     {structuredProducts.map((product) => (
                       <Link
                         key={product.id}
@@ -1033,6 +1056,7 @@ async function renderRegionPage(region: SupplierRegionPage) {
   const certCount = network.filter((row) => normalizedCerts(row).length > 0).length;
   const exportReadyCount = network.filter((row) => row.exportReady).length;
   const pageUrl = `${CURRENT_SITE_URL}/suppliers/${region.slug}`;
+  const chinese = REGION_CHINESE[region.slug];
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -1083,11 +1107,13 @@ async function renderRegionPage(region: SupplierRegionPage) {
               VERIFIED REGIONAL CLUSTER
             </div>
             <h1 className="mt-3 text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">
-              FRP &amp; Composite Manufacturers in {region.name}, China
+              {chinese?.name ?? `中国${region.name} FRP 产业带工厂`}
             </h1>
+            <p className="mt-3 text-lg font-medium text-foreground/80">FRP &amp; Composite Manufacturers in {region.name}, China</p>
             <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">
-              {region.summary}
+              {chinese?.summary} {region.summary}
             </p>
+            <div className="mt-6 flex flex-wrap gap-3"><Link href="/suppliers/claim" className={buttonVariants({ size: "lg" })}>中国工厂免费入驻 <ArrowRight size={15} /></Link><Link href="/suppliers" className={buttonVariants({ size: "lg", variant: "outline" })}>Browse suppliers</Link></div>
           </div>
           <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4">
             <div className="rounded-xl border border-border/70 bg-background p-5"><Factory size={18} strokeWidth={1.5} /><div className="mt-4 text-3xl font-semibold">{provinceCount}</div><div className="mt-1 text-xs text-muted-foreground">Public regional records</div></div>

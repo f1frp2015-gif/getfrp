@@ -84,8 +84,12 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ local
           inLanguage: "en",
           mainEntity: {
             "@type": "ItemList",
-            numberOfItems: tools.length,
-            itemListElement: tools.map((tool, index) => ({
+            numberOfItems: tools.length + 2,
+            itemListElement: [
+              { title: "FRP weight calculator", href: `${CURRENT_SITE_URL}/tools/frp-weight-calculator` },
+              { title: "FRP standard comparison", href: `${CURRENT_SITE_URL}/tools/standard-comparison` },
+              ...tools,
+            ].map((tool, index) => ({
               "@type": "ListItem",
               position: index + 1,
               name: tool.title,
@@ -110,19 +114,23 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ local
           </nav>
           <div className="mt-8 max-w-4xl">
             <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7be4e1]">
-              EXTERNAL ENGINEERING REFERENCES
+              GETFRP BUYER TOOLS
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-              FRP engineering tools by F1 Composite
+              FRP calculators and standards tools
             </h1>
             <p className="mt-5 max-w-3xl text-[16px] leading-8 text-[#d9dfe8]">
-              GetFRP no longer operates separate calculation engines. The links below open the engineering tools, published assumptions and validation records maintained by F1 Composite.
+              Use GetFRP&apos;s weight and standards tools for procurement screening, then open the deeper F1 Composite engineering references when structural calculations are required.
             </p>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="grid gap-5 md:grid-cols-2">
+          <Link href="/tools/frp-weight-calculator" className="rounded-xl border border-primary/30 bg-primary/5 p-6"><Calculator size={20} className="text-primary" /><h2 className="mt-6 text-xl font-semibold">FRP weight calculator</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">Estimate profile, rod, tube and panel mass from geometry and material density.</p></Link>
+          <Link href="/tools/standard-comparison" className="rounded-xl border border-primary/30 bg-primary/5 p-6"><BookOpenCheck size={20} className="text-primary" /><h2 className="mt-6 text-xl font-semibold">EN 13706 vs ASTM D3917 vs GB 50608</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">Compare scope, edition, procurement use and the limits of each FRP standard.</p></Link>
+        </div>
         <div className="mb-7 rounded-xl border border-[#123f8c]/20 bg-[#123f8c]/5 p-5 text-sm leading-7 text-muted-foreground">
           These are external references hosted on <span className="font-semibold text-foreground">f1composite.com</span>. Use them for preliminary screening and confirm final design with the governing code, product-specific evidence and a qualified engineer.
         </div>

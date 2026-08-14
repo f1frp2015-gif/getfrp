@@ -32,6 +32,16 @@ import {
 } from "@/lib/supplier-directory";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
+import {
+  ADDITIONAL_PRODUCT_PAGES,
+  APPLICATION_PAGES,
+  COMBINATION_PAGES,
+  MANUFACTURING_PAGES,
+  STANDARD_PAGES,
+} from "@/lib/data/seo-marketplace-pages";
+import { INSIGHT_PAGES, SOURCE_FROM_CHINA_PAGES } from "@/lib/data/longform-pages";
+import { HELP_PAGES } from "@/lib/data/help-pages";
+import { loadApprovedProductSitemapRows } from "@/lib/products/ugc-queries";
 
 export type SitemapType =
   | "core"
@@ -68,10 +78,16 @@ export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/", lastModified: CONTENT_REVIEW_DATE },
   { path: "/products", lastModified: CONTENT_REVIEW_DATE },
   { path: "/suppliers", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/rfq", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/manufacturing", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/applications", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/standards", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/insights", lastModified: CONTENT_REVIEW_DATE },
   { path: "/services/frp-engineering-qa", lastModified: CONTENT_REVIEW_DATE },
   { path: "/methodology", lastModified: CONTENT_REVIEW_DATE },
   { path: "/ai", lastModified: "2026-08-04" },
   { path: "/about", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/contact", lastModified: CONTENT_REVIEW_DATE },
   { path: "/source-from-china", lastModified: "2026-08-04" },
   { path: "/sitemap", lastModified: CONTENT_REVIEW_DATE },
 ];
@@ -82,6 +98,8 @@ export const DATA_SITEMAP_ROUTES: StaticRoute[] = [
 
 export const TOOL_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/tools", lastModified: "2026-08-12" },
+  { path: "/tools/frp-weight-calculator", lastModified: "2026-08-13" },
+  { path: "/tools/standard-comparison", lastModified: "2026-08-13" },
   { path: "/tech", lastModified: "2026-08-04" },
 ];
 
@@ -94,6 +112,12 @@ export const RESOURCE_SITEMAP_PATHS = [
   "/processes/filament-winding",
   "/processes/compression-molding",
   ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
+  ...MANUFACTURING_PAGES.map((page) => page.path),
+  ...APPLICATION_PAGES.map((page) => page.path),
+  ...STANDARD_PAGES.map((page) => page.path),
+  ...COMBINATION_PAGES.filter((page) => !page.path.startsWith("/products/")).map((page) => page.path),
+  ...INSIGHT_PAGES.map((page) => `/insights/${page.slug}`),
+  ...HELP_PAGES.map((page) => `/help/${page.slug}`),
 ];
 
 const toEntry = (
@@ -144,9 +168,14 @@ export async function buildSitemapEntries(
             slug: product.slug,
             updatedAt: CONTENT_REVIEW_DATE,
           }));
-      return publishedRows.map((row) =>
+      const catalogEntries = publishedRows.map((row) =>
         toEntry(`/products/${row.slug}`, row.updatedAt),
       );
+      const programmaticEntries = [
+        ...ADDITIONAL_PRODUCT_PAGES,
+        ...COMBINATION_PAGES.filter((page) => page.path.startsWith("/products/")),
+      ].map((page) => toEntry(page.path, CONTENT_REVIEW_DATE));
+      return [...catalogEntries, ...programmaticEntries];
     }
 
     case "suppliers": {
@@ -199,18 +228,30 @@ export async function buildSitemapEntries(
         },
       );
       const allCompanyEntries = [...companyEntries, ...curatedCompanyEntries];
+      const supplierProductRows = await loadApprovedProductSitemapRows();
+      const supplierProductEntries = supplierProductRows.map((row) =>
+        toEntry(
+          `/suppliers/${row.supplierSlug ?? row.supplierId}/${row.slug}`,
+          row.updatedAt,
+        ),
+      );
       const directoryEntries = allCompanyEntries.length > 0
         ? [toEntry(supplierDirectoryPath(1), CONTENT_REVIEW_DATE)]
         : [];
-      return [...networkEntries, ...directoryEntries, ...allCompanyEntries];
+      return [...networkEntries, ...directoryEntries, ...allCompanyEntries, ...supplierProductEntries];
     }
 
     case "sourcing": {
       // Curated English long-tail hubs — EN deploy only.
       if (!isEn) return [];
-      return sourcingTopicSlugs.map((slug) => ({
-        ...toEntry(`/sourcing/${slug}`, "2026-08-04"),
-      }));
+      return [
+        ...sourcingTopicSlugs.map((slug) => ({
+          ...toEntry(`/sourcing/${slug}`, "2026-08-04"),
+        })),
+        ...SOURCE_FROM_CHINA_PAGES.map((page) =>
+          toEntry(`/source-from-china/${page.slug}`, CONTENT_REVIEW_DATE),
+        ),
+      ];
     }
 
     case "resources": {
@@ -264,7 +305,12 @@ function xmlEscape(s: string): string {
 export function renderUrlset(entries: MetadataRoute.Sitemap): string {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-  for (const e of entries) {
+  const sortedEntries = [...entries].sort((a, b) => {
+    const aTime = a.lastModified ? new Date(a.lastModified).getTime() : 0;
+    const bTime = b.lastModified ? new Date(b.lastModified).getTime() : 0;
+    return bTime - aTime || a.url.localeCompare(b.url);
+  });
+  for (const e of sortedEntries) {
     xml += "  <url>\n";
     xml += `    <loc>${xmlEscape(e.url)}</loc>\n`;
     if (e.lastModified) {

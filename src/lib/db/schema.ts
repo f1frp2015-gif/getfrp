@@ -722,6 +722,81 @@ export const supplierProducts = pgTable(
   ],
 );
 
+// Supplier-owned product pages are the indexable UGC unit. Unlike
+// supplierProducts (the reviewed relationship to a platform product family),
+// these rows contain the supplier's own name, images, specifications and
+// commercial terms. Public reads must always require status = "approved".
+export const supplierProductPages = pgTable(
+  "supplier_product_pages",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    supplierListingId: varchar("supplier_listing_id", { length: 50 })
+      .notNull()
+      .references(() => supplierListings.id, { onDelete: "cascade" }),
+    categoryId: varchar("category_id", { length: 100 })
+      .notNull()
+      .references(() => products.id),
+    slug: varchar("slug", { length: 160 }).notNull(),
+    name: varchar("name", { length: 240 }).notNull(),
+    description: text("description").notNull(),
+    images: jsonb("images").$type<string[]>().default([]).notNull(),
+    material: varchar("material", { length: 160 }).notNull(),
+    manufacturingProcesses: jsonb("manufacturing_processes")
+      .$type<string[]>()
+      .default([])
+      .notNull(),
+    applications: jsonb("applications").$type<string[]>().default([]).notNull(),
+    standards: jsonb("standards").$type<string[]>().default([]).notNull(),
+    parameters: jsonb("parameters")
+      .$type<Record<string, string>>()
+      .default({})
+      .notNull(),
+    certifications: jsonb("certifications").$type<string[]>().default([]).notNull(),
+    moq: integer("moq"),
+    moqUnit: varchar("moq_unit", { length: 24 }),
+    exportMarkets: jsonb("export_markets").$type<string[]>().default([]).notNull(),
+    videoUrl: text("video_url"),
+    priceRange: varchar("price_range", { length: 160 }),
+    status: varchar("status", { length: 16 }).default("pending").notNull(),
+    rejectionReason: text("rejection_reason"),
+    isDemo: boolean("is_demo").default(false).notNull(),
+    submittedAt: timestamp("submitted_at").defaultNow().notNull(),
+    approvedAt: timestamp("approved_at"),
+    reviewedBy: uuid("reviewed_by").references(() => users.id),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("supplier_product_pages_supplier_slug_uniq").on(
+      table.supplierListingId,
+      table.slug,
+    ),
+    index("supplier_product_pages_status_idx").on(table.status, table.updatedAt),
+    index("supplier_product_pages_category_idx").on(table.categoryId, table.status),
+    index("supplier_product_pages_supplier_idx").on(table.supplierListingId, table.status),
+  ],
+);
+
+export const supplierProductReviewLogs = pgTable(
+  "supplier_product_review_logs",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    productPageId: uuid("product_page_id")
+      .notNull()
+      .references(() => supplierProductPages.id, { onDelete: "cascade" }),
+    reviewerId: uuid("reviewer_id").references(() => users.id),
+    action: varchar("action", { length: 24 }).notNull(),
+    reason: text("reason"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("supplier_product_review_logs_product_idx").on(
+      table.productPageId,
+      table.createdAt,
+    ),
+  ],
+);
+
 // ═══════════════════════════════════════════
 // Supplier claims — 企业认领申请
 // ═══════════════════════════════════════════

@@ -9,6 +9,7 @@ import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { SUPPLIER_RESULTS_PAGE_SIZE } from "@/lib/supplier-directory-config";
+import { SEARCH_RELATED_LINKS } from "@/lib/site-navigation";
 import { SuppliersClient } from "../suppliers-client";
 
 export const revalidate = 3600;
@@ -41,16 +42,15 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   await params;
   return {
-    title: {
-      absolute: "Search China FRP Manufacturers & Suppliers | getfrp",
-    },
+    title: { absolute: "Search China FRP Manufacturers & Suppliers | getfrp" },
     description:
       "Search and compare China FRP suppliers by product, fiber, resin, manufacturing process, region, certification and profile status.",
     alternates: alternates("/suppliers/search"),
-    robots: { index: false, follow: true },
+    robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   };
 }
 
@@ -105,6 +105,21 @@ export default async function SupplierSearchPage({
           },
         ]}
       />
+
+      <section className="mb-7 rounded-xl border bg-muted/25 p-5" aria-labelledby="related-static-pages">
+        <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary">STATIC CATEGORY PATHS</div>
+        <h1 id="related-static-pages" className="mt-2 text-2xl font-semibold">Search suppliers or open a related FRP category</h1>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+          Search results are dynamic and intentionally excluded from indexing. These reviewed static directories provide stable product, process, application and standard paths.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {SEARCH_RELATED_LINKS.map((item) => (
+            <Link key={item.href} href={item.href as never} className="rounded-full border bg-background px-3 py-1.5 text-xs font-medium hover:border-primary">
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <section id="supplier-results" className="scroll-mt-24">
         <SuppliersClient

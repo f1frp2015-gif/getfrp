@@ -259,12 +259,12 @@ function checkStandaloneGetfrpSeo(): Violation[] {
 
   const homepage = readFileSync(resolve("src/app/[locale]/home-english.tsx"), "utf8");
   const homepageMetadata = readFileSync(resolve("src/app/[locale]/page.tsx"), "utf8");
-  if (!homepage.includes("China FRP Products &amp; Manufacturers")) {
+  if (!homepage.includes("China FRP Suppliers &amp; Manufacturers")) {
     out.push({
       page: "/",
       field: "h1",
       severity: "error",
-      message: "homepage H1 must retain the China FRP products and manufacturers keyword",
+      message: "homepage H1 must retain the China FRP suppliers and manufacturers keyword",
     });
   }
   if (
@@ -291,7 +291,6 @@ function checkIndexCleanup(): Violation[] {
     "patents",
     "articles",
     "papers",
-    "standards",
   ] as const;
   const sitemapSource = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
   const termsSource = readFileSync(
