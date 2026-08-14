@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -115,6 +116,27 @@ test("global navigation and search meet the crawlable discovery contract", () =>
     );
     assert.ok(isInPrimaryDropdown || HELP_LINKS.some((item) => item.href === link.href), `missing navigation entry for ${link.href}`);
   }
+});
+
+test("the header is English-only and search appears only in the homepage body", () => {
+  const header = readFileSync(
+    new URL("../components/layout/header.tsx", import.meta.url),
+    "utf8",
+  );
+  const homepage = readFileSync(
+    new URL("../app/[locale]/home-english.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(header, />EN</);
+  for (const locale of ["ES", "DE", "PT"]) {
+    assert.doesNotMatch(header, new RegExp(`>${locale}<`));
+  }
+  assert.doesNotMatch(header, /GlobalMarketplaceSearch/);
+  assert.equal(
+    existsSync(new URL("../components/layout/global-marketplace-search.tsx", import.meta.url)),
+    false,
+  );
+  assert.match(homepage, /<HomeMarketplaceSearch \/>/);
 });
 
 test("L4 pages link back to home within three clicks and expose 8-12 related searches", () => {

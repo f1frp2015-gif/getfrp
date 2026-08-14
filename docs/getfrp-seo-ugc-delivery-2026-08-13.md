@@ -10,7 +10,9 @@ Repository: `f1frp2015-gif/getfrp`
 
 ### 1. Crawlable L0-L4 marketplace architecture
 
-- Rebuilt the global header as two navigation rows plus one shared marketplace search row.
+- Rebuilt the global header as two compact navigation rows. After launch review,
+  search was consolidated into the homepage hero to remove the duplicate header
+  search surface.
 - The primary navigation has exactly seven groups: Products, Suppliers, Processes, Applications, Standards, Sourcing Guide and Tools.
 - Added complete crawlable dropdown and footer coverage for product L2 pages, process pages, application pages, standard pages, sourcing guides, tools and the three Help pages.
 - Added five manufacturing pages, five application pages, four standard pages, eight additional product pages and five product/process/application/standard combination pages.
@@ -31,7 +33,8 @@ Repository: `f1frp2015-gif/getfrp`
 
 ### 3. Search and internal-link system
 
-- Added Products, Suppliers and Verified Factory tabs with separate destinations and placeholders.
+- Retained the primary Products and Suppliers search experience in the homepage
+  hero; the duplicate global header search was removed.
 - Suggestions are generated from static routes and category terms, always offering at least five useful static destinations once a user types.
 - Added at least six popular searches linked directly to static pages.
 - Dynamic supplier search is explicitly `noindex,follow` and renders six related static-page links above its results.
@@ -110,7 +113,7 @@ Search volume is intentionally marked `待核`; no unsupported volume figures we
 ## Acceptance checklist
 
 - [x] Seven-item primary navigation with dropdowns
-- [x] Global three-tab search, suggestions and hot searches
+- [x] Homepage search and popular static searches without a duplicate header search
 - [x] Dynamic search `noindex,follow` with static related links
 - [x] Breadcrumb UI plus JSON-LD on new deep routes
 - [x] 8-12 related links on aggregation/combination pages
