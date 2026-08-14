@@ -81,7 +81,7 @@ test("keeps Deqing Guotai in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dezhou Hongyu Compo-Tech Co., Ltd.",
   );
 });
 
