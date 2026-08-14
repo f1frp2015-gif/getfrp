@@ -398,6 +398,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /composite rebar|fiber.*rebar|frp rebar/i, label: "Composite Rebar" },
   { pattern: /basalt fiber.*(?:yarn|roving)|(?:yarn|roving).*basalt fiber/i, label: "Basalt Fiber Yarn and Roving" },
   { pattern: /syt45/i, label: "SYT45 Carbon Fiber" },
+  { pattern: /carbon-fiber.*prepreg|prepreg.*carbon-fiber/i, label: "Carbon Fiber Prepreg and Reinforcement Fabrics" },
   { pattern: /carbon-fiber automotive|automotive.*carbon-fiber/i, label: "Carbon Fiber Automotive Parts" },
   { pattern: /carbon-fiber.*phone|aramid-fiber phone/i, label: "Carbon Fiber Phone Cases" },
   { pattern: /unidirectional.*biaxial|triaxial|quadraxial/i, label: "Multiaxial Fiberglass Fabrics" },
@@ -516,6 +517,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Hygienic interior wall and ceiling systems",
     body: (name) =>
       `${name}'s published wall-panel scope may be relevant to commercial interiors, food-processing spaces, hospitals, laboratories and other cleanable surfaces. Buyers should define the resin and gel coat, reinforcement construction, thickness and flatness tolerance, joint and trim system, cleaning chemicals, color and texture, fire or hygiene evidence, substrate preparation and installation responsibility for the complete wall or ceiling assembly.`,
+    categories: ["manufacturer"],
   },
   {
     pattern: /refrigerated truck|dry van|\brv\b|vehicle body|bus(?:es)?\b/i,
@@ -541,7 +543,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Composite panels, laminates and surface systems",
     body: (name) =>
       `${name}'s listed sheets or panels may suit transport, building or industrial surfaces depending on construction. Qualification should identify the manufacturing process, resin, reinforcement orientation, core where applicable, thickness and flatness tolerance, surface and color standard, UV or fire evidence, fabrication details and packing that protects edges and finish.`,
-    excludedCategories: ["additive"],
+    categories: ["manufacturer"],
   },
   {
     pattern: /resin|gelcoat|polyurethane|epoxy|polyester|vinyl ester/i,
