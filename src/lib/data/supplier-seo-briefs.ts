@@ -543,7 +543,7 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Composite panels, laminates and surface systems",
     body: (name) =>
       `${name}'s listed sheets or panels may suit transport, building or industrial surfaces depending on construction. Qualification should identify the manufacturing process, resin, reinforcement orientation, core where applicable, thickness and flatness tolerance, surface and color standard, UV or fire evidence, fabrication details and packing that protects edges and finish.`,
-    excludedCategories: ["additive"],
+    categories: ["manufacturer"],
   },
   {
     pattern: /resin|gelcoat|polyurethane|epoxy|polyester|vinyl ester/i,
