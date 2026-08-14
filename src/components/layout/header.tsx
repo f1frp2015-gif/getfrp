@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Logo } from "@/components/logo";
-import { GlobalMarketplaceSearch } from "@/components/layout/global-marketplace-search";
 import { PRIMARY_NAVIGATION } from "@/lib/site-navigation";
 
 export function Header() {
@@ -28,11 +27,6 @@ export function Header() {
         <div className="mx-auto grid min-h-9 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 text-[11px] sm:px-6">
           <div className="flex items-center gap-2" aria-label="Language availability">
             <span className="font-semibold text-brand-aqua">EN</span>
-            {(["ES", "DE", "PT"] as const).map((locale) => (
-              <span key={locale} className="cursor-not-allowed text-white/45" title={`${locale} is planned`} aria-label={`${locale} coming soon`}>
-                {locale}
-              </span>
-            ))}
           </div>
           <Link href="/rfq" className="font-semibold text-white underline decoration-brand-teal decoration-2 underline-offset-4 hover:text-brand-aqua">
             Post RFQ
@@ -98,7 +92,6 @@ export function Header() {
         </Sheet>
       </div>
 
-      <GlobalMarketplaceSearch />
     </header>
   );
 }
