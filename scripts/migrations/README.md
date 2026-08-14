@@ -1,5 +1,7 @@
 # Migrations (reference SQL)
-
+Apply migrations in numeric order. `0003_supplier_product_pages.sql` adds the
+supplier-owned product-page review workflow; it is additive and does not alter
+the existing platform product catalog or supplier-product relationships.
 The repo's drizzle/ folder is gitignored — the project uses `pnpm db:push`
 to sync schema directly. This folder keeps hand-written SQL versions of
 non-trivial schema additions as a reviewable record + a fallback for any
@@ -29,3 +31,4 @@ psql "$DATABASE_URL" -f scripts/migrations/0001_factory_product.sql
 |---|---|---|
 | `0001_factory_product.sql` | `factory_waitlist` + `factory_inquiries` + `factory_inquiry_drafts` tables, plus 4 enums | S2 AI 询盘助手 product MVP. Additive only — safe to apply on live DB. |
 | `0002_supplier_product_core.sql` | `products` + `supplier_products` tables and indexes | Canonical product catalog plus explicit many-to-many supplier relationships. Additive; legacy content remains archived. |
+| `0003_supplier_product_pages.sql` | `supplier_product_pages` + `supplier_product_review_logs` | Supplier-owned indexable UGC products with pending/approved/rejected moderation. |

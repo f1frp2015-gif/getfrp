@@ -16,7 +16,6 @@ const REMOVED_PUBLIC_SECTIONS = [
   "/papers",
   "/patents",
   "/platform",
-  "/standards",
   "/trade",
 ] as const;
 

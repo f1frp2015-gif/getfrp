@@ -6,12 +6,19 @@ import { setRequestLocale } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import { gateAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
-import { products, supplierProducts } from "@/lib/db/schema";
+import {
+  products,
+  supplierListings,
+  supplierProductPages,
+  supplierProducts,
+} from "@/lib/db/schema";
 
 import {
   AdminProductsManager,
   type AdminProductRow,
 } from "./admin-products-manager";
+import { UgcReviewManager, type ReviewProductRow } from "./ugc-review-manager";
+import { supplierProductPagesAvailable } from "@/lib/products/ugc-queries";
 
 export const dynamic = "force-dynamic";
 
@@ -44,12 +51,21 @@ export default async function AdminProductsPage({
     );
   }
 
-  const rows = await db
-    .select({ product: products, linkedSupplierCount: count(supplierProducts.id) })
-    .from(products)
-    .leftJoin(supplierProducts, eq(products.id, supplierProducts.productId))
-    .groupBy(products.id)
-    .orderBy(desc(products.updatedAt));
+  const ugcAvailable = await supplierProductPagesAvailable();
+  const [rows, ugcRows] = await Promise.all([
+    db
+      .select({ product: products, linkedSupplierCount: count(supplierProducts.id) })
+      .from(products)
+      .leftJoin(supplierProducts, eq(products.id, supplierProducts.productId))
+      .groupBy(products.id)
+      .orderBy(desc(products.updatedAt)),
+    ugcAvailable ? db
+      .select({ page: supplierProductPages, supplier: supplierListings, product: products })
+      .from(supplierProductPages)
+      .innerJoin(supplierListings, eq(supplierProductPages.supplierListingId, supplierListings.id))
+      .innerJoin(products, eq(supplierProductPages.categoryId, products.id))
+      .orderBy(desc(supplierProductPages.updatedAt)) : Promise.resolve([]),
+  ]);
 
   const catalog: AdminProductRow[] = rows.map(({ product, linkedSupplierCount }) => ({
     id: product.id,
@@ -75,6 +91,18 @@ export default async function AdminProductsPage({
     source: product.source,
     linkedSupplierCount: Number(linkedSupplierCount),
   }));
+  const reviewRows: ReviewProductRow[] = ugcRows.map(({ page, supplier, product }) => ({
+    id: page.id,
+    name: page.name,
+    supplierName: supplier.nameEn ?? supplier.name,
+    categoryName: product.nameEn,
+    material: page.material,
+    imageCount: page.images.length,
+    description: page.description,
+    status: page.status,
+    rejectionReason: page.rejectionReason ?? "",
+    isDemo: page.isDemo,
+  }));
 
   return (
     <div className="space-y-6">
@@ -85,7 +113,12 @@ export default async function AdminProductsPage({
           Supplier-specific offerings are managed separately in each supplier workspace.
         </p>
       </div>
-      <AdminProductsManager rows={catalog} />
+      <UgcReviewManager rows={reviewRows} />
+      {!ugcAvailable ? <Card><CardContent className="py-6 text-sm text-muted-foreground">The supplier product review queue is temporarily unavailable while the additive database migration is pending.</CardContent></Card> : null}
+      <section className="space-y-4">
+        <div><h2 className="text-xl font-semibold">Platform product categories</h2><p className="mt-1 text-sm text-muted-foreground">These definitions control L2 category landing pages and supplier upload classification.</p></div>
+        <AdminProductsManager rows={catalog} />
+      </section>
     </div>
   );
 }

@@ -27,10 +27,6 @@ const legacyProductSlugs = [
 
 const retiredToolRedirects = [
   {
-    source: "/tools/frp-weight-calculator",
-    destination: "https://www.f1composite.com/frp-profile-calculator",
-  },
-  {
     source: "/tools/frp-cost-estimator",
     destination: "https://www.f1composite.com/fiberglass-pultruded-profile-price",
   },

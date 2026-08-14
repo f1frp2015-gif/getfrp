@@ -8,6 +8,7 @@ import {
   ClipboardCheck,
   Factory,
   FileSearch,
+  MapPin,
   Ruler,
   Search,
   Truck,
@@ -19,6 +20,8 @@ import { SupplierCategoryCardImage } from "@/components/supplier-category-card-i
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
+import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
+import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 
 import { HomeMarketplaceSearch } from "./home-marketplace-search";
 
@@ -78,6 +81,14 @@ const FEATURED_PRODUCTS = [
       ["Glass fiber", "fiber-glass"],
     ],
   },
+] as const;
+
+const REGION_LINKS = [
+  ["Jiangsu", "/suppliers/jiangsu", "Resin, profiles, grating and sheet"],
+  ["Shandong", "/suppliers/shandong", "Fiber, pipe, rebar and industrial FRP"],
+  ["Guangdong", "/suppliers/guangdong", "Electrical, marine and molded components"],
+  ["Hebei", "/suppliers/hebei", "Pipe, tanks and corrosion equipment"],
+  ["Zhejiang", "/suppliers/zhejiang", "Profiles, panels and specialty materials"],
 ] as const;
 
 const PROCESS_LINKS = [
@@ -290,7 +301,14 @@ function formatPlantCount(value: number | null): string {
 }
 
 export async function HomePageEnglish() {
-  const verifiedPlantCount = await loadVerifiedPlantCount();
+  const [verifiedPlantCount, publicSuppliers, approvedProducts] = await Promise.all([
+    loadVerifiedPlantCount(),
+    getPublicSupplierDirectory("en"),
+    loadApprovedSupplierProducts(),
+  ]);
+  const featuredSuppliers = publicSuppliers
+    .filter((supplier) => supplier.verified && supplier.profilePublished)
+    .slice(0, 4);
 
   return (
     <>
@@ -362,13 +380,10 @@ export async function HomePageEnglish() {
               China&apos;s specialist FRP marketplace
             </div>
             <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[64px]">
-              <span className="sr-only">
-                China FRP Products &amp; Manufacturers —
-              </span>
-              <span aria-hidden="true">Source China&apos;s FRP Supply Chain.</span>
+              China FRP Suppliers &amp; Manufacturers
             </h1>
             <p className="mx-auto mt-4 max-w-4xl text-[12px] leading-5 text-[#d9dfe8] sm:whitespace-nowrap sm:text-sm sm:leading-6">
-              Glass fiber, carbon fiber, resin systems and export-ready FRP products.
+              Search China FRP suppliers for glass fiber, carbon fiber, resin systems and export-ready FRP products.
             </p>
           </div>
 
@@ -548,6 +563,30 @@ export async function HomePageEnglish() {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9dfe8] bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <SectionIntro eyebrow="China manufacturing regions" title="Source FRP by production cluster." body="Use regional entry pages to compare public factory records, then move into the product, process and RFQ paths that match the project." />
+          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {REGION_LINKS.map(([name, href, detail]) => <Link key={href} href={href as never} className="rounded-xl border border-[#d9dfe8] p-4 hover:border-[#19c3c8]"><div className="flex items-center gap-2 font-semibold text-[#0a1f44]"><MapPin size={15} className="text-[#123f8c]" />{name} FRP suppliers</div><p className="mt-2 text-[11px] leading-5 text-[#5d6672]">{detail}</p></Link>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
+          <div>
+            <SectionIntro eyebrow="Reviewed supplier profiles" title="Certified and verified suppliers." body="Public company profiles with reviewed identity and certification signals. Product-level compliance remains a separate order check." />
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              {featuredSuppliers.map((supplier) => <Link key={supplier.id} href={`/suppliers/${supplier.slug}` as never} className="rounded-xl border border-[#d9dfe8] bg-white p-5"><div className="flex items-center gap-2 font-semibold text-[#0a1f44]"><BadgeCheck size={16} className="text-[#123f8c]" />FRP supplier — {supplier.name}</div><p className="mt-2 text-xs text-[#5d6672]">{supplier.location}</p><p className="mt-3 line-clamp-2 text-xs leading-5 text-[#5d6672]">{supplier.certifications.slice(0, 3).join(" · ") || supplier.description}</p></Link>)}
+            </div>
+          </div>
+          <div>
+            <SectionIntro eyebrow="Approved supplier products" title="New products from real factories." body="Supplier-owned product pages enter this feed only after review; pending and rejected submissions remain private." />
+            {approvedProducts.length ? <div className="mt-7 space-y-3">{approvedProducts.slice(0, 4).map((product) => <Link key={product.id} href={`/suppliers/${product.supplier.slug}/${product.slug}` as never} className="flex items-center justify-between gap-4 rounded-xl border border-[#d9dfe8] bg-white p-5"><div><h3 className="font-semibold text-[#0a1f44]">{product.name}</h3><p className="mt-1 text-xs text-[#5d6672]">{product.supplier.name} · {product.category.name}</p></div><ArrowRight size={15} className="shrink-0 text-[#123f8c]" /></Link>)}</div> : <div className="mt-7 rounded-xl border border-dashed border-[#d9dfe8] bg-white p-7 text-sm leading-6 text-[#5d6672]">No approved supplier product pages are available yet. This feed remains empty instead of using demo or synthetic inventory.</div>}
           </div>
         </div>
       </section>
