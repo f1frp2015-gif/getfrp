@@ -77,5 +77,12 @@ async function seedDemo() {
   console.log("Seeded 2 explicitly non-public demo suppliers and 5 pending demo products.");
 }
 
-if (process.argv.includes("--delete")) await removeDemo();
-else await seedDemo();
+async function main() {
+  if (process.argv.includes("--delete")) await removeDemo();
+  else await seedDemo();
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  process.exitCode = 1;
+});
