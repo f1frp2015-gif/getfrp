@@ -45,6 +45,7 @@ import { DALIAN_YIBANG_SUPPLIER_PROFILE } from "@/lib/data/dalian-yibang-supplie
 import { DALIAN_YUXING_SUPPLIER_PROFILE } from "@/lib/data/dalian-yuxing-supplier-profile";
 import { DANYANG_YIXUN_SUPPLIER_PROFILE } from "@/lib/data/danyang-yixun-supplier-profile";
 import { DARBOND_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/darbond-technology-supplier-profile";
+import { DEEPSEA_PRECISION_TECH_SHENZHEN_SUPPLIER_PROFILE } from "@/lib/data/deepsea-precision-tech-shenzhen-supplier-profile";
 import { DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-maikos-composites-supplier-profile";
 import { ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-dasheng-mould-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
@@ -164,6 +165,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: DARBOND_TECHNOLOGY_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE },
   { profile: DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: DEEPSEA_PRECISION_TECH_SHENZHEN_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },

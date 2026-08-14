@@ -69,7 +69,7 @@ test("keeps Maikos in reviewed exhibitor source order", () => {
 
   assert.ok(index > 0);
   assert.equal(names[index - 1], "Zhejiang Dasheng Mould Plastics Co., Ltd.");
-  assert.equal(names[index + 1], "Shenzhen Hongfu Tongxin Technology Co., Ltd.");
+  assert.equal(names[index + 1], "DeepSea Precision Tech (Shenzhen) Co., Ltd.");
 });
 
 test("builds a composite mold-release SEO brief in the page range", () => {
