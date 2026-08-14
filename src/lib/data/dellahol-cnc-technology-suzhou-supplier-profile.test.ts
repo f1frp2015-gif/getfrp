@@ -75,7 +75,7 @@ test("keeps Dellahol in reviewed exhibitor source order", () => {
   );
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Deqing Guotai Fireproof Material Factory",
   );
 });
 

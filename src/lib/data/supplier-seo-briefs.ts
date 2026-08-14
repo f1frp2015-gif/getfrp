@@ -402,6 +402,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /carbon-fiber.*phone|aramid-fiber phone/i, label: "Carbon Fiber Phone Cases" },
   { pattern: /unidirectional.*biaxial|triaxial|quadraxial/i, label: "Multiaxial Fiberglass Fabrics" },
   { pattern: /fiberglass tissue|glass-fiber mat/i, label: "Fiberglass Tissue and Mat" },
+  { pattern: /fiberglass fireproof fabric|fireproof.*fiberglass/i, label: "Fireproof Fiberglass and Insulation Textiles" },
   { pattern: /high-silica cloth/i, label: "Fiberglass and High-Silica Fabrics" },
   { pattern: /direct roving/i, label: "Fiberglass Direct Roving" },
   { pattern: /fiberglass rovings?.*chopped|chopped strands/i, label: "Fiberglass Roving and Chopped Strands" },
@@ -429,6 +430,12 @@ const APPLICATION_SIGNALS: ApplicationSignal[] = [
     title: "Composite utility and electrical infrastructure",
     body: (name) =>
       `${name}: Utility poles, crossarms and insulation structures need a controlled design basis covering geometry, load cases, deflection, connection details, electrical insulation, tracking and erosion, fire, UV, moisture, temperature, fatigue and installation. Buyers should identify the governing utility or railway specification and require type, routine and lot evidence for the exact product family.`,
+  },
+  {
+    pattern: /fireproof (?:fiberglass|insulation|fabric|blanket)|welding blanket|thermal insulation jacket|high-silica fiberglass/i,
+    title: "Hot-work barriers, removable insulation and thermal protection",
+    body: (name) =>
+      `${name}'s listed thermal textiles and converted products can be screened for welding barriers, smoke curtains, removable equipment insulation and other hot-work protection. The RFQ should define substrate and coating, continuous and peak temperature, flame or molten-splash exposure, heat flux, back-face limit, dimensions, layers, seams, fasteners and maintenance. Require current test evidence for the exact offered construction; a catalog use of “fireproof” is not an approval by itself.`,
   },
   {
     pattern: /flame.?retard|fire.?retard|halogen.?free|low.?smoke/i,
