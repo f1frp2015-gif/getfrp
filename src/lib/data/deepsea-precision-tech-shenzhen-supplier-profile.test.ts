@@ -72,7 +72,7 @@ test("keeps DeepSea in reviewed exhibitor source order", () => {
   assert.equal(names[index - 1], "Maikos Composites Co., Ltd.");
   assert.equal(
     names[index + 1],
-    "Shenzhen Hongfu Tongxin Technology Co., Ltd.",
+    "Dellahol CNC Technology (Suzhou) Co., Ltd.",
   );
 });
 
