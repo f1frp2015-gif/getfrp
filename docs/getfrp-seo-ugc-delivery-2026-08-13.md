@@ -10,9 +10,9 @@ Repository: `f1frp2015-gif/getfrp`
 
 ### 1. Crawlable L0-L4 marketplace architecture
 
-- Rebuilt the global header as two compact navigation rows. After launch review,
-  search was consolidated into the homepage hero to remove the duplicate header
-  search surface.
+- Consolidated the global header into one compact navigation row containing the
+  logo, seven primary navigation groups, English indicator and account/RFQ
+  actions. Search remains in the homepage hero to avoid a duplicate surface.
 - The primary navigation has exactly seven groups: Products, Suppliers, Processes, Applications, Standards, Sourcing Guide and Tools.
 - Added complete crawlable dropdown and footer coverage for product L2 pages, process pages, application pages, standard pages, sourcing guides, tools and the three Help pages.
 - Added five manufacturing pages, five application pages, four standard pages, eight additional product pages and five product/process/application/standard combination pages.
@@ -60,7 +60,7 @@ Repository: `f1frp2015-gif/getfrp`
 ## Important implementation decisions
 
 1. Section 11.4 is treated as the final search rule: dynamic result pages remain `noindex,follow`. Static L2/L3 and combination pages carry index demand and receive internal links from search.
-2. The current public site remains English-only. EN is active; ES/DE/PT are visible disabled placeholders. No false `hreflang` alternates are emitted until translated canonical pages exist.
+2. The current public site remains English-only. The header shows EN without inactive language placeholders. No false `hreflang` alternates are emitted until translated canonical pages exist.
 3. Category pages never fabricate inventory. When fewer than three reviewed suppliers/products match, they show an honest empty state and route users to related static pages or RFQ.
 4. The existing GetFRP authentication and role model is retained. Replacing it would add unrelated migration risk and is not required for the UGC workflow.
 5. Uploaded image references are same-origin and stable even when the backing OSS provider changes.

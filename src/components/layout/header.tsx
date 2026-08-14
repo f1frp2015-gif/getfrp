@@ -22,31 +22,19 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-brand-cool-gray/80 bg-white/95 backdrop-blur">
-      <div className="border-b border-brand-cool-gray/70 bg-brand-navy text-white">
-        <div className="mx-auto grid min-h-9 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 text-[11px] sm:px-6">
-          <div className="flex items-center gap-2" aria-label="Language availability">
-            <span className="font-semibold text-brand-aqua">EN</span>
-          </div>
-          <Link href="/rfq" className="font-semibold text-white underline decoration-brand-teal decoration-2 underline-offset-4 hover:text-brand-aqua">
-            Post RFQ
-          </Link>
-          <div className="flex justify-end gap-3">
-            <Link href="/sign-up" className="font-semibold hover:text-brand-aqua">Join Free</Link>
-            <Link href="/sign-in" className="text-white/80 hover:text-brand-aqua">Sign in</Link>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <header
+      data-navigation-layout="single-row"
+      className="sticky top-0 z-50 w-full border-b border-brand-cool-gray/80 bg-white/95 backdrop-blur"
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
         <Link href="/" className="flex items-center hover:opacity-85" aria-label="getfrp home">
           <Logo eager />
         </Link>
 
-        <nav className="hidden items-center lg:flex" aria-label="Primary navigation">
+        <nav className="ml-auto hidden items-center xl:flex" aria-label="Primary navigation">
           {PRIMARY_NAVIGATION.map((group) => (
             <div key={group.href} className="flex items-center">
-              <Link href={group.href as never} className={`relative px-2 py-5 text-[12px] font-medium transition-colors ${isActive(group.href) ? "text-brand-navy" : "text-brand-graphite/70 hover:text-brand-navy"}`}>
+              <Link href={group.href as never} className={`relative px-2 py-6 text-[12px] font-medium transition-colors ${isActive(group.href) ? "text-brand-navy" : "text-brand-graphite/70 hover:text-brand-navy"}`}>
                 {group.label}
                 {isActive(group.href) ? <span className="absolute inset-x-2 bottom-0 h-0.5 bg-brand-teal" /> : null}
               </Link>
@@ -69,12 +57,25 @@ export function Header() {
           ))}
         </nav>
 
+        <div className="ml-4 hidden shrink-0 items-center gap-3 border-l border-brand-cool-gray/80 pl-4 text-[11px] xl:flex">
+          <span className="font-semibold text-brand-blue" aria-label="English language">EN</span>
+          <Link href="/rfq" className="rounded-md bg-brand-navy px-3 py-2 font-semibold text-white transition-colors hover:bg-brand-blue">
+            Post RFQ
+          </Link>
+          <Link href="/sign-up" className="font-semibold text-brand-navy hover:text-brand-blue">Join Free</Link>
+          <Link href="/sign-in" className="text-brand-graphite/70 hover:text-brand-blue">Sign in</Link>
+        </div>
+
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className="inline-flex size-9 items-center justify-center rounded-md text-brand-navy hover:bg-brand-aqua/20 lg:hidden" aria-label="Open navigation">
+          <SheetTrigger className="ml-auto inline-flex size-9 items-center justify-center rounded-md text-brand-navy hover:bg-brand-aqua/20 xl:hidden" aria-label="Open navigation">
             <Menu size={20} />
           </SheetTrigger>
           <SheetContent side="right" className="w-[min(90vw,360px)] overflow-y-auto p-5 pt-12">
             <nav aria-label="Mobile navigation">
+              <div className="mb-4 flex items-center justify-between border-b border-brand-cool-gray/80 pb-4 text-xs">
+                <span className="font-semibold text-brand-blue" aria-label="English language">EN</span>
+                <Link href="/sign-in" onClick={() => setOpen(false)} className="text-brand-graphite/70 hover:text-brand-blue">Sign in</Link>
+              </div>
               {PRIMARY_NAVIGATION.map((group) => (
                 <div key={group.href} className="border-b border-brand-cool-gray/80 py-3">
                   <Link href={group.href as never} onClick={() => setOpen(false)} className="font-semibold text-brand-navy">{group.label}</Link>
@@ -91,7 +92,6 @@ export function Header() {
           </SheetContent>
         </Sheet>
       </div>
-
     </header>
   );
 }

@@ -128,6 +128,7 @@ test("the header is English-only and search appears only in the homepage body", 
     "utf8",
   );
   assert.match(header, />EN</);
+  assert.match(header, /data-navigation-layout="single-row"/);
   for (const locale of ["ES", "DE", "PT"]) {
     assert.doesNotMatch(header, new RegExp(`>${locale}<`));
   }
