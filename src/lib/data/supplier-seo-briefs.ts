@@ -389,6 +389,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /composite compression molds?|SMC.*(?:molds?|moulds?)/i, label: "Composite Compression Molds" },
   { pattern: /composite (?:mold|mould) release agents?|(?:mold|mould) release agents?.*composite/i, label: "Composite Mold Release Agents" },
   { pattern: /industrial CT inspection|X-ray digital radiography/i, label: "Industrial X-ray and CT Inspection Systems" },
+  { pattern: /high-precision heavy-cutting machining centers?|CNC profile machining centers?/i, label: "CNC Profile and Five-Axis Machining Centers" },
   { pattern: /frp\s*\/\s*grp pipe|frp pipe.*fitting/i, label: "FRP Pipe and Fittings" },
   { pattern: /phenolic grating/i, label: "Phenolic and FRP Grating" },
   { pattern: /grating/i, label: "FRP Grating" },
