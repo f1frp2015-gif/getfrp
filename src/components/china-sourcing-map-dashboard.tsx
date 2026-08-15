@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useState, type KeyboardEvent } from "react";
 import {
   ArrowRight,
   Factory,
@@ -13,10 +13,30 @@ import type {
   ChinaSourcingMapData,
   ChinaSourcingMapProvince,
 } from "@/lib/data/china-sourcing-map";
+import {
+  CHINA_MAP_REFERENCE_PATHS,
+  CHINA_MAP_VIEW_BOX,
+  CHINA_PROVINCE_MAP_REGIONS,
+} from "@/lib/data/china-province-map";
 import { cn } from "@/lib/utils";
 
 const ALL_CATEGORIES = "all";
-const HEAT_COLORS = ["#102f4b", "#164b61", "#147282", "#18a7ae", "#7be4e1"];
+const HEAT_COLORS = [
+  "#102f4b",
+  "#164b61",
+  "#147282",
+  "#18a7ae",
+  "#7be4e1",
+];
+const MAP_LABEL_OFFSETS: Readonly<Record<string, readonly [number, number]>> = {
+  北京: [-4, -11],
+  天津: [13, 6],
+  上海: [14, 2],
+  江苏: [7, -5],
+  浙江: [11, 9],
+  香港: [12, 8],
+  澳门: [-13, 9],
+};
 
 function provinceCount(
   province: ChinaSourcingMapProvince,
@@ -36,18 +56,13 @@ function heatIndex(count: number, max: number): number {
   return 4;
 }
 
-function tileStyle(
-  province: ChinaSourcingMapProvince,
-  count: number,
-  max: number,
-): CSSProperties {
-  const index = heatIndex(count, max);
-  return {
-    gridColumnStart: province.column,
-    gridRowStart: province.row,
-    backgroundColor: HEAT_COLORS[index],
-    color: index === 4 ? "#071d32" : "#f8fafc",
-  };
+function selectProvinceFromKeyboard(
+  event: KeyboardEvent<SVGPathElement>,
+  onSelect: () => void,
+) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  onSelect();
 }
 
 function percentage(value: number): string {
@@ -68,8 +83,6 @@ export function ChinaSourcingMapDashboard({
         id: "",
         name: "",
         code: "",
-        column: 1,
-        row: 1,
         total: 0,
         categoryCounts: {},
       },
@@ -88,6 +101,10 @@ export function ChinaSourcingMapDashboard({
       })),
     ],
     [data.categories, data.mappedTotal, data.provinces],
+  );
+  const provinceById = useMemo(
+    () => new Map(data.provinces.map((province) => [province.id, province])),
+    [data.provinces],
   );
 
   const rankedProvinces = useMemo(
@@ -257,15 +274,15 @@ export function ChinaSourcingMapDashboard({
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-400">
-                Province tile map
+                Province choropleth map
               </div>
               <p className="mt-1 text-xs text-slate-300">
-                Select a province to inspect its supplier mix.
+                Select a geographic province to inspect its supplier mix.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
-              <span>Lower</span>
-              {HEAT_COLORS.slice(1).map((color) => (
+              <span>0</span>
+              {HEAT_COLORS.map((color) => (
                 <span
                   key={color}
                   className="h-2.5 w-5 rounded-[2px] border border-white/10"
@@ -276,46 +293,105 @@ export function ChinaSourcingMapDashboard({
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-white/10 bg-[#061726] p-3 sm:p-5">
-            <div
-              className="grid min-h-[430px] min-w-[640px] grid-cols-10 grid-rows-8 gap-1.5"
-              aria-label={`China supplier density map for ${selectedCategoryLabel}`}
+          <div className="overflow-x-auto rounded-xl border border-white/10 bg-[#061726] p-2 sm:p-4">
+            <svg
+              viewBox={CHINA_MAP_VIEW_BOX}
+              className="h-auto w-full min-w-[620px]"
+              role="group"
+              aria-labelledby="china-map-title china-map-description"
+              preserveAspectRatio="xMidYMid meet"
             >
-              {data.provinces.map((province) => {
-                const count = provinceCount(province, category);
-                const selected = province.id === selectedProvince?.id;
-                return (
-                  <button
-                    key={province.id}
-                    type="button"
-                    aria-label={`${province.name}: ${count} ${selectedCategoryLabel.toLowerCase()}`}
-                    aria-pressed={selected}
-                    onClick={() => setSelectedProvinceId(province.id)}
-                    title={`${province.name} · ${count} ${selectedCategoryLabel.toLowerCase()}`}
-                    className={cn(
-                      "group relative flex min-h-12 flex-col items-center justify-center rounded-md border px-1 py-1.5 transition duration-150 hover:z-10 hover:-translate-y-0.5 hover:border-[#7be4e1] focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[#7be4e1] motion-reduce:transform-none",
-                      count === 0
-                        ? "border-white/[0.06] opacity-55"
-                        : "border-white/15 shadow-[0_5px_15px_rgba(0,0,0,0.16)]",
-                      selected &&
-                        "z-10 border-[#7be4e1] ring-2 ring-[#7be4e1] ring-offset-2 ring-offset-[#061726]",
-                    )}
-                    style={tileStyle(province, count, maxCount)}
-                  >
-                    <span className="font-mono text-[10px] font-bold tracking-[0.08em]">
-                      {province.code}
-                    </span>
-                    <span className="mt-0.5 text-[11px] font-semibold leading-none">
-                      {count || "·"}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+              <title id="china-map-title">
+                China supplier density by province for {selectedCategoryLabel}
+              </title>
+              <desc id="china-map-description">
+                A geographic map of China. Province colors and numeric markers
+                represent verified supplier counts for the selected category.
+              </desc>
+
+              <g>
+                {CHINA_PROVINCE_MAP_REGIONS.map((region) => {
+                  const province = provinceById.get(region.provinceId);
+                  if (!province) return null;
+                  const count = provinceCount(province, category);
+                  const selected = province.id === selectedProvince?.id;
+                  const label = `${province.name}: ${count} ${selectedCategoryLabel.toLowerCase()}`;
+                  return (
+                    <path
+                      key={province.id}
+                      d={region.path}
+                      fill={HEAT_COLORS[heatIndex(count, maxCount)]}
+                      fillRule="evenodd"
+                      stroke={selected ? "#f8fafc" : "#5f7b8e"}
+                      strokeWidth={selected ? 2.8 : 0.85}
+                      vectorEffect="non-scaling-stroke"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={label}
+                      aria-pressed={selected}
+                      onClick={() => setSelectedProvinceId(province.id)}
+                      onKeyDown={(event) =>
+                        selectProvinceFromKeyboard(event, () =>
+                          setSelectedProvinceId(province.id),
+                        )
+                      }
+                      className="cursor-pointer transition-[fill,stroke,filter] duration-200 hover:brightness-125 focus-visible:outline-none focus-visible:stroke-white motion-reduce:transition-none"
+                    >
+                      <title>{label}</title>
+                    </path>
+                  );
+                })}
+              </g>
+
+              <g aria-hidden="true" className="pointer-events-none">
+                {CHINA_MAP_REFERENCE_PATHS.map((path) => (
+                  <path key={path} d={path} fill="#7897aa" opacity="0.85" />
+                ))}
+              </g>
+
+              <g aria-hidden="true" className="pointer-events-none">
+                {CHINA_PROVINCE_MAP_REGIONS.map((region) => {
+                  const province = provinceById.get(region.provinceId);
+                  if (!province) return null;
+                  const count = provinceCount(province, category);
+                  const selected = province.id === selectedProvince?.id;
+                  if (count === 0 && !selected) return null;
+                  const [offsetX, offsetY] = MAP_LABEL_OFFSETS[province.id] ?? [
+                    0,
+                    0,
+                  ];
+                  return (
+                    <g
+                      key={province.id}
+                      transform={`translate(${region.labelX + offsetX} ${region.labelY + offsetY})`}
+                    >
+                      <circle
+                        r="14"
+                        fill={selected ? "#7be4e1" : "#071d32"}
+                        stroke={selected ? "#ffffff" : "#7be4e1"}
+                        strokeWidth={selected ? 2 : 1.3}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                      <text
+                        y="0.5"
+                        fill={selected ? "#071d32" : "#f8fafc"}
+                        fontSize="10.5"
+                        fontWeight="700"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        {count}
+                      </text>
+                    </g>
+                  );
+                })}
+              </g>
+            </svg>
           </div>
           <p className="mt-3 text-[10px] leading-5 text-slate-500">
-            Tile positions preserve approximate geography; color and counts show
-            verified supplier records, not production capacity or market share.
+            Province boundaries provide geographic reference. Color and numeric
+            markers show verified supplier records, not production capacity or
+            market share. Boundary geometry: DataV GeoAtlas.
           </p>
         </div>
 

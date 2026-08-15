@@ -8,15 +8,13 @@ export type SourcingMapCategoryInput = {
   label: string;
 };
 
-export type ChinaProvinceTile = {
+export type ChinaProvinceDefinition = {
   id: string;
   name: string;
   code: string;
-  column: number;
-  row: number;
 };
 
-export type ChinaSourcingMapProvince = ChinaProvinceTile & {
+export type ChinaSourcingMapProvince = ChinaProvinceDefinition & {
   total: number;
   categoryCounts: Record<string, number>;
 };
@@ -33,45 +31,41 @@ export type ChinaSourcingMapData = {
   categories: ChinaSourcingMapCategory[];
 };
 
-// A geographic tile map keeps every province legible and clickable on small
-// screens while preserving the broad north/south/east/west relationships.
-// It also avoids implying survey-grade boundary precision in an aggregate
-// sourcing visualization.
-export const CHINA_PROVINCE_TILES: readonly ChinaProvinceTile[] = [
-  { id: "新疆", name: "Xinjiang", code: "XJ", column: 1, row: 2 },
-  { id: "西藏", name: "Tibet", code: "XZ", column: 1, row: 5 },
-  { id: "青海", name: "Qinghai", code: "QH", column: 3, row: 4 },
-  { id: "云南", name: "Yunnan", code: "YN", column: 3, row: 6 },
-  { id: "甘肃", name: "Gansu", code: "GS", column: 4, row: 3 },
-  { id: "四川", name: "Sichuan", code: "SC", column: 4, row: 5 },
-  { id: "贵州", name: "Guizhou", code: "GZ", column: 4, row: 6 },
-  { id: "广西", name: "Guangxi", code: "GX", column: 4, row: 7 },
-  { id: "内蒙古", name: "Inner Mongolia", code: "NM", column: 5, row: 2 },
-  { id: "宁夏", name: "Ningxia", code: "NX", column: 5, row: 3 },
-  { id: "重庆", name: "Chongqing", code: "CQ", column: 5, row: 5 },
-  { id: "湖南", name: "Hunan", code: "HN", column: 5, row: 6 },
-  { id: "广东", name: "Guangdong", code: "GD", column: 5, row: 7 },
-  { id: "海南", name: "Hainan", code: "HI", column: 5, row: 8 },
-  { id: "陕西", name: "Shaanxi", code: "SN", column: 6, row: 4 },
-  { id: "湖北", name: "Hubei", code: "HB", column: 6, row: 5 },
-  { id: "江西", name: "Jiangxi", code: "JX", column: 6, row: 6 },
-  { id: "香港", name: "Hong Kong", code: "HK", column: 6, row: 8 },
-  { id: "山西", name: "Shanxi", code: "SX", column: 7, row: 3 },
-  { id: "河南", name: "Henan", code: "HA", column: 7, row: 4 },
-  { id: "安徽", name: "Anhui", code: "AH", column: 7, row: 5 },
-  { id: "福建", name: "Fujian", code: "FJ", column: 7, row: 7 },
-  { id: "澳门", name: "Macao", code: "MO", column: 7, row: 8 },
-  { id: "北京", name: "Beijing", code: "BJ", column: 8, row: 2 },
-  { id: "河北", name: "Hebei", code: "HE", column: 8, row: 3 },
-  { id: "山东", name: "Shandong", code: "SD", column: 8, row: 4 },
-  { id: "江苏", name: "Jiangsu", code: "JS", column: 8, row: 5 },
-  { id: "浙江", name: "Zhejiang", code: "ZJ", column: 8, row: 6 },
-  { id: "台湾", name: "Taiwan", code: "TW", column: 8, row: 7 },
-  { id: "天津", name: "Tianjin", code: "TJ", column: 9, row: 3 },
-  { id: "上海", name: "Shanghai", code: "SH", column: 9, row: 5 },
-  { id: "辽宁", name: "Liaoning", code: "LN", column: 10, row: 3 },
-  { id: "吉林", name: "Jilin", code: "JL", column: 10, row: 2 },
-  { id: "黑龙江", name: "Heilongjiang", code: "HL", column: 10, row: 1 },
+export const CHINA_PROVINCES: readonly ChinaProvinceDefinition[] = [
+  { id: "新疆", name: "Xinjiang", code: "XJ" },
+  { id: "西藏", name: "Tibet", code: "XZ" },
+  { id: "青海", name: "Qinghai", code: "QH" },
+  { id: "云南", name: "Yunnan", code: "YN" },
+  { id: "甘肃", name: "Gansu", code: "GS" },
+  { id: "四川", name: "Sichuan", code: "SC" },
+  { id: "贵州", name: "Guizhou", code: "GZ" },
+  { id: "广西", name: "Guangxi", code: "GX" },
+  { id: "内蒙古", name: "Inner Mongolia", code: "NM" },
+  { id: "宁夏", name: "Ningxia", code: "NX" },
+  { id: "重庆", name: "Chongqing", code: "CQ" },
+  { id: "湖南", name: "Hunan", code: "HN" },
+  { id: "广东", name: "Guangdong", code: "GD" },
+  { id: "海南", name: "Hainan", code: "HI" },
+  { id: "陕西", name: "Shaanxi", code: "SN" },
+  { id: "湖北", name: "Hubei", code: "HB" },
+  { id: "江西", name: "Jiangxi", code: "JX" },
+  { id: "香港", name: "Hong Kong", code: "HK" },
+  { id: "山西", name: "Shanxi", code: "SX" },
+  { id: "河南", name: "Henan", code: "HA" },
+  { id: "安徽", name: "Anhui", code: "AH" },
+  { id: "福建", name: "Fujian", code: "FJ" },
+  { id: "澳门", name: "Macao", code: "MO" },
+  { id: "北京", name: "Beijing", code: "BJ" },
+  { id: "河北", name: "Hebei", code: "HE" },
+  { id: "山东", name: "Shandong", code: "SD" },
+  { id: "江苏", name: "Jiangsu", code: "JS" },
+  { id: "浙江", name: "Zhejiang", code: "ZJ" },
+  { id: "台湾", name: "Taiwan", code: "TW" },
+  { id: "天津", name: "Tianjin", code: "TJ" },
+  { id: "上海", name: "Shanghai", code: "SH" },
+  { id: "辽宁", name: "Liaoning", code: "LN" },
+  { id: "吉林", name: "Jilin", code: "JL" },
+  { id: "黑龙江", name: "Heilongjiang", code: "HL" },
 ];
 
 const PROVINCE_ALIASES: Readonly<Record<string, string>> = {
@@ -111,17 +105,19 @@ const PROVINCE_ALIASES: Readonly<Record<string, string>> = {
   澳门特别行政区: "澳门",
 };
 
-const TILE_BY_ID = new Map(CHINA_PROVINCE_TILES.map((tile) => [tile.id, tile]));
-const TILE_BY_ENGLISH_NAME = new Map(
-  CHINA_PROVINCE_TILES.map((tile) => [tile.name.toLowerCase(), tile.id]),
+const PROVINCE_BY_ID = new Map(
+  CHINA_PROVINCES.map((province) => [province.id, province]),
+);
+const PROVINCE_BY_ENGLISH_NAME = new Map(
+  CHINA_PROVINCES.map((province) => [province.name.toLowerCase(), province.id]),
 );
 
 export function normalizeChinaProvince(value: string | null): string | null {
   const cleaned = value?.trim();
   if (!cleaned) return null;
-  if (TILE_BY_ID.has(cleaned)) return cleaned;
+  if (PROVINCE_BY_ID.has(cleaned)) return cleaned;
   if (PROVINCE_ALIASES[cleaned]) return PROVINCE_ALIASES[cleaned];
-  return TILE_BY_ENGLISH_NAME.get(cleaned.toLowerCase()) ?? null;
+  return PROVINCE_BY_ENGLISH_NAME.get(cleaned.toLowerCase()) ?? null;
 }
 
 function fallbackCategoryLabel(id: string): string {
@@ -170,10 +166,10 @@ export function buildChinaSourcingMapData(
       a.label.localeCompare(b.label),
   );
 
-  const provinces = CHINA_PROVINCE_TILES.map((tile) => {
-    const counts = provinceCategoryCounts.get(tile.id) ?? new Map<string, number>();
+  const provinces = CHINA_PROVINCES.map((province) => {
+    const counts = provinceCategoryCounts.get(province.id) ?? new Map<string, number>();
     return {
-      ...tile,
+      ...province,
       total: Array.from(counts.values()).reduce((sum, count) => sum + count, 0),
       categoryCounts: Object.fromEntries(counts),
     };
