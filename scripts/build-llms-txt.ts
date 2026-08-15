@@ -7,6 +7,7 @@ const LLMS = `# getfrp.com — China FRP Products & Manufacturers
 
 ## Primary resources
 - [FRP products](https://getfrp.com/products): product families with materials, processes, specifications, standards and buying checks.
+- [International FRP standards comparison](https://getfrp.com/standards): process and raw-material standards crosswalk for Europe, the United States, Australia and Canada.
 - [China FRP manufacturers](https://getfrp.com/suppliers): searchable supplier directory. Every listed company has its own canonical profile URL.
 - [Source from China](https://getfrp.com/source-from-china): RFQ, sampling, QA, payment, export and logistics playbook.
 - [RFQ](https://getfrp.com/rfq): one controlled request for supplier matching and evidence review.
