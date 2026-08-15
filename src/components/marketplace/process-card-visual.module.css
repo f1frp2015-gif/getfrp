@@ -1,0 +1,413 @@
+.stage {
+  position: relative;
+  height: 7.5rem;
+  margin: -0.5rem -0.5rem 1.35rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-brand-cool-gray) 78%, transparent);
+  border-radius: 0.6rem;
+  background:
+    radial-gradient(circle at 82% 18%, rgb(25 195 200 / 12%), transparent 31%),
+    linear-gradient(145deg, #f8fafc, #f1f6f8 66%, #eafafa);
+  color: var(--color-brand-navy);
+  isolation: isolate;
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.stage::after {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.stage svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scanLine {
+  position: absolute;
+  inset: 0 auto 0 -25%;
+  z-index: 3;
+  width: 18%;
+  background: linear-gradient(90deg, transparent, rgb(123 228 225 / 18%), transparent);
+  transform: skewX(-10deg);
+  animation: scan 7s linear infinite;
+  pointer-events: none;
+}
+
+.grid {
+  fill: none;
+  stroke: #123f8c;
+  stroke-width: 0.7;
+  opacity: 0.055;
+}
+
+.directionArrow,
+.spinMarks,
+.pressPulse {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+/* Pultrusion: fibers advance through resin and a heated die. */
+.pultrusionFibers {
+  fill: none;
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 14 7;
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: flowDash 1.25s linear infinite;
+}
+
+.resinBath {
+  fill: rgb(25 195 200 / 15%);
+  stroke: var(--color-brand-blue);
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.resinSurface {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: resinWave 2.4s ease-in-out infinite;
+}
+
+.pultrusionDie {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transform-origin: 175px 65px;
+  animation: dieHeat 2.8s ease-in-out infinite;
+}
+
+.pultrusionProfile {
+  fill: rgb(18 63 140 / 10%);
+  stroke: var(--color-brand-blue);
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.pullArrows {
+  animation: pull 1.5s ease-in-out infinite;
+}
+
+/* Filament winding: the mandrel spins while the carriage traverses. */
+.rovingSpool {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-width: 1.7;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 4s linear infinite;
+}
+
+.feedTow {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 7 5;
+  stroke-width: 2.4;
+  animation: flowDash 1s linear infinite;
+}
+
+.mandrel {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.6;
+}
+
+.mandrelHighlight {
+  fill: none;
+  stroke: rgb(18 63 140 / 18%);
+  stroke-dasharray: 14 8;
+  animation: reverseFlowDash 1.25s linear infinite;
+}
+
+.windingBands {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 52 18;
+  stroke-width: 2.2;
+  animation: windingLay 2.4s linear infinite;
+}
+
+.windingCarriage {
+  fill: var(--color-brand-blue);
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.2;
+  animation: carriage 4s ease-in-out infinite alternate;
+}
+
+.spinMarks {
+  animation: spinMark 1.8s ease-in-out infinite;
+}
+
+/* Hand lay-up: a consolidation roller travels over wet laminate. */
+.openMold {
+  fill: none;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.laminateLayers {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+.laminateLayers path:nth-child(1) {
+  stroke: var(--color-brand-blue);
+}
+
+.laminateLayers path:nth-child(2) {
+  stroke: var(--color-brand-teal);
+}
+
+.laminateLayers path:nth-child(3) {
+  stroke: var(--color-brand-aqua);
+}
+
+.wetOutTrail {
+  fill: none;
+  stroke: rgb(25 195 200 / 32%);
+  stroke-dasharray: 130;
+  stroke-linecap: round;
+  stroke-width: 12;
+  animation: wetOut 4.8s ease-in-out infinite;
+}
+
+.layupRoller {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  animation: rollerSweep 4.8s ease-in-out infinite;
+}
+
+.layupRoller rect {
+  fill: rgb(18 63 140 / 10%);
+  stroke: var(--color-brand-blue);
+}
+
+.laminateBubbles {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-width: 1.2;
+  animation: releaseBubbles 4.8s ease-in-out infinite;
+}
+
+/* SMC: the upper die closes and the charge spreads under pressure. */
+.pressColumns {
+  fill: none;
+  stroke: rgb(10 31 68 / 28%);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.upperMold,
+.lowerMold {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.upperMold {
+  animation: pressClose 4.2s ease-in-out infinite;
+}
+
+.smcCharge {
+  fill: rgb(25 195 200 / 34%);
+  stroke: var(--color-brand-teal);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: chargeSpread 4.2s ease-in-out infinite;
+}
+
+.pressPulse {
+  animation: pressurePulse 4.2s ease-in-out infinite;
+}
+
+/* RTM: a resin front moves across the dry preform inside a closed mold. */
+.rtmMold {
+  fill: #fff;
+  fill-opacity: 0.72;
+  stroke: var(--color-brand-navy);
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.rtmPreform {
+  fill: none;
+  stroke: rgb(18 63 140 / 25%);
+  stroke-dasharray: 4 4;
+  stroke-width: 1.4;
+}
+
+.rtmResinFront {
+  fill: rgb(25 195 200 / 28%);
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: resinFill 5s ease-in-out infinite;
+}
+
+.rtmInlet,
+.rtmOutlet {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.rtmInlet {
+  animation: inletPulse 1.25s ease-in-out infinite;
+}
+
+.rtmOutlet {
+  animation: outletPulse 5s ease-in-out infinite;
+}
+
+.resinParticles {
+  fill: var(--color-brand-teal);
+  animation: particles 5s ease-in-out infinite;
+}
+
+@keyframes scan {
+  from { transform: translateX(0) skewX(-10deg); }
+  42%, 100% { transform: translateX(700%) skewX(-10deg); }
+}
+
+@keyframes flowDash {
+  to { stroke-dashoffset: -21; }
+}
+
+@keyframes reverseFlowDash {
+  to { stroke-dashoffset: 22; }
+}
+
+@keyframes resinWave {
+  50% { transform: translateY(2px); }
+}
+
+@keyframes dieHeat {
+  50% {
+    fill: rgb(123 228 225 / 26%);
+    filter: drop-shadow(0 0 4px rgb(25 195 200 / 35%));
+  }
+}
+
+@keyframes pull {
+  50% { transform: translateX(7px); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes windingLay {
+  to { stroke-dashoffset: -70; }
+}
+
+@keyframes carriage {
+  from { transform: translateX(-22px); }
+  to { transform: translateX(72px); }
+}
+
+@keyframes spinMark {
+  50% { transform: translateX(3px); }
+}
+
+@keyframes rollerSweep {
+  0%, 12%, 100% { transform: translateX(-72px) rotate(-4deg); }
+  48%, 62% { transform: translateX(60px) rotate(3deg); }
+}
+
+@keyframes wetOut {
+  0%, 12%, 100% {
+    opacity: 0.2;
+    stroke-dashoffset: 130;
+  }
+  55%, 72% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes releaseBubbles {
+  0%, 30% { opacity: 0.75; transform: translateY(0); }
+  65%, 100% { opacity: 0; transform: translateY(-13px); }
+}
+
+@keyframes pressClose {
+  0%, 15%, 100% { transform: translateY(0); }
+  45%, 72% { transform: translateY(19px); }
+}
+
+@keyframes chargeSpread {
+  0%, 15%, 100% { transform: scaleX(0.72) scaleY(1); }
+  45%, 72% { transform: scaleX(1.6) scaleY(0.44); }
+}
+
+@keyframes pressurePulse {
+  0%, 20%, 82%, 100% { opacity: 0; transform: translateY(-3px); }
+  42%, 68% { opacity: 1; transform: translateY(2px); }
+}
+
+@keyframes resinFill {
+  0%, 12% { opacity: 0.28; transform: scaleX(0.04); }
+  72%, 88% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0.28; transform: scaleX(0.04); }
+}
+
+@keyframes inletPulse {
+  50% { transform: translateX(4px); }
+}
+
+@keyframes outletPulse {
+  0%, 54% { opacity: 0.38; }
+  76%, 90% { opacity: 1; filter: drop-shadow(0 0 4px rgb(25 195 200 / 75%)); }
+  100% { opacity: 0.38; }
+}
+
+@keyframes particles {
+  0%, 10%, 100% { opacity: 0; transform: translateX(-10px); }
+  35%, 75% { opacity: 1; }
+  88% { opacity: 0; transform: translateX(14px); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :global(a:hover) > .stage,
+  :global(a:focus-visible) > .stage {
+    border-color: rgb(25 195 200 / 62%);
+    box-shadow: 0 12px 28px -22px rgb(10 31 68 / 75%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage *,
+  .stage::before,
+  .stage::after {
+    animation: none !important;
+  }
+
+  .scanLine {
+    display: none;
+  }
+}
