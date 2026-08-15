@@ -28,7 +28,6 @@ import { JsonLd } from "@/components/json-ld";
 import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { TestimonialsBlock } from "@/components/testimonials-block";
-import { ProductFamilyGallery } from "@/components/frp-section-figure";
 import { ChinaSourcingMapDashboard } from "@/components/china-sourcing-map-dashboard";
 import {
   crosswalk,
@@ -39,31 +38,6 @@ import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles"
 import { buildChinaSourcingMapData } from "@/lib/data/china-sourcing-map";
 
 export const revalidate = 3600;
-
-// Western buyers expect a clear scale signal at-a-glance — translate internal
-// XL/L/M/S codes into descriptive labels rather than leaking jargon.
-const TIER_META: Record<string, { label: string; rank: number; tone: string }> = {
-  XL: {
-    label: "Major",
-    rank: 4,
-    tone: "border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
-  },
-  L: {
-    label: "Large",
-    rank: 3,
-    tone: "border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
-  },
-  M: {
-    label: "Mid",
-    rank: 2,
-    tone: "border-border bg-muted text-foreground",
-  },
-  S: {
-    label: "Small",
-    rank: 1,
-    tone: "border-border/60 bg-background text-muted-foreground",
-  },
-};
 
 type VerifiedRow = {
   category: string | null;
@@ -122,14 +96,6 @@ export default async function SourceFromChinaPage({
   })();
 
   const total = verified.length;
-
-  // Group by category (already scale-ordered from SQL).
-  const byCategory = new Map<string, VerifiedRow[]>();
-  for (const row of verified) {
-    const cat = row.category ?? "manufacturer";
-    if (!byCategory.has(cat)) byCategory.set(cat, []);
-    byCategory.get(cat)!.push(row);
-  }
 
   // Province counts keyed by Chinese province token (DB native), then mapped
   // to English at render time. Fixes a latent bug where the previous build
@@ -317,140 +283,10 @@ export default async function SourceFromChinaPage({
         </Link>
       </div>
 
-      {/* Featured: what you can source — generated product figures, anonymous
-          by design (shows the product, not the factory), each → RFQ */}
-      <section className="mb-12">
-        <div className="mb-5 flex items-end justify-between gap-3 border-b border-border/70 pb-3">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              WHAT YOU CAN SOURCE
-            </div>
-            <h2 className="mt-1.5 text-xl font-semibold tracking-tight sm:text-2xl">
-              FRP product families we source from China
-            </h2>
-          </div>
-        </div>
-        <ProductFamilyGallery />
-        <p className="mt-3 text-xs text-muted-foreground">
-          Figures are schematic. Tell us the spec and target standard — we match
-          the right plant from the audited network and stand behind delivery.
-        </p>
-      </section>
-
-      {/* TOC */}
-      <div className="mb-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
-        {[
-          { id: "directory", num: "01", label: "Capability by category", sub: "Audited, by scale tier" },
-          { id: "regions", num: "02", label: "Interactive sourcing map", sub: "Province × category" },
-          { id: "certs", num: "03", label: "Export readiness", sub: "Certifications decoded" },
-          { id: "standards", num: "04", label: "Standards crosswalk", sub: "GB ⇄ ASTM / ISO / EN" },
-          { id: "playbook", num: "05", label: "Sourcing playbook", sub: "Spec → PO → Delivery" },
-          { id: "topics", num: "06", label: "Topic deep dives", sub: "Grating · Rebar · Tariffs · GB-vs-ASTM" },
-        ].map((i) => (
-          <a
-            key={i.id}
-            href={`#${i.id}`}
-            className="group flex items-center justify-between border border-border/70 bg-background p-4 transition-colors hover:border-foreground"
-          >
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                MODULE {i.num}
-              </div>
-              <div className="mt-1 text-sm font-semibold">{i.label}</div>
-              <div className="mt-0.5 text-xs text-muted-foreground">{i.sub}</div>
-            </div>
-            <ChevronRight
-              size={16}
-              className="text-muted-foreground transition-transform group-hover:translate-x-0.5"
-            />
-          </a>
-        ))}
-      </div>
-
-      {/* ═══ 01 — Suppliers by category, ranked by scale ═══ */}
-      <section id="directory" className="mt-16 scroll-mt-20">
+      {/* ═══ 01 — Verified suppliers by region ═══ */}
+      <section id="regions" className="scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 01 · CAPABILITY"
-          title="The audited network, by capability and scale"
-        />
-        <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          The supply base behind those products, shown in aggregate. Each card is
-          a supply-chain role with its audited plant count and scale mix — Major
-          (listed groups / Tier-1) through Small (niche SMEs). We pick and stand
-          behind the specific plant for your spec; you deal with one desk, not a
-          directory.
-        </p>
-
-        {/* Tier legend */}
-        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs">
-          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-            Scale tier:
-          </span>
-          {(["XL", "L", "M", "S"] as const).map((t) => (
-            <span
-              key={t}
-              className={`inline-flex items-center gap-1.5 border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${TIER_META[t].tone}`}
-            >
-              {TIER_META[t].label}
-              <span className="text-[9px] opacity-60">
-                ({tierCounts[t] ?? 0})
-              </span>
-            </span>
-          ))}
-        </div>
-
-        {/* Capability cards — anonymized: counts + scale mix, no factory names */}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {supplierCategories
-            .map((c) => ({ cat: c, rows: byCategory.get(c.id) ?? [] }))
-            .filter((b) => b.rows.length > 0)
-            .map(({ cat, rows }) => {
-              const mix = rows.reduce<Record<string, number>>((acc, r) => {
-                const t = r.scaleTier ?? "M";
-                acc[t] = (acc[t] ?? 0) + 1;
-                return acc;
-              }, {});
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/rfq?category=${encodeURIComponent(cat.id)}` as never}
-                  className="group flex flex-col border border-border/70 bg-background p-5 transition-colors hover:border-foreground"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="text-sm font-semibold tracking-tight">
-                      {cat.nameEn}
-                    </span>
-                    <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-                      {rows.length}
-                    </span>
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {(["XL", "L", "M", "S"] as const)
-                      .filter((t) => (mix[t] ?? 0) > 0)
-                      .map((t) => (
-                        <span
-                          key={t}
-                          className={`inline-flex items-center gap-1 border px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider ${TIER_META[t].tone}`}
-                        >
-                          {TIER_META[t].label}
-                          <span className="opacity-60">{mix[t]}</span>
-                        </span>
-                      ))}
-                  </div>
-                  <span className="mt-4 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-foreground/70 transition-colors group-hover:text-foreground">
-                    Source this → RFQ
-                    <ChevronRight size={12} className="transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
-              );
-            })}
-        </div>
-      </section>
-
-      {/* ═══ 02 — Verified suppliers by region ═══ */}
-      <section id="regions" className="mt-20 scroll-mt-20">
-        <PlatformSectionHeading
-          eyebrow="MODULE 02 · CHINA SOURCING MAP"
+          eyebrow="MODULE 01 · CHINA SOURCING MAP"
           title="Find the right composites cluster before you send the RFQ"
         />
         <p className="mb-7 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
@@ -462,10 +298,10 @@ export default async function SourceFromChinaPage({
         <ChinaSourcingMapDashboard data={sourcingMapData} />
       </section>
 
-      {/* ═══ 03 — Export readiness ═══ */}
+      {/* ═══ 02 — Export readiness ═══ */}
       <section id="certs" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 03 · EXPORT READINESS"
+          eyebrow="MODULE 02 · EXPORT READINESS"
           title="Certifications that actually unlock cross-border purchase orders"
         />
         <p className="mb-6 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
@@ -525,10 +361,10 @@ export default async function SourceFromChinaPage({
         </div>
       </section>
 
-      {/* ═══ 04 — Standards crosswalk ═══ */}
+      {/* ═══ 03 — Standards crosswalk ═══ */}
       <section id="standards" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 04 · STANDARDS CROSSWALK"
+          eyebrow="MODULE 03 · STANDARDS CROSSWALK"
           title="GB ⇄ ASTM / ISO / EN for composite test methods and products"
         />
         <p className="mb-6 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
@@ -603,10 +439,10 @@ export default async function SourceFromChinaPage({
         </div>
       </section>
 
-      {/* ═══ 05 — Sourcing playbook ═══ */}
+      {/* ═══ 04 — Sourcing playbook ═══ */}
       <section id="playbook" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 05 · SOURCING PLAYBOOK"
+          eyebrow="MODULE 04 · SOURCING PLAYBOOK"
           title="From spec to delivered cargo: the 6-step path"
         />
         <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
@@ -690,10 +526,10 @@ export default async function SourceFromChinaPage({
         </PlatformCardGrid>
       </section>
 
-      {/* ═══ 06 — Sourcing topic deep dives ═══ */}
+      {/* ═══ 05 — Sourcing topic deep dives ═══ */}
       <section id="topics" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 06 · DEEP DIVES"
+          eyebrow="MODULE 05 · DEEP DIVES"
           title="Topic-specific sourcing guides"
         />
         <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
