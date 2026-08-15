@@ -2,8 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   buildChinaSourcingMapData,
+  CHINA_PROVINCES,
   normalizeChinaProvince,
 } from "./china-sourcing-map";
+import {
+  CHINA_MAP_REFERENCE_PATHS,
+  CHINA_PROVINCE_MAP_REGIONS,
+} from "./china-province-map";
 
 test("normalizes full Chinese administrative names and English province names", () => {
   assert.equal(normalizeChinaProvince("江苏省"), "江苏");
@@ -44,4 +49,15 @@ test("builds province-by-category counts without inventing locations", () => {
       ["resin", 1],
     ],
   );
+});
+
+test("provides a geographic path for every province in the sourcing dataset", () => {
+  assert.deepEqual(
+    new Set(CHINA_PROVINCE_MAP_REGIONS.map((region) => region.provinceId)),
+    new Set(CHINA_PROVINCES.map((province) => province.id)),
+  );
+  assert.ok(
+    CHINA_PROVINCE_MAP_REGIONS.every((region) => region.path.startsWith("M")),
+  );
+  assert.ok(CHINA_MAP_REFERENCE_PATHS.length > 0);
 });
