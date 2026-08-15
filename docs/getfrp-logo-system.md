@@ -1,6 +1,6 @@
 # GetFRP logo system
 
-The logo keeps two established brand cues: the continuous loop represents connection and an end-to-end supply chain; the three outgoing strands represent composite reinforcement. The compact geometry is designed to remain recognizable in browser tabs, circular avatars, mobile home screens, and the website header.
+The logo keeps two established brand cues: the continuous loop represents connection and an end-to-end supply chain; the three outgoing strands represent composite reinforcement. The master artwork uses custom tapered ribbon geometry and a woven crossover instead of generic round strokes. The compact geometry is designed to remain recognizable in browser tabs, circular avatars, mobile home screens, and the website header.
 
 ## Assets
 
@@ -24,3 +24,4 @@ The live React header uses the same vector paths through `src/components/logo.ts
 - Do not stretch, rotate, add gradients or shadows, recolor individual strands, or crop inside the rounded avatar tile.
 
 PNG files are compatibility exports. SVG is the source of truth for future changes.
+The favicon is an intentional small-size reduction of the master mark, not a separate logo.

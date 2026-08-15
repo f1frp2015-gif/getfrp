@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">GetFRP avatar</title>
-  <desc id="desc">The GetFRP composite fiber mark on a navy rounded square.</desc>
-  <rect width="512" height="512" rx="112" fill="#0A1F44"/>
-  <path d="M248 256C204 201 174 176 128 176C78 176 48 211 48 256C48 301 80 336 130 336C176 336 211 307 256 256" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M252 256C298 205 340 184 408 184M271 276C315 234 354 216 416 216M291 296C331 264 367 252 412 252" fill="none" stroke="#19C3C8" stroke-width="22" stroke-linecap="round"/>
+  <desc id="desc">The GetFRP woven composite fiber mark on a navy rounded square.</desc>
+  <rect width="512" height="512" rx="104" fill="#0A1F44"/>
+  <g transform="translate(30 143) scale(.94)">
+    <path fill="#F8FBFF" d="M262 113C220 61 182 30 130 30C66 30 24 68 24 120C24 173 67 210 130 210C183 210 222 179 263 132L244 114C208 155 174 181 130 181C82 181 52 156 52 120C52 83 82 58 130 58C168 58 199 81 234 123L262 113Z"/>
+    <path fill="#19C3C8" d="M229 116C286 61 341 43 399 49C423 51 443 60 458 72C438 65 419 63 400 64C345 66 300 84 244 127L229 116Z"/>
+    <path fill="#19C3C8" d="M244 130C296 84 346 69 401 74C426 77 445 85 459 97C439 90 421 88 401 89C351 91 308 107 257 141L244 130Z"/>
+    <path fill="#19C3C8" d="M259 144C305 109 349 98 399 103C423 106 442 114 456 126C437 120 419 118 401 119C355 121 316 133 270 154L259 144Z"/>
+  </g>
 </svg>

@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="192" viewBox="0 0 760 192" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="240" viewBox="0 0 800 240" role="img" aria-labelledby="title desc">
   <title id="title">GetFRP</title>
-  <desc id="desc">The GetFRP composite fiber mark and wordmark.</desc>
-  <g transform="translate(0 0)">
-    <path d="M228 96C186 44 158 20 116 20C62 20 20 53 20 96C20 139 62 172 116 172C161 172 193 145 236 96" fill="none" stroke="#0A1F44" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M232 96C278 45 320 24 388 24M251 116C295 74 334 56 396 56M271 136C311 104 347 92 392 92" fill="none" stroke="#19C3C8" stroke-width="18" stroke-linecap="round"/>
-  </g>
-  <text x="424" y="132" fill="#0A1F44" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="700" letter-spacing="-6">getfrp</text>
+  <desc id="desc">The GetFRP woven composite fiber mark and wordmark.</desc>
+  <path fill="#0A1F44" d="M262 113C220 61 182 30 130 30C66 30 24 68 24 120C24 173 67 210 130 210C183 210 222 179 263 132L244 114C208 155 174 181 130 181C82 181 52 156 52 120C52 83 82 58 130 58C168 58 199 81 234 123L262 113Z"/>
+  <path fill="#19C3C8" d="M229 116C286 61 341 43 399 49C423 51 443 60 458 72C438 65 419 63 400 64C345 66 300 84 244 127L229 116Z"/>
+  <path fill="#19C3C8" d="M244 130C296 84 346 69 401 74C426 77 445 85 459 97C439 90 421 88 401 89C351 91 308 107 257 141L244 130Z"/>
+  <path fill="#19C3C8" d="M259 144C305 109 349 98 399 103C423 106 442 114 456 126C437 120 419 118 401 119C355 121 316 133 270 154L259 144Z"/>
+  <text x="476" y="160" fill="#0A1F44" font-family="Arial, Helvetica, sans-serif" font-size="108" font-weight="700" letter-spacing="-6">getfrp</text>
 </svg>
