@@ -19,7 +19,6 @@ import {
 import {
   SUPPLIER_SOURCING_CATALOG_ITEM_COUNT,
   SUPPLIER_SOURCING_CATALOGS,
-  type SupplierSourcingCatalogItem,
 } from "@/lib/data/supplier-sourcing-catalogs";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { alternates } from "@/lib/seo";
@@ -30,43 +29,25 @@ export const revalidate = 3600;
 const POPULAR_SEARCHES = [
   {
     label: "FRP grating factories",
-    query: "FRP grating",
-    capability: "resin-vinyl-ester",
+    href: "/products/frp-grating",
   },
   {
     label: "Pultrusion manufacturers",
-    query: "pultrusion",
-    capability: "process-pultrusion",
+    href: "/manufacturing/pultrusion",
   },
   {
     label: "Filament winding",
-    query: "filament winding",
-    capability: "process-filament-winding",
+    href: "/manufacturing/filament-winding",
   },
   {
     label: "Carbon fiber prepreg",
-    query: "carbon fiber prepreg",
-    capability: "fiber-carbon",
+    href: "/manufacturing/prepreg-autoclave",
   },
   {
     label: "SMC & BMC molding",
-    query: "SMC BMC",
-    capability: "process-compression-molding",
+    href: "/products/smc-bmc",
   },
 ] as const;
-
-function catalogItemHref(
-  item: SupplierSourcingCatalogItem,
-  supplierSearchBasePath: string,
-) {
-  if (item.capability) {
-    return `${supplierSearchBasePath}?capability=${encodeURIComponent(item.capability)}#supplier-results`;
-  }
-  if (item.query) {
-    return `${supplierSearchBasePath}?q=${encodeURIComponent(item.query)}#supplier-results`;
-  }
-  return `/products/${item.productSlug}`;
-}
 
 export async function generateMetadata({
   params,
@@ -115,7 +96,7 @@ export default async function SuppliersPage({
   const catalogItems = SUPPLIER_SOURCING_CATALOGS.flatMap((catalog) =>
     catalog.items.map((item) => ({
       name: item.label,
-      href: catalogItemHref(item, supplierSearchBasePath),
+      href: item.href,
     })),
   );
   const catalogDirectoryJsonLd = {
@@ -150,7 +131,7 @@ export default async function SuppliersPage({
               China composites supplier directory
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              Search China&apos;s FRP supply chain
+              China FRP Manufacturers &amp; Suppliers Directory
             </h1>
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-slate-200 sm:text-base">
               Find manufacturers by product, material, process, company or end-use market—then compare published capability and verification records.
@@ -223,7 +204,7 @@ export default async function SuppliersPage({
                 {POPULAR_SEARCHES.map((item) => (
                   <Link
                     key={item.label}
-                    href={`${supplierSearchBasePath}?q=${encodeURIComponent(item.query)}&capability=${item.capability}#supplier-results` as never}
+                    href={item.href as never}
                     className="rounded-full bg-[#0b2035] px-4 py-2 text-xs text-slate-200 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
                   >
                     {item.label}
@@ -312,7 +293,7 @@ export default async function SuppliersPage({
                 {catalog.items.map((item) => (
                   <li key={item.label}>
                     <Link
-                      href={catalogItemHref(item, supplierSearchBasePath) as never}
+                      href={item.href as never}
                       className="group flex items-center justify-between gap-3 border-b border-border/60 py-2.5 text-sm text-[#29445f] transition-colors hover:text-[#365ce8]"
                     >
                       <span>{item.label}</span>

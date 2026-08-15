@@ -259,24 +259,24 @@ function checkStandaloneGetfrpSeo(): Violation[] {
 
   const homepage = readFileSync(resolve("src/app/[locale]/home-english.tsx"), "utf8");
   const homepageMetadata = readFileSync(resolve("src/app/[locale]/page.tsx"), "utf8");
-  if (!homepage.includes("China FRP Suppliers &amp; Manufacturers")) {
+  if (!homepage.includes("China FRP Sourcing Platform &amp; Marketplace")) {
     out.push({
       page: "/",
       field: "h1",
       severity: "error",
-      message: "homepage H1 must retain the China FRP suppliers and manufacturers keyword",
+      message: "homepage H1 must target the FRP marketplace and sourcing intent",
     });
   }
   if (
     !`${homepageMetadata}\n${homepage}`.includes(
-      "FRP Products & Suppliers China — Factory-Direct Marketplace",
+      "China FRP Marketplace & Sourcing Platform | GetFRP",
     )
   ) {
     out.push({
       page: "/",
       field: "title",
       severity: "error",
-      message: "homepage title must retain the factory-direct China FRP keyword",
+      message: "homepage title must target the marketplace and sourcing intent",
     });
   }
 

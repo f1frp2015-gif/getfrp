@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const code = String(body?.code ?? "").trim();
 
   if (!isValidCnPhone(phone) || !/^\d{6}$/.test(code)) {
-    return NextResponse.json({ error: "手机号或验证码格式不正确" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid phone number or verification code format" }, { status: 400 });
   }
 
   try {
@@ -31,23 +31,23 @@ export async function POST(req: NextRequest) {
       .limit(1);
 
     if (!otp) {
-      return NextResponse.json({ error: "验证码无效或已过期,请重新获取" }, { status: 400 });
+      return NextResponse.json({ error: "The verification code is invalid or expired; request a new one" }, { status: 400 });
     }
     if (otp.attempts >= OTP_MAX_ATTEMPTS) {
-      return NextResponse.json({ error: "尝试次数过多,请重新获取验证码" }, { status: 429 });
+      return NextResponse.json({ error: "Too many attempts; request a new verification code" }, { status: 429 });
     }
     if (hashCode(code, phone) !== otp.codeHash) {
       await db
         .update(phoneOtps)
         .set({ attempts: otp.attempts + 1 })
         .where(eq(phoneOtps.id, otp.id));
-      return NextResponse.json({ error: "验证码错误" }, { status: 400 });
+      return NextResponse.json({ error: "Incorrect verification code" }, { status: 400 });
     }
 
     await db.update(phoneOtps).set({ consumedAt: new Date() }).where(eq(phoneOtps.id, otp.id));
     return NextResponse.json({ ok: true });
   } catch (e) {
     console.error("[otp/check] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "服务暂时不可用,请稍后重试" }, { status: 500 });
+    return NextResponse.json({ error: "Service temporarily unavailable; please try again later" }, { status: 500 });
   }
 }

@@ -9,10 +9,10 @@ const ALLOWED = ["image/jpeg", "image/png", "image/webp"];
 
 export async function POST(req: NextRequest) {
   const me = await getCurrentUser();
-  if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
+  if (!me) return NextResponse.json({ error: "Please sign in first" }, { status: 401 });
 
   if (!ossConfigured()) {
-    return NextResponse.json({ error: "对象存储未配置" }, { status: 503 });
+    return NextResponse.json({ error: "Object storage is not configured" }, { status: 503 });
   }
 
   const body = await req.json().catch(() => ({}));
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   const contentType = String(body?.contentType ?? "").trim();
 
   if (!fileName || !ALLOWED.includes(contentType)) {
-    return NextResponse.json({ error: "仅支持 JPG/PNG/WebP 图片" }, { status: 400 });
+    return NextResponse.json({ error: "Only JPG, PNG, and WebP images are supported" }, { status: 400 });
   }
 
   const safeName = fileName.replace(/[^\w.\-]+/g, "_").slice(-80) || "avatar";

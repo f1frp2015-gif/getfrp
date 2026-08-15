@@ -62,17 +62,23 @@ export function marketplaceBreadcrumbTrail(page: MarketplacePage) {
 
 function faqSet(subject: string, dimension: string) {
   return [
-    { question: `How should buyers shortlist ${subject} suppliers in China?`, answer: `Start with the required ${dimension}, then compare the factory's published product scope, process evidence, current certifications, export markets and ability to answer one controlled RFQ. Company verification does not replace product-level testing.` },
-    { question: `What evidence should a ${subject} quotation include?`, answer: `Ask for the offered grade, drawing or datasheet revision, material and process declaration, applicable test reports, inspection plan, MOQ, lead time and packing proposal. The legal entity on certificates should match the seller or be explained.` },
-    { question: `Does ISO 9001 prove that a ${subject} product meets its project standard?`, answer: `No. ISO 9001 concerns the quality-management system. Product compliance requires evidence for the offered construction, material, dimensions and test method, with report scope and validity checked.` },
-    { question: `How does GetFRP prevent thin or fabricated supplier data?`, answer: `Category pages aggregate only public, reviewed supplier profiles and approved supplier-uploaded product pages. When fewer than three credible matches exist, the page shows an honest empty state and related categories instead of invented records.` },
-    { question: `Can buyers send one RFQ to compare multiple ${subject} manufacturers?`, answer: `Yes. A controlled RFQ keeps drawings, standards, quantity, delivery destination and evidence requirements identical so quotations can be compared on the same technical and commercial basis.` },
+    { question: `What should buyers verify before contacting a ${subject} factory?`, answer: `Define the required ${dimension} first. Then compare the published product scope, process records, current certificates, export experience and ability to quote against one controlled specification. A verified company identity does not replace product testing.` },
+    { question: "Which records make competing quotations comparable?", answer: "Request the offered grade, drawing or datasheet revision, material and process declaration, applicable test reports, inspection plan, MOQ, lead time and packing proposal. Any mismatch between the certificate holder, seller and factory should be explained." },
+    { question: "Does ISO 9001 prove product compliance?", answer: "No. ISO 9001 covers a quality-management system. Product compliance depends on evidence for the offered construction, materials, dimensions and test methods, including the report scope and validity." },
+    { question: "Why might this page show no supplier cards?", answer: "The directory uses reviewed public profiles and approved supplier submissions. If fewer than three credible records match, it points buyers to adjacent categories instead of padding the page with unverified companies or products." },
+    { question: "Can one RFQ be used to compare several manufacturers?", answer: "Yes. Keep the drawings, standards, quantity, destination and evidence requirements identical. That exposes technical deviations and keeps the commercial comparison on the same basis." },
   ];
 }
 
 function page(input: Omit<MarketplacePage, "faqs"> & { faqDimension: string }): MarketplacePage {
   const { faqDimension, ...rest } = input;
-  return { ...rest, faqs: faqSet(rest.h1, faqDimension) };
+  const faqSubject = rest.process
+    ?? (rest.application ? `${rest.application} FRP` : undefined)
+    ?? rest.h1
+      .replace(/^China\s+/i, "")
+      .replace(/\s+(?:manufacturers|suppliers)(?:\s+in\s+China)?$/i, "")
+      .toLowerCase();
+  return { ...rest, faqs: faqSet(faqSubject, faqDimension) };
 }
 
 export const ADDITIONAL_PRODUCT_PAGES: MarketplacePage[] = [

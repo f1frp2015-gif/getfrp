@@ -4,7 +4,6 @@ import {
   withChatFallbackForRequest,
   isChatConfiguredForRequest,
 } from "@/lib/ai/provider";
-import { resolveServerLocale } from "@/lib/i18n/server-locale";
 
 export const runtime = "nodejs";
 export const maxDuration = 20;
@@ -42,11 +41,7 @@ export async function POST(req: Request) {
     return Response.json({ error: "bad request" }, { status: 400 });
   }
 
-  const locale = resolveServerLocale(req, body.locale);
-  const isEn = locale === "en";
-
-  const system = isEn
-    ? `You generate 3 follow-up questions an overseas FRP composites engineer or procurement manager would naturally ask AFTER reading the answer below. The questions must:
+  const system = `You generate 3 follow-up questions an overseas FRP composites engineer or procurement manager would naturally ask AFTER reading the answer below. The questions must:
 - Be concrete and specific (mention a fiber, resin, standard code, country, certification, MOQ, etc).
 - Push the conversation forward, not restate what was already answered.
 - Stay under 18 words each.
@@ -54,19 +49,9 @@ export async function POST(req: Request) {
 - Cover different angles: one technical deeper-dive, one supplier / sourcing follow-up, one compliance / standards angle.
 
 Output ONLY a JSON object on a single line, no prose, no code fences:
-{"questions":["...","...","..."]}`
-    : `根据下面的问答，生成 3 个国内复材工程师/采购最自然会接着问的后续问题。要求：
-- 具体明确（涉及具体纤维/树脂/标准号/认证/工艺等）。
-- 推进对话，不要重复已回答的内容。
-- 每条 ≤ 30 字。
-- 一条偏技术深入，一条偏厂家/采购，一条偏标准/合规。
-
-只输出单行 JSON，禁止额外文字、禁止代码块：
 {"questions":["...","...","..."]}`;
 
-  const userBlock = isEn
-    ? `User asked:\n${body.question}\n\nAssistant answered:\n${body.answer}\n\nReturn the JSON now.`
-    : `用户问：\n${body.question}\n\n助手回答：\n${body.answer}\n\n现在返回 JSON。`;
+  const userBlock = `User asked:\n${body.question}\n\nAssistant answered:\n${body.answer}\n\nReturn the JSON now.`;
 
   try {
     // Within-side provider fallback: a primary-provider error retries the next

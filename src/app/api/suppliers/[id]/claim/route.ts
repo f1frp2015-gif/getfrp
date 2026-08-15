@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { supplierClaims, supplierListings } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
+import { containsCjk } from "@/lib/english-only";
 
 export const runtime = "nodejs";
 
@@ -67,6 +68,12 @@ export async function POST(
     );
   }
   const { contactName, contactTitle, contactPhone, contactEmail, businessLicenseUrl, note } = parsed.data;
+  if (containsCjk(`${contactName} ${contactTitle} ${note}`)) {
+    return NextResponse.json(
+      { error: "Supplier claim details must be written in English" },
+      { status: 400 },
+    );
+  }
 
   const [row] = await db
     .insert(supplierClaims)

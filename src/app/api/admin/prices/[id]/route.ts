@@ -20,9 +20,9 @@ function sanitizeQuotes(input: unknown): PriceQuote[] | null {
       nameEn: q.nameEn ? String(q.nameEn) : undefined,
       category: String(q.category ?? "auxiliary"),
       price: Number(q.price) || 0,
-      unit: String(q.unit ?? "元/吨"),
+      unit: String(q.unit ?? "CNY/tonne"),
       change: Number(q.change) || 0,
-      region: String(q.region ?? "全国"),
+      region: String(q.region ?? "China"),
       source: q.source ? String(q.source) : undefined,
     });
   }
@@ -44,7 +44,7 @@ export async function PATCH(
 
   if (body.quotes !== undefined) {
     const q = sanitizeQuotes(body.quotes);
-    if (!q) return NextResponse.json({ error: "quotes 格式错误" }, { status: 400 });
+    if (!q) return NextResponse.json({ error: "Invalid quotes format" }, { status: 400 });
     patch.quotes = q;
   }
   if (typeof body.summary === "string") patch.summary = body.summary;
@@ -57,7 +57,7 @@ export async function PATCH(
     .where(eq(priceReports.id, id))
     .returning({ id: priceReports.id });
   if (!updated) {
-    return NextResponse.json({ error: "行情不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Price report not found" }, { status: 404 });
   }
 
   return NextResponse.json({ data: { id: updated.id } });

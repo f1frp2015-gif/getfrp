@@ -194,13 +194,13 @@ export default async function DeliveryPage({
           href={"/platform/stack/ai-agent" as never}
           className="font-mono text-[12px] uppercase tracking-wider text-foreground hover:underline"
         >
-          → {locale === "zh" ? "返回：AI Agent 层" : "Back to: AI Agent"}
+          → Back to: AI Agent
         </Link>
         <Link
           href="/platform"
           className="font-mono text-[12px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
         >
-          {locale === "zh" ? "返回平台说明" : "Back to Platform"}
+          Back to Platform
         </Link>
       </section>
     </div>

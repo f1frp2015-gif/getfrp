@@ -14,6 +14,7 @@ import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profi
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import type { SerializedSupplier } from "@/lib/types/supplier-directory";
+import { englishOnlyList, englishOnlyText } from "@/lib/english-only";
 
 const PINNED_SUPPLIER_ID = F1_COMPOSITE_SUPPLIER_ID;
 const SCALE_RANK: Record<string, number> = { XL: 4, L: 3, M: 2, S: 1 };
@@ -57,18 +58,20 @@ function serializeSupplierRow(
   return {
     id: supplier.id,
     slug: supplierRouteSlug(supplier),
-    name: isEn ? supplier.nameEn ?? "" : supplier.name,
+    name: isEn ? englishOnlyText(supplier.nameEn ?? "") : supplier.name,
     category: supplier.category ?? "",
-    location: isEn ? supplier.locationEn ?? "" : supplier.location ?? "",
+    location: isEn ? englishOnlyText(supplier.locationEn ?? "") : supplier.location ?? "",
     established: supplier.established ?? null,
-    description: isEn ? supplier.descriptionEn ?? "" : supplier.description ?? "",
-    products: (isEn ? supplier.productsEn ?? [] : supplier.products ?? []) as string[],
-    processList: (isEn
-      ? supplier.processListEn ?? []
-      : supplier.processList ?? []) as string[],
-    certifications: (isEn
-      ? supplier.certificationsEn ?? []
-      : supplier.certifications ?? []) as string[],
+    description: isEn ? englishOnlyText(supplier.descriptionEn ?? "") : supplier.description ?? "",
+    products: isEn
+      ? englishOnlyList(supplier.productsEn)
+      : (supplier.products ?? []) as string[],
+    processList: isEn
+      ? englishOnlyList(supplier.processListEn)
+      : (supplier.processList ?? []) as string[],
+    certifications: isEn
+      ? englishOnlyList(supplier.certificationsEn)
+      : (supplier.certifications ?? []) as string[],
     verified: Boolean(supplier.verified),
     // This UI flag represents a completed, indexable company homepage rather
     // than the looser database publication switch. Incomplete legacy records
@@ -80,8 +83,12 @@ function serializeSupplierRow(
     scaleTier: supplier.scaleTier ?? null,
     employeeCount: row.employeeCount,
     annualRevenue: row.annualRevenue,
-    capabilities: supplier.capabilities ?? [],
-    standardsSupported: supplier.standardsSupported ?? [],
+    capabilities: isEn
+      ? englishOnlyList(supplier.capabilities)
+      : supplier.capabilities ?? [],
+    standardsSupported: isEn
+      ? englishOnlyList(supplier.standardsSupported)
+      : supplier.standardsSupported ?? [],
     moqKg: supplier.moqKg ?? null,
     leadTimeDays: supplier.leadTimeDays ?? null,
     exportReady: supplier.exportReady,

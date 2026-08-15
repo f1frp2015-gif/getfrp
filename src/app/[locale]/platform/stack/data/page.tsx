@@ -168,7 +168,7 @@ export default async function DataPage({
           </PlatformCard>
           <PlatformCard Icon={Network} monoLabel="MORE" title="...">
             <p className="text-muted-foreground/80">
-              {locale === "zh" ? "持续迭代，欢迎建议。" : "Ongoing iteration, suggestions welcome."}
+              Ongoing iteration, suggestions welcome.
             </p>
           </PlatformCard>
         </PlatformCardGrid>
@@ -179,13 +179,13 @@ export default async function DataPage({
           href={"/platform/stack/delivery" as never}
           className="font-mono text-[12px] uppercase tracking-wider text-foreground hover:underline"
         >
-          → {locale === "zh" ? "下一层：工程交付层" : "Next: Engineering Delivery"}
+          → Next: Engineering Delivery
         </Link>
         <Link
           href="/platform"
           className="font-mono text-[12px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
         >
-          {locale === "zh" ? "返回平台说明" : "Back to Platform"}
+          Back to Platform
         </Link>
       </section>
     </div>

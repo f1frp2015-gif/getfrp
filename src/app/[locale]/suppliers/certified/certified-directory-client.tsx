@@ -8,14 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FacetGroup, type FacetOption } from "@/components/qualification/facet-group";
-import { QualificationLabel } from "@/components/qualification/qualification-label";
 import { useProgressiveList } from "@/lib/hooks/use-progressive-list";
-import {
-  type Facet,
-  FACETS,
-  FACET_META,
-  TAGS_BY_ID,
-} from "@/lib/qualification/cert-taxonomy";
+import { cn } from "@/lib/utils";
+
+const FACETS = ["cert", "std", "cat", "mat", "process", "prop", "industry", "region"] as const;
 
 export interface DirectorySupplier {
   id: string;
@@ -29,15 +25,17 @@ export interface DirectorySupplier {
     trust: number;
     validTo: string | null;
     certNo: string | null;
+    label: string;
+    facetLabel: string;
+    tone: string;
+    verifyUrl: string | null;
   }[];
 }
 
 export function CertifiedDirectoryClient({
   suppliers,
-  locale,
 }: {
   suppliers: DirectorySupplier[];
-  locale: "zh" | "en";
 }) {
   const t = useTranslations("CertifiedDirectory");
   const [search, setSearch] = useState("");
@@ -51,20 +49,19 @@ export function CertifiedDirectoryClient({
 
   // 分面选项 + 计数(count = 含该 tag 的供应商数)
   const facetGroups = useMemo(() => {
-    const map = new Map<Facet, Map<string, number>>();
+    const map = new Map<string, Map<string, number>>();
     for (const s of suppliers) {
       const seen = new Set<string>();
       for (const tg of s.tags) {
         if (seen.has(tg.tagId)) continue;
         seen.add(tg.tagId);
-        const f = tg.facet as Facet;
-        if (!FACET_META[f]) continue;
+        const f = tg.facet;
         const inner = map.get(f) ?? new Map<string, number>();
         inner.set(tg.tagId, (inner.get(tg.tagId) ?? 0) + 1);
         map.set(f, inner);
       }
     }
-    const out: { facet: Facet; options: FacetOption[] }[] = [];
+    const out: { facet: string; label: string; options: FacetOption[] }[] = [];
     for (const f of FACETS) {
       const inner = map.get(f);
       if (!inner) continue;
@@ -72,19 +69,23 @@ export function CertifiedDirectoryClient({
         .map(([tagId, count]) => ({
           tagId,
           count,
-          label: TAGS_BY_ID.get(tagId)?.label[locale] ?? tagId,
+          label: suppliers.flatMap((supplier) => supplier.tags).find((tag) => tag.tagId === tagId)?.label ?? tagId,
         }))
         .sort((a, b) => b.count - a.count);
-      out.push({ facet: f, options });
+      out.push({
+        facet: f,
+        label: suppliers.flatMap((supplier) => supplier.tags).find((tag) => tag.facet === f)?.facetLabel ?? f,
+        options,
+      });
     }
     return out;
-  }, [suppliers, locale]);
+  }, [suppliers]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     const selByFacet = new Map<string, string[]>();
     for (const tagId of selected) {
-      const f = TAGS_BY_ID.get(tagId)?.facet;
+      const f = suppliers.flatMap((supplier) => supplier.tags).find((tag) => tag.tagId === tagId)?.facet;
       if (!f) continue;
       const arr = selByFacet.get(f) ?? [];
       arr.push(tagId);
@@ -134,8 +135,7 @@ export function CertifiedDirectoryClient({
           {facetGroups.map((g) => (
             <FacetGroup
               key={g.facet}
-              facet={g.facet}
-              locale={locale}
+              label={g.label}
               options={g.options}
               selected={selected}
               onToggle={toggle}
@@ -174,7 +174,38 @@ export function CertifiedDirectoryClient({
                       )}
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      <QualificationLabel tags={s.tags} locale={locale} />
+                      <div className="space-y-1.5">
+                        {FACETS.filter((facet) => s.tags.some((tag) => tag.facet === facet)).map((facet) => (
+                          <div key={facet} className="flex flex-wrap items-center gap-1.5">
+                            <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                              {s.tags.find((tag) => tag.facet === facet)?.facetLabel}
+                            </span>
+                            {s.tags.filter((tag) => tag.facet === facet).map((tag) => (
+                              <Badge
+                                key={tag.tagId}
+                                variant="outline"
+                                className={cn("gap-1 font-normal", tag.tone)}
+                              >
+                                <span title={`trust ${tag.trust}`} aria-hidden>
+                                  {(["○", "◔", "◑", "●"] as const)[tag.trust] ?? "○"}
+                                </span>
+                                {tag.label}
+                                {tag.verifyUrl && tag.trust >= 2 && (
+                                  <a
+                                    href={tag.verifyUrl}
+                                    target="_blank"
+                                    rel="noopener"
+                                    className="underline underline-offset-2"
+                                    title="Verify"
+                                  >
+                                    ↗
+                                  </a>
+                                )}
+                              </Badge>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
                       {s.website && (
                         <a
                           href={s.website}

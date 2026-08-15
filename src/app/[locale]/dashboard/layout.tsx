@@ -53,7 +53,7 @@ export default async function DashboardLayout({
     { href: "/dashboard/admin/enterprises" as const, label: t("nav.adminEnterprises"), iconKey: "admin-claims" },
     { href: "/dashboard/admin/suppliers" as const, label: t("nav.adminSuppliers"), iconKey: "enterprise" },
     { href: "/dashboard/admin/products" as const, label: t("nav.adminProducts"), iconKey: "post-list" },
-    { href: "/dashboard/admin/articles" as const, label: "资讯草稿箱", iconKey: "post-list" },
+    { href: "/dashboard/admin/articles" as const, label: "Editorial Drafts", iconKey: "post-list" },
     { href: "/dashboard/admin/prices" as const, label: t("nav.adminPrices"), iconKey: "ai-price" },
   ];
 

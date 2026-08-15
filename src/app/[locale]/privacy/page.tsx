@@ -10,13 +10,11 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  await params;
   return {
-    title: locale === "en" ? "Privacy Policy" : "隐私政策",
+    title: "Privacy Policy",
     description:
-      locale === "en"
-        ? "How getfrp collects, uses, and protects personal data — GDPR, CCPA and PIPL aligned."
-        : "复材站如何收集、使用与保护您的个人数据。",
+      "How getfrp collects, uses, and protects personal data — GDPR, CCPA and PIPL aligned.",
     alternates: alternates("/privacy"),
   };
 }
@@ -33,9 +31,9 @@ export default async function PrivacyPage({
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
-      {locale === "en" ? <PrivacyEn /> : <PrivacyZh />}
+      <PrivacyEn />
       <p className="mt-12 text-xs text-muted-foreground">
-        {locale === "en" ? "Last updated" : "最近更新"}: {LAST_UPDATED}
+        Last updated: {LAST_UPDATED}
       </p>
     </main>
   );
@@ -139,32 +137,6 @@ function PrivacyEn() {
         Attn: Data Protection contact<br />
         Contact: <Link href="/rfq">GetFRP contact form</Link>
       </p>
-    </div>
-  );
-}
-
-function PrivacyZh() {
-  return (
-    <div className="prose prose-sm dark:prose-invert max-w-none">
-      <h1>隐私政策</h1>
-      <p>
-        本站由<strong>重庆曜一新材料科技有限公司</strong>运营。我们仅收集为提供
-        服务所必需的个人信息（如询盘联系方式、账号邮箱），不出售用户数据。
-      </p>
-      <h2>1. 收集的信息</h2>
-      <ul>
-        <li>询盘 / 联系表单：姓名、公司、邮箱、电话、技术规格。</li>
-        <li>账号信息：手机号、微信资料（昵称 / 头像 / OpenID）及登录会话 Cookie。</li>
-        <li>技术日志：IP、UA、请求路径，最长保留 90 天，用于反滥用与运维。</li>
-      </ul>
-      <h2>2. 信息存储</h2>
-      <p>应用数据库托管于 Neon Postgres（新加坡）。</p>
-      <h2>3. 您的权利</h2>
-      <p>
-        您有权访问、更正、删除我们持有的您的个人信息。请通过站内联系表单提交请求。
-      </p>
-      <h2>4. 联系</h2>
-      <p>重庆曜一新材料科技有限公司</p>
     </div>
   );
 }

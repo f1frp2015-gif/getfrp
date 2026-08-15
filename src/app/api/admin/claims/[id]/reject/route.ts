@@ -23,11 +23,11 @@ export async function POST(
     .where(eq(supplierClaims.id, id))
     .limit(1);
   if (!claim) {
-    return NextResponse.json({ error: "认领记录不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Claim record not found" }, { status: 404 });
   }
   if (claim.status !== "pending") {
     return NextResponse.json(
-      { error: `当前状态 ${claim.status}，无法重复审核` },
+      { error: `A claim with status ${claim.status} cannot be reviewed again` },
       { status: 409 }
     );
   }

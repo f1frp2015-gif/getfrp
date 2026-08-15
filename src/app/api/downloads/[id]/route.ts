@@ -15,7 +15,7 @@ export async function GET(
 
   const [asset] = await db.select().from(downloads).where(eq(downloads.id, id)).limit(1);
   if (!asset) {
-    return NextResponse.json({ error: "资源不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Resource not found" }, { status: 404 });
   }
 
   const me = await getCurrentUser();
@@ -30,7 +30,7 @@ export async function GET(
     if (!meetsTier(tier, asset.requiredTier)) {
       return NextResponse.json(
         {
-          error: `该资源需要 ${tierLabel(asset.requiredTier)} 及以上会员`,
+          error: `This resource requires ${tierLabel(asset.requiredTier)} access or higher`,
           currentTier: tier,
           upgradeUrl: "/sign-up",
         },

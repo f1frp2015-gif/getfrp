@@ -14,6 +14,7 @@ import {
   CertifiedDirectoryClient,
   type DirectorySupplier,
 } from "./certified-directory-client";
+import { FACET_META, TAGS_BY_ID, verifyUrlFor } from "@/lib/qualification/cert-taxonomy";
 
 export async function generateMetadata({
   params,
@@ -92,6 +93,10 @@ export default async function CertifiedDirectoryPage({
         trust: r.trust,
         validTo: r.validTo,
         certNo: r.certNo,
+        label: TAGS_BY_ID.get(r.tagId)?.label.en ?? r.tagId,
+        facetLabel: FACET_META[r.facet as keyof typeof FACET_META]?.label.en ?? r.facet,
+        tone: FACET_META[r.facet as keyof typeof FACET_META]?.tone ?? "border-slate-300 text-slate-600 bg-slate-50",
+        verifyUrl: verifyUrlFor(r.tagId, r.certNo),
       });
     }
     tagsBySupplier.set(r.supplierListingId, arr);
@@ -114,9 +119,6 @@ export default async function CertifiedDirectoryPage({
     .sort((a, b) => b.tags.length - a.tags.length);
 
   return (
-    <CertifiedDirectoryClient
-      suppliers={suppliers}
-      locale={isEn ? "en" : "zh"}
-    />
+    <CertifiedDirectoryClient suppliers={suppliers} />
   );
 }

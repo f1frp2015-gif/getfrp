@@ -163,7 +163,6 @@ export function AiAssistantClient({
   const t = useTranslations("AI");
   const localeRaw = useLocale();
   const locale: "zh" | "en" = localeRaw === "en" ? "en" : "zh";
-  const isEn = locale === "en";
 
   // Domestic model picker (智谱 GLM / 通义 Qwen / DeepSeek). Empty on the
   // overseas build → no picker. Default to the first key-configured provider
@@ -294,7 +293,7 @@ export function AiAssistantClient({
 
   // 选中技能 → 模板填入输入框,聚焦让用户补全 【____】 占位再发送。
   function pickSkill(skill: AiSkill) {
-    setInput(skill.template[locale]);
+    setInput(skill.template.en);
     requestAnimationFrame(() => {
       const el = textareaRef.current;
       if (el) {
@@ -306,14 +305,14 @@ export function AiAssistantClient({
 
   // Slash 菜单:输入以 "/" 开头时,按其后文本过滤技能。
   const slashQuery = input.startsWith("/") ? input.slice(1) : null;
-  const slashSkills = slashQuery !== null ? filterSkills(slashQuery, locale) : [];
+  const slashSkills = slashQuery !== null ? filterSkills(slashQuery) : [];
   const slashOpen = slashQuery !== null && slashSkills.length > 0;
 
   // 输入条(slash 菜单 + 文本框 + 发送):空状态放标题下方,对话中固定底部。
   const inputBar = (
     <div className="relative">
       {slashOpen && (
-        <SlashMenu skills={slashSkills} locale={locale} onPick={pickSkill} />
+        <SlashMenu skills={slashSkills} onPick={pickSkill} />
       )}
       <input
         ref={fileInputRef}
@@ -370,9 +369,7 @@ export function AiAssistantClient({
               }
             }}
             placeholder={
-              isEn
-                ? "Ask anything, attach a drawing, or type / for skills…"
-                : "问任何复材问题、上传图纸,或打 / 选技能…"
+              "Ask anything, attach a drawing, or type / for skills…"
             }
             disabled={busy}
             rows={3}
@@ -393,7 +390,7 @@ export function AiAssistantClient({
           <button
             type="submit"
             disabled={(!input.trim() && attachments.length === 0) || busy}
-            aria-label={isEn ? "Send" : "发送"}
+            aria-label="Send"
             className="mb-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center self-end rounded-full bg-foreground text-background transition-all hover:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-30"
           >
             <ArrowUp size={14} strokeWidth={2.5} />
@@ -405,7 +402,7 @@ export function AiAssistantClient({
       )}
       {preparing && (
         <p className="mt-1.5 px-1 text-[11px] text-muted-foreground">
-          {isEn ? "Processing attachment…" : "正在处理附件…"}
+          Processing attachment…
         </p>
       )}
       <p className="mt-2 text-center text-[10px] text-muted-foreground">
@@ -421,27 +418,27 @@ export function AiAssistantClient({
         <div className="flex items-center gap-2">
           <Sparkles size={14} className="text-foreground" />
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-            {isEn ? "getfrp · sourcing assistant" : "复材 AI · 选材与采购助手"}
+            getfrp · sourcing assistant
           </span>
         </div>
         <div className="flex items-center gap-2">
           {availableModels.length > 0 && model && (
             <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
               <span className="hidden sm:inline">
-                {isEn ? "Model" : "模型"}
+                Model
               </span>
               <select
                 value={model}
                 onChange={(e) => setModel(e.target.value)}
                 disabled={busy}
-                aria-label={isEn ? "Choose AI model" : "选择 AI 模型"}
+                aria-label="Choose AI model"
                 className="rounded-md border border-border/70 bg-background px-2 py-1 text-[11px] text-foreground outline-none transition-colors hover:border-foreground/30 focus:border-foreground/50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {availableModels.map((m) => (
                   <option key={m.id} value={m.id} disabled={!m.configured}>
                     {m.configured
                       ? `${m.label} · ${m.model}`
-                      : `${m.label}${isEn ? " (not set)" : "（未配置）"}`}
+                      : `${m.label} (not set)`}
                   </option>
                 ))}
               </select>
@@ -454,7 +451,7 @@ export function AiAssistantClient({
               className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               <Plus size={11} />
-              {isEn ? "New chat" : "新对话"}
+              New chat
             </button>
           )}
         </div>
@@ -464,8 +461,6 @@ export function AiAssistantClient({
       {!hasMessages ? (
         <div className="flex-1 overflow-y-auto py-6">
           <EmptyHero
-            isEn={isEn}
-            locale={locale}
             onPick={pickSkill}
             disabled={busy}
             inputBar={inputBar}
@@ -535,14 +530,10 @@ export function AiAssistantClient({
 }
 
 function EmptyHero({
-  isEn,
-  locale,
   onPick,
   disabled,
   inputBar,
 }: {
-  isEn: boolean;
-  locale: "zh" | "en";
   onPick: (skill: AiSkill) => void;
   disabled: boolean;
   inputBar: ReactNode;
@@ -553,12 +544,10 @@ function EmptyHero({
         <Sparkles size={20} />
       </div>
       <h1 className="mt-5 text-center text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">
-        {isEn ? "Ask anything about composites." : "问关于复合材料的任何问题。"}
+        Ask anything about composites.
       </h1>
       <p className="mt-3 max-w-xl text-center text-[14px] leading-relaxed text-muted-foreground">
-        {isEn
-          ? "Type your question or pick a skill below. Every answer is grounded in the library and cited."
-          : "直接提问,或选下方一个技能。每条结论都基于复材站库并附引用。"}
+        Type your question or pick a skill below. Every answer is grounded in the library and cited.
       </p>
       {/* 对话框(上) */}
       <div className="mt-6 w-full">{inputBar}</div>
@@ -567,7 +556,7 @@ function EmptyHero({
         {SKILL_CATEGORIES.map((cat) => (
           <div key={cat.id}>
             <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              {cat.label[locale]}
+              {cat.label.en}
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
               {AI_SKILLS.filter((s) => s.category === cat.id).map((skill) => {
@@ -586,10 +575,10 @@ function EmptyHero({
                     />
                     <span className="min-w-0">
                       <span className="block text-[13px] font-medium leading-snug">
-                        {skill.label[locale]}
+                        {skill.label.en}
                       </span>
                       <span className="mt-0.5 block text-[11.5px] leading-snug text-muted-foreground">
-                        {skill.desc[locale]}
+                        {skill.desc.en}
                       </span>
                     </span>
                   </button>
@@ -605,17 +594,15 @@ function EmptyHero({
 
 function SlashMenu({
   skills,
-  locale,
   onPick,
 }: {
   skills: AiSkill[];
-  locale: "zh" | "en";
   onPick: (skill: AiSkill) => void;
 }) {
   return (
     <div className="absolute bottom-full left-0 right-0 mb-2 max-h-72 overflow-y-auto rounded-xl border border-border bg-background p-1.5 shadow-lg">
       <div className="px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-        {locale === "en" ? "Skills" : "技能"}
+        Skills
       </div>
       {skills.map((skill) => {
         const Icon = SKILL_ICONS[skill.icon];
@@ -634,13 +621,13 @@ function SlashMenu({
             <Icon size={15} className="mt-0.5 shrink-0 text-muted-foreground" />
             <span className="min-w-0 flex-1">
               <span className="flex items-center gap-2">
-                <span className="text-[13px] font-medium">{skill.label[locale]}</span>
+                <span className="text-[13px] font-medium">{skill.label.en}</span>
                 <span className="rounded bg-muted px-1 py-px text-[9px] text-muted-foreground">
-                  {cat?.label[locale]}
+                  {cat?.label.en}
                 </span>
               </span>
               <span className="mt-0.5 block text-[11.5px] leading-snug text-muted-foreground">
-                {skill.desc[locale]}
+                {skill.desc.en}
               </span>
             </span>
           </button>
@@ -751,11 +738,9 @@ function ThinkingIndicator({ label }: { label: string }) {
 function ExcelDownloadButton({
   table,
   filename,
-  isEn,
 }: {
   table: BomTable;
   filename: string;
-  isEn: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState(false);
@@ -778,17 +763,7 @@ function ExcelDownloadButton({
       className="inline-flex items-center gap-1.5 rounded-md border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-800 transition-colors hover:bg-emerald-100 disabled:opacity-60 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
     >
       <FileSpreadsheet size={14} />
-      {busy
-        ? isEn
-          ? "Generating…"
-          : "生成中…"
-        : err
-          ? isEn
-            ? "Failed — retry"
-            : "失败,重试"
-          : isEn
-            ? "Download Excel"
-            : "下载 Excel"}
+      {busy ? "Generating…" : err ? "Failed — retry" : "Download Excel"}
       <span className="max-w-[180px] truncate text-emerald-600/80 dark:text-emerald-400/70">
         · {filename}
       </span>
@@ -817,7 +792,6 @@ function AssistantAnswer({
   disabled: boolean;
   exports: ExcelExport[];
 }) {
-  const isEn = locale === "en";
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
 
@@ -862,13 +836,13 @@ function AssistantAnswer({
       {citations.length > 0 && (
         <SourceCards
           citations={citations}
-          label={isEn ? "Sources" : "来源"}
+          label="Sources"
         />
       )}
 
       <div className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
         <Sparkles size={11} className="text-foreground/70" />
-        {isEn ? "Answer" : "回答"}
+        Answer
       </div>
 
       <div className="prose prose-sm dark:prose-invert max-w-none">
@@ -882,7 +856,6 @@ function AssistantAnswer({
               key={i}
               table={ex.table}
               filename={ex.filename}
-              isEn={isEn}
             />
           ))}
         </div>
@@ -898,13 +871,7 @@ function AssistantAnswer({
               className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               {copied ? <Check size={12} /> : <Copy size={12} />}
-              {copied
-                ? isEn
-                  ? "Copied"
-                  : "已复制"
-                : isEn
-                  ? "Copy answer"
-                  : "复制回答"}
+              {copied ? "Copied" : "Copy answer"}
             </button>
 
             <button
@@ -913,13 +880,7 @@ function AssistantAnswer({
               className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               {shared ? <Check size={12} /> : <Share2 size={12} />}
-              {shared
-                ? isEn
-                  ? "Link copied"
-                  : "链接已复制"
-                : isEn
-                  ? "Share"
-                  : "分享"}
+              {shared ? "Link copied" : "Share"}
             </button>
 
             {supplierHits.length > 0 && (
@@ -928,9 +889,7 @@ function AssistantAnswer({
                 className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3 py-1 text-[11px] text-background transition-colors hover:bg-foreground/90"
               >
                 <MessagesSquare size={12} />
-                {isEn
-                  ? `Send these ${supplierHits.length} as RFQ`
-                  : `把这 ${supplierHits.length} 家发给询盘`}
+                {`Send these ${supplierHits.length} as RFQ`}
               </Link>
             )}
 
@@ -938,7 +897,7 @@ function AssistantAnswer({
               href={"/rfq" as never}
               className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
-              {isEn ? "Structured RFQ" : "结构化询盘"}
+              Structured RFQ
             </Link>
           </div>
 

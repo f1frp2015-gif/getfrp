@@ -10,6 +10,11 @@ import {
 import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import {
+  englishOnlyList,
+  englishOnlyRecord,
+  englishOnlyText,
+} from "@/lib/english-only";
 
 export type PublicSupplierProduct = {
   id: string;
@@ -70,30 +75,30 @@ function rowToPublic(row: {
   return {
     id: row.page.id,
     slug: row.page.slug,
-    name: row.page.name,
-    description: row.page.description,
+    name: englishOnlyText(row.page.name),
+    description: englishOnlyText(row.page.description),
     images: row.page.images,
-    material: row.page.material,
-    manufacturingProcesses: row.page.manufacturingProcesses,
-    applications: row.page.applications,
-    standards: row.page.standards,
-    parameters: row.page.parameters,
-    certifications: row.page.certifications,
+    material: englishOnlyText(row.page.material),
+    manufacturingProcesses: englishOnlyList(row.page.manufacturingProcesses),
+    applications: englishOnlyList(row.page.applications),
+    standards: englishOnlyList(row.page.standards),
+    parameters: englishOnlyRecord(row.page.parameters),
+    certifications: englishOnlyList(row.page.certifications),
     moq: row.page.moq,
-    moqUnit: row.page.moqUnit,
-    exportMarkets: row.page.exportMarkets,
+    moqUnit: row.page.moqUnit ? englishOnlyText(row.page.moqUnit) : null,
+    exportMarkets: englishOnlyList(row.page.exportMarkets),
     videoUrl: row.page.videoUrl,
-    priceRange: row.page.priceRange,
+    priceRange: row.page.priceRange ? englishOnlyText(row.page.priceRange) : null,
     approvedAt: row.page.approvedAt,
     updatedAt: row.page.updatedAt,
     category: { id: row.product.id, slug: row.product.slug, name: row.product.nameEn },
     supplier: {
       id: supplier.id,
       slug: supplierRouteSlug(supplier),
-      name: supplier.nameEn ?? supplier.name,
-      location: supplier.locationEn ?? supplier.location ?? "China",
+      name: englishOnlyText(supplier.nameEn ?? "") || "Composite supplier",
+      location: englishOnlyText(supplier.locationEn ?? "") || "China",
       verified: Boolean(supplier.verified),
-      certifications: (supplier.certificationsEn ?? supplier.certifications ?? []) as string[],
+      certifications: englishOnlyList(supplier.certificationsEn),
       logo: supplier.logo ?? null,
     },
   };

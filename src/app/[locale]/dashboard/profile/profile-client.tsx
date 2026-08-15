@@ -112,7 +112,7 @@ export function ProfileClient({
     }
   }
 
-  const initial = (name.trim()[0] || phone.slice(-2, -1) || "用").toUpperCase();
+  const initial = (name.trim()[0] || phone.slice(-2, -1) || "U").toUpperCase();
 
   return (
     <div className="space-y-6">

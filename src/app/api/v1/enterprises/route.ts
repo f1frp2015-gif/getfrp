@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { enterprises, supplierListings, users } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { canEditSupplierProfile } from "@/lib/permissions";
+import { containsCjk } from "@/lib/english-only";
 
 export const runtime = "nodejs";
 
@@ -88,10 +89,29 @@ function enterpriseValues(body: Record<string, unknown>) {
   };
 }
 
+function hasNonEnglishPublicFields(values: ReturnType<typeof enterpriseValues>): boolean {
+  return containsCjk(
+    JSON.stringify({
+      name: values.name,
+      shortName: values.shortName,
+      category: values.category,
+      province: values.province,
+      city: values.city,
+      address: values.address,
+      employeeCount: values.employeeCount,
+      description: values.description,
+      products: values.products,
+      processes: values.processes,
+      certifications: values.certifications,
+      contactName: values.contactName,
+    }),
+  );
+}
+
 export async function PATCH(req: NextRequest) {
   const me = await getCurrentUser();
-  if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
-  if (!me.enterpriseId) return NextResponse.json({ error: "您尚未关联企业" }, { status: 404 });
+  if (!me) return NextResponse.json({ error: "Please sign in first" }, { status: 401 });
+  if (!me.enterpriseId) return NextResponse.json({ error: "Your account is not linked to a company" }, { status: 404 });
   if (!canEditSupplierProfile(me)) {
     return NextResponse.json(
       { error: "Your account does not have permission to edit this company." },
@@ -102,9 +122,15 @@ export async function PATCH(req: NextRequest) {
   if (!parsed.success) return invalidEnterpriseResponse(parsed.error);
   const body = parsed.data;
   const values = enterpriseValues(body);
+  if (hasNonEnglishPublicFields(values)) {
+    return NextResponse.json(
+      { error: "Supplier profiles and onboarding details must be written in English" },
+      { status: 400 },
+    );
+  }
   const isEnglish = body?.locale === "en";
   if (!values.name || !values.category || !values.contactName || !values.contactPhone || (isEnglish && !values.contactEmail)) {
-    return NextResponse.json({ error: "企业全称 / 类型 / 联系人 / 联系电话必填" }, { status: 400 });
+    return NextResponse.json({ error: "Company name, type, contact, and phone are required" }, { status: 400 });
   }
 
   try {
@@ -112,7 +138,7 @@ export async function PATCH(req: NextRequest) {
       .set({ ...values, updatedAt: new Date() })
       .where(eq(enterprises.id, me.enterpriseId))
       .returning();
-    if (!enterprise) return NextResponse.json({ error: "企业不存在" }, { status: 404 });
+    if (!enterprise) return NextResponse.json({ error: "Company not found" }, { status: 404 });
 
     // Keep the public supplier record in sync with the editable company fields.
     const localizedPublicValues = isEnglish
@@ -144,7 +170,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ data: enterprise });
   } catch (e) {
     console.error("[enterprises PATCH] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "服务暂时不可用,请稍后重试" }, { status: 500 });
+    return NextResponse.json({ error: "Service temporarily unavailable; please try again later" }, { status: 500 });
   }
 }
 
@@ -164,10 +190,10 @@ function asStringArray(v: unknown): string[] {
 export async function POST(req: NextRequest) {
   const me = await getCurrentUser();
   if (!me) {
-    return NextResponse.json({ error: "请先登录" }, { status: 401 });
+    return NextResponse.json({ error: "Please sign in first" }, { status: 401 });
   }
   if (me.enterpriseId) {
-    return NextResponse.json({ error: "您已关联企业,无需重复注册" }, { status: 409 });
+    return NextResponse.json({ error: "Your account is already linked to a company" }, { status: 409 });
   }
 
   const parsed = EnterpriseBody.safeParse(await req.json().catch(() => null));
@@ -182,12 +208,18 @@ export async function POST(req: NextRequest) {
 
   if (!name || !category || !contactName || !contactPhone || (isEnglish && !contactEmail)) {
     return NextResponse.json(
-      { error: "企业全称 / 类型 / 联系人 / 联系电话必填" },
+      { error: "Company name, type, contact, and phone are required" },
       { status: 400 }
     );
   }
 
   const values = enterpriseValues(body);
+  if (hasNonEnglishPublicFields(values)) {
+    return NextResponse.json(
+      { error: "Supplier profiles and onboarding details must be written in English" },
+      { status: 400 },
+    );
+  }
 
   try {
     const [ent] = await db
@@ -208,13 +240,13 @@ export async function POST(req: NextRequest) {
         data: {
           id: ent.id,
           status: "pending",
-          message: "入驻申请已提交,我们将在 1-3 个工作日内完成审核。",
+          message: "Your onboarding application was submitted and will be reviewed within 1-3 business days.",
         },
       },
       { status: 201 }
     );
   } catch (e) {
     console.error("[enterprises POST] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "服务暂时不可用,请稍后重试" }, { status: 500 });
+    return NextResponse.json({ error: "Service temporarily unavailable; please try again later" }, { status: 500 });
   }
 }

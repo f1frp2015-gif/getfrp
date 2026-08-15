@@ -17,9 +17,9 @@ import { Link } from "@/i18n/navigation";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 
-const title = "F1 Composite FRP Engineering Tools | GetFRP";
+const title = "FRP Weight & Standards Tools | FRP Calculator | GetFRP";
 const description =
-  "Open F1 Composite engineering tools for FRP profile checks, span tables, price screening, window U-value calculations, methodology and validation benchmarks.";
+  "Use an FRP weight calculator and standards comparison tools, then open specialist profile, span, pricing and thermal references for deeper engineering checks.";
 const tools = [
   {
     href: "https://www.f1composite.com/frp-profile-calculator",

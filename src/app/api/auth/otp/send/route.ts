@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   const phone = String(body?.phone ?? "").trim();
 
   if (!isValidCnPhone(phone)) {
-    return NextResponse.json({ error: "请输入有效的手机号" }, { status: 400 });
+    return NextResponse.json({ error: "Enter a valid phone number" }, { status: 400 });
   }
 
   try {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       .where(and(eq(phoneOtps.phone, phone), gte(phoneOtps.createdAt, cooldownSince)))
       .limit(1);
     if (recent) {
-      return NextResponse.json({ error: "验证码发送过于频繁,请稍后再试" }, { status: 429 });
+      return NextResponse.json({ error: "Verification codes were requested too frequently; try again later" }, { status: 429 });
     }
 
     // 限流 2:同号 24h 内最多 OTP_DAILY_CAP 条
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       .from(phoneOtps)
       .where(and(eq(phoneOtps.phone, phone), gte(phoneOtps.createdAt, daySince)));
     if (count >= OTP_DAILY_CAP) {
-      return NextResponse.json({ error: "今日验证码发送次数已达上限" }, { status: 429 });
+      return NextResponse.json({ error: "The daily verification-code limit has been reached" }, { status: 429 });
     }
 
     const code = generateCode();
@@ -65,9 +65,9 @@ export async function POST(req: NextRequest) {
     if (process.env.NODE_ENV !== "production") {
       return NextResponse.json({ ok: true, devCode: code });
     }
-    return NextResponse.json({ error: "短信服务未配置" }, { status: 503 });
+    return NextResponse.json({ error: "SMS service is not configured" }, { status: 503 });
   } catch (e) {
     console.error("[otp/send] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "服务暂时不可用,请稍后重试" }, { status: 500 });
+    return NextResponse.json({ error: "Service temporarily unavailable; please try again later" }, { status: 500 });
   }
 }

@@ -10,7 +10,7 @@ import { EditDraftClient } from "./edit-client";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { title: "审阅资讯草稿" };
+export const metadata: Metadata = { title: "Review Editorial Draft" };
 
 export default async function AdminArticleDetailPage({
   params,
@@ -27,7 +27,7 @@ export default async function AdminArticleDetailPage({
     return (
       <Card>
         <CardContent className="py-12 text-center">
-          <div className="text-lg font-semibold">无管理员权限</div>
+          <div className="text-lg font-semibold">Administrator access required</div>
         </CardContent>
       </Card>
     );

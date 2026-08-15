@@ -13,7 +13,7 @@ import {
   isChatConfiguredForRequest,
   parseRequestedProvider,
 } from "@/lib/ai/provider";
-import { SYSTEM_PROMPT, SYSTEM_PROMPT_EN } from "@/lib/ai/knowledge";
+import { SYSTEM_PROMPT_EN } from "@/lib/ai/knowledge";
 import { retrieveTopK, buildRagContext, type Retrieved } from "@/lib/ai/retrieve";
 import { makeWebSearchTool, isWebSearchConfigured } from "@/lib/ai/tools/web-search";
 import { makeWindowUValueTool } from "@/lib/ai/tools/window-uvalue";
@@ -26,7 +26,6 @@ import { makeComplianceFlagsTool } from "@/lib/ai/tools/compliance-flags";
 import { makeCreateSourcingBriefTool } from "@/lib/ai/tools/create-sourcing-brief";
 import { makeExportExcelTool } from "@/lib/ai/tools/export-excel";
 import { applyRedlines } from "@/lib/ai/guards/redlines";
-import { resolveServerLocale } from "@/lib/i18n/server-locale";
 import {
   consumeAnonChatCredit,
   ANON_LIMIT_RESPONSE_BODY,
@@ -65,24 +64,15 @@ function lastUserQuery(uiMessages: UIMessage[]): string {
   return "";
 }
 
-function localeInstruction(locale: string): string {
-  if (locale === "en") {
-    return `You MUST respond entirely in English, regardless of the language used in the knowledge base or retrieved passages. If source material is in Chinese, translate faithfully to English. Keep technical terms, standard numbers (e.g. ASTM D3039), and proper nouns as-is.`;
-  }
-  return `你必须使用简体中文回答，即使检索结果是英文资料也要翻译成中文。术语、标准号、专有名词保留原样。`;
+function localeInstruction(): string {
+  return `You MUST respond entirely in English, regardless of the language used in the knowledge base or retrieved passages. If source material is in Chinese, translate faithfully to English. Keep technical terms, standard numbers (e.g. ASTM D3039), and proper nouns as-is.`;
 }
 
-function citationGuidance(locale: string): string {
-  if (locale === "en") {
-    return `Your answer MUST cite the retrieved results wherever possible. Use the format \`[#N]\` (where N is the result index) inline at the end of the supported statement.
+function citationGuidance(): string {
+  return `Your answer MUST cite the retrieved results wherever possible. Use the format \`[#N]\` (where N is the result index) inline at the end of the supported statement.
 - If no retrieved result supports a statement, explicitly say "GetFRP has no record of this; the following is general knowledge."
 - Do NOT fabricate DOIs, patent numbers, or standard numbers.
 - Do NOT append a "References" section — the inline [#N] markers are sufficient.`;
-  }
-  return `你的回答**必须**尽量引用下方检索结果。引用格式为 \`[#N]\`（N 为检索结果编号），放在对应陈述句末尾。
-- 如果没有相关检索结果能支持某陈述，请明确说"复材站库中暂无此信息，以下为通用知识"。
-- 不允许编造 DOI、专利号、标准号。
-- 请在答案末尾不用再列"参考文献"，前文行内 [#N] 已足够。`;
 }
 
 function hasFilePart(uiMessages: UIMessage[]): boolean {
@@ -91,30 +81,18 @@ function hasFilePart(uiMessages: UIMessage[]): boolean {
 
 // Extra system guidance injected only when the turn carries attachments —
 // steers the model to actually *read* drawings/photos and pull out specs.
-function visionInstruction(locale: string): string {
-  if (locale === "en") {
-    return `The user has attached one or more files (engineering drawings, product photos, or PDFs). Before answering:
+function visionInstruction(): string {
+  return `The user has attached one or more files (engineering drawings, product photos, or PDFs). Before answering:
 1. Read each attachment carefully. For drawings/photos, extract the concrete information visible: dimensions, cross-section shape, material callouts, standard codes, tolerances, quantities, and any annotations.
 2. Restate what you can see so the user can confirm you read it correctly.
 3. Explicitly flag anything unreadable, ambiguous, or missing (e.g. "wall thickness is not dimensioned").
 4. Then answer using composites expertise, grounded in the library where possible.
-5. If the user wants a parts list / bill of materials, present it as a clean table. Then add a one-line offer: reply "导出 Excel" (or "export to Excel") on the next message and you'll generate a downloadable .xlsx file.
+5. If the user wants a parts list / bill of materials, present it as a clean table. Then offer to generate a downloadable .xlsx file if the user replies "export to Excel".
 Never invent dimensions or values that are not legible in the attachment.`;
-  }
-  return `用户上传了一个或多个附件（工程图纸、产品照片或 PDF）。回答前请：
-1. 仔细识别每个附件。对图纸/照片，提取可见的具体信息：尺寸、截面形状、材料标注、标准号、公差、数量及任何注释。
-2. 复述你识别到的内容，便于用户确认识别无误。
-3. 明确指出无法识别、有歧义或缺失的部分（例如"壁厚未标注尺寸"）。
-4. 然后结合复材专业知识作答，尽量基于复材站库。
-5. 若用户需要零件 / 物料清单（BOM），用清晰的表格列出；并在结尾主动提示一句：在下一条消息回复"导出 Excel"，我就把清单生成可下载的 .xlsx 表格文件。
-绝不编造附件中无法辨认的尺寸或数值。`;
 }
 
-function visionUnavailableText(locale: string): string {
-  if (locale === "en") {
-    return "Image and PDF recognition isn't enabled on this site yet. For now, please describe the drawing or specs in text and I'll help — or visit getfrp.com where attachment recognition is live.";
-  }
-  return "本站的图纸 / 图片 / PDF 识别功能正在开通中，暂时无法读取附件。你可以先用文字描述图纸或参数，我来帮你分析；或访问 getfrp.com（海外站已支持附件识别）。";
+function visionUnavailableText(): string {
+  return "Image and PDF recognition isn't enabled on this site yet. For now, please describe the drawing or specs in text and I'll help — or visit getfrp.com where attachment recognition is live.";
 }
 
 // Qwen-VL (domestic, via DashScope's OpenAI-compatible endpoint) only accepts
@@ -126,7 +104,6 @@ function visionUnavailableText(locale: string): string {
 // left with zero parts (convertToModelMessages rejects empty content).
 function stripPdfParts(
   uiMessages: UIMessage[],
-  locale: string,
 ): { messages: UIMessage[]; removed: boolean } {
   let removed = false;
   const messages = uiMessages.map((m) => {
@@ -138,10 +115,7 @@ function stripPdfParts(
     if (kept.length === 0) {
       kept.push({
         type: "text",
-        text:
-          locale === "en"
-            ? "(PDF attachment omitted — not readable on this assistant)"
-            : "(已省略无法读取的 PDF 附件)",
+        text: "(PDF attachment omitted — not readable on this assistant)",
       });
     }
     return { ...m, parts: kept };
@@ -151,11 +125,8 @@ function stripPdfParts(
 
 // System steer appended when a PDF was stripped on the domestic path, so the
 // model tells the user how to get the drawing read instead of silently ignoring it.
-function pdfDroppedInstruction(locale: string): string {
-  if (locale === "en") {
-    return "One or more PDF attachments could not be read here. Briefly tell the user that this assistant can't read PDF — they should upload the drawing as an image (PNG/JPG) or a screenshot, or use getfrp.com which reads PDF. Still answer what you can from any images and text provided.";
-  }
-  return "用户上传的 PDF 附件本助手无法读取。请在回答中简短告知:本站暂不支持读取 PDF,请把图纸导出为图片(PNG/JPG)或截图后上传,或使用海外站 getfrp.com(支持 PDF);同时就已有的图片与文字尽量作答。";
+function pdfDroppedInstruction(): string {
+  return "One or more PDF attachments could not be read here. Briefly tell the user that this assistant can't read PDF — they should upload the drawing as an image (PNG/JPG) or a screenshot, or use getfrp.com which reads PDF. Still answer what you can from any images and text provided.";
 }
 
 export async function POST(req: Request) {
@@ -193,9 +164,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const uiMessages = normalizeMessages(body.messages || []);
-    // GetFRP is English-only; ignore stale client locale values.
-    const locale = resolveServerLocale(req, body.locale);
-
     const ctx = body.context as
       | {
           standardCode?: string;
@@ -228,7 +196,7 @@ export async function POST(req: Request) {
             writer.write({
               type: "text-delta",
               id,
-              delta: visionUnavailableText(locale),
+              delta: visionUnavailableText(),
             });
             writer.write({ type: "text-end", id });
           },
@@ -246,7 +214,7 @@ export async function POST(req: Request) {
       const modelHandlesPdf =
         vision.provider === "google" || vision.provider === "openrouter";
       if (!modelHandlesPdf) {
-        const sanitized = stripPdfParts(uiMessages, locale);
+        const sanitized = stripPdfParts(uiMessages);
         chatMessages = sanitized.messages;
         pdfDropped = sanitized.removed;
       }
@@ -264,44 +232,33 @@ export async function POST(req: Request) {
     }
 
     const systemParts: string[] = [
-      locale === "en" ? SYSTEM_PROMPT_EN : SYSTEM_PROMPT,
-      localeInstruction(locale),
-      citationGuidance(locale),
+      SYSTEM_PROMPT_EN,
+      localeInstruction(),
+      citationGuidance(),
     ];
-    if (withAttachments) systemParts.push(visionInstruction(locale));
-    if (pdfDropped) systemParts.push(pdfDroppedInstruction(locale));
+    if (withAttachments) systemParts.push(visionInstruction());
+    if (pdfDropped) systemParts.push(pdfDroppedInstruction());
 
     const ragBlock = buildRagContext(retrieved);
     if (ragBlock) systemParts.push(ragBlock);
 
     if (ctx?.standardCode) {
-      const lines =
-        locale === "en"
-          ? [
-              `You are currently helping the user interpret standard [${ctx.standardCode}]${ctx.standardTitle ? ` — ${ctx.standardTitle}` : ""}.`,
-            ]
-          : [
-              `你当前正在协助用户解读标准【${ctx.standardCode}】${ctx.standardTitle ? ` — ${ctx.standardTitle}` : ""}。`,
-            ];
+      const lines = [
+        `You are currently helping the user interpret standard [${ctx.standardCode}]${ctx.standardTitle ? ` — ${ctx.standardTitle}` : ""}.`,
+      ];
       if (ctx.chapterNo || ctx.chapterTitle) {
         lines.push(
-          locale === "en"
-            ? `User is focused on: Chapter ${ctx.chapterNo ?? "?"} ${ctx.chapterTitle ?? ""}`.trim()
-            : `用户聚焦章节：第 ${ctx.chapterNo ?? "?"} 章 ${ctx.chapterTitle ?? ""}`.trim()
+          `User is focused on: Chapter ${ctx.chapterNo ?? "?"} ${ctx.chapterTitle ?? ""}`.trim()
         );
       }
       if (ctx.chapterBody) {
         lines.push(
-          locale === "en"
-            ? "Chapter highlights (for reference; do not quote verbatim):"
-            : "该章要点（供你参考，不要逐字复述版权原文）："
+          "Chapter highlights (for reference; do not quote verbatim):"
         );
         lines.push(ctx.chapterBody);
       }
       lines.push(
-        locale === "en"
-          ? "When answering: ① cite the chapter number explicitly; ② if information is missing, tell the user to consult the original standard; ③ do not fabricate values."
-          : "回答时：① 明确引用章节号；② 如缺信息，明确告知用户查阅原标准；③ 不要编造未列出的数值。"
+        "When answering: cite the chapter number explicitly; if information is missing, tell the user to consult the original standard; do not fabricate values."
       );
       systemParts.push(lines.join("\n"));
     }
@@ -327,7 +284,7 @@ export async function POST(req: Request) {
           feasibility_match: makeFeasibilityMatchTool(),
           landed_cost_usd: makeLandedCostTool(),
           compliance_flags: makeComplianceFlagsTool(),
-          create_sourcing_brief: makeCreateSourcingBriefTool(host, locale),
+          create_sourcing_brief: makeCreateSourcingBriefTool(host, "en"),
           export_excel: makeExportExcelTool(),
           ...(isWebSearchConfigured(host)
             ? { web_search: makeWebSearchTool(host) }

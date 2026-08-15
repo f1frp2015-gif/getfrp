@@ -1,6 +1,5 @@
 "use client";
 
-import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 /**
@@ -24,9 +23,6 @@ export function AuthRequiredNotice({
   remaining?: number | null;
   className?: string;
 }) {
-  const locale = useLocale();
-  const isEn = locale === "en";
-
   const msg = error instanceof Error ? error.message : error ? String(error) : "";
   // 命中匿名上限。失败包含 "AUTH_REQUIRED" 或 "401" 都算 — 401 兜底覆盖
   // useChat 内部把 body 吞掉只留 status 的边角场景。
@@ -44,9 +40,7 @@ export function AuthRequiredNotice({
       <div
         className={`rounded-md border border-border bg-muted/40 p-3 text-xs text-muted-foreground ${className}`}
       >
-        {isEn
-          ? `Something went wrong. Try again, or sign in for a more reliable session.`
-          : `刚刚连接出错。可以重试,或登录后获得更稳定的会话。`}
+        Something went wrong. Try again, or sign in for a more reliable session.
       </div>
     );
   }
@@ -57,30 +51,24 @@ export function AuthRequiredNotice({
     >
       <p className="font-medium text-amber-900 dark:text-amber-200">
         {justRanOut
-          ? isEn
-            ? "That was your last free question."
-            : "刚才是你本次的最后一次免费提问。"
-          : isEn
-            ? "Free anonymous queries used up."
-            : "匿名免费咨询已用完。"}
+          ? "That was your last free question."
+          : "Free anonymous queries used up."}
       </p>
       <p className="mt-1 text-[13px] leading-relaxed text-amber-900/85 dark:text-amber-200/80">
-        {isEn
-          ? "Sign up to keep going — unlimited and completely free at this stage. Your chat history will be saved."
-          : "注册账号即可继续使用,当前阶段完全免费,聊天记录也会保留。"}
+        Sign up to keep going — unlimited and completely free at this stage. Your chat history will be saved.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <Link
           href="/sign-up"
           className="inline-flex items-center rounded-md bg-amber-900 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-amber-800 dark:bg-amber-200 dark:text-amber-950 dark:hover:bg-amber-100"
         >
-          {isEn ? "Sign up free" : "免费注册"}
+          Sign up free
         </Link>
         <Link
           href="/sign-in"
           className="inline-flex items-center rounded-md border border-amber-400/80 px-3 py-1.5 text-xs font-medium text-amber-900 transition-colors hover:bg-amber-100 dark:border-amber-700 dark:text-amber-200 dark:hover:bg-amber-900/40"
         >
-          {isEn ? "I have an account" : "已有账号"}
+          I have an account
         </Link>
       </div>
     </div>

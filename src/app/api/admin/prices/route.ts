@@ -33,7 +33,7 @@ export async function POST() {
     .insert(priceReports)
     .values({
       weekOf: nextMonday(),
-      title: latest?.title ?? "复材原材料价格行情",
+      title: latest?.title ?? "Composite Raw Material Price Report",
       summary: "",
       quotes,
       sources: latest?.sources ?? [],

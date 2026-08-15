@@ -28,11 +28,11 @@ export async function POST(
     .where(eq(supplierDocuments.id, id))
     .limit(1);
   if (!doc) {
-    return NextResponse.json({ error: "资质文档不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Qualification document not found" }, { status: 404 });
   }
   if (doc.status !== "needs_review" && doc.status !== "extracted") {
     return NextResponse.json(
-      { error: `当前状态 ${doc.status}，无法审核` },
+      { error: `A document with status ${doc.status} cannot be reviewed` },
       { status: 409 },
     );
   }

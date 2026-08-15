@@ -9,13 +9,11 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  await params;
   return {
-    title: locale === "en" ? "FRP Sourcing Assistant" : "复材 AI 助手",
+    title: "FRP Sourcing Assistant",
     description:
-      locale === "en"
-        ? "Interactive getfrp sourcing assistant for FRP specifications, suppliers, materials and standards."
-        : "复材规格、供应商、材料与标准的交互式 AI 助手。",
+      "Interactive getfrp sourcing assistant for FRP specifications, suppliers, materials and standards.",
     robots: { index: false, follow: false },
     alternates: alternates("/ai/chat"),
   };

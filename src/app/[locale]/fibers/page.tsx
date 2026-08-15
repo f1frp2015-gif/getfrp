@@ -13,15 +13,10 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
-  const isEn = locale === "en";
+  await params;
   return {
-    title: isEn
-      ? "Composite Fibers Index — Glass / Carbon / Basalt / Aramid / Bio | getfrp"
-      : "复材纤维体系总览 — 玻纤 / 碳纤 / 玄武岩 / 芳纶 / 生物基 | 复材站",
-    description: isEn
-      ? "Index of composite reinforcement fiber families with grades, applications, process compatibility, products, and suppliers per fiber type."
-      : "复合材料增强纤维家族总览:玻璃纤维、碳纤维、玄武岩、芳纶、生物基。每种纤维下挂产品、供应商和工艺兼容性。",
+    title: "Composite Fibers Index — Glass / Carbon / Basalt / Aramid / Bio | getfrp",
+    description: "Index of composite reinforcement fiber families with grades, applications, process compatibility, products, and suppliers per fiber type.",
     alternates: alternates("/fibers"),
   };
 }
@@ -33,7 +28,6 @@ export default async function FibersHubPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const isEn = locale === "en";
   const t = await getTranslations({ locale, namespace: "Fibers" });
 
   return (
@@ -43,24 +37,19 @@ export default async function FibersHubPage({
           {t("breadcrumbFibers")}
         </div>
         <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-          {isEn ? "Composite reinforcement fibers" : "复合材料增强纤维家族"}
+          Composite reinforcement fibers
         </h1>
         <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          {isEn
-            ? "Pick a fiber family to drill into grade ranges, suppliers, products, and process compatibility — all linked into the rest of the GetFRP sourcing platform."
-            : "选择纤维家族,进入对应的牌号区间、供应商、产品和工艺兼容性。"}
+          Pick a fiber family to drill into grade ranges, suppliers, products, and process compatibility — all linked into the rest of the GetFRP sourcing platform.
         </p>
       </header>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {FIBERS.map((f) => {
-          const name = isEn ? f.nameEn : f.name;
-          // getfrp.com (en): never show the Chinese name as a subtitle.
-          const altName = isEn ? null : f.nameEn;
-          const grades = isEn ? f.gradesEn ?? f.grades : f.grades;
-          const keywords = isEn
-            ? f.keywords.filter((k) => !/[一-鿿]/.test(k))
-            : f.keywords;
+          const name = f.nameEn;
+          const altName = null;
+          const grades = f.gradesEn ?? f.grades;
+          const keywords = f.keywords.filter((k) => !/[\p{Script=Han}]/u.test(k));
           return (
             <Link
               key={f.slug}
@@ -80,7 +69,7 @@ export default async function FibersHubPage({
               )}
               <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
                 <span className="text-muted-foreground/70">
-                  {isEn ? "Grade families" : "牌号体系"}:
+                  Grade families:
                 </span>{" "}
                 <span className="font-medium text-foreground/90">
                   {grades}
@@ -98,7 +87,7 @@ export default async function FibersHubPage({
                 ))}
               </div>
               <div className="mt-5 inline-flex items-center gap-1 text-[13px] font-medium text-foreground/80 transition-colors group-hover:text-foreground">
-                {isEn ? "Open dossier" : "进入档案"}
+                Open dossier
                 <ArrowRight
                   size={14}
                   className="transition-transform group-hover:translate-x-0.5"

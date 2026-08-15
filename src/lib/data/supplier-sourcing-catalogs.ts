@@ -1,22 +1,8 @@
-export type SupplierSourcingCatalogItem =
-  | {
-      label: string;
-      capability: string;
-      query?: never;
-      productSlug?: never;
-    }
-  | {
-      label: string;
-      query: string;
-      capability?: never;
-      productSlug?: never;
-    }
-  | {
-      label: string;
-      productSlug: string;
-      capability?: never;
-      query?: never;
-    };
+export type SupplierSourcingCatalogItem = {
+  label: string;
+  /** Crawlable, indexable destination; never a supplier search-results URL. */
+  href: string;
+};
 
 export type SupplierSourcingCatalog = {
   id: string;
@@ -43,14 +29,14 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Fiber, resin and chemistry suppliers at the start of the composites value chain.",
     items: [
-      { label: "Glass fiber & fiberglass", capability: "fiber-glass" },
-      { label: "Carbon fiber & CFRP", capability: "fiber-carbon" },
-      { label: "Basalt fiber", capability: "fiber-basalt" },
-      { label: "Aramid & high-strength fiber", capability: "fiber-aramid" },
-      { label: "Unsaturated polyester resin", capability: "resin-polyester" },
-      { label: "Vinyl ester resin", capability: "resin-vinyl-ester" },
-      { label: "Epoxy resin", capability: "resin-epoxy" },
-      { label: "Thermoplastic matrices", capability: "resin-thermoplastic" },
+      { label: "Glass fiber & fiberglass", href: "/products/fiber-glass" },
+      { label: "Carbon fiber & CFRP", href: "/products/carbon-fiber" },
+      { label: "Basalt fiber", href: "/fibers/basalt" },
+      { label: "Aramid & high-strength fiber", href: "/fibers/aramid" },
+      { label: "Unsaturated polyester resin", href: "/products/resin-gelcoat#polyester-resin" },
+      { label: "Vinyl ester resin", href: "/products/resin-gelcoat#vinyl-ester-resin" },
+      { label: "Epoxy resin", href: "/products/resin-gelcoat#epoxy-resin" },
+      { label: "Thermoplastic matrices", href: "/manufacturing/thermoplastic-forming" },
     ],
   },
   {
@@ -60,13 +46,13 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Textile reinforcements, molding compounds and semi-finished formats ready for conversion.",
     items: [
-      { label: "Rovings & chopped strand", query: "roving chopped strand" },
-      { label: "Fabrics, mats & veils", query: "fabric mat veil" },
-      { label: "Prepreg & towpreg", query: "prepreg towpreg" },
-      { label: "SMC & BMC compounds", query: "SMC BMC compound" },
-      { label: "LFT, GMT & thermoplastic tapes", query: "LFT GMT thermoplastic tape" },
-      { label: "Core materials & sandwich panels", query: "core material sandwich panel" },
-      { label: "Gelcoats, coatings & adhesives", query: "gelcoat coating adhesive" },
+      { label: "Rovings & chopped strand", href: "/products/fiber-glass#rovings-and-chopped-strand" },
+      { label: "Fabrics, mats & veils", href: "/products/fiber-glass#fabrics-mats-and-veils" },
+      { label: "Prepreg & towpreg", href: "/manufacturing/prepreg-autoclave" },
+      { label: "SMC & BMC compounds", href: "/products/smc-bmc" },
+      { label: "LFT, GMT & thermoplastic tapes", href: "/manufacturing/thermoplastic-forming" },
+      { label: "Core materials & sandwich panels", href: "/products/fiberglass-panel" },
+      { label: "Gelcoats, coatings & adhesives", href: "/products/resin-gelcoat" },
     ],
   },
   {
@@ -76,14 +62,14 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Match part geometry, production volume and evidence requirements to the right process.",
     items: [
-      { label: "Pultrusion", capability: "process-pultrusion" },
-      { label: "Filament winding", capability: "process-filament-winding" },
-      { label: "Compression molding · SMC/BMC", capability: "process-compression-molding" },
-      { label: "Resin transfer molding · RTM", capability: "process-rtm" },
-      { label: "Vacuum infusion · VARTM", capability: "process-vacuum-infusion" },
-      { label: "Hand lay-up & spray-up", capability: "process-hand-lay-up" },
-      { label: "Prepreg & autoclave", capability: "process-prepreg-autoclave" },
-      { label: "Thermoplastic molding · LFT/GMT", capability: "process-thermoplastic-molding" },
+      { label: "Pultrusion", href: "/manufacturing/pultrusion" },
+      { label: "Filament winding", href: "/manufacturing/filament-winding" },
+      { label: "Compression molding · SMC/BMC", href: "/manufacturing/smc-molding" },
+      { label: "Resin transfer molding · RTM", href: "/manufacturing/rtm" },
+      { label: "Vacuum infusion · VARTM", href: "/manufacturing/vacuum-infusion" },
+      { label: "Hand lay-up & spray-up", href: "/manufacturing/hand-layup" },
+      { label: "Prepreg & autoclave", href: "/manufacturing/prepreg-autoclave" },
+      { label: "Thermoplastic molding · LFT/GMT", href: "/manufacturing/thermoplastic-forming" },
     ],
   },
   {
@@ -93,14 +79,14 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Open a structured product specification before comparing matched factories.",
     items: [
-      { label: "FRP grating", productSlug: "frp-grating" },
-      { label: "Pultruded profiles", productSlug: "pultruded-profiles" },
-      { label: "Fiberglass sheet", productSlug: "fiberglass-sheet" },
-      { label: "FRP rebar", productSlug: "frp-rebar" },
-      { label: "FRP pipe & tanks", productSlug: "frp-pipe" },
-      { label: "SMC & BMC parts", productSlug: "smc-bmc" },
-      { label: "Resin & gelcoat", productSlug: "resin-gelcoat" },
-      { label: "Glass fiber products", productSlug: "fiber-glass" },
+      { label: "FRP grating", href: "/products/frp-grating" },
+      { label: "Pultruded profiles", href: "/products/pultruded-profiles" },
+      { label: "Fiberglass sheet", href: "/products/fiberglass-sheet" },
+      { label: "FRP rebar", href: "/products/frp-rebar" },
+      { label: "FRP pipe & tanks", href: "/products/frp-pipe" },
+      { label: "SMC & BMC parts", href: "/products/smc-bmc" },
+      { label: "Resin & gelcoat", href: "/products/resin-gelcoat" },
+      { label: "Glass fiber products", href: "/products/fiber-glass" },
     ],
   },
   {
@@ -110,14 +96,14 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Production equipment, tooling, testing and specialist services around composite parts.",
     items: [
-      { label: "Molds, tooling & release systems", query: "mold tooling release" },
-      { label: "Resin handling & dispensing", query: "resin handling dispensing" },
-      { label: "Ovens & autoclaves", query: "oven autoclave" },
-      { label: "Presses & molding systems", query: "press molding equipment" },
-      { label: "CNC cutting & finishing", query: "CNC cutting finishing" },
-      { label: "Testing, NDT & quality control", query: "testing NDT quality control" },
-      { label: "Design, simulation & engineering", query: "design simulation engineering" },
-      { label: "Recycling & circularity", query: "composite recycling" },
+      { label: "Molds, tooling & release systems", href: "/manufacturing#tooling-and-release" },
+      { label: "Resin handling & dispensing", href: "/manufacturing#resin-processing" },
+      { label: "Ovens & autoclaves", href: "/manufacturing/prepreg-autoclave" },
+      { label: "Presses & molding systems", href: "/manufacturing/smc-molding" },
+      { label: "CNC cutting & finishing", href: "/manufacturing/pultrusion#secondary-operations" },
+      { label: "Testing, NDT & quality control", href: "/services/frp-engineering-qa" },
+      { label: "Design, simulation & engineering", href: "/tools" },
+      { label: "Recycling & circularity", href: "/applications#recycling-and-circularity" },
     ],
   },
   {
@@ -127,14 +113,14 @@ export const SUPPLIER_SOURCING_CATALOGS: readonly SupplierSourcingCatalog[] = [
     description:
       "Search by the end-use sectors used by the international composites industry.",
     items: [
-      { label: "Aerospace & defense", query: "aerospace defense" },
-      { label: "Automotive & road transport", query: "automotive transport" },
-      { label: "Building & civil engineering", query: "building civil engineering" },
-      { label: "Infrastructure & utilities", query: "infrastructure utility" },
-      { label: "Renewable energy & wind", query: "renewable energy wind" },
-      { label: "Marine & shipbuilding", query: "marine shipbuilding" },
-      { label: "Electrical, electronics & telecom", query: "electrical electronics telecom" },
-      { label: "Pipe, tanks, water & oil and gas", query: "pipe tank water oil gas" },
+      { label: "Aerospace & defense", href: "/applications#aerospace-space" },
+      { label: "Automotive & road transport", href: "/applications#automotive-road-transportation" },
+      { label: "Building & civil engineering", href: "/applications/construction" },
+      { label: "Infrastructure & utilities", href: "/applications/construction#infrastructure" },
+      { label: "Renewable energy & wind", href: "/applications#wind-renewable-energy" },
+      { label: "Marine & shipbuilding", href: "/applications/marine" },
+      { label: "Electrical, electronics & telecom", href: "/applications/electrical" },
+      { label: "Pipe, tanks, water & oil and gas", href: "/applications/chemical-processing" },
     ],
   },
 ] as const;
