@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="192" viewBox="0 0 760 192" role="img" aria-labelledby="title desc">
+  <title id="title">GetFRP</title>
+  <desc id="desc">The GetFRP composite fiber mark and wordmark.</desc>
+  <g transform="translate(0 0)">
+    <path d="M228 96C186 44 158 20 116 20C62 20 20 53 20 96C20 139 62 172 116 172C161 172 193 145 236 96" fill="none" stroke="#0A1F44" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M232 96C278 45 320 24 388 24M251 116C295 74 334 56 396 56M271 136C311 104 347 92 392 92" fill="none" stroke="#19C3C8" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <text x="424" y="132" fill="#0A1F44" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="700" letter-spacing="-6">getfrp</text>
+</svg>

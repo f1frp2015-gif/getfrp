@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
-  <title>GetFRP brand mark</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">GetFRP avatar</title>
+  <desc id="desc">The GetFRP composite fiber mark on a navy rounded square.</desc>
   <rect width="512" height="512" rx="112" fill="#0A1F44"/>
   <path d="M248 256C204 201 174 176 128 176C78 176 48 211 48 256C48 301 80 336 130 336C176 336 211 307 256 256" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M252 256C298 205 340 184 408 184M271 276C315 234 354 216 416 216M291 296C331 264 367 252 412 252" fill="none" stroke="#19C3C8" stroke-width="22" stroke-linecap="round"/>
