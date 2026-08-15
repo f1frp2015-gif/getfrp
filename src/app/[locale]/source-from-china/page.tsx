@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { setRequestLocale } from "next-intl/server";
 import {
-  ShieldCheck,
   ClipboardCheck,
   FileSearch,
   Truck,
@@ -17,7 +16,6 @@ import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
-import { Badge } from "@/components/ui/badge";
 import {
   PlatformHero,
   PlatformSectionHeading,
@@ -29,10 +27,6 @@ import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { TestimonialsBlock } from "@/components/testimonials-block";
 import { ChinaSourcingMapDashboard } from "@/components/china-sourcing-map-dashboard";
-import {
-  crosswalk,
-  exportReadinessCerts,
-} from "@/lib/data/china-standards-crosswalk";
 import { supplierCategories } from "@/lib/data/suppliers";
 import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
 import { buildChinaSourcingMapData } from "@/lib/data/china-sourcing-map";
@@ -42,15 +36,14 @@ export const revalidate = 3600;
 type VerifiedRow = {
   category: string | null;
   province: string | null;
-  certificationsEn: string[] | null;
   scaleTier: string | null;
 };
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Source FRP from China — Products, Suppliers & Standards | getfrp",
+    title: "Source FRP from China — Products, Suppliers & Sourcing | getfrp",
     description:
-      "Source FRP products from China with matched manufacturers, specification checks, standards cross-references, factory verification and export support.",
+      "Source FRP products from China with matched manufacturers, regional supply-cluster insights, factory verification and export support.",
     alternates: alternates("/source-from-china"),
   };
 }
@@ -73,7 +66,6 @@ export default async function SourceFromChinaPage({
         .select({
           category: supplierListings.category,
           province: supplierListings.province,
-          certificationsEn: supplierListings.certificationsEn,
           scaleTier: supplierListings.scaleTier,
         })
         .from(supplierListings)
@@ -88,7 +80,6 @@ export default async function SourceFromChinaPage({
         ? [{
             category: profile.category,
             province: profile.province,
-            certificationsEn: profile.certificationsEn,
             scaleTier: profile.scaleTier,
           }]
         : [],
@@ -106,14 +97,6 @@ export default async function SourceFromChinaPage({
     provinceCounts.set(row.province, (provinceCounts.get(row.province) ?? 0) + 1);
   }
   const provincesCovered = provinceCounts.size;
-
-  // Cert counts: case-insensitive substring match against the EN cert list.
-  const certCount = (needle: string) =>
-    verified.filter((s) =>
-      (s.certificationsEn ?? []).some((c) =>
-        c.toLowerCase().includes(needle.toLowerCase())
-      )
-    ).length;
 
   const tierCounts = verified.reduce<Record<string, number>>((acc, s) => {
     const t = s.scaleTier ?? "M";
@@ -141,7 +124,7 @@ export default async function SourceFromChinaPage({
           inLanguage: "en",
           name: "Source composites from China",
           description:
-            "Verified Chinese FRP suppliers organized by category and ranked by scale tier, with export-ready certifications, standards crosswalk, and sourcing playbook for overseas buyers.",
+            "Verified Chinese FRP suppliers mapped by province and category, with supply-cluster insights and a sourcing playbook for overseas buyers.",
         }}
       />
       {/* FAQPage schema: explicit Q&A surface that Perplexity, Google AI
@@ -167,14 +150,6 @@ export default async function SourceFromChinaPage({
               acceptedAnswer: {
                 "@type": "Answer",
                 text: "Jiangsu dominates resin (unsaturated polyester, vinyl ester, epoxy) and downstream pultrusion. Shandong is the fiber heartland (E-glass, ECR-glass, S-glass, carbon fiber tow). Zhejiang covers mid-volume manufacturing, especially fabric and prepreg. Henan and Shanxi are the basalt fiber clusters. Knowing the province before the RFQ filters out three-quarters of the no-fit responses.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "What is the GB equivalent of ASTM D3039 for tensile testing?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "GB/T 1447-2005 is China's analog to ASTM D3039 for tensile properties of fiber-reinforced plastics. The specimen geometry and gripping requirements are similar but not identical; for safety-critical structural parts, request the test panel be cut to ASTM D3039 dimensions and tested at a CNAS-accredited lab (SGS / Bureau Veritas / Intertek / TUV China).",
               },
             },
             {
@@ -211,8 +186,8 @@ export default async function SourceFromChinaPage({
 
       <PlatformHero
         eyebrow="FOR OVERSEAS BUYERS"
-        title="Source FRP from China — products, standards, one accountable desk"
-        description="The whole China FRP supply base, audited and mapped. See what you can source, how Chinese GB standards map to ASTM / ISO / EN, and the step-by-step path — then hand the factory-side work to one bilingual desk that sources as your principal."
+        title="Source FRP from China — products, clusters, one accountable desk"
+        description="The whole China FRP supply base, audited and mapped. See what you can source, where each product category is concentrated, and the step-by-step path — then hand the factory-side work to one bilingual desk that sources as your principal."
       />
 
       {/* TL;DR — scan UX. Western B2B buyers triage in 5-8 seconds; surface
@@ -226,7 +201,7 @@ export default async function SourceFromChinaPage({
           {[
             "What FRP products to source (profiles, grating, rebar, pipe) and the audited supply base behind them — by capability and scale tier",
             "Province-by-province map of where each FRP product category is actually made (resin = Jiangsu, fiber = Shandong, etc.)",
-            "GB ⇄ ASTM ⇄ ISO ⇄ EN standards crosswalk — set spec expectations before the RFQ, not after",
+            "Verified supplier coverage by province and category, refreshed from the audited network every hour",
             "A 6-step sourcing playbook from spec to delivered cargo, with payment / QC / Incoterms benchmarks",
           ].map((line) => (
             <li
@@ -248,10 +223,7 @@ export default async function SourceFromChinaPage({
         <StatCard label="Plants audited on the ground" value={total} />
         <StatCard label="Major + Large tier" value={majorPlusLarge} />
         <StatCard label="Provinces covered" value={provincesCovered} />
-        <StatCard
-          label="ISO 9001 holders"
-          value={certCount("ISO 9001")}
-        />
+        <StatCard label="Capabilities mapped" value={sourcingMapData.categories.length} />
       </div>
 
       {/* Primary CTA strip */}
@@ -298,151 +270,10 @@ export default async function SourceFromChinaPage({
         <ChinaSourcingMapDashboard data={sourcingMapData} />
       </section>
 
-      {/* ═══ 02 — Export readiness ═══ */}
-      <section id="certs" className="mt-20 scroll-mt-20">
-        <PlatformSectionHeading
-          eyebrow="MODULE 02 · EXPORT READINESS"
-          title="Certifications that actually unlock cross-border purchase orders"
-        />
-        <p className="mb-6 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          A certification only matters when your end-market requires it. This
-          decodes the ones overseas buyers screen by, and shows how many
-          suppliers on the platform currently hold each one.
-        </p>
-
-        <div className="grid gap-3 md:grid-cols-2">
-          {exportReadinessCerts.map((c) => {
-            // "CE marking" / "CCS / DNV / ABS / LR" are display labels — supplier
-            // records store the bare cert token ("CE", "CCS"), so a literal
-            // substring match against the full label always undercounts to 0.
-            const n = certCount(c.id === "ccs" ? "CCS" : c.id === "ce" ? "CE" : c.name);
-            return (
-              <div
-                key={c.id}
-                className="border border-border/70 bg-background p-5"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck size={16} className="text-foreground" strokeWidth={1.5} />
-                      <span className="font-semibold">{c.name}</span>
-                    </div>
-                    <div className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                      {c.scope}
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="font-mono text-[10px]">
-                    {n} suppliers
-                  </Badge>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {c.why}
-                </p>
-                {n > 0 && (
-                  <Link
-                    href={`/rfq?cert=${encodeURIComponent(c.name)}` as never}
-                    className="mt-3 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wider text-foreground hover:underline"
-                  >
-                    Require in your RFQ →
-                  </Link>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-6 rounded-md border border-amber-300 bg-amber-50 p-4 text-xs leading-relaxed text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
-          <strong>Note:</strong> A certificate is necessary but not sufficient. Three
-          things still need cross-checking: the scope (which products the cert
-          covers), the current status (most lapses we see are mid-2-year
-          renewal cycles), and the issuing body&apos;s accreditation chain
-          (CNAS / IAF / ANAB). A &quot;ISO 9001 certified&quot; line item on a
-          factory profile usually means one of these three is missing.
-        </div>
-      </section>
-
-      {/* ═══ 03 — Standards crosswalk ═══ */}
-      <section id="standards" className="mt-20 scroll-mt-20">
-        <PlatformSectionHeading
-          eyebrow="MODULE 03 · STANDARDS CROSSWALK"
-          title="GB ⇄ ASTM / ISO / EN for composite test methods and products"
-        />
-        <p className="mb-6 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          If your supplier tests per GB, does that satisfy your ASTM-based spec?
-          Short answer: often structurally similar, sometimes geometrically different.
-          Use this table to set expectations before the RFQ, not after.
-        </p>
-
-        <div className="overflow-x-auto border border-border/70">
-          <table className="w-full min-w-[800px] text-sm">
-            <thead className="bg-muted/40 text-left font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              <tr>
-                <th className="p-3">Topic</th>
-                <th className="p-3">China (GB)</th>
-                <th className="p-3">International equivalents</th>
-              </tr>
-            </thead>
-            <tbody>
-              {crosswalk.map((r) => (
-                <tr key={r.gb} className="border-t border-border/70 align-top">
-                  <td className="p-3">
-                    <div className="font-semibold">{r.topicEn}</div>
-                  </td>
-                  <td className="p-3">
-                    <div className="font-mono text-xs font-semibold">{r.gb}</div>
-                    <div className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
-                      {r.gbTitle}
-                    </div>
-                  </td>
-                  <td className="p-3">
-                    <div className="space-y-1.5">
-                      {r.intl.map((i) => (
-                        <div key={i.code} className="flex items-start gap-2">
-                          <Badge variant="outline" className="shrink-0 font-mono text-[10px]">
-                            {i.body}
-                          </Badge>
-                          <div>
-                            <div className="font-mono text-xs font-semibold">{i.code}</div>
-                            <div className="text-[11px] leading-snug text-muted-foreground">
-                              {i.title}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    {r.note && (
-                      <p className="mt-2 text-[11px] italic text-muted-foreground">
-                        {r.note}
-                      </p>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <p className="mt-4 text-xs text-muted-foreground">
-          Curated by the GetFRP editorial team. Submit corrections or additions through the{" "}
-          <Link className="text-foreground underline" href="/rfq">
-            GetFRP contact form
-          </Link>.
-        </p>
-
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Link
-            href="/sourcing/gb-vs-astm-frp"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-muted"
-          >
-            Read the standards crosswalk guide →
-          </Link>
-        </div>
-      </section>
-
-      {/* ═══ 04 — Sourcing playbook ═══ */}
+      {/* ═══ 02 — Sourcing playbook ═══ */}
       <section id="playbook" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 04 · SOURCING PLAYBOOK"
+          eyebrow="MODULE 02 · SOURCING PLAYBOOK"
           title="From spec to delivered cargo: the 6-step path"
         />
         <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
@@ -526,10 +357,10 @@ export default async function SourceFromChinaPage({
         </PlatformCardGrid>
       </section>
 
-      {/* ═══ 05 — Sourcing topic deep dives ═══ */}
+      {/* ═══ 03 — Sourcing topic deep dives ═══ */}
       <section id="topics" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 05 · DEEP DIVES"
+          eyebrow="MODULE 03 · DEEP DIVES"
           title="Topic-specific sourcing guides"
         />
         <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
