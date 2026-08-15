@@ -9,6 +9,8 @@
     radial-gradient(circle at 82% 18%, rgb(25 195 200 / 12%), transparent 31%),
     linear-gradient(145deg, #f8fafc, #f1f6f8 66%, #eafafa);
   color: var(--color-brand-navy);
+  contain-intrinsic-size: auto 7.5rem;
+  content-visibility: auto;
   isolation: isolate;
   transition:
     border-color 300ms ease,
@@ -289,6 +291,364 @@
   animation: particles 5s ease-in-out infinite;
 }
 
+/* Spray-up: a chopper gun meters resin and short fibers into an open mold. */
+.sprayMold {
+  fill: none;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.sprayLaminate {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.sprayLaminate path:first-child { stroke: var(--color-brand-blue); }
+.sprayLaminate path:last-child { stroke: var(--color-brand-teal); }
+
+.chopperGun {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  animation: gunPulse 2.4s ease-in-out infinite;
+}
+
+.sprayFan {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 7 8;
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: flowDash 0.7s linear infinite;
+}
+
+.choppedFibers {
+  fill: none;
+  stroke: var(--color-brand-blue);
+  stroke-linecap: round;
+  stroke-width: 2.4;
+  animation: choppedSpray 1.2s linear infinite;
+}
+
+/* Vacuum bagging: atmospheric pressure draws the flexible bag onto the stack. */
+.vacuumTool {
+  fill: none;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.vacuumLaminate {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 2.4;
+}
+
+.vacuumLaminate path:nth-child(1) { stroke: var(--color-brand-aqua); }
+.vacuumLaminate path:nth-child(2) { stroke: var(--color-brand-teal); }
+.vacuumLaminate path:nth-child(3) { stroke: var(--color-brand-blue); }
+
+.vacuumBag {
+  fill: rgb(123 228 225 / 10%);
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 6 4;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: bagDrawDown 5s ease-in-out infinite;
+}
+
+.bagSeal {
+  fill: var(--color-brand-navy);
+  opacity: 0.8;
+}
+
+.vacuumPort,
+.vacuumArrows {
+  fill: #fff;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.vacuumPort { animation: vacuumGauge 2s ease-in-out infinite; }
+.vacuumArrows { animation: drawDownArrows 5s ease-in-out infinite; }
+
+/* Vacuum infusion: vacuum pulls a controlled resin front through dry reinforcement. */
+.infusionTool {
+  fill: #fff;
+  fill-opacity: 0.72;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.6;
+}
+
+.infusionTool path {
+  fill: none;
+  stroke: rgb(18 63 140 / 22%);
+  stroke-dasharray: 4 4;
+  stroke-width: 1.2;
+}
+
+.infusionFront {
+  fill: rgb(25 195 200 / 30%);
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: infusionFill 5.6s ease-in-out infinite;
+}
+
+.infusionInlet,
+.infusionVacuum {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.infusionInlet { animation: inletPulse 1.25s ease-in-out infinite; }
+.infusionVacuum { animation: vacuumOutlet 5.6s ease-in-out infinite; }
+
+.infusionBubbles {
+  fill: var(--color-brand-teal);
+  animation: infusionBubbles 5.6s ease-in-out infinite;
+}
+
+/* Prepreg autoclave: a bagged laminate cures under heat and pressure. */
+.autoclaveShell {
+  fill: #fff;
+  fill-opacity: 0.65;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.8;
+}
+
+.autoclaveTrolley {
+  fill: rgb(18 63 140 / 10%);
+  stroke: var(--color-brand-blue);
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  animation: trolleyLoad 6s ease-in-out infinite;
+}
+
+.autoclaveHeat {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: heatRise 2s ease-in-out infinite;
+}
+
+.pressureRings {
+  fill: none;
+  stroke: var(--color-brand-aqua);
+  stroke-width: 1.8;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pressureWave 2.4s ease-out infinite;
+}
+
+/* AFP: a compact placement head steers multiple tows over a contoured tool. */
+.afpTool {
+  fill: none;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.afpCourses {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 18 7;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+  animation: courseLay 1.2s linear infinite;
+}
+
+.afpHead {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  animation: headTraverse 5s ease-in-out infinite;
+}
+
+.afpHead circle { fill: rgb(25 195 200 / 24%); stroke: var(--color-brand-teal); }
+
+.afpTape {
+  fill: none;
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 6 4;
+  stroke-width: 2;
+  animation: headTraverse 5s ease-in-out infinite, flowDash 1s linear infinite;
+}
+
+.afpDirection { animation: afpArrow 1.5s ease-in-out infinite; }
+
+/* Braiding: rotating carriers interlace yarn around a translating mandrel. */
+.braidMandrel {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.7;
+}
+
+.braidYarns {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 28 8;
+  stroke-width: 2;
+  animation: braidInterlace 1.3s linear infinite;
+}
+
+.braiderRing {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-width: 1.7;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 5s linear infinite;
+}
+
+.braiderRing circle { fill: var(--color-brand-teal); }
+
+.braidFeed {
+  fill: none;
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 5 4;
+  stroke-width: 1.8;
+  animation: flowDash 0.9s linear infinite;
+}
+
+/* Composite 3D printing: the print head traverses while reinforced beads build layers. */
+.printerFrame {
+  fill: none;
+  stroke: rgb(10 31 68 / 42%);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.printHead {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  animation: printTraverse 4.2s ease-in-out infinite;
+}
+
+.printLayers {
+  fill: rgb(25 195 200 / 14%);
+  stroke: var(--color-brand-blue);
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: layerBuild 4.2s ease-in-out infinite;
+}
+
+.extrusionBead {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-dasharray: 7 5;
+  stroke-linecap: round;
+  stroke-width: 2.4;
+  animation: printBead 4.2s linear infinite;
+}
+
+.printDirection { animation: printArrow 1.4s ease-in-out infinite; }
+
+.fiberFeed {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-linecap: round;
+  stroke-width: 1.8;
+  animation: fiberFeed 1.4s linear infinite;
+}
+
+/* Thermoplastic forming: a heated reinforced sheet is stamped and consolidated. */
+.thermoPress {
+  fill: none;
+  stroke: rgb(10 31 68 / 28%);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.thermoUpperTool,
+.thermoLowerTool {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.thermoUpperTool { animation: thermoPressClose 4.8s ease-in-out infinite; }
+
+.heatedSheet {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-width: 5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sheetForm 4.8s ease-in-out infinite;
+}
+
+.sheetHeat {
+  fill: none;
+  stroke: var(--color-brand-aqua);
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: heatRise 1.8s ease-in-out infinite;
+}
+
+.formingArrows {
+  fill: none;
+  stroke: var(--color-brand-teal);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  animation: formingPressure 4.8s ease-in-out infinite;
+}
+
+/* Continuous lamination: films, resin and reinforcement consolidate through rollers. */
+.laminationInputs {
+  fill: #fff;
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 9 5;
+  stroke-linecap: round;
+  stroke-width: 2;
+  animation: flowDash 1s linear infinite;
+}
+
+.laminationRollers {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.7;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 3.4s linear infinite;
+}
+
+.laminationPanel {
+  fill: rgb(18 63 140 / 10%);
+  stroke: var(--color-brand-blue);
+  stroke-dasharray: 18 6;
+  stroke-width: 1.6;
+  animation: panelFeed 1.2s linear infinite;
+}
+
+.cureLamps {
+  fill: #fff;
+  stroke: var(--color-brand-navy);
+  stroke-width: 1.5;
+  animation: lampCure 2s ease-in-out infinite;
+}
+
+.panelDirection { animation: pull 1.5s ease-in-out infinite; }
+
 @keyframes scan {
   from { transform: translateX(0) skewX(-10deg); }
   42%, 100% { transform: translateX(700%) skewX(-10deg); }
@@ -390,6 +750,127 @@
   0%, 10%, 100% { opacity: 0; transform: translateX(-10px); }
   35%, 75% { opacity: 1; }
   88% { opacity: 0; transform: translateX(14px); }
+}
+
+@keyframes gunPulse {
+  50% { transform: translateX(3px) rotate(1deg); }
+}
+
+@keyframes choppedSpray {
+  from { opacity: 0.15; transform: translate(-8px, -5px); }
+  45% { opacity: 1; }
+  to { opacity: 0.15; transform: translate(13px, 9px); }
+}
+
+@keyframes bagDrawDown {
+  0%, 12%, 100% { transform: scaleY(1); }
+  48%, 74% { transform: scaleY(0.64); }
+}
+
+@keyframes vacuumGauge {
+  50% { filter: drop-shadow(0 0 4px rgb(25 195 200 / 70%)); }
+}
+
+@keyframes drawDownArrows {
+  0%, 12%, 100% { opacity: 0.25; transform: translateY(-7px); }
+  48%, 74% { opacity: 1; transform: translateY(8px); }
+}
+
+@keyframes infusionFill {
+  0%, 10%, 100% { opacity: 0.2; transform: scaleX(0.03); }
+  72%, 88% { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes vacuumOutlet {
+  0%, 55%, 100% { opacity: 0.35; }
+  72%, 90% { opacity: 1; filter: drop-shadow(0 0 5px rgb(25 195 200 / 72%)); }
+}
+
+@keyframes infusionBubbles {
+  0%, 10%, 100% { opacity: 0; transform: translateX(-12px); }
+  32%, 70% { opacity: 1; }
+  90% { opacity: 0; transform: translateX(18px); }
+}
+
+@keyframes trolleyLoad {
+  0%, 10%, 100% { transform: translateX(-22px); }
+  36%, 82% { transform: translateX(10px); }
+}
+
+@keyframes heatRise {
+  0%, 100% { opacity: 0.25; transform: translateY(4px); }
+  50% { opacity: 1; transform: translateY(-4px); }
+}
+
+@keyframes pressureWave {
+  0% { opacity: 0; transform: scale(0.72); }
+  45% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.18); }
+}
+
+@keyframes courseLay {
+  to { stroke-dashoffset: -25; }
+}
+
+@keyframes headTraverse {
+  0%, 10%, 100% { transform: translateX(-45px); }
+  48%, 62% { transform: translateX(72px); }
+}
+
+@keyframes afpArrow {
+  50% { opacity: 0.4; transform: translateX(9px); }
+}
+
+@keyframes braidInterlace {
+  to { stroke-dashoffset: -36; }
+}
+
+@keyframes printTraverse {
+  0%, 10%, 100% { transform: translateX(-38px); }
+  48%, 62% { transform: translateX(105px); }
+}
+
+@keyframes layerBuild {
+  0%, 12%, 100% { opacity: 0.32; transform: scaleY(0.36); }
+  74%, 90% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes printBead {
+  to { stroke-dashoffset: -24; }
+}
+
+@keyframes printArrow {
+  50% { opacity: 0.35; transform: translateX(8px); }
+}
+
+@keyframes fiberFeed {
+  to { stroke-dashoffset: -16; }
+}
+
+@keyframes thermoPressClose {
+  0%, 16%, 100% { transform: translateY(0); }
+  48%, 74% { transform: translateY(20px); }
+}
+
+@keyframes sheetForm {
+  0%, 16%, 100% { transform: translateY(0) scaleX(1); }
+  48%, 74% { transform: translateY(14px) scaleX(0.64) scaleY(2.2); }
+}
+
+@keyframes formingPressure {
+  0%, 18%, 84%, 100% { opacity: 0; transform: translateY(-4px); }
+  42%, 72% { opacity: 1; transform: translateY(3px); }
+}
+
+@keyframes panelFeed {
+  to { stroke-dashoffset: -24; }
+}
+
+@keyframes lampCure {
+  50% {
+    fill: rgb(123 228 225 / 24%);
+    filter: drop-shadow(0 3px 4px rgb(25 195 200 / 30%));
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

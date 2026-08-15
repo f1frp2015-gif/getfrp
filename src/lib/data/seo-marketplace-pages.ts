@@ -123,6 +123,15 @@ const PROCESS_INFO = [
   ["hand-layup", "Hand Lay-up", "Open-mold laminate production for large, low-volume and geometrically complex FRP components.", "hand lay-up"],
   ["smc-molding", "SMC Molding", "Matched-tool compression molding for repeat composite covers, enclosures and engineered parts.", "compression molding"],
   ["rtm", "RTM", "Closed-mold resin transfer molding for controlled surfaces, repeatable laminate thickness and medium-volume components.", "resin transfer molding"],
+  ["spray-up", "Spray-up", "Chopper-gun deposition of resin and short reinforcement for economical open-mold shells, covers and large low-volume parts.", "spray-up"],
+  ["vacuum-bagging", "Vacuum Bagging", "Flexible-bag consolidation of wet lay-up or prepreg laminates to improve compaction, air removal and surface consistency.", "vacuum bagging"],
+  ["vacuum-infusion", "Vacuum Infusion", "Vacuum-driven resin flow through dry reinforcement for large panels, marine structures, blades and controlled closed laminates.", "vacuum infusion"],
+  ["prepreg-autoclave", "Prepreg & Autoclave", "Controlled prepreg lay-up cured under elevated temperature and pressure for aerospace-grade laminate quality and low void content.", "prepreg autoclave"],
+  ["automated-fiber-placement", "Automated Fiber Placement", "Robotically steered continuous tows placed over contoured tooling for repeatable, optimized high-performance structures.", "automated fiber placement"],
+  ["fiber-braiding", "Fiber Braiding", "Interlaced continuous yarns formed around a mandrel for impact-tolerant tubes, profiles, preforms and complex hollow structures.", "fiber braiding"],
+  ["composite-3d-printing", "Composite 3D Printing", "Layer-wise additive manufacturing with chopped or continuous fiber reinforcement for tooling, prototypes and near-net-shape parts.", "composite 3D printing"],
+  ["thermoplastic-forming", "Thermoplastic Composite Forming", "Rapid heating, stamping and consolidation of reinforced thermoplastic sheets or organosheets for repeat production.", "thermoplastic composite forming"],
+  ["continuous-lamination", "Continuous Lamination", "Continuous film, resin and reinforcement consolidation for flat or profiled FRP sheet, panel and translucent building products.", "continuous lamination"],
 ] as const;
 
 export const MANUFACTURING_PAGES = PROCESS_INFO.map(([slug, name, summary, process]) => page({

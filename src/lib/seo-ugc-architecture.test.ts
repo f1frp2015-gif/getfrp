@@ -44,6 +44,15 @@ test("required L2 and L3 marketplace routes are present and unique", () => {
     "/products/fiberglass-grating-manufacturers",
     "/applications/wastewater-treatment/frp-grating",
     "/standards/en-13706/pultruded-profiles",
+    "/manufacturing/spray-up",
+    "/manufacturing/vacuum-bagging",
+    "/manufacturing/vacuum-infusion",
+    "/manufacturing/prepreg-autoclave",
+    "/manufacturing/automated-fiber-placement",
+    "/manufacturing/fiber-braiding",
+    "/manufacturing/composite-3d-printing",
+    "/manufacturing/thermoplastic-forming",
+    "/manufacturing/continuous-lamination",
   ];
   const pages = [
     ...ADDITIONAL_PRODUCT_PAGES,
@@ -55,7 +64,7 @@ test("required L2 and L3 marketplace routes are present and unique", () => {
   const paths = pages.map((page) => page.path);
   assert.equal(new Set(paths).size, paths.length);
   for (const path of required) assert.ok(paths.includes(path), `missing ${path}`);
-  assert.equal(MANUFACTURING_PAGES.length, 5);
+  assert.equal(MANUFACTURING_PAGES.length, 14);
   assert.equal(APPLICATION_PAGES.length, 5);
   assert.equal(STANDARD_PAGES.length, 4);
 });
