@@ -29,12 +29,14 @@ import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { TestimonialsBlock } from "@/components/testimonials-block";
 import { ProductFamilyGallery } from "@/components/frp-section-figure";
+import { ChinaSourcingMapDashboard } from "@/components/china-sourcing-map-dashboard";
 import {
   crosswalk,
   exportReadinessCerts,
-  chinaFrpProvinces,
 } from "@/lib/data/china-standards-crosswalk";
-import { supplierCategories, provincesEn } from "@/lib/data/suppliers";
+import { supplierCategories } from "@/lib/data/suppliers";
+import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
+import { buildChinaSourcingMapData } from "@/lib/data/china-sourcing-map";
 
 export const revalidate = 3600;
 
@@ -93,7 +95,7 @@ export default async function SourceFromChinaPage({
   // factory identity reaches the client; getfrp sources as a principal.
   const verified: VerifiedRow[] = await (async () => {
     try {
-      return await db
+      const databaseRows = await db
         .select({
           category: supplierListings.category,
           province: supplierListings.province,
@@ -102,9 +104,21 @@ export default async function SourceFromChinaPage({
         })
         .from(supplierListings)
         .where(eq(supplierListings.verified, true));
+      if (databaseRows.length > 0) return databaseRows;
     } catch {
-      return [];
+      // The Git-backed profiles keep the public sourcing map useful during
+      // database outages and in preview builds without production credentials.
     }
+    return CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) =>
+      profile.verified
+        ? [{
+            category: profile.category,
+            province: profile.province,
+            certificationsEn: profile.certificationsEn,
+            scaleTier: profile.scaleTier,
+          }]
+        : [],
+    );
   })();
 
   const total = verified.length;
@@ -141,6 +155,13 @@ export default async function SourceFromChinaPage({
     return acc;
   }, {});
   const majorPlusLarge = (tierCounts.XL ?? 0) + (tierCounts.L ?? 0);
+  const sourcingMapData = buildChinaSourcingMapData(
+    verified,
+    supplierCategories.map((category) => ({
+      id: category.id,
+      label: category.nameEn,
+    })),
+  );
 
   const url = `${CURRENT_SITE_URL}/source-from-china`;
 
@@ -320,7 +341,7 @@ export default async function SourceFromChinaPage({
       <div className="mb-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
         {[
           { id: "directory", num: "01", label: "Capability by category", sub: "Audited, by scale tier" },
-          { id: "regions", num: "02", label: "Regional clusters", sub: "China's FRP map" },
+          { id: "regions", num: "02", label: "Interactive sourcing map", sub: "Province × category" },
           { id: "certs", num: "03", label: "Export readiness", sub: "Certifications decoded" },
           { id: "standards", num: "04", label: "Standards crosswalk", sub: "GB ⇄ ASTM / ISO / EN" },
           { id: "playbook", num: "05", label: "Sourcing playbook", sub: "Spec → PO → Delivery" },
@@ -429,46 +450,16 @@ export default async function SourceFromChinaPage({
       {/* ═══ 02 — Verified suppliers by region ═══ */}
       <section id="regions" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 02 · REGIONAL CLUSTERS"
-          title="Where Chinese FRP capacity actually lives"
+          eyebrow="MODULE 02 · CHINA SOURCING MAP"
+          title="Find the right composites cluster before you send the RFQ"
         />
-        <p className="mb-6 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          Chinese composites capacity is regionally clustered. Jiangsu does
-          resin, Shandong does fiber, Zhejiang does mid-volume manufacturing,
-          Henan and Shanxi cover basalt. Knowing which province handles your
-          slice of the value chain saves weeks of RFQ blast and weeds out
-          three-quarters of the no-fit responses upfront.
+        <p className="mb-7 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+          Filter the audited supplier network by supply-chain role, compare
+          province-level density, and inspect the category mix behind each hub.
+          Counts are generated from verified supplier records and refreshed with
+          this page every hour.
         </p>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {chinaFrpProvinces.map((p) => {
-            // The DB stores Chinese province tokens; reverse-lookup via
-            // provincesEn map to count audited plants per province.
-            const zhKey = Object.entries(provincesEn).find(
-              ([, en]) => en === p.name
-            )?.[0];
-            const count = zhKey ? (provinceCounts.get(zhKey) ?? 0) : 0;
-            return (
-              <div
-                key={p.code}
-                className="border border-border/70 bg-background p-4"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex h-6 w-8 items-center justify-center border border-border bg-muted font-mono text-[10px] tracking-[0.12em] text-muted-foreground">
-                      {p.code}
-                    </span>
-                    <span className="text-sm font-semibold">{p.name}</span>
-                  </div>
-                  <span className="font-mono text-[11px] text-muted-foreground">
-                    {count} audited
-                  </span>
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground">{p.specialty}</p>
-              </div>
-            );
-          })}
-        </div>
+        <ChinaSourcingMapDashboard data={sourcingMapData} />
       </section>
 
       {/* ═══ 03 — Export readiness ═══ */}
