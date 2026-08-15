@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     absolute: "FRP Manufacturing Processes & Suppliers in China | getfrp",
   },
   description:
-    "Compare China FRP suppliers by pultrusion, filament winding, hand lay-up, SMC molding and RTM.",
+    "Compare China fiber-composite suppliers across open mold, closed mold, automated lay-up, thermoplastic forming and composite additive manufacturing routes.",
   alternates: alternates("/manufacturing"),
 };
 
@@ -24,7 +24,7 @@ export default async function ManufacturingHub({
   return (
     <DirectoryHub
       title="FRP manufacturing processes in China"
-      description="Move from product geometry and production volume to the manufacturing route, process controls and real reviewed supplier profiles."
+      description="Compare 14 fiber-composite manufacturing routes—from open molds and resin infusion to automated placement and 3D printing—by geometry, volume, process control and reviewed supplier capability."
       pages={MANUFACTURING_PAGES}
       cardVisual="process"
     />
