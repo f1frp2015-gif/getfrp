@@ -26,7 +26,7 @@ function isAllowedFileUrl(raw: string): boolean {
 
 export async function POST(req: Request) {
   const uid = await getSessionUid().catch(() => null);
-  if (!uid) return NextResponse.json({ error: "需要登录" }, { status: 401 });
+  if (!uid) return NextResponse.json({ error: "Sign-in required" }, { status: 401 });
 
   let body: { kind?: string; fileUrl?: string };
   try {

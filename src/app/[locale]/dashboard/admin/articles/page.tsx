@@ -11,7 +11,7 @@ import { gateAdmin } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { title: "资讯草稿箱" };
+export const metadata: Metadata = { title: "Editorial Drafts" };
 
 function fmt(d: Date | null | undefined): string {
   return d ? d.toISOString().slice(0, 16).replace("T", " ") : "—";
@@ -32,9 +32,9 @@ export default async function AdminArticlesPage({
     return (
       <Card>
         <CardContent className="py-12 text-center">
-          <div className="text-lg font-semibold">无管理员权限</div>
+          <div className="text-lg font-semibold">Administrator access required</div>
           <p className="mt-2 text-sm text-muted-foreground">
-            该页面仅限管理员访问。
+            This page is available only to administrators.
           </p>
         </CardContent>
       </Card>
@@ -70,21 +70,21 @@ export default async function AdminArticlesPage({
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">资讯草稿箱</h1>
+        <h1 className="text-2xl font-bold">Editorial Drafts</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          深度研究资讯由定时任务自动生成为草稿，发布前在此审阅、编辑、发布或删除。
+          Review, edit, publish, or delete research drafts before they appear on GetFRP.
         </p>
       </div>
 
       <section className="space-y-3">
         <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">待审草稿</h2>
+          <h2 className="text-lg font-semibold">Drafts awaiting review</h2>
           <Badge variant="secondary">{drafts.length}</Badge>
         </div>
         {drafts.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center text-sm text-muted-foreground">
-              暂无草稿。定时任务会在每个奇数日自动生成一篇深度研究稿到这里。
+              No drafts are waiting for review.
             </CardContent>
           </Card>
         ) : (
@@ -104,7 +104,7 @@ export default async function AdminArticlesPage({
                             {d.category ?? "—"}
                           </Badge>
                           <Badge variant="secondary" className="text-xs">
-                            草稿
+                            Draft
                           </Badge>
                         </div>
                         <h3 className="mt-1 font-medium leading-snug">{d.title}</h3>
@@ -115,8 +115,8 @@ export default async function AdminArticlesPage({
                         )}
                       </div>
                       <div className="shrink-0 text-right text-xs text-muted-foreground">
-                        <div>建 {fmt(d.createdAt)}</div>
-                        <div>改 {fmt(d.updatedAt)}</div>
+                        <div>Created {fmt(d.createdAt)}</div>
+                        <div>Updated {fmt(d.updatedAt)}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -128,9 +128,9 @@ export default async function AdminArticlesPage({
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-semibold">最近已发布</h2>
+        <h2 className="text-lg font-semibold">Recently published</h2>
         {published.length === 0 ? (
-          <p className="text-sm text-muted-foreground">暂无已发布资讯。</p>
+          <p className="text-sm text-muted-foreground">No published articles yet.</p>
         ) : (
           <Card>
             <CardContent className="divide-y py-0">

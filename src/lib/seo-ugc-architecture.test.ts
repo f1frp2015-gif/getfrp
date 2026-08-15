@@ -18,6 +18,7 @@ import {
 } from "./data/longform-pages";
 import { HELP_PAGES } from "./data/help-pages";
 import { SupplierProductPageInput } from "./products/ugc-input";
+import { SUPPLIER_SOURCING_CATALOGS } from "./data/supplier-sourcing-catalogs";
 import {
   HELP_LINKS,
   HOT_SEARCHES,
@@ -100,6 +101,42 @@ test("supplier product input requires real images and a substantive description"
   assert.equal(SupplierProductPageInput.safeParse(base).success, true);
   assert.equal(SupplierProductPageInput.safeParse({ ...base, images: [] }).success, false);
   assert.equal(SupplierProductPageInput.safeParse({ ...base, description: "too short" }).success, false);
+  assert.equal(
+    SupplierProductPageInput.safeParse({
+      ...base,
+      name: "用于污水处理的玻璃钢格栅产品",
+    }).success,
+    false,
+  );
+});
+
+test("supplier catalog links transfer authority only to indexable static pages", () => {
+  const items = SUPPLIER_SOURCING_CATALOGS.flatMap((catalog) => catalog.items);
+  assert.equal(items.length, 47);
+  for (const item of items) {
+    assert.ok(item.href.startsWith("/"), `${item.label} must use an internal route`);
+    assert.doesNotMatch(item.href, /^\/suppliers\/search(?:[?#]|$)/);
+    assert.doesNotMatch(item.href, /[?&](?:q|capability)=/);
+  }
+});
+
+test("marketplace copy avoids mechanical keyword repetition and stock AI phrasing", () => {
+  const pages = [
+    ...ADDITIONAL_PRODUCT_PAGES,
+    ...MANUFACTURING_PAGES,
+    ...APPLICATION_PAGES,
+    ...STANDARD_PAGES,
+    ...COMBINATION_PAGES,
+  ];
+  const stockPhrases = /\b(?:as an ai|delve into|ever-evolving landscape|it is important to note|in conclusion)\b/i;
+  for (const page of pages) {
+    const faqQuestions = page.faqs.map((faq) => faq.question).join(" ");
+    assert.doesNotMatch(faqQuestions, /manufacturers in china suppliers in china/i);
+    assert.doesNotMatch([page.summary, ...page.paragraphs, ...page.faqs.flatMap((faq) => [faq.question, faq.answer])].join(" "), stockPhrases);
+    const normalizedH1 = page.h1.toLowerCase();
+    const h1Repeats = faqQuestions.toLowerCase().split(normalizedH1).length - 1;
+    assert.ok(h1Repeats <= 1, `${page.path} repeats its H1 mechanically in FAQs`);
+  }
 });
 
 test("global navigation and search meet the crawlable discovery contract", () => {

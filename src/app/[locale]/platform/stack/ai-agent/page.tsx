@@ -177,7 +177,7 @@ export default async function AiAgentPage({
           </PlatformCard>
           <PlatformCard Icon={Layers} monoLabel="MORE" title="...">
             <p className="text-muted-foreground/80">
-              {locale === "zh" ? "持续迭代，欢迎建议。" : "Ongoing iteration, suggestions welcome."}
+              Ongoing iteration, suggestions welcome.
             </p>
           </PlatformCard>
         </PlatformCardGrid>
@@ -188,13 +188,13 @@ export default async function AiAgentPage({
           href={"/platform/stack/data" as never}
           className="font-mono text-[12px] uppercase tracking-wider text-foreground hover:underline"
         >
-          → {locale === "zh" ? "下一层：结构化数据层" : "Next: Structured Data"}
+          → Next: Structured Data
         </Link>
         <Link
           href="/platform"
           className="font-mono text-[12px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
         >
-          {locale === "zh" ? "返回平台说明" : "Back to Platform"}
+          Back to Platform
         </Link>
       </section>
     </div>

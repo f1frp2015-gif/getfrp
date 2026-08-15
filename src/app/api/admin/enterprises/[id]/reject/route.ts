@@ -18,11 +18,11 @@ export async function POST(
 
   const [ent] = await db.select().from(enterprises).where(eq(enterprises.id, id)).limit(1);
   if (!ent) {
-    return NextResponse.json({ error: "企业不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Company not found" }, { status: 404 });
   }
   if (ent.status !== "pending") {
     return NextResponse.json(
-      { error: `当前状态 ${ent.status}，无法重复审核` },
+      { error: `A company with status ${ent.status} cannot be reviewed again` },
       { status: 409 }
     );
   }

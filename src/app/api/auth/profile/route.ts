@@ -23,7 +23,7 @@ function isAllowedAvatarUrl(url: string): boolean {
 
 export async function PATCH(req: Request) {
   const me = await getCurrentUser();
-  if (!me) return NextResponse.json({ error: "请先登录" }, { status: 401 });
+  if (!me) return NextResponse.json({ error: "Please sign in first" }, { status: 401 });
 
   let body: { name?: unknown; avatarUrl?: unknown };
   try {
@@ -41,10 +41,10 @@ export async function PATCH(req: Request) {
   if (body.name !== undefined) {
     const name = String(body.name).trim();
     if (name.length < 1) {
-      return NextResponse.json({ error: "请输入昵称" }, { status: 400 });
+      return NextResponse.json({ error: "Enter a display name" }, { status: 400 });
     }
     if (name.length > 100) {
-      return NextResponse.json({ error: "昵称最多 100 个字符" }, { status: 400 });
+      return NextResponse.json({ error: "Display name must be 100 characters or fewer" }, { status: 400 });
     }
     updates.name = name;
   }
@@ -53,13 +53,13 @@ export async function PATCH(req: Request) {
     const avatarUrl =
       body.avatarUrl === null ? "" : String(body.avatarUrl).trim();
     if (!isAllowedAvatarUrl(avatarUrl)) {
-      return NextResponse.json({ error: "头像地址无效" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid avatar URL" }, { status: 400 });
     }
     updates.avatarUrl = avatarUrl || null;
   }
 
   if (updates.name === undefined && updates.avatarUrl === undefined) {
-    return NextResponse.json({ error: "无可更新字段" }, { status: 400 });
+    return NextResponse.json({ error: "No fields to update" }, { status: 400 });
   }
 
   const [row] = await db

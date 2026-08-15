@@ -29,13 +29,13 @@ const HEAT_COLORS = [
   "#7be4e1",
 ];
 const MAP_LABEL_OFFSETS: Readonly<Record<string, readonly [number, number]>> = {
-  北京: [-4, -11],
-  天津: [13, 6],
-  上海: [14, 2],
-  江苏: [7, -5],
-  浙江: [11, 9],
-  香港: [12, 8],
-  澳门: [-13, 9],
+  BJ: [-4, -11],
+  TJ: [13, 6],
+  SH: [14, 2],
+  JS: [7, -5],
+  ZJ: [11, 9],
+  HK: [12, 8],
+  MO: [-13, 9],
 };
 
 function provinceCount(

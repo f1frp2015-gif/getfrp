@@ -64,6 +64,8 @@ import { ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE } from "./data/zhejiang-tianhe-r
 import {
   ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
 } from "./data/zhongsheng-fiberglass-supplier-profile";
+import { CURATED_SUPPLIER_PROFILES } from "./data/curated-supplier-profiles";
+import { supplierRouteSlug } from "./supplier-slugs";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
 
@@ -77,70 +79,18 @@ test("adds every published Git-backed profile when the database is empty", async
 
   assert.deepEqual(
     new Set(directory.map(({ slug }) => slug)),
-    new Set([
-      "f1-composite",
-      "alta-performance-materials",
-      "aoc",
-      "haining-anjie-composite-materials",
-      "advanced-technik-composite-atcc",
-      "changsheng-carbon",
-      "beijing-jinghua-parker",
-      "changzhou-aolante-machinery",
-      "changzhou-hongfa-zongheng",
-      "changzhou-jianlin-glass-fiber",
-      "changzhou-panwang-frp-composite-materials",
-      "changzhou-putai-pro-tech",
-      "changzhou-rixin-group",
-      "changzhou-rixin-molding-technology",
-      "changzhou-runfengyuan-textile-machinery",
-      "changzhou-sairui-engineering-technology",
-      "changzhou-shenying-carbon-fiber-composites",
-      "changzhou-sinajet-digital-cutting",
-      "changzhou-utek-composite",
-      "shenzhen-hongfu-tongxin",
-      "shanghai-horse-construction",
-      "wanhua-chemical",
-      "jushi",
-      "chongqing-polycomp-international",
-      "hebei-weitong-frp",
-      "hongyu-composite-materials-technology-jiaxing",
-      "chongqing-dujiang-composites",
-      "anhui-anche-east-frp",
-      "hubei-feilihua-quartz-glass",
-      "taishan-fiberglass",
-      "zhongfu-shenying",
-      "noah-composites",
-      "pulwell-composites",
-      "shandong-runsing-composites",
-      "shanghai-moyan-instrument",
-      "shengli-limited",
-      "jiangsu-jiuding-new-materials",
-      "yangzhou-maxtone-composite",
-      "changzhou-matex-composites",
-      "nanjing-efg",
-      "nanjing-loyalty-composite-equipment",
-      "newtech-group",
-      "jufa-new-material",
-      "nanjing-keerda-mould",
-      "shanghai-crotti",
-      "yuyao-fanghua-mould",
-      "strongfibre",
-      "nanjing-spare-composites",
-      "wells-advanced-materials",
-      "sinauva-composites",
-      "tangshan-runfeng-composite-materials",
-      "techstorm-advanced-material",
-      "hebei-tengjun-frp",
-      "jiangsu-tianlong-basalt-fiber",
-      "lianyungang-tuotian-aviation-equipment",
-      "sino-composite-structures",
-      "suzhou-greentech",
-      "xiamen-lft-composite-plastic",
-      "dongguan-yuto-new-material",
-      "zhejiang-huafeng-new-material",
-      "zhejiang-tianhe-resin",
-      "taizhou-zhongsheng-glass-fiber-products",
-    ]),
+    new Set(
+      CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) =>
+        profile.profilePublished && profile.nameEn?.trim()
+          ? [supplierRouteSlug(profile)]
+          : [],
+      ),
+    ),
+  );
+  assert.doesNotMatch(
+    JSON.stringify(directory),
+    /[\p{Script=Han}]/u,
+    "the public English supplier directory must not expose Chinese text",
   );
   const alta = directory.find(
     ({ id }) => id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE.id,

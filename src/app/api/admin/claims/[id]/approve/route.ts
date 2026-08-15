@@ -29,11 +29,11 @@ export async function POST(
     .where(eq(supplierClaims.id, id))
     .limit(1);
   if (!claim) {
-    return NextResponse.json({ error: "认领记录不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Claim record not found" }, { status: 404 });
   }
   if (claim.status !== "pending") {
     return NextResponse.json(
-      { error: `当前状态 ${claim.status}，无法重复审核` },
+      { error: `A claim with status ${claim.status} cannot be reviewed again` },
       { status: 409 }
     );
   }
@@ -44,7 +44,7 @@ export async function POST(
     .where(eq(supplierListings.id, claim.supplierListingId))
     .limit(1);
   if (!supplier) {
-    return NextResponse.json({ error: "供应商不存在" }, { status: 404 });
+    return NextResponse.json({ error: "Supplier not found" }, { status: 404 });
   }
 
   // 1. Create or find enterprise record
@@ -112,7 +112,7 @@ export async function POST(
     .set({
       status: "rejected",
       reviewerId: gate.user.id,
-      reviewNote: "该企业已由其他申请人认领",
+      reviewNote: "This company has already been claimed by another applicant",
       reviewedAt: new Date(),
     })
     .where(

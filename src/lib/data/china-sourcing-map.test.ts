@@ -32,8 +32,8 @@ test("builds province-by-category counts without inventing locations", () => {
     ],
   );
 
-  const jiangsu = data.provinces.find((province) => province.id === "江苏");
-  const shandong = data.provinces.find((province) => province.id === "山东");
+  const jiangsu = data.provinces.find((province) => province.id === "JS");
+  const shandong = data.provinces.find((province) => province.id === "SD");
 
   assert.equal(data.total, 4);
   assert.equal(data.mappedTotal, 3);
@@ -54,7 +54,7 @@ test("builds province-by-category counts without inventing locations", () => {
 test("provides a geographic path for every province in the sourcing dataset", () => {
   assert.deepEqual(
     new Set(CHINA_PROVINCE_MAP_REGIONS.map((region) => region.provinceId)),
-    new Set(CHINA_PROVINCES.map((province) => province.id)),
+    new Set(CHINA_PROVINCES.map((province) => province.code)),
   );
   assert.ok(
     CHINA_PROVINCE_MAP_REGIONS.every((region) => region.path.startsWith("M")),

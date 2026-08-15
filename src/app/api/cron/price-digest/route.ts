@@ -59,7 +59,7 @@ export async function GET(req: Request) {
     .insert(priceReports)
     .values({
       weekOf,
-      title: latest?.title ?? "复材原材料价格行情",
+      title: latest?.title ?? "Composite Raw Material Price Report",
       summary: "",
       quotes,
       sources: latest?.sources ?? [],

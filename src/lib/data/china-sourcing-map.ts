@@ -120,6 +120,11 @@ export function normalizeChinaProvince(value: string | null): string | null {
   return PROVINCE_BY_ENGLISH_NAME.get(cleaned.toLowerCase()) ?? null;
 }
 
+export function chinaProvinceCode(value: string | null): string | null {
+  const provinceId = normalizeChinaProvince(value);
+  return provinceId ? PROVINCE_BY_ID.get(provinceId)?.code ?? null : null;
+}
+
 function fallbackCategoryLabel(id: string): string {
   return id
     .split(/[-_\s]+/)
@@ -169,7 +174,9 @@ export function buildChinaSourcingMapData(
   const provinces = CHINA_PROVINCES.map((province) => {
     const counts = provinceCategoryCounts.get(province.id) ?? new Map<string, number>();
     return {
-      ...province,
+      id: province.code,
+      name: province.name,
+      code: province.code,
       total: Array.from(counts.values()).reduce((sum, count) => sum + count, 0),
       categoryCounts: Object.fromEntries(counts),
     };

@@ -30,10 +30,10 @@ const ALLOWED = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
 
 export async function POST(req: Request) {
   const me = await getCurrentUser().catch(() => null);
-  if (!me) return NextResponse.json({ error: "需要登录" }, { status: 401 });
+  if (!me) return NextResponse.json({ error: "Sign-in required" }, { status: 401 });
 
   if (!ossConfigured()) {
-    return NextResponse.json({ error: "对象存储未配置" }, { status: 503 });
+    return NextResponse.json({ error: "Object storage is not configured" }, { status: 503 });
   }
 
   let body: {
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
   const contentType =
     typeof body.contentType === "string" ? body.contentType.trim() : "";
   if (contentType && !ALLOWED.includes(contentType)) {
-    return NextResponse.json({ error: "仅支持 JPG/PNG/WebP/PDF" }, { status: 400 });
+    return NextResponse.json({ error: "Only JPG, PNG, WebP, and PDF files are supported" }, { status: 400 });
   }
 
   // 服务端推导供应商归属:企业 → supplier_listings(与上传页 page.tsx 同口径)。

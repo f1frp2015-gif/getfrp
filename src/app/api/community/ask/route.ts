@@ -5,12 +5,11 @@ import {
   withChatFallbackForRequest,
   isChatConfiguredForRequest,
 } from "@/lib/ai/provider";
-import { SYSTEM_PROMPT } from "@/lib/ai/knowledge";
+import { SYSTEM_PROMPT_EN } from "@/lib/ai/knowledge";
 import { retrieveTopK, buildRagContext } from "@/lib/ai/retrieve";
 import { makeWebSearchTool, isWebSearchConfigured } from "@/lib/ai/tools/web-search";
 import { db } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
-import { resolveServerLocale } from "@/lib/i18n/server-locale";
 import {
   consumeAnonChatCredit,
   ANON_LIMIT_RESPONSE_BODY,
@@ -54,9 +53,6 @@ export async function POST(req: Request) {
   }
 
   const question = (body.question ?? "").trim();
-  // GetFRP is English-only; ignore stale client locale values.
-  const locale = resolveServerLocale(req, body.locale);
-
   if (!question || question.length < 5) {
     return NextResponse.json({ error: "question too short" }, { status: 400 });
   }
@@ -79,23 +75,15 @@ export async function POST(req: Request) {
     .map((c, i) => ({ index: i + 1, title: c.title, url: c.url as string }));
 
   // ── Generate answer ────────────────────────────────────────
-  const citationCue =
-    locale === "en"
-      ? `Cite retrieved sources with the inline marker [#N] where N is the source index.`
-      : `请在回答末尾用格式"[#N]"标注引用来源编号。`;
+  const citationCue = `Cite retrieved sources with the inline marker [#N] where N is the source index.`;
 
   const systemForAsk =
-    SYSTEM_PROMPT + (ragCtx ? `\n\n---\n\n${ragCtx}\n\n---\n\n${citationCue}` : "");
+    SYSTEM_PROMPT_EN + (ragCtx ? `\n\n---\n\n${ragCtx}\n\n---\n\n${citationCue}` : "");
 
   const langInstruction =
-    locale === "en"
-      ? "You MUST respond entirely in English regardless of the language of retrieved sources. Translate Chinese source material to English. Keep standard numbers (e.g. ASTM D3039), proper nouns, and technical acronyms unchanged."
-      : "请用中文回答。";
+    "You MUST respond entirely in English regardless of the language of retrieved sources. Translate Chinese source material to English. Keep standard numbers (e.g. ASTM D3039), proper nouns, and technical acronyms unchanged.";
 
-  const prompt =
-    locale === "en"
-      ? `${langInstruction}\n\nUser question: ${question}\n\nProvide a professional, concise, well-cited answer (≈ 400-600 words).`
-      : `${langInstruction}\n\n用户问题：${question}\n\n请给出专业、简明、有引用的回答（约 400-600 字）。`;
+  const prompt = `${langInstruction}\n\nUser question: ${question}\n\nProvide a professional, concise, well-cited answer (about 400-600 words).`;
 
   const host = req.headers.get("x-forwarded-host") || req.headers.get("host");
   const toolsConfig = isWebSearchConfigured(host)
@@ -139,7 +127,7 @@ export async function POST(req: Request) {
         status: "published",
         title: question.slice(0, 299),
         content,
-        category: "AI问答",
+        category: "AI Q&A",
       })
       .returning({ id: posts.id });
     insertedId = rows[0]?.id ?? null;

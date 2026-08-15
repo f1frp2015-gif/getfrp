@@ -1,7 +1,5 @@
 // UL Product iQ 式分面筛选组:某个 facet 下的多选复选框 + 计数。受控组件,
 // selected / onToggle 由父级(客户端目录)管理。无 hook,跟随父级渲染环境。
-import { type Facet, FACET_META } from "@/lib/qualification/cert-taxonomy";
-
 export interface FacetOption {
   tagId: string;
   label: string;
@@ -9,14 +7,12 @@ export interface FacetOption {
 }
 
 export function FacetGroup({
-  facet,
-  locale,
+  label,
   options,
   selected,
   onToggle,
 }: {
-  facet: Facet;
-  locale: "zh" | "en";
+  label: string;
   options: FacetOption[];
   selected: string[];
   onToggle: (tagId: string) => void;
@@ -24,7 +20,7 @@ export function FacetGroup({
   if (!options.length) return null;
   return (
     <div className="space-y-1.5">
-      <div className="text-xs font-semibold">{FACET_META[facet].label[locale]}</div>
+      <div className="text-xs font-semibold">{label}</div>
       <div className="space-y-1">
         {options.map((o) => (
           <label

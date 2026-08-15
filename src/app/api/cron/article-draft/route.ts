@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { articles, authors } from "@/lib/db/schema";
 import { makeSlug } from "@/lib/slug";
+import { containsCjk } from "@/lib/english-only";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,12 +27,12 @@ async function houseAuthorId(): Promise<string | undefined> {
   const [existing] = await db
     .select({ id: authors.id })
     .from(authors)
-    .where(eq(authors.name, "复材站编辑部"))
+    .where(eq(authors.name, "GetFRP Editorial Team"))
     .limit(1);
   if (existing) return existing.id;
   const [created] = await db
     .insert(authors)
-    .values({ name: "复材站编辑部", title: "官方", bio: "复材站编辑部" })
+    .values({ name: "GetFRP Editorial Team", title: "Official", bio: "GetFRP editorial team" })
     .onConflictDoNothing()
     .returning({ id: authors.id });
   return created?.id;
@@ -66,6 +67,12 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
+  if (containsCjk(title) || containsCjk(body)) {
+    return NextResponse.json(
+      { error: "GetFRP accepts English-only editorial drafts" },
+      { status: 400 },
+    );
+  }
 
   const titleEn = b.titleEn ? String(b.titleEn).trim() : null;
   const bodyEn = b.bodyEn ? String(b.bodyEn).trim() : null;
@@ -82,8 +89,8 @@ export async function POST(req: Request) {
     : null;
   // Draft defaults: visible to domestic (zh) on publish; overseas only if an
   // English body was supplied. Reviewer can flip these in the 草稿箱.
-  const forZh = b.forZh === undefined ? true : !!b.forZh;
-  const forEn = b.forEn === undefined ? !!bodyEn : !!b.forEn;
+  const forZh = false;
+  const forEn = true;
 
   const slug = b.slug
     ? await uniqueSlug(String(b.slug), title)
@@ -110,7 +117,7 @@ export async function POST(req: Request) {
         hot: false,
         forZh,
         forEn,
-        publishedAt: null, // DRAFT — appears in 草稿箱, not public
+        publishedAt: null,
       })
       .returning({ id: articles.id, slug: articles.slug });
 

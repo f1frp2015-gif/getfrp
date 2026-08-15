@@ -114,7 +114,7 @@ export function AdminPricesManager({
             ...d,
             quotes: [
               ...d.quotes,
-              { name: "", category: "resin", price: 0, unit: "元/吨", change: 0, region: "华东" },
+              { name: "", category: "resin", price: 0, unit: "CNY/tonne", change: 0, region: "East China" },
             ],
           }
         : d,

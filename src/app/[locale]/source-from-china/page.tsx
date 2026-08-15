@@ -41,7 +41,7 @@ type VerifiedRow = {
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Source FRP from China — Products, Suppliers & Sourcing | getfrp",
+    title: { absolute: "Source FRP from China | Products & Factory Sourcing | GetFRP" },
     description:
       "Source FRP products from China with matched manufacturers, regional supply-cluster insights, factory verification and export support.",
     alternates: alternates("/source-from-china"),

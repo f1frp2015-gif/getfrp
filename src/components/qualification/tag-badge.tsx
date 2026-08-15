@@ -44,7 +44,7 @@ export function TagBadge({
           target="_blank"
           rel="noopener"
           className="underline underline-offset-2"
-          title={locale === "en" ? "Verify" : "查验"}
+          title="Verify"
         >
           ↗
         </a>

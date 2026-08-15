@@ -3,34 +3,25 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { getMessageText } from "@/lib/ai/utils";
 import { AiMessage } from "@/components/ai-message";
 import { AuthRequiredNotice } from "@/components/auth-required-notice";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const QUICK_QUESTIONS: Record<"zh" | "en", readonly string[]> = {
-  zh: [
-    "耐盐酸的树脂推荐哪种？",
-    "拉挤型材出口欧洲需要什么标准？",
-    "碳纤维和玻纤强度差多少？",
-    "真空导入的配方怎么配？",
-  ],
-  en: [
+const QUICK_QUESTIONS = [
     "Which resin resists hydrochloric acid best?",
     "What standards apply to pultruded profiles exported to Europe?",
     "How much stronger is carbon fiber than glass fiber?",
     "How should I formulate for vacuum infusion?",
-  ],
-};
+  ] as const;
 
 export function AiChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const localeRaw = useLocale();
-  const locale: "zh" | "en" = localeRaw === "en" ? "en" : "zh";
+  const locale = "en" as const;
   const t = useTranslations("AI");
   const ts = useTranslations("Site");
 
@@ -46,7 +37,7 @@ export function AiChatWidget() {
   const { messages, sendMessage, status, error } = useChat({ transport });
 
   const busy = status === "streaming" || status === "submitted";
-  const quickQuestions = QUICK_QUESTIONS[locale];
+  const quickQuestions = QUICK_QUESTIONS;
 
   useEffect(() => {
     if (scrollRef.current)
@@ -61,9 +52,7 @@ export function AiChatWidget() {
   }
 
   const welcome =
-    locale === "en"
-      ? "Hi! I'm the composites AI. Ask me about material data, formulas, processes, and standards."
-      : "你好！我是复材 AI，可以帮你查询材料数据、推荐配方、解答工艺问题、查找标准。";
+    "Hi! I'm the composites AI. Ask me about material data, formulas, processes, and standards.";
 
   return (
     <>

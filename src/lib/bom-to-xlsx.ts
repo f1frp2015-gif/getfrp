@@ -21,7 +21,7 @@ const XLSX_MIME =
 // Excel sheet names can't contain \ / ? * [ ] : and are capped at 31 chars.
 function safeSheetName(name: string | undefined): string {
   const cleaned = (name ?? "").replace(/[\\/?*[\]:]/g, " ").trim();
-  return cleaned.slice(0, 31) || "拆解清单";
+  return cleaned.slice(0, 31) || "Bill of Materials";
 }
 
 // CJK glyphs are ~1.7× the width of a Latin char in Excel's column-width units.

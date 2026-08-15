@@ -25,11 +25,11 @@ type Draft = {
 };
 
 const CATEGORIES = [
-  { id: "industry", name: "行业动态" },
-  { id: "policy", name: "政策法规" },
-  { id: "tech", name: "技术前沿" },
-  { id: "company", name: "企业新闻" },
-  { id: "expo", name: "展会活动" },
+  { id: "industry", name: "Industry" },
+  { id: "policy", name: "Policy & Regulation" },
+  { id: "tech", name: "Technology" },
+  { id: "company", name: "Company News" },
+  { id: "expo", name: "Trade Shows" },
 ];
 
 export function EditDraftClient({ article }: { article: Draft }) {
@@ -56,11 +56,11 @@ export function EditDraftClient({ article }: { article: Draft }) {
         body: JSON.stringify({ title, excerpt, body, category, readTime, forZh: false, forEn, hot }),
       });
       const j = await res.json();
-      if (!res.ok) throw new Error(j?.error ?? "保存失败");
-      setMsg({ kind: "ok", text: "已保存草稿" });
+      if (!res.ok) throw new Error(j?.error ?? "Save failed");
+      setMsg({ kind: "ok", text: "Draft saved" });
       router.refresh();
     } catch (e) {
-      setMsg({ kind: "err", text: e instanceof Error ? e.message : "保存失败" });
+      setMsg({ kind: "err", text: e instanceof Error ? e.message : "Save failed" });
     } finally {
       setBusy(null);
     }
@@ -78,31 +78,31 @@ export function EditDraftClient({ article }: { article: Draft }) {
         body: JSON.stringify({ unpublish }),
       });
       const j = await res.json();
-      if (!res.ok) throw new Error(j?.error ?? "操作失败");
+      if (!res.ok) throw new Error(j?.error ?? "Action failed");
       setPublished(!unpublish);
       setMsg({
         kind: "ok",
-        text: unpublish ? "已取消发布（回到草稿）" : "已发布，已对外可见",
+        text: unpublish ? "Unpublished and returned to drafts" : "Published and publicly visible",
       });
       router.refresh();
     } catch (e) {
-      setMsg({ kind: "err", text: e instanceof Error ? e.message : "操作失败" });
+      setMsg({ kind: "err", text: e instanceof Error ? e.message : "Action failed" });
     } finally {
       setBusy(null);
     }
   }
 
   async function remove() {
-    if (!confirm("确认删除这篇文章？不可恢复。")) return;
+    if (!confirm("Delete this article permanently? This cannot be undone.")) return;
     setBusy("delete");
     setMsg(null);
     try {
       const res = await fetch(`/api/admin/articles/${article.id}`, { method: "DELETE" });
       const j = await res.json();
-      if (!res.ok) throw new Error(j?.error ?? "删除失败");
+      if (!res.ok) throw new Error(j?.error ?? "Delete failed");
       router.push("/dashboard/admin/articles");
     } catch (e) {
-      setMsg({ kind: "err", text: e instanceof Error ? e.message : "删除失败" });
+      setMsg({ kind: "err", text: e instanceof Error ? e.message : "Delete failed" });
       setBusy(null);
     }
   }
@@ -115,10 +115,10 @@ export function EditDraftClient({ article }: { article: Draft }) {
             href="/dashboard/admin/articles"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            ← 草稿箱
+            ← Drafts
           </Link>
           <Badge variant={published ? "default" : "secondary"}>
-            {published ? "已发布" : "草稿"}
+            {published ? "Published" : "Draft"}
           </Badge>
           <span className="text-xs text-muted-foreground">Internal content record</span>
         </div>
@@ -140,13 +140,13 @@ export function EditDraftClient({ article }: { article: Draft }) {
         {/* Editor */}
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-muted-foreground">标题</label>
+            <label className="text-xs font-medium text-muted-foreground">Title</label>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} className="mt-1" />
           </div>
 
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className="text-xs font-medium text-muted-foreground">分类</label>
+              <label className="text-xs font-medium text-muted-foreground">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -158,18 +158,18 @@ export function EditDraftClient({ article }: { article: Draft }) {
               </select>
             </div>
             <div className="w-32">
-              <label className="text-xs font-medium text-muted-foreground">阅读时长</label>
-              <Input value={readTime} onChange={(e) => setReadTime(e.target.value)} placeholder="6分钟" className="mt-1" />
+              <label className="text-xs font-medium text-muted-foreground">Read time</label>
+              <Input value={readTime} onChange={(e) => setReadTime(e.target.value)} placeholder="6 min" className="mt-1" />
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-muted-foreground">摘要</label>
+            <label className="text-xs font-medium text-muted-foreground">Excerpt</label>
             <Textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} rows={3} className="mt-1" />
           </div>
 
           <div>
-            <label className="text-xs font-medium text-muted-foreground">正文（Markdown）</label>
+            <label className="text-xs font-medium text-muted-foreground">Body (Markdown)</label>
             <Textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
@@ -185,35 +185,35 @@ export function EditDraftClient({ article }: { article: Draft }) {
             </label>
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={hot} onChange={(e) => setHot(e.target.checked)} />
-              热门
+              Featured
             </label>
           </div>
 
           <div className="flex flex-wrap gap-2 border-t pt-4">
             <Button onClick={save} disabled={busy !== null}>
-              {busy === "save" ? "保存中…" : "保存草稿"}
+              {busy === "save" ? "Saving…" : "Save draft"}
             </Button>
             {!published ? (
               <Button onClick={() => togglePublish(false)} disabled={busy !== null} variant="default">
-                {busy === "publish" ? "发布中…" : "发布"}
+                {busy === "publish" ? "Publishing…" : "Publish"}
               </Button>
             ) : (
               <Button onClick={() => togglePublish(true)} disabled={busy !== null} variant="outline">
-                {busy === "publish" ? "处理中…" : "取消发布"}
+                {busy === "publish" ? "Working…" : "Unpublish"}
               </Button>
             )}
             <Button onClick={remove} disabled={busy !== null} variant="destructive" className="ml-auto">
-              删除
+              Delete
             </Button>
           </div>
         </div>
 
         {/* Live preview */}
         <div className="space-y-2">
-          <div className="text-xs font-medium text-muted-foreground">预览</div>
+          <div className="text-xs font-medium text-muted-foreground">Preview</div>
           <Card>
             <CardContent className="py-5">
-              <h1 className="text-xl font-bold leading-snug">{title || "（无标题）"}</h1>
+              <h1 className="text-xl font-bold leading-snug">{title || "Untitled"}</h1>
               {excerpt && <p className="mt-2 text-sm text-muted-foreground">{excerpt}</p>}
               <div className="mt-4">
                 <ArticleBody content={body} />

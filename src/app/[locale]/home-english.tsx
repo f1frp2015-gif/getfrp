@@ -26,9 +26,9 @@ import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 import { HomeMarketplaceSearch } from "./home-marketplace-search";
 
 export const HOME_TITLE =
-  "FRP Products & Suppliers China — Factory-Direct Marketplace";
+  "China FRP Marketplace & Sourcing Platform | GetFRP";
 export const HOME_DESCRIPTION =
-  "Search China's complete FRP supply chain — glass fiber, carbon fiber, resins, grating, profiles, pipe, molded parts and verified manufacturers.";
+  "Source composite materials and products through one China FRP marketplace for specifications, factory matching, evidence review and export-ready RFQs.";
 
 // Supply-chain capacity basis checked 2026-08-04: China Jushi (2.0M t/yr),
 // Taishan Fiberglass (800K+ t/yr) and CPIC (1.2M+ t/yr) official profiles;
@@ -380,10 +380,10 @@ export async function HomePageEnglish() {
               China&apos;s specialist FRP marketplace
             </div>
             <h1 className="mt-4 text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] sm:mt-6 sm:text-6xl lg:text-[64px]">
-              China FRP Suppliers &amp; Manufacturers
+              China FRP Sourcing Platform &amp; Marketplace
             </h1>
             <p className="mx-auto mt-4 max-w-4xl text-[12px] leading-5 text-[#d9dfe8] sm:whitespace-nowrap sm:text-sm sm:leading-6">
-              Search China FRP suppliers for glass fiber, carbon fiber, resin systems and export-ready FRP products.
+              Define the product, compare factory evidence and manage an export-ready RFQ across China&apos;s composite supply chain.
             </p>
           </div>
 

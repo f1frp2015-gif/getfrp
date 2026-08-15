@@ -120,19 +120,17 @@ async function articleExistsBySlug(slug: string): Promise<boolean> {
 async function rewriteWithGemini(
   item: RssItem,
   google: ReturnType<typeof createGoogleGenerativeAI>
-): Promise<{ zh: string; en: string } | null> {
-  const prompt = `You are a composites industry editor. Rewrite the following article snippet into two versions, each ~800 characters:
-1. Chinese version (中文) — write for Chinese FRP engineers, use industry terms.
-2. English version — professional but accessible.
+): Promise<{ title: string; body: string } | null> {
+  const prompt = `You are a composites industry editor. Rewrite the following article snippet in natural, professional English for international FRP engineers and buyers. Avoid stock AI phrases and keyword stuffing. Produce a concise English headline and an article of about 800 words.
 
 Article title: ${item.title}
 Original content: ${item.description.slice(0, 1500)}
 
 Output EXACTLY in this format (no extra text):
-[ZH]
-<Chinese rewrite here>
-[EN]
-<English rewrite here>`;
+[TITLE]
+<English headline>
+[BODY]
+<English article>`;
 
   try {
     const { text } = await generateText({
@@ -140,12 +138,12 @@ Output EXACTLY in this format (no extra text):
       prompt,
       maxOutputTokens: 700,
     });
-    const zhM = text.match(/\[ZH\]\s*([\s\S]*?)\[EN\]/);
-    const enM = text.match(/\[EN\]\s*([\s\S]*)/);
-    const zh = zhM?.[1]?.trim() ?? "";
-    const en = enM?.[1]?.trim() ?? "";
-    if (!zh || !en) return null;
-    return { zh, en };
+    const titleM = text.match(/\[TITLE\]\s*([\s\S]*?)\[BODY\]/);
+    const bodyM = text.match(/\[BODY\]\s*([\s\S]*)/);
+    const title = titleM?.[1]?.trim() ?? "";
+    const body = bodyM?.[1]?.trim() ?? "";
+    if (!title || !body) return null;
+    return { title, body };
   } catch {
     return null;
   }
@@ -195,15 +193,15 @@ export async function GET(req: Request) {
         continue;
       }
 
-      const body = rewritten.en;
-      const excerpt = rewritten.en.slice(0, 200);
+      const body = rewritten.body;
+      const excerpt = rewritten.body.slice(0, 200);
 
       try {
         const rows = await db
           .insert(articles)
           .values({
             slug,
-            title: item.title.slice(0, 500),
+            title: rewritten.title.slice(0, 500),
             excerpt,
             body,
             category: "industry",

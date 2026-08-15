@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { containsCjk } from "@/lib/english-only";
 
 const trimmedList = z.array(z.string().trim().min(1).max(160)).max(40);
 
@@ -25,6 +26,31 @@ export const SupplierProductPageInput = z
   })
   .strict()
   .superRefine((value, ctx) => {
+    const publicText: Array<[Array<string | number>, string]> = [
+      [["name"], value.name],
+      [["description"], value.description],
+      [["material"], value.material],
+      [["moqUnit"], value.moqUnit],
+      [["priceRange"], value.priceRange],
+      ...value.manufacturingProcesses.map((item, index) => [["manufacturingProcesses", index], item] as [Array<string | number>, string]),
+      ...value.applications.map((item, index) => [["applications", index], item] as [Array<string | number>, string]),
+      ...value.standards.map((item, index) => [["standards", index], item] as [Array<string | number>, string]),
+      ...value.certifications.map((item, index) => [["certifications", index], item] as [Array<string | number>, string]),
+      ...value.exportMarkets.map((item, index) => [["exportMarkets", index], item] as [Array<string | number>, string]),
+      ...Object.entries(value.parameters).flatMap(([key, item]) => [
+        [["parameters", key], key] as [Array<string | number>, string],
+        [["parameters", key], item] as [Array<string | number>, string],
+      ]),
+    ];
+    for (const [path, text] of publicText) {
+      if (containsCjk(text)) {
+        ctx.addIssue({
+          code: "custom",
+          path,
+          message: "GetFRP publishes supplier content in English only. Translate this field before submitting.",
+        });
+      }
+    }
     for (const [index, image] of value.images.entries()) {
       if (!image.startsWith("/supplier-product-assets/") && !image.startsWith("/images/product-types/")) {
         ctx.addIssue({

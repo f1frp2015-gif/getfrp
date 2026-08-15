@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
   if (!toUserId || !subject || !message) {
     return NextResponse.json(
-      { error: "toUserId / subject / message 必填" },
+      { error: "toUserId, subject, and message are required" },
       { status: 400 }
     );
   }

@@ -33,7 +33,7 @@ export async function PATCH(
     .set(set)
     .where(eq(articles.id, id))
     .returning({ id: articles.id });
-  if (!row) return NextResponse.json({ error: "文章不存在" }, { status: 404 });
+  if (!row) return NextResponse.json({ error: "Article not found" }, { status: 404 });
   return NextResponse.json({ ok: true });
 }
 
