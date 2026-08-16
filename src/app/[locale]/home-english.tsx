@@ -18,7 +18,6 @@ import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
-import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 
 import { HomeMarketplaceSearch } from "./home-marketplace-search";
 
@@ -182,10 +181,9 @@ function formatPlantCount(value: number | null): string {
 }
 
 export async function HomePageEnglish() {
-  const [verifiedPlantCount, publicSuppliers, approvedProducts] = await Promise.all([
+  const [verifiedPlantCount, publicSuppliers] = await Promise.all([
     loadVerifiedPlantCount(),
     getPublicSupplierDirectory("en"),
-    loadApprovedSupplierProducts(),
   ]);
   const featuredSuppliers = publicSuppliers
     .filter((supplier) => supplier.verified && supplier.profilePublished)
@@ -393,14 +391,10 @@ export async function HomePageEnglish() {
       </section>
 
       <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
-        <div className="mx-auto max-w-7xl space-y-12 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <div>
             <SectionIntro eyebrow="Reviewed supplier profiles" title="Certified and verified suppliers." body="Public company profiles with reviewed identity and certification signals. Product-level compliance remains a separate order check." />
             <SupplierList suppliers={featuredSuppliers} className="mt-7" />
-          </div>
-          <div>
-            <SectionIntro eyebrow="Approved supplier products" title="New products from real factories." body="Supplier-owned product pages enter this feed only after review; pending and rejected submissions remain private." />
-            {approvedProducts.length ? <div className="mt-7 space-y-3">{approvedProducts.slice(0, 4).map((product) => <Link key={product.id} href={`/suppliers/${product.supplier.slug}/${product.slug}` as never} className="flex items-center justify-between gap-4 rounded-xl border border-[#d9dfe8] bg-white p-5"><div><h3 className="font-semibold text-[#0a1f44]">{product.name}</h3><p className="mt-1 text-xs text-[#5d6672]">{product.supplier.name} · {product.category.name}</p></div><ArrowRight size={15} className="shrink-0 text-[#123f8c]" /></Link>)}</div> : <div className="mt-7 rounded-xl border border-dashed border-[#d9dfe8] bg-white p-7 text-sm leading-6 text-[#5d6672]">No approved supplier product pages are available yet. This feed remains empty instead of using demo or synthetic inventory.</div>}
           </div>
         </div>
       </section>
