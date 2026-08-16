@@ -137,10 +137,23 @@ export default async function SuppliersPage({
               Find manufacturers by product, material, process, company or end-use market—then compare published capability and verification records.
             </p>
 
-            <div className="mt-9 overflow-hidden rounded-xl border border-white/15 bg-[#0b2035] text-left shadow-2xl shadow-black/20">
+            <div className="relative mt-9 overflow-hidden rounded-xl border border-white/20 bg-[#07111c] text-left shadow-2xl shadow-black/30">
+              <div
+                aria-hidden="true"
+                className="absolute inset-[-4px] scale-[1.02] bg-cover bg-[position:center_52%] opacity-95 blur-[1px]"
+                style={{
+                  backgroundImage:
+                    "url('/images/carbon-fiber-search-background.webp')",
+                  filter: "brightness(1.35) contrast(1.2)",
+                }}
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[linear-gradient(110deg,rgba(4,15,26,0.12)_0%,rgba(7,24,39,0.02)_52%,rgba(5,19,32,0.1)_100%)]"
+              />
               <nav
                 aria-label="Supplier directory views"
-                className="grid grid-cols-2 border-b border-white/15 sm:grid-cols-4"
+                className="relative grid grid-cols-2 border-b border-white/25 bg-[#071827]/45 backdrop-blur-[2px] sm:grid-cols-4"
               >
                 <Link
                   href={supplierSearchBasePath as never}
@@ -171,7 +184,7 @@ export default async function SuppliersPage({
               <form
                 action={supplierSearchAction}
                 method="get"
-                className="flex flex-col gap-2 p-4 sm:flex-row sm:p-5"
+                className="relative flex flex-col gap-2 p-4 backdrop-blur-[1px] sm:flex-row sm:p-5"
               >
                 <label htmlFor="supplier-directory-search" className="sr-only">
                   Search suppliers by product, capability, service or company
