@@ -105,7 +105,7 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ local
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
           <nav className="text-xs text-[#d9dfe8]" aria-label="Breadcrumb">
             <Link href="/">Home</Link>

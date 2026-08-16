@@ -83,7 +83,7 @@ export default async function EngineeringQaPage({
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#7be4e1]">
             Buyer-side technical control in China
@@ -130,7 +130,7 @@ export default async function EngineeringQaPage({
         </div>
       </section>
 
-      <section className="border-y border-border/80 bg-[#f4f6f9]">
+      <section className="fiber-surface-light border-y border-border/80">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2">
           <div>
             <h2 className="text-2xl font-semibold">Typical evidence pack</h2>

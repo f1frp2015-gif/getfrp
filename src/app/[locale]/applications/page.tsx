@@ -68,11 +68,7 @@ export default async function ApplicationsPage({
         ]}
       />
 
-      <section className="relative overflow-hidden border-b border-white/10 bg-[#071a38] text-white">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(123,228,225,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(123,228,225,0.16)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_right,black,transparent_75%)]"
-        />
+      <section className="fiber-surface-dark border-b border-white/10 text-white">
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end lg:py-24">
           <div className="max-w-4xl">
             <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7be4e1]">
@@ -119,7 +115,7 @@ export default async function ApplicationsPage({
         </div>
       </section>
 
-      <section className="bg-[#f4f6f9]">
+      <section className="fiber-surface-light">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
           <div className="flex flex-col justify-between gap-5 border-b border-[#cbd3de] pb-7 md:flex-row md:items-end">
             <div>
@@ -287,7 +283,7 @@ export default async function ApplicationsPage({
 
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-          <div className="grid overflow-hidden rounded-xl border border-[#d9dfe8] bg-[#0a1f44] text-white lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="fiber-surface-dark grid rounded-xl border border-[#d9dfe8] text-white lg:grid-cols-[1fr_auto] lg:items-center">
             <div className="p-7 sm:p-9">
               <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7be4e1]">
                 Application engineering
