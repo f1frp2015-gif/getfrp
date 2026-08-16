@@ -124,8 +124,21 @@ export default async function SuppliersPage({
     <main className="bg-background">
       <JsonLd data={catalogDirectoryJsonLd} />
 
-      <section className="border-b border-white/10 bg-[#102840] text-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
+      <section className="relative overflow-hidden border-b border-white/10 bg-[#081725] text-white">
+        <div
+          aria-hidden="true"
+          className="absolute inset-[-8px] scale-[1.02] bg-cover bg-[position:center_52%] opacity-95 blur-[1.5px]"
+          style={{
+            backgroundImage:
+              "url('/images/carbon-fiber-search-background.webp')",
+            filter: "brightness(0.72) contrast(1.2)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(12,38,62,0.34)_0%,rgba(5,18,30,0.68)_78%),linear-gradient(180deg,rgba(5,17,29,0.28)_0%,rgba(5,17,29,0.62)_100%)]"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
           <div className="mx-auto max-w-5xl text-center">
             <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7be4e1]">
               China composites supplier directory
@@ -137,23 +150,10 @@ export default async function SuppliersPage({
               Find manufacturers by product, material, process, company or end-use market—then compare published capability and verification records.
             </p>
 
-            <div className="relative mt-9 overflow-hidden rounded-xl border border-white/20 bg-[#07111c] text-left shadow-2xl shadow-black/30">
-              <div
-                aria-hidden="true"
-                className="absolute inset-[-4px] scale-[1.02] bg-cover bg-[position:center_52%] opacity-95 blur-[1px]"
-                style={{
-                  backgroundImage:
-                    "url('/images/carbon-fiber-search-background.webp')",
-                  filter: "brightness(1.35) contrast(1.2)",
-                }}
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[linear-gradient(110deg,rgba(4,15,26,0.12)_0%,rgba(7,24,39,0.02)_52%,rgba(5,19,32,0.1)_100%)]"
-              />
+            <div className="mt-9 overflow-hidden rounded-xl border border-white/20 bg-[#07111c]/75 text-left shadow-2xl shadow-black/35 backdrop-blur-md">
               <nav
                 aria-label="Supplier directory views"
-                className="relative grid grid-cols-2 border-b border-white/25 bg-[#071827]/45 backdrop-blur-[2px] sm:grid-cols-4"
+                className="grid grid-cols-2 border-b border-white/20 bg-black/15 sm:grid-cols-4"
               >
                 <Link
                   href={supplierSearchBasePath as never}
@@ -184,7 +184,7 @@ export default async function SuppliersPage({
               <form
                 action={supplierSearchAction}
                 method="get"
-                className="relative flex flex-col gap-2 p-4 backdrop-blur-[1px] sm:flex-row sm:p-5"
+                className="flex flex-col gap-2 bg-black/10 p-4 sm:flex-row sm:p-5"
               >
                 <label htmlFor="supplier-directory-search" className="sr-only">
                   Search suppliers by product, capability, service or company
@@ -218,7 +218,7 @@ export default async function SuppliersPage({
                   <Link
                     key={item.label}
                     href={item.href as never}
-                    className="rounded-full bg-[#0b2035] px-4 py-2 text-xs text-slate-200 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                    className="rounded-full bg-[#07111c]/70 px-4 py-2 text-xs text-slate-200 ring-1 ring-white/15 backdrop-blur-sm transition-colors hover:bg-white/10 hover:text-white"
                   >
                     {item.label}
                   </Link>
