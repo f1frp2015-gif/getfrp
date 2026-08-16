@@ -169,7 +169,7 @@ export default async function SourceFromChinaPage({
       <PlatformHero
         eyebrow="FOR OVERSEAS BUYERS"
         title="Source FRP from China — products, clusters, one accountable desk"
-        description="The whole China FRP supply base, audited and mapped. See what you can source, where each product category is concentrated, and the step-by-step path — then hand the factory-side work to one bilingual desk that sources as your principal."
+        description="The whole China FRP supply base, audited and mapped. See what you can source, where each product category is concentrated, and the step-by-step path — then appoint one bilingual desk for the agreed China-side work under a separate buyer service engagement."
       />
 
       {/* ═══ 01 — Verified suppliers by region ═══ */}
@@ -274,10 +274,96 @@ export default async function SourceFromChinaPage({
         </PlatformCardGrid>
       </section>
 
-      {/* ═══ 03 — Sourcing topic deep dives ═══ */}
+      {/* ═══ 03 — Buyer-side on-the-ground services ═══ */}
+      <section id="offline-services" className="mt-20 scroll-mt-20">
+        <PlatformSectionHeading
+          eyebrow="MODULE 03 · ON-THE-GROUND PROCUREMENT SUPPORT"
+          title="Delegate the China-side work to GetFRP"
+        />
+        <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+          Overseas buyers can appoint GetFRP for a defined part of the sourcing
+          process. Each offline engagement is scoped and contracted separately
+          with the buyer before work begins, with clear deliverables, timing and
+          responsibility boundaries.
+        </p>
+
+        <PlatformCardGrid columns={3}>
+          <PlatformCard Icon={Search} monoLabel="SOURCE" title="Supplier sourcing & verification">
+            <p>
+              Identify and shortlist suitable manufacturers, then cross-check
+              legal identity, production location, process fit and relevant
+              supporting documents.
+            </p>
+          </PlatformCard>
+
+          <PlatformCard Icon={FileSearch} monoLabel="ASSESS" title="Factory visits & capability assessment">
+            <p>
+              Coordinate and attend factory visits, review equipment, capacity,
+              process and quality controls, and return an evidence-linked report
+              with open risks.
+            </p>
+          </PlatformCard>
+
+          <PlatformCard Icon={FileText} monoLabel="ALIGN" title="Technical translation & negotiation">
+            <p>
+              Translate RFQs, drawings, standards and meeting decisions; keep
+              technical deviations, MOQ, lead time, payment and commercial terms
+              visible to both sides.
+            </p>
+          </PlatformCard>
+
+          <PlatformCard Icon={Receipt} monoLabel="FOLLOW" title="Samples & production follow-up">
+            <p>
+              Coordinate samples and first articles, follow the production plan,
+              document changes and provide progress updates before issues reach
+              the shipment stage.
+            </p>
+          </PlatformCard>
+
+          <PlatformCard Icon={ClipboardCheck} monoLabel="CONTROL" title="Inspection & corrective action">
+            <p>
+              Build a project-specific inspection checklist, coordinate in-process
+              or pre-shipment checks, and track non-conformities and corrective
+              actions to an agreed release decision.
+            </p>
+          </PlatformCard>
+
+          <PlatformCard Icon={Truck} monoLabel="DELIVER" title="Logistics & export coordination">
+            <p>
+              Coordinate packaging, freight quotations, Incoterms, export
+              documents and the shipment handoff with the buyer&apos;s approved
+              forwarder and other third-party providers.
+            </p>
+          </PlatformCard>
+        </PlatformCardGrid>
+
+        <div className="mt-6 flex flex-col gap-5 border border-border/70 bg-foreground p-6 text-background sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div className="max-w-3xl">
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-background/70">
+              SCOPE &amp; PRICING
+            </div>
+            <h3 className="mt-2 text-xl font-semibold tracking-tight">
+              Request a defined China-side work package
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-background/80">
+              Pricing depends on the product, supplier status, factory location,
+              onsite work, documentation and delivery schedule. Contact us for a
+              written service scope and quotation.
+            </p>
+          </div>
+          <a
+            href="mailto:inquiry@getfrp.com?subject=GetFRP%20China%20Procurement%20Support"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-md bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-background/90"
+          >
+            inquiry@getfrp.com
+          </a>
+        </div>
+      </section>
+
+      {/* ═══ 04 — Sourcing topic deep dives ═══ */}
       <section id="topics" className="mt-20 scroll-mt-20">
         <PlatformSectionHeading
-          eyebrow="MODULE 03 · DEEP DIVES"
+          eyebrow="MODULE 04 · DEEP DIVES"
           title="Topic-specific sourcing guides"
         />
         <p className="mb-8 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
