@@ -17,7 +17,7 @@ const COPY = {
   h1Bottom: "from China, verified.",
   sub: "Product specs · manufacturer profiles · standards · one English RFQ",
   domain: "getfrp.com",
-  brand: "getfrp",
+  brand: "GetFRP",
 } as const;
 
 export default function OpengraphImage() {
