@@ -44,6 +44,7 @@ export type PublicSupplierProduct = {
     verified: boolean;
     certifications: string[];
     logo: string | null;
+    website: string | null;
   };
 };
 
@@ -100,6 +101,7 @@ function rowToPublic(row: {
       verified: Boolean(supplier.verified),
       certifications: englishOnlyList(supplier.certificationsEn),
       logo: supplier.logo ?? null,
+      website: supplier.website ?? null,
     },
   };
 }

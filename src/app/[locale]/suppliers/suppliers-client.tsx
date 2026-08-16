@@ -5,17 +5,18 @@ import { useTranslations } from "next-intl";
 import {
   ArrowLeft,
   ArrowRight,
-  Building2,
-  Check,
   ExternalLink,
   GitCompareArrows,
   SlidersHorizontal,
   X,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { SaveButton } from "@/components/save-button";
+import {
+  SupplierLogo,
+  SupplierResultRow,
+} from "@/components/supplier-result-row";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -82,76 +83,6 @@ function paginationItems(current: number, total: number): PaginationItem[] {
     "end-ellipsis",
     total,
   ];
-}
-
-function companyInitials(name: string): string {
-  const clean = name.trim();
-  if (!clean) return "FRP";
-  if (/[\u3400-\u9fff]/.test(clean)) return clean.slice(0, 2);
-  return clean
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-}
-
-function SupplierLogo({
-  src,
-  name,
-  compact = false,
-}: {
-  src: string | null;
-  name: string;
-  compact?: boolean;
-}) {
-  const [failed, setFailed] = useState(false);
-  const sizeClass = compact ? "h-12 w-16" : "h-20 w-20 lg:h-24 lg:w-28";
-
-  if (!src || failed) {
-    return (
-      <div
-        role="img"
-        aria-label={`${name} logo`}
-        className={cn(
-          "flex shrink-0 items-center justify-center rounded-lg border border-border/70 bg-muted font-semibold tracking-tight text-foreground",
-          sizeClass,
-          compact ? "text-sm" : "text-lg",
-        )}
-      >
-        {companyInitials(name)}
-      </div>
-    );
-  }
-
-  return (
-    // Supplier logos are remote, company-managed assets with unrestricted hosts.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={`${name} logo`}
-      loading="lazy"
-      decoding="async"
-      onError={() => setFailed(true)}
-      className={cn(
-        "shrink-0 rounded-lg border border-border/70 bg-white object-contain p-2",
-        sizeClass,
-      )}
-    />
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="min-w-0 border-l border-border/70 pl-2.5 first:border-l-0 first:pl-0 sm:first:border-l sm:first:pl-2.5">
-      <div className="truncate text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
-        {label}
-      </div>
-      <div className="mt-0.5 truncate text-xs font-semibold" title={value}>
-        {value}
-      </div>
-    </div>
-  );
 }
 
 function websiteLabel(website: string): string {
@@ -923,197 +854,22 @@ export function SuppliersClient({
               const selected = selectedIds.includes(supplier.id);
               const productTags = getProductTags(supplier);
               const matchReasons = getMatchReasons(supplier);
-              const showVerificationBadge =
-                supplier.profilePublished && supplier.verified;
               const selectionDisabled =
                 !selected && selectedIds.length >= COMPARE_MAX;
 
               return (
-                <Card
+                <SupplierResultRow
                   key={supplier.id}
-                  id={supplier.id}
-                  data-supplier-card=""
-                  className={cn(
-                    "scroll-mt-20 py-0 [content-visibility:auto] [contain-intrinsic-size:288px] transition-colors hover:border-primary/50 lg:min-h-[18rem]",
-                    selected && "border-primary ring-1 ring-primary/20",
-                  )}
-                >
-                  <CardContent className="grid h-full min-h-0 grid-cols-[5rem_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto] gap-4 p-4 lg:grid-cols-[7rem_minmax(0,1fr)_10.5rem] lg:grid-rows-1 lg:gap-5 lg:p-5">
-                    <SupplierLogo src={supplier.logo} name={supplier.name} />
-
-                    <div className="min-w-0 overflow-hidden">
-                      <div className="flex min-h-11 items-start gap-2">
-                        <div className="min-w-0 flex-1">
-                          <Link
-                            href={`/suppliers/${supplier.slug}` as never}
-                            className="group inline-flex max-w-full items-start gap-1.5 font-semibold leading-5 hover:text-primary"
-                          >
-                            <span className="line-clamp-2">{supplier.name}</span>
-                            <ArrowRight
-                              size={13}
-                              className="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5"
-                            />
-                          </Link>
-                          <div className="mt-1 truncate text-xs text-muted-foreground">
-                            {supplier.location || t("notDisclosed")}
-                          </div>
-                        </div>
-                        <div className="flex shrink-0 flex-col items-end gap-1">
-                          {supplier.sponsored && showVerificationBadge && (
-                            <Badge className="border border-amber-300 bg-amber-50 text-amber-900 shadow-none hover:bg-amber-50">
-                              {t("sponsoredVerified")}
-                            </Badge>
-                          )}
-                          {showVerificationBadge && !supplier.sponsored && (
-                            <Badge variant="signal">{t("verified")}</Badge>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="mt-3 grid grid-cols-2 gap-y-3 sm:grid-cols-4 sm:gap-y-0">
-                        <Metric
-                          label="Process"
-                          value={supplier.processList[0] || t("notDisclosed")}
-                        />
-                        <Metric
-                          label="Standard"
-                          value={supplier.standardsSupported[0] || supplier.certifications[0] || t("notDisclosed")}
-                        />
-                        <Metric
-                          label="MOQ"
-                          value={supplier.moqKg !== null ? `${supplier.moqKg.toLocaleString()} kg` : t("notDisclosed")}
-                        />
-                        <Metric
-                          label="Lead time"
-                          value={supplier.leadTimeDays !== null ? `${supplier.leadTimeDays} days` : t("notDisclosed")}
-                        />
-                      </div>
-
-                      <p
-                        title={supplier.description || t("notDisclosed")}
-                        className="mt-3 min-h-10 line-clamp-2 text-sm leading-5 text-muted-foreground"
-                      >
-                        {supplier.description || t("notDisclosed")}
-                      </p>
-
-                      <div className="mt-3">
-                        <div className="mb-1.5 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
-                          {t("productCategories")}
-                        </div>
-                        <div className="grid grid-cols-3 gap-1">
-                          {productTags.map((tag, index) => (
-                            <Badge
-                              key={`${tag}-${index}`}
-                              variant="secondary"
-                              className="w-full min-w-0 justify-start"
-                              title={tag}
-                            >
-                              <span className="truncate">{tag}</span>
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-
-                      {matchReasons.length > 0 && (
-                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                          <span className="text-[10px] uppercase tracking-[0.08em] text-muted-foreground">Why matched</span>
-                          {matchReasons.map((reason) => (
-                            <Badge key={reason} variant="outline" className="border-[#123f8c]/30 bg-[#123f8c]/5 text-[10px] text-[#0a1f44]">
-                              {reason}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="mt-3 flex min-w-0 items-center gap-2 text-xs">
-                        <span className="shrink-0 text-muted-foreground">
-                          {t("website")}
-                        </span>
-                        {supplier.website ? (
-                          <a
-                            href={supplier.website}
-                            target="_blank"
-                            rel="noopener noreferrer nofollow"
-                            className="flex min-w-0 items-center gap-1 font-medium text-primary hover:underline"
-                          >
-                            <span className="truncate">
-                              {websiteLabel(supplier.website)}
-                            </span>
-                            <ExternalLink size={12} className="shrink-0" />
-                          </a>
-                        ) : (
-                          <span className="truncate text-muted-foreground">
-                            {t("notDisclosed")}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="col-span-2 grid grid-cols-2 gap-2 border-t border-border/70 pt-3 lg:col-span-1 lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:border-l lg:border-t-0 lg:pl-4 lg:pt-0">
-                      <SaveButton
-                        key={`${supplier.id}-${savedSupplierIds.has(supplier.id)}`}
-                        sourceType="supplier"
-                        sourceId={supplier.id}
-                        title={supplier.name}
-                        url={`/suppliers/${supplier.slug}`}
-                        initialSaved={savedSupplierIds.has(supplier.id)}
-                        signedIn={signedIn}
-                        className="[&_button]:w-full"
-                      />
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant={selected ? "default" : "outline"}
-                        disabled={selectionDisabled}
-                        aria-pressed={selected}
-                        aria-label={
-                          selected
-                            ? t("removeCompany", { name: supplier.name })
-                            : t("selectCompany", { name: supplier.name })
-                        }
-                        title={selectionDisabled ? t("compareLimit") : undefined}
-                        onClick={() => toggleSelect(supplier.id)}
-                        className="w-full"
-                      >
-                        {selected ? <Check /> : <GitCompareArrows />}
-                        {selected ? t("selected") : t("select")}
-                      </Button>
-                      <Link
-                        href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never}
-                        className={buttonVariants({
-                          size: "sm",
-                          className: "w-full",
-                        })}
-                      >
-                        Add to RFQ
-                        <ArrowRight />
-                      </Link>
-                      <Link
-                        href={`/suppliers/${supplier.slug}` as never}
-                        className={buttonVariants({
-                          variant: "ghost",
-                          size: "sm",
-                          className: "w-full",
-                        })}
-                      >
-                        {t("viewProfile")}
-                        <ArrowRight />
-                      </Link>
-                      <Link
-                        href={`/suppliers/claim?supplier=${encodeURIComponent(supplier.slug)}` as never}
-                        prefetch={false}
-                        className={buttonVariants({
-                          variant: "secondary",
-                          size: "sm",
-                          className: "w-full",
-                        })}
-                      >
-                        <Building2 />
-                        {t("claimYourCompany")}
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
+                  supplier={supplier}
+                  tags={productTags}
+                  signals={matchReasons.map((label) => ({ label }))}
+                  selected={selected}
+                  selectionDisabled={selectionDisabled}
+                  onToggleSelect={() => toggleSelect(supplier.id)}
+                  initialSaved={savedSupplierIds.has(supplier.id)}
+                  signedIn={signedIn}
+                  showSave
+                />
               );
                 })}
               </div>

@@ -4,15 +4,17 @@ import { ArrowRight, Building2, CheckCircle2, Search, ShieldCheck } from "lucide
 import { setRequestLocale } from "next-intl/server";
 
 import { QualificationsUploader } from "@/app/[locale]/dashboard/qualifications/qualifications-uploader";
-import { Badge } from "@/components/ui/badge";
+import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/current-user";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { db } from "@/lib/db";
 import { supplierClaims, supplierListings } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 
 import { ClaimCompanyForm } from "./claim-company-form";
 
@@ -69,14 +71,7 @@ export default async function ClaimSupplierPage({
 
   const searchResults = query
     ? await db
-        .select({
-          id: supplierListings.id,
-          slug: supplierListings.slug,
-          name: supplierListings.nameEn,
-          location: supplierListings.locationEn,
-          category: supplierListings.category,
-          verified: supplierListings.verified,
-        })
+        .select()
         .from(supplierListings)
         .where(
           and(
@@ -91,6 +86,7 @@ export default async function ClaimSupplierPage({
         .orderBy(desc(supplierListings.verified), supplierListings.nameEn)
         .limit(12)
     : [];
+  const displaySearchResults = searchResults.map(enrichSupplierWithCuratedProfile);
 
   const [latestClaim] = me && selectedSupplier
     ? await db
@@ -198,40 +194,40 @@ export default async function ClaimSupplierPage({
 
           <div className="min-w-0 space-y-6">
             {!selectedSupplier && query && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    {searchResults.length} possible matches
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="divide-y divide-border/70 p-0">
-                  {searchResults.map((supplier) => (
-                    <Link
-                      key={supplier.id}
-                      href={`/suppliers/claim?supplier=${encodeURIComponent(supplier.slug ?? supplier.id)}` as never}
-                      className="grid min-h-24 gap-3 px-6 py-5 transition-colors hover:bg-muted/35 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
-                    >
-                      <div className="min-w-0">
-                        <div className="font-semibold">{supplier.name}</div>
-                        <div className="mt-1 text-xs text-muted-foreground">
-                          {supplier.location || "China"}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 sm:justify-end">
-                        {supplier.verified && <Badge variant="signal">Identity checked</Badge>}
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-                          Select company <ArrowRight size={13} />
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                  {searchResults.length === 0 && (
-                    <div className="p-8 text-center text-sm text-muted-foreground">
-                      No unclaimed company matched “{query}”. Try a shorter legal or brand name.
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+              <div>
+                <h2 className="mb-4 text-lg font-semibold">
+                  {displaySearchResults.length} possible matches
+                </h2>
+                {displaySearchResults.length > 0 ? (
+                  <SupplierList
+                    suppliers={displaySearchResults.map((supplier) => ({
+                      id: supplier.id,
+                      slug: supplier.slug ?? supplier.id,
+                      name: supplier.nameEn ?? supplier.name,
+                      location: supplier.locationEn ?? supplier.location ?? "China",
+                      category: supplier.category,
+                      description: supplier.descriptionEn ?? supplier.description,
+                      products: supplier.productsEn ?? supplier.products ?? [],
+                      processList: supplier.processListEn ?? supplier.processList ?? [],
+                      certifications:
+                        supplier.certificationsEn ?? supplier.certifications ?? [],
+                      standardsSupported: supplier.standardsSupported ?? [],
+                      verified: Boolean(supplier.verified),
+                      profilePublished: isSupplierProfileIndexable(supplier),
+                      website: supplier.website,
+                      logo: supplier.logo,
+                      moqKg: supplier.moqKg,
+                      leadTimeDays: supplier.leadTimeDays,
+                      actionHref: `/suppliers/claim?supplier=${encodeURIComponent(supplier.slug ?? supplier.id)}`,
+                      actionLabel: "Select company",
+                    }))}
+                  />
+                ) : (
+                  <div className="rounded-xl border p-8 text-center text-sm text-muted-foreground">
+                    No unclaimed company matched “{query}”. Try a shorter legal or brand name.
+                  </div>
+                )}
+              </div>
             )}
 
             {!selectedSupplier && !query && (
