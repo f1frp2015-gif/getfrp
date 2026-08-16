@@ -25,6 +25,7 @@ import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { FaqGrid } from "@/components/faq-grid";
 import {
   PlatformHero,
   PlatformSectionHeading,
@@ -317,27 +318,12 @@ export default async function ComboPage({
             {t("faqTitle")}
           </h2>
         </div>
-        <div className="divide-y divide-border/70 border-y border-border/70">
-          {faqItems.map((f) => (
-            <details
-              key={f.q}
-              className="group cursor-pointer py-4 [&_summary::-webkit-details-marker]:hidden"
-            >
-              <summary className="flex items-start justify-between gap-3">
-                <span className="text-[15px] font-semibold leading-snug tracking-tight">
-                  {f.q}
-                </span>
-                <ChevronRight
-                  size={14}
-                  className="mt-1 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
-                />
-              </summary>
-              <p className="mt-3 max-w-3xl text-[14px] leading-[1.8] text-muted-foreground">
-                {f.a}
-              </p>
-            </details>
-          ))}
-        </div>
+        <FaqGrid
+          items={faqItems.map((faq) => ({
+            question: faq.q,
+            answer: faq.a,
+          }))}
+        />
       </section>
 
       {/* Next step — B2B conversion path (RFQ / suppliers / calculator) */}

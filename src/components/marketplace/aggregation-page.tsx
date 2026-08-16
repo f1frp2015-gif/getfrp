@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { ArrowRight, Factory, PackageSearch } from "lucide-react";
 
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
@@ -107,7 +108,7 @@ export async function MarketplaceAggregationPage({
 
       <section className="border-b border-border/80 bg-muted/15" id="products"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">APPROVED UGC PRODUCTS</div><h2 className="mt-2 text-2xl font-semibold">Supplier-uploaded products</h2><p className="mt-3 max-w-3xl text-sm text-muted-foreground">Only approved supplier submissions appear here. Pending, rejected and demo rows are excluded from public queries and sitemap output.</p>{products.length ? <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{products.map((product) => <Link key={product.id} href={`/suppliers/${product.supplier.slug}/${product.slug}` as never} className="overflow-hidden rounded-xl border bg-background"><div className="relative aspect-[4/3] bg-muted"><Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 1023px) 50vw, 33vw" className="object-cover" /></div><div className="p-5"><h3 className="font-semibold">{product.name}</h3><p className="mt-2 text-xs text-muted-foreground">{product.supplier.name} · {product.material}</p></div></Link>)}</div> : <div className="mt-7 rounded-xl border border-dashed bg-background p-8 text-center"><PackageSearch className="mx-auto" /><h3 className="mt-3 font-semibold">No approved supplier products in this combination yet</h3><p className="mt-2 text-sm text-muted-foreground">Browse the reviewed supplier profiles above or submit an RFQ. GetFRP does not fill empty categories with synthetic products.</p></div>}</div></section>
 
-      <section className="border-b border-border/80"><div className="mx-auto max-w-4xl px-4 py-14 sm:px-6"><h2 className="text-2xl font-semibold">Buyer FAQ</h2><div className="mt-6 divide-y border-y">{page.faqs.map((faq) => <article key={faq.question} className="py-6"><h3 className="font-semibold">{faq.question}</h3><p className="mt-2 text-sm leading-7 text-muted-foreground">{faq.answer}</p></article>)}</div></div></section>
+      <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><h2 className="text-2xl font-semibold">Buyer FAQ</h2><FaqGrid items={page.faqs} className="mt-6" /></div></section>
 
       <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-xl font-semibold">Related searches</h2><div className="mt-5 flex flex-wrap gap-2">{related.map((item) => <Link key={item.href} href={item.href as never} className="rounded-full border bg-background px-4 py-2 text-sm hover:border-foreground/50">{item.label}</Link>)}</div><Link href={page.guideHref as never} className="mt-7 inline-flex items-center gap-2 font-medium underline underline-offset-4">Read the related China sourcing guide <ArrowRight size={15} /></Link></div></section>
 

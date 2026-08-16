@@ -10,6 +10,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
@@ -493,16 +494,9 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+      <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Buyer FAQ</div>
-        <div className="mt-6 divide-y divide-border/70 border-y border-border/70">
-          {product.faqs.map((faq) => (
-            <article key={faq.question} className="py-6">
-              <h2 className="font-semibold">{faq.question}</h2>
-              <p className="mt-2 text-[14px] leading-7 text-muted-foreground">{faq.answer}</p>
-            </article>
-          ))}
-        </div>
+        <FaqGrid items={product.faqs} className="mt-6" />
       </section>
     </main>
   );

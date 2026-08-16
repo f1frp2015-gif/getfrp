@@ -3,7 +3,6 @@ import {
   ArrowUpRight,
   BadgeCheck,
   Boxes,
-  ChevronDown,
   ClipboardCheck,
   Factory,
   FileSearch,
@@ -12,6 +11,7 @@ import {
 import { count, eq } from "drizzle-orm";
 
 import { JsonLd } from "@/components/json-ld";
+import { FaqGrid } from "@/components/faq-grid";
 import { SupplierList } from "@/components/supplier-list";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
@@ -580,26 +580,13 @@ export async function HomePageEnglish() {
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-[#0a1f44] sm:text-4xl">
             Questions overseas FRP buyers ask first.
           </h2>
-          <div className="mt-8 grid gap-x-10 border-y border-[#d9dfe8] md:grid-cols-2">
-            {HOME_FAQS.map((faq) => (
-              <details
-                key={faq.question}
-                className="group border-b border-[#d9dfe8] last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0 [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex min-h-20 cursor-pointer items-center justify-between gap-4 rounded-sm py-5 font-semibold leading-6 text-[#0a1f44] outline-none focus-visible:ring-2 focus-visible:ring-[#123f8c] focus-visible:ring-offset-2">
-                  <span>{faq.question}</span>
-                  <ChevronDown
-                    size={16}
-                    aria-hidden="true"
-                    className="shrink-0 text-[#5d6672] transition-transform duration-200 group-open:rotate-180"
-                  />
-                </summary>
-                <p className="pb-5 pr-8 text-[13px] leading-7 text-[#5d6672]">
-                  {faq.answer}
-                </p>
-              </details>
-            ))}
-          </div>
+          <FaqGrid
+            items={HOME_FAQS}
+            className="mt-8 border-[#d9dfe8]"
+            itemClassName="border-[#d9dfe8]"
+            questionClassName="text-[#0a1f44] focus-visible:ring-[#123f8c] [&_[data-slot=accordion-trigger-icon]]:text-[#5d6672]"
+            answerClassName="text-[13px] text-[#5d6672]"
+          />
         </div>
       </section>
     </>
