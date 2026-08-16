@@ -27,8 +27,8 @@ export function Header() {
       className="sticky top-0 z-50 w-full border-b border-brand-cool-gray/80 bg-white/95 backdrop-blur"
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
-        <Link href="/" className="flex items-center hover:opacity-85" aria-label="getfrp home">
-          <Logo eager />
+        <Link href="/" className="flex items-center hover:opacity-85" aria-label="GetFRP home">
+          <Logo />
         </Link>
 
         <nav className="ml-auto hidden items-center xl:flex" aria-label="Primary navigation">

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="140" viewBox="0 0 620 140" role="img" aria-labelledby="title desc">
+  <title id="title">GetFRP</title>
+  <desc id="desc">China composites sourcing platform</desc>
+  <text x="18" y="94" fill="#0A1F44" font-family="Geist, Inter, Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="-4">Get</text>
+  <rect x="154" y="65" width="10" height="10" rx="1.8" fill="#E54B4B"/>
+  <path d="m171 50 19 20-19 20" fill="none" stroke="#0A1F44" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m183 50 19 20-19 20" fill="none" stroke="#123F8C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m195 50 19 20-19 20" fill="none" stroke="#19C3C8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="232" y="94" fill="#0A1F44" font-family="Geist, Inter, Arial, sans-serif" font-size="74" font-weight="800" letter-spacing="-2">FRP</text>
+</svg>

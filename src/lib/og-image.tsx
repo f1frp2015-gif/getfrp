@@ -42,7 +42,7 @@ export function renderOgCard({
           }}
         />
 
-        {/* brand mark */}
+        {/* N12A-4 brand mark: China origin and three composite export layers */}
         <div
           style={{
             display: "flex",
@@ -53,28 +53,14 @@ export function renderOgCard({
             letterSpacing: "-0.01em",
           }}
         >
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              background: "#1b2430",
-              borderRadius: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 3,
-            }}
-          >
-            <div style={{ width: 20, height: 3, background: "#ffffff" }} />
-            <div
-              style={{ width: 20, height: 3, background: "rgba(255,255,255,0.78)" }}
-            />
-            <div
-              style={{ width: 20, height: 3, background: "rgba(255,255,255,0.52)" }}
-            />
-          </div>
-          <div>getfrp · China FRP marketplace</div>
+          <svg width="32" height="32" viewBox="0 0 48 48">
+            <rect width="48" height="48" rx="11" fill="#0A1F44" />
+            <rect x="4.5" y="20" width="8" height="8" rx="1.5" fill="#E54B4B" />
+            <path d="m13.5 12 12 12-12 12" fill="none" stroke="#FFFFFF" strokeWidth="4.6" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="m21.5 12 12 12-12 12" fill="none" stroke="#7BE4E1" strokeWidth="4.6" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="m29.5 12 12 12-12 12" fill="none" stroke="#19C3C8" strokeWidth="4.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <div>GetFRP · China composites sourcing</div>
         </div>
 
         {/* category pill */}

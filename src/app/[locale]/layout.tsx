@@ -72,10 +72,11 @@ export async function generateMetadata({
     // keyword lists are flagged as over-optimization by some auditors.
     icons: {
       icon: [
-        { url: "/favicon.svg", type: "image/svg+xml" },
-        { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+        { url: "/favicon.svg?v=n12a4", type: "image/svg+xml" },
+        { url: "/favicon.png?v=n12a4", type: "image/png", sizes: "32x32" },
       ],
-      apple: "/apple-icon.png",
+      shortcut: "/favicon.png?v=n12a4",
+      apple: "/apple-icon.png?v=n12a4",
     },
     openGraph: {
       type: "website",
@@ -154,7 +155,7 @@ export default async function LocaleLayout({
                 "@type": "Organization",
                 "@id": `${siteUrl}/#organization`,
                 name: brand,
-                alternateName: ["getfrp"],
+                alternateName: ["getfrp", "GetFRP"],
                 url: siteUrl,
                 logo: `${siteUrl}/getfrp-logo.png`,
                 description,
