@@ -12,6 +12,7 @@ import {
 import { count, eq } from "drizzle-orm";
 
 import { JsonLd } from "@/components/json-ld";
+import { SupplierList } from "@/components/supplier-list";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
@@ -384,12 +385,10 @@ export async function HomePageEnglish() {
       </section>
 
       <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
+        <div className="mx-auto max-w-7xl space-y-12 px-4 py-16 sm:px-6">
           <div>
             <SectionIntro eyebrow="Reviewed supplier profiles" title="Certified and verified suppliers." body="Public company profiles with reviewed identity and certification signals. Product-level compliance remains a separate order check." />
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {featuredSuppliers.map((supplier) => <Link key={supplier.id} href={`/suppliers/${supplier.slug}` as never} className="rounded-xl border border-[#d9dfe8] bg-white p-5"><div className="flex items-center gap-2 font-semibold text-[#0a1f44]"><BadgeCheck size={16} className="text-[#123f8c]" />FRP supplier — {supplier.name}</div><p className="mt-2 text-xs text-[#5d6672]">{supplier.location}</p><p className="mt-3 line-clamp-2 text-xs leading-5 text-[#5d6672]">{supplier.certifications.slice(0, 3).join(" · ") || supplier.description}</p></Link>)}
-            </div>
+            <SupplierList suppliers={featuredSuppliers} className="mt-7" />
           </div>
           <div>
             <SectionIntro eyebrow="Approved supplier products" title="New products from real factories." body="Supplier-owned product pages enter this feed only after review; pending and rejected submissions remain private." />

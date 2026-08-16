@@ -3,18 +3,17 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { SupplierList } from "@/components/supplier-list";
 import { FacetGroup, type FacetOption } from "@/components/qualification/facet-group";
 import { useProgressiveList } from "@/lib/hooks/use-progressive-list";
-import { cn } from "@/lib/utils";
 
 const FACETS = ["cert", "std", "cat", "mat", "process", "prop", "industry", "region"] as const;
 
 export interface DirectorySupplier {
   id: string;
+  slug: string;
   name: string;
   location: string;
   verified: boolean;
@@ -150,76 +149,37 @@ export function CertifiedDirectoryClient({
           </div>
 
           {filtered.length === 0 ? (
-            <Card>
-              <CardContent className="py-12 text-center text-muted-foreground">
-                {t("noResults")}
-              </CardContent>
-            </Card>
+            <div className="border border-dashed py-12 text-center text-muted-foreground">
+              {t("noResults")}
+            </div>
           ) : (
             <>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {visible.map((s) => (
-                  <Card key={s.id}>
-                    <CardHeader className="pb-2">
-                      <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-base">{s.name}</CardTitle>
-                        {s.verified && (
-                          <Badge variant="default" className="shrink-0">
-                            {t("verified")}
-                          </Badge>
-                        )}
-                      </div>
-                      {s.location && (
-                        <div className="text-xs text-muted-foreground">{s.location}</div>
-                      )}
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="space-y-1.5">
-                        {FACETS.filter((facet) => s.tags.some((tag) => tag.facet === facet)).map((facet) => (
-                          <div key={facet} className="flex flex-wrap items-center gap-1.5">
-                            <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                              {s.tags.find((tag) => tag.facet === facet)?.facetLabel}
-                            </span>
-                            {s.tags.filter((tag) => tag.facet === facet).map((tag) => (
-                              <Badge
-                                key={tag.tagId}
-                                variant="outline"
-                                className={cn("gap-1 font-normal", tag.tone)}
-                              >
-                                <span title={`trust ${tag.trust}`} aria-hidden>
-                                  {(["○", "◔", "◑", "●"] as const)[tag.trust] ?? "○"}
-                                </span>
-                                {tag.label}
-                                {tag.verifyUrl && tag.trust >= 2 && (
-                                  <a
-                                    href={tag.verifyUrl}
-                                    target="_blank"
-                                    rel="noopener"
-                                    className="underline underline-offset-2"
-                                    title="Verify"
-                                  >
-                                    ↗
-                                  </a>
-                                )}
-                              </Badge>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-                      {s.website && (
-                        <a
-                          href={s.website}
-                          target="_blank"
-                          rel="noopener"
-                          className="text-xs text-primary hover:underline"
-                        >
-                          {s.website} ↗
-                        </a>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <SupplierList
+                suppliers={visible.map((supplier) => ({
+                  id: supplier.id,
+                  slug: supplier.slug,
+                  name: supplier.name,
+                  location: supplier.location,
+                  verified: supplier.verified,
+                  profilePublished: true,
+                  description: supplier.tags.length
+                    ? supplier.tags
+                        .map((tag) => `${tag.facetLabel}: ${tag.label}`)
+                        .join(" · ")
+                    : undefined,
+                  signals: [
+                    ...supplier.tags.map((tag) => ({
+                      label: tag.label,
+                      href: tag.trust >= 2 ? tag.verifyUrl : null,
+                      className: tag.tone,
+                    })),
+                    ...(supplier.website
+                      ? [{ label: "Company website", href: supplier.website }]
+                      : []),
+                  ],
+                }))}
+                signalLimit={12}
+              />
               {remaining > 0 && (
                 <div className="text-center">
                   <Button variant="outline" onClick={expand}>
