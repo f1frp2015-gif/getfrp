@@ -302,7 +302,7 @@ export function ChinaSourcingMapDashboard({
               preserveAspectRatio="xMidYMid meet"
             >
               <title id="china-map-title">
-                China supplier density by province for {selectedCategoryLabel}
+                {`China supplier density by province for ${selectedCategoryLabel}`}
               </title>
               <desc id="china-map-description">
                 A geographic map of China. Province colors and numeric markers
