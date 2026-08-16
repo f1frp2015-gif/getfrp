@@ -72,7 +72,7 @@ export default async function MethodologyPage({
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#7be4e1]">
             Research &amp; editorial policy
@@ -131,7 +131,7 @@ export default async function MethodologyPage({
         </div>
       </section>
 
-      <section className="border-y border-border/80 bg-muted/20">
+      <section className="fiber-surface-light border-y border-border/80">
         <div className="mx-auto grid max-w-6xl gap-5 px-4 py-14 sm:px-6 md:grid-cols-3">
           {[
             {

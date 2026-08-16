@@ -59,7 +59,7 @@ export default async function ProcessDetailPage({ params }: { params: Promise<{ 
         { name: page.name, url: pageUrl },
       ]} />
 
-      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#7be4e1]">China FRP process guide</div>
           <h1 className="mt-4 max-w-5xl text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">{page.name}</h1>
@@ -104,7 +104,7 @@ export default async function ProcessDetailPage({ params }: { params: Promise<{ 
         </div>
       </section>
 
-      <section className="border-y border-border/80 bg-[#f4f6f9]">
+      <section className="fiber-surface-light border-y border-border/80">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <h2 className="text-2xl font-semibold">Related product families</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-3">{relatedProducts.map((product) => <Link key={product.slug} href={`/products/${product.slug}` as never} className="rounded-xl border border-border/70 bg-background p-5 transition-colors hover:border-[#123f8c]"><div className="font-semibold">{product.nameEn}</div><p className="mt-2 line-clamp-3 text-[13px] leading-6 text-muted-foreground">{product.summary}</p><span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#123f8c]">Open product evidence <ArrowRight size={12} /></span></Link>)}</div>

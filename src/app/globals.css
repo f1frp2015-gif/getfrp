@@ -183,4 +183,67 @@
       linear-gradient(to bottom, var(--border) 1px, transparent 1px);
     background-size: 24px 24px;
   }
+
+  /* Reusable fiberglass surfaces for page heroes and quiet section accents. */
+  .fiber-surface-dark,
+  .fiber-surface-light {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .fiber-surface-dark {
+    background-color: #0a1f44;
+  }
+
+  .fiber-surface-light {
+    background-color: #f4f6f9;
+  }
+
+  .fiber-surface-dark::before,
+  .fiber-surface-dark::after,
+  .fiber-surface-light::before,
+  .fiber-surface-light::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: "";
+    pointer-events: none;
+  }
+
+  .fiber-surface-dark::before {
+    inset: -6px;
+    background-image: url("/images/fiber-texture-random.webp");
+    background-position: center;
+    background-size: cover;
+    filter: blur(2px);
+    opacity: 0.5;
+    transform: scale(1.015);
+  }
+
+  .fiber-surface-dark::after {
+    background:
+      radial-gradient(circle at 82% 12%, rgb(25 195 200 / 15%), transparent 34%),
+      linear-gradient(135deg, rgb(5 17 37 / 88%), rgb(8 28 58 / 72%) 52%, rgb(5 17 37 / 88%));
+  }
+
+  .fiber-surface-light::before {
+    inset: -4px;
+    background-image: url("/images/fiber-texture-linear.webp");
+    background-position: center;
+    background-size: cover;
+    filter: blur(1px);
+    opacity: 0.34;
+    transform: scale(1.01);
+  }
+
+  .fiber-surface-light::after {
+    background: linear-gradient(120deg, rgb(255 255 255 / 88%), rgb(244 246 249 / 72%));
+  }
+
+  .fiber-surface-dark > *,
+  .fiber-surface-light > * {
+    position: relative;
+    z-index: 1;
+  }
 }

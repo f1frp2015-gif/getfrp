@@ -99,7 +99,7 @@ export default async function StandardsPage({
         ]}
       />
 
-      <section className="overflow-hidden border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <div
             className="pointer-events-none absolute -right-24 -top-40 size-[440px] rounded-full border border-[#19c3c8]/20"
@@ -147,7 +147,7 @@ export default async function StandardsPage({
         </div>
       </section>
 
-      <section className="border-b border-border/80 bg-muted/20">
+      <section className="fiber-surface-light border-b border-border/80">
         <div className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
           {[
             { value: processCount, label: "Manufacturing processes", note: "From pultrusion to filament winding" },
@@ -328,7 +328,7 @@ export default async function StandardsPage({
         );
       })}
 
-      <section className="border-b border-border/80 bg-[#f4f6f9]">
+      <section className="fiber-surface-light border-b border-border/80">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
             <div>

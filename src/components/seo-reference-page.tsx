@@ -59,7 +59,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
         ]}
       />
 
-      <section className="border-b border-border/80 bg-[#0a1f44] text-white">
+      <section className="fiber-surface-dark border-b border-border/80 text-white">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <nav className="text-xs text-[#d9dfe8]" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
@@ -89,7 +89,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
         </div>
       </section>
 
-      <section className="border-b border-border/80 bg-muted/20">
+      <section className="fiber-surface-light border-b border-border/80">
         <div className="mx-auto grid max-w-6xl gap-3 px-4 py-7 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
           {page.highlights.map((item) => (
             <div key={item.label} className="rounded-xl border border-border/70 bg-background p-4">
@@ -236,7 +236,7 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
         </div>
       </section>
 
-      <section className="bg-[#0a1f44] py-12 text-white">
+      <section className="fiber-surface-dark py-12 text-white">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7be4e1]">
             TURN THE RESEARCH INTO ONE CONTROLLED RFQ

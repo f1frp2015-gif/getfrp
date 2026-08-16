@@ -58,8 +58,7 @@ export default async function SupplierResourcesPage({
 
   return (
     <main>
-      <section className="relative overflow-hidden border-b border-brand-blue bg-brand-navy text-white">
-        <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_center,#19c3c833,transparent_65%)]" />
+      <section className="fiber-surface-dark border-b border-brand-blue text-white">
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
           <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-aqua">
             For FRP suppliers
@@ -120,7 +119,7 @@ export default async function SupplierResourcesPage({
         </div>
       </section>
 
-      <section className="border-y border-brand-cool-gray bg-brand-cool-gray/25">
+      <section className="fiber-surface-light border-y border-brand-cool-gray">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div>
             <div className="flex size-10 items-center justify-center rounded-xl bg-brand-blue text-white">
