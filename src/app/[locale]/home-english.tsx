@@ -10,6 +10,7 @@ import {
   Search,
 } from "lucide-react";
 import { count, eq } from "drizzle-orm";
+import Image from "next/image";
 
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
@@ -250,8 +251,15 @@ export async function HomePageEnglish() {
       />
 
       <section className="relative overflow-hidden bg-[#0a1f44] text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(70,188,174,.2),transparent_34%),linear-gradient(135deg,#0a1f44_0%,#0a1f44_58%,#0a1f44_100%)]" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.1] [background-image:linear-gradient(rgba(255,255,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.2)_1px,transparent_1px)] [background-size:40px_40px]" />
+        <Image
+          src="/images/home-frp-fiber-hero.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none scale-[1.02] object-cover object-center blur-[4px]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(5,17,37,.84)_0%,rgba(8,28,58,.66)_52%,rgba(5,17,37,.82)_100%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-16 lg:pt-20">
           <div className="mx-auto max-w-5xl text-center">
