@@ -33,11 +33,7 @@ export function SupplierList({
         className="list-none space-y-3"
       >
         {suppliers.map((supplier, index) => {
-          const signals = supplier.signals?.length
-            ? supplier.signals.slice(0, signalLimit)
-            : (supplier.certifications ?? [])
-                .slice(0, signalLimit)
-                .map((label) => ({ label }));
+          const signals = supplier.signals?.slice(0, signalLimit) ?? [];
 
           return (
             <li
