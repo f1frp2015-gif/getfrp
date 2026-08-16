@@ -114,8 +114,18 @@ export default async function CertifiedDirectoryPage({
       slug: supplierRouteSlug(s),
       name: (isEn ? s.nameEn : s.name) ?? s.name,
       location: (isEn ? s.locationEn : s.location) ?? "",
+      category: s.category ?? "",
+      description: (isEn ? s.descriptionEn : s.description) ?? "",
+      products: (isEn ? s.productsEn : s.products) ?? [],
+      processList: (isEn ? s.processListEn : s.processList) ?? [],
+      certifications: (isEn ? s.certificationsEn : s.certifications) ?? [],
+      standardsSupported: s.standardsSupported ?? [],
       verified: Boolean(s.verified),
+      profilePublished: Boolean(s.profilePublished),
       website: s.website ?? null,
+      logo: s.logo ?? null,
+      moqKg: s.moqKg ?? null,
+      leadTimeDays: s.leadTimeDays ?? null,
       tags: tagsBySupplier.get(s.id) ?? [],
     }))
     .sort((a, b) => b.tags.length - a.tags.length);

@@ -16,8 +16,18 @@ export interface DirectorySupplier {
   slug: string;
   name: string;
   location: string;
+  category: string;
+  description: string;
+  products: string[];
+  processList: string[];
+  certifications: string[];
+  standardsSupported: string[];
   verified: boolean;
+  profilePublished: boolean;
   website: string | null;
+  logo: string | null;
+  moqKg: number | null;
+  leadTimeDays: number | null;
   tags: {
     tagId: string;
     facet: string;
@@ -160,13 +170,24 @@ export function CertifiedDirectoryClient({
                   slug: supplier.slug,
                   name: supplier.name,
                   location: supplier.location,
+                  category: supplier.category,
                   verified: supplier.verified,
-                  profilePublished: true,
-                  description: supplier.tags.length
-                    ? supplier.tags
-                        .map((tag) => `${tag.facetLabel}: ${tag.label}`)
-                        .join(" · ")
-                    : undefined,
+                  profilePublished: supplier.profilePublished,
+                  description:
+                    supplier.description ||
+                    (supplier.tags.length
+                      ? supplier.tags
+                          .map((tag) => `${tag.facetLabel}: ${tag.label}`)
+                          .join(" · ")
+                      : undefined),
+                  products: supplier.products,
+                  processList: supplier.processList,
+                  certifications: supplier.certifications,
+                  standardsSupported: supplier.standardsSupported,
+                  website: supplier.website,
+                  logo: supplier.logo,
+                  moqKg: supplier.moqKg,
+                  leadTimeDays: supplier.leadTimeDays,
                   signals: [
                     ...supplier.tags.map((tag) => ({
                       label: tag.label,

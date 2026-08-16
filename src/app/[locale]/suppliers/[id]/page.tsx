@@ -778,9 +778,16 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                           location: englishSupplier.locationEn ?? englishSupplier.location,
                           category: englishSupplier.category,
                           description: englishSupplier.descriptionEn ?? englishSupplier.description,
+                          products: (englishSupplier.productsEn ?? englishSupplier.products ?? []) as string[],
+                          processList: (englishSupplier.processListEn ?? englishSupplier.processList ?? []) as string[],
                           certifications: (englishSupplier.certificationsEn ?? englishSupplier.certifications ?? []) as string[],
+                          standardsSupported: (englishSupplier.standardsSupported ?? []) as string[],
                           verified: Boolean(englishSupplier.verified),
                           profilePublished: Boolean(englishSupplier.profilePublished),
+                          website: englishSupplier.website,
+                          logo: englishSupplier.logo,
+                          moqKg: englishSupplier.moqKg,
+                          leadTimeDays: englishSupplier.leadTimeDays,
                         };
                       })}
                     />

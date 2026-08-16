@@ -1,17 +1,11 @@
 import { cache } from "react";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { SUPPLIER_RESULTS_PAGE_SIZE } from "@/lib/supplier-directory-config";
+import type { SerializedSupplier } from "@/lib/types/supplier-directory";
 
 export const SUPPLIER_DIRECTORY_PAGE_SIZE = SUPPLIER_RESULTS_PAGE_SIZE;
 
-export type SupplierDirectoryItem = {
-  slug: string;
-  name: string;
-  location: string | null;
-  category: string | null;
-  description: string | null;
-  updatedAt: Date | null;
-};
+export type SupplierDirectoryItem = SerializedSupplier;
 
 export function supplierDirectoryPageCount(total: number): number {
   return total > 0 ? Math.ceil(total / SUPPLIER_DIRECTORY_PAGE_SIZE) : 0;
@@ -38,15 +32,6 @@ export const getSupplierDirectoryPage = cache(async (page: number): Promise<{
   const suppliers = await getPublicSupplierDirectory("en");
   const total = suppliers.length;
   const offset = (page - 1) * SUPPLIER_DIRECTORY_PAGE_SIZE;
-  const items = suppliers
-    .slice(offset, offset + SUPPLIER_DIRECTORY_PAGE_SIZE)
-    .map((supplier) => ({
-      slug: supplier.slug,
-      name: supplier.name,
-      location: supplier.location || null,
-      category: supplier.category || null,
-      description: supplier.description || null,
-      updatedAt: null,
-    }));
+  const items = suppliers.slice(offset, offset + SUPPLIER_DIRECTORY_PAGE_SIZE);
   return { items, total, pageCount: supplierDirectoryPageCount(total) };
 });
