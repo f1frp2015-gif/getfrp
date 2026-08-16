@@ -2,21 +2,16 @@ import {
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
-  BookOpenCheck,
   Boxes,
   ChevronDown,
   ClipboardCheck,
   Factory,
   FileSearch,
-  MapPin,
-  Ruler,
   Search,
-  Truck,
 } from "lucide-react";
 import { count, eq } from "drizzle-orm";
 
 import { JsonLd } from "@/components/json-ld";
-import { SupplierCategoryCardImage } from "@/components/supplier-category-card-image";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
@@ -35,61 +30,6 @@ export const HOME_DESCRIPTION =
 // Jilin government disclosure (70K t/yr carbon fiber), Zhongfu Shenying's
 // 2025 annual-report release (29K t/yr) and Guangwei's 2024 annual report
 // (7,685 t/yr). Display values are deliberately rounded.
-
-const FEATURED_PRODUCTS = [
-  {
-    slug: "frp-grating",
-    eyebrow: "Corrosion infrastructure",
-    title: "FRP Grating Manufacturers in China",
-    description: "Molded and pultruded panels, stair treads and handrail systems.",
-    detail: "VE · anti-slip · fire options",
-    related: [
-      ["Pultruded profiles", "pultruded-profiles"],
-      ["FRP rebar", "frp-rebar"],
-    ],
-  },
-  {
-    slug: "pultruded-profiles",
-    eyebrow: "Structural profiles",
-    title: "Pultruded Profile Manufacturers in China",
-    description: "Angles, channels, beams, tubes and custom constant sections.",
-    detail: "EN 13706 · CNC finishing",
-    related: [
-      ["FRP grating", "frp-grating"],
-      ["Fiberglass sheet", "fiberglass-sheet"],
-    ],
-  },
-  {
-    slug: "frp-pipe",
-    eyebrow: "Process equipment",
-    title: "FRP Pipe & Tank Manufacturers in China",
-    description: "Filament-wound pipe, fittings, vessels and corrosion equipment.",
-    detail: "VE · pressure · chemical service",
-    related: [
-      ["Resin & gelcoat", "resin-gelcoat"],
-      ["Pultruded profiles", "pultruded-profiles"],
-    ],
-  },
-  {
-    slug: "smc-bmc",
-    eyebrow: "Molded components",
-    title: "SMC / BMC Parts Manufacturers in China",
-    description: "Compression-molded enclosures, covers and engineered components.",
-    detail: "Tooling · volume production",
-    related: [
-      ["Resin & gelcoat", "resin-gelcoat"],
-      ["Glass fiber", "fiber-glass"],
-    ],
-  },
-] as const;
-
-const REGION_LINKS = [
-  ["Jiangsu", "/suppliers/jiangsu", "Resin, profiles, grating and sheet"],
-  ["Shandong", "/suppliers/shandong", "Fiber, pipe, rebar and industrial FRP"],
-  ["Guangdong", "/suppliers/guangdong", "Electrical, marine and molded components"],
-  ["Hebei", "/suppliers/hebei", "Pipe, tanks and corrosion equipment"],
-  ["Zhejiang", "/suppliers/zhejiang", "Profiles, panels and specialty materials"],
-] as const;
 
 const PROCESS_LINKS = [
   {
@@ -170,67 +110,6 @@ const HOW_IT_WORKS = [
     title: "Submit one controlled RFQ",
     body: "Send one English specification for matched quotes, QA checks and export follow-up.",
     Icon: ClipboardCheck,
-  },
-] as const;
-
-const BUYER_PATHS = [
-  {
-    eyebrow: "ENGINEER",
-    title: "Define properties and standards",
-    description:
-      "Compare FRP properties, density, manufacturing limits and ASTM / EN / GB references before freezing the product specification.",
-    href: "/technical",
-    cta: "Open technical references",
-    Icon: Ruler,
-  },
-  {
-    eyebrow: "PROCUREMENT",
-    title: "Compare manufacturers on one scope",
-    description:
-      "Search Chinese FRP suppliers by product, process and region, then close capability, certificate and commercial deviations through one RFQ.",
-    href: "/suppliers",
-    cta: "Compare suppliers",
-    Icon: ClipboardCheck,
-  },
-  {
-    eyebrow: "DISTRIBUTOR",
-    title: "Build a repeatable product line",
-    description:
-      "Screen factory-direct products, catalog data, OEM options, packaging and landed cost before committing to wholesale or private-label volume.",
-    href: "/products",
-    cta: "Browse product families",
-    Icon: Truck,
-  },
-] as const;
-
-const INSIGHTS = [
-  {
-    eyebrow: "BUYER PLAYBOOK",
-    title: "How to source FRP from China",
-    description:
-      "Move from specification and shortlist to samples, inspection, payment, export documents and delivered cargo.",
-    href: "/source-from-china",
-  },
-  {
-    eyebrow: "MATERIAL DECISION",
-    title: "FRP vs steel",
-    description:
-      "Compare corrosion, stiffness, weight, connections, fire and lifecycle cost before choosing a structural system.",
-    href: "/compare/frp-vs-steel",
-  },
-  {
-    eyebrow: "ENGINEERING DATA",
-    title: "FRP properties explained",
-    description:
-      "Read directional mechanical properties, test methods and the evidence needed before using supplier datasheets.",
-    href: "/technical/frp-properties",
-  },
-  {
-    eyebrow: "QUALITY CONTROL",
-    title: "Inspect FRP before shipment",
-    description:
-      "Turn drawings, materials, process controls, tests and packaging into an RFQ-to-release inspection plan.",
-    href: "/guides/frp-quality-inspection",
   },
 ] as const;
 
@@ -504,78 +383,6 @@ export async function HomePageEnglish() {
         </div>
       </section>
 
-      <section className="border-b border-[#d9dfe8] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <SectionIntro
-              eyebrow="Recommended products"
-              title="Start with proven sourcing categories."
-              body="Popular product families with established China factory clusters, repeatable specifications and export-ready supply routes."
-            />
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
-            >
-              View all products <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURED_PRODUCTS.map((product) => (
-              <article
-                key={product.slug}
-                className="group flex overflow-hidden rounded-xl border border-[#d9dfe8] bg-white transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
-              >
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <Link href={`/products/${product.slug}` as never} className="block">
-                    <SupplierCategoryCardImage slug={product.slug} />
-                    <div className="p-5">
-                      <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
-                        {product.eyebrow}
-                      </div>
-                      <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-[#0a1f44]">
-                        {product.title}
-                      </h3>
-                      <p className="mt-2 min-h-10 text-[12px] leading-5 text-[#5d6672]">
-                        {product.description}
-                      </p>
-                      <div className="mt-4 border-t border-[#d9dfe8] pt-3 font-mono text-[9px] text-[#5d6672]">
-                        {product.detail}
-                      </div>
-                    </div>
-                  </Link>
-                  <div className="mt-auto border-t border-[#d9dfe8] px-5 py-3">
-                    <span className="mr-2 font-mono text-[8px] uppercase tracking-[0.12em] text-[#5d6672]">
-                      Related
-                    </span>
-                    {product.related.map(([label, slug], index) => (
-                      <span key={slug}>
-                        {index > 0 ? <span className="mx-1 text-[#d9dfe8]">·</span> : null}
-                        <Link
-                          href={`/products/${slug}` as never}
-                          className="text-[10px] font-medium text-[#5d6672] hover:text-[#123f8c] hover:underline"
-                        >
-                          {label}
-                        </Link>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-[#d9dfe8] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-          <SectionIntro eyebrow="China manufacturing regions" title="Source FRP by production cluster." body="Use regional entry pages to compare public factory records, then move into the product, process and RFQ paths that match the project." />
-          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {REGION_LINKS.map(([name, href, detail]) => <Link key={href} href={href as never} className="rounded-xl border border-[#d9dfe8] p-4 hover:border-[#19c3c8]"><div className="flex items-center gap-2 font-semibold text-[#0a1f44]"><MapPin size={15} className="text-[#123f8c]" />{name} FRP suppliers</div><p className="mt-2 text-[11px] leading-5 text-[#5d6672]">{detail}</p></Link>)}
-          </div>
-        </div>
-      </section>
-
       <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
           <div>
@@ -762,136 +569,6 @@ export async function HomePageEnglish() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <SectionIntro
-              eyebrow="Connected data model"
-              title="Products and suppliers, linked in both directions."
-              body="The catalog separates reusable product specifications from company records, then connects them with explicit capability and evidence relationships."
-            />
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
-            >
-              Explore product data <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="mt-9 grid gap-4 lg:grid-cols-3">
-            {[
-              {
-                label: "01 · PRODUCT",
-                title: "One structured specification",
-                body: "Materials, processes, applications, standards, specification fields and buying checks live on the product—not in duplicated supplier copy.",
-                href: "/products" as const,
-                cta: "Browse products",
-              },
-              {
-                label: "02 · SUPPLIER",
-                title: "One company capability record",
-                body: "Legal identity, location, processes, certification evidence, export readiness and contact data remain attached to the supplier.",
-                href: "/suppliers" as const,
-                cta: "Browse suppliers",
-              },
-              {
-                label: "03 · RELATIONSHIP",
-                title: "A verified connection",
-                body: "MOQ, lead time, customization, supplier product name and evidence belong to the supplier-product relationship and can be reviewed independently.",
-                href: "/rfq" as const,
-                cta: "Verify by RFQ",
-              },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] p-6 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
-              >
-                <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
-                  {item.label}
-                </div>
-                <h3 className="mt-7 text-xl font-semibold leading-snug tracking-[-0.025em] text-[#0a1f44] group-hover:text-[#123f8c]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-[13px] leading-6 text-[#5d6672]">
-                  {item.body}
-                </p>
-                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
-                  {item.cta} <ArrowUpRight size={12} className="ml-1 inline" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-          <SectionIntro
-            eyebrow="Built for industrial buying"
-            title="One China FRP marketplace for each decision maker."
-            body="Engineers, procurement teams and distributors enter the same supply chain with different questions. Each path connects technical evidence to product and manufacturer records instead of separating research from sourcing."
-          />
-          <div className="mt-9 grid gap-4 lg:grid-cols-3">
-            {BUYER_PATHS.map((item) => (
-              <Link
-                key={item.eyebrow}
-                href={item.href as never}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">
-                    {item.eyebrow}
-                  </span>
-                  <item.Icon size={18} className="text-[#5d6672]" />
-                </div>
-                <h3 className="mt-7 text-xl font-semibold tracking-[-0.025em] text-[#0a1f44] group-hover:text-[#123f8c]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-[13px] leading-6 text-[#5d6672]">
-                  {item.description}
-                </p>
-                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#123f8c]">
-                  {item.cta} <ArrowRight size={12} className="ml-1 inline" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f4f6f9]">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <SectionIntro
-              eyebrow="Insights"
-              title="Technical answers that lead to better RFQs."
-              body="Use objective material comparisons, property references and quality-control guides to define the requirement before comparing factory prices."
-            />
-            <Link href="/guides" className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline">
-              Explore buyer guides <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {INSIGHTS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href as never}
-                className="group flex min-h-64 flex-col rounded-xl border border-[#d9dfe8] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[#7be4e1] hover:shadow-lg"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#123f8c]">{item.eyebrow}</span>
-                  <BookOpenCheck size={16} className="text-[#5d6672]" />
-                </div>
-                <h3 className="mt-8 text-lg font-semibold leading-snug tracking-tight text-[#0a1f44] group-hover:text-[#123f8c]">{item.title}</h3>
-                <p className="mt-3 text-[12px] leading-6 text-[#5d6672]">{item.description}</p>
-                <div className="mt-auto border-t border-[#d9dfe8] pt-4 text-[11px] font-semibold text-[#123f8c]">Read insight <ArrowUpRight size={12} className="ml-1 inline" /></div>
-              </Link>
-            ))}
           </div>
         </div>
       </section>
