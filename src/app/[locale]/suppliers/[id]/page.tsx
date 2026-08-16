@@ -22,6 +22,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { JsonLd } from "@/components/json-ld";
+import { SupplierList } from "@/components/supplier-list";
 import { db } from "@/lib/db";
 import {
   enterprises,
@@ -753,23 +754,37 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               {(supplierCategoryPage || supplierRegionPage || relatedSuppliers.length > 0) && (
                 <div>
                   <h3 className="text-lg font-semibold">Continue the sourcing comparison</h3>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-4 flex flex-wrap gap-3">
                     {supplierCategoryPage && (
-                      <Link href={`/suppliers/${supplierCategoryPage.slug}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
+                      <Link href={`/suppliers/${supplierCategoryPage.slug}` as never} className="border border-border/70 px-4 py-3 text-sm font-semibold hover:border-foreground/40">
                         Compare China {supplierCategoryPage.shortName} suppliers <ArrowRight size={14} className="ml-1 inline" />
                       </Link>
                     )}
                     {supplierRegionPage && (
-                      <Link href={`/suppliers/${supplierRegionPage.slug}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
+                      <Link href={`/suppliers/${supplierRegionPage.slug}` as never} className="border border-border/70 px-4 py-3 text-sm font-semibold hover:border-foreground/40">
                         Explore {supplierRegionPage.name} composite suppliers <ArrowRight size={14} className="ml-1 inline" />
                       </Link>
                     )}
-                    {relatedSuppliers.map((relatedSupplier) => (
-                      <Link key={relatedSupplier.id} href={`/suppliers/${supplierRouteSlug(relatedSupplier)}` as never} className="rounded-xl border border-border/70 p-4 text-sm font-semibold hover:border-foreground/40">
-                        {relatedSupplier.nameEn} <ArrowRight size={14} className="ml-1 inline" />
-                      </Link>
-                    ))}
                   </div>
+                  {relatedSuppliers.length > 0 && (
+                    <SupplierList
+                      className="mt-5"
+                      suppliers={relatedSuppliers.map((relatedSupplier) => {
+                        const englishSupplier = englishOnlySupplier(relatedSupplier);
+                        return {
+                          id: englishSupplier.id,
+                          slug: supplierRouteSlug(englishSupplier),
+                          name: englishSupplier.nameEn ?? englishSupplier.name,
+                          location: englishSupplier.locationEn ?? englishSupplier.location,
+                          category: englishSupplier.category,
+                          description: englishSupplier.descriptionEn ?? englishSupplier.description,
+                          certifications: (englishSupplier.certificationsEn ?? englishSupplier.certifications ?? []) as string[],
+                          verified: Boolean(englishSupplier.verified),
+                          profilePublished: Boolean(englishSupplier.profilePublished),
+                        };
+                      })}
+                    />
+                  )}
                 </div>
               )}
             </section>

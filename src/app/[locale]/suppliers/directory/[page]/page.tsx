@@ -5,6 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { JsonLd } from "@/components/json-ld";
+import { SupplierList } from "@/components/supplier-list";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -123,54 +124,11 @@ export default async function SupplierDirectoryPage({
         <h2 id="supplier-directory-results" className="sr-only">
           Supplier directory results
         </h2>
-        <div className="hidden grid-cols-[minmax(0,1.15fr)_minmax(0,1.85fr)_8.5rem] rounded-t-xl border-x border-t border-border/70 bg-muted/30 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground lg:grid">
-          <span>Supplier</span>
-          <span>Profile summary</span>
-          <span className="text-right">Profile</span>
-        </div>
-        <ol
-          start={startPosition + 1}
-          className="divide-y divide-border/70 overflow-hidden rounded-xl border border-border/70 bg-background lg:rounded-t-none"
-        >
-          {directory.items.map((supplier, index) => (
-            <li key={supplier.slug} value={startPosition + index + 1}>
-              <Link
-                href={`/suppliers/${supplier.slug}` as never}
-                className="group grid min-h-32 gap-4 px-5 py-5 transition-colors hover:bg-muted/35 focus-visible:bg-muted/35 focus-visible:outline-none lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1.85fr)_8.5rem] lg:items-center"
-              >
-                <div className="min-w-0">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-full bg-[#123f8c]/8 px-2 font-mono text-[10px] font-semibold text-[#123f8c]">
-                      {startPosition + index + 1}
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="font-semibold leading-6 text-foreground transition-colors group-hover:text-[#123f8c]">
-                        {supplier.name}
-                      </h3>
-                      <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
-                        {supplier.location ? <span>{supplier.location}</span> : null}
-                        {supplier.category ? <span>{supplier.category}</span> : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <p className="line-clamp-3 text-sm leading-6 text-muted-foreground lg:line-clamp-2">
-                  {supplier.description?.trim() ||
-                    "Public China FRP supplier record. Confirm product scope and evidence through a controlled RFQ."}
-                </p>
-
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#123f8c] lg:justify-end">
-                  View profile
-                  <ArrowRight
-                    size={13}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ol>
+        <SupplierList
+          suppliers={directory.items}
+          startIndex={startPosition}
+          showIndex
+        />
       </section>
 
       <nav className="mt-12 border-t border-border/70 pt-8" aria-label="Supplier directory pagination">

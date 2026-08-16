@@ -15,6 +15,7 @@ import {
   type DirectorySupplier,
 } from "./certified-directory-client";
 import { FACET_META, TAGS_BY_ID, verifyUrlFor } from "@/lib/qualification/cert-taxonomy";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
 
 export async function generateMetadata({
   params,
@@ -110,6 +111,7 @@ export default async function CertifiedDirectoryPage({
   const suppliers: DirectorySupplier[] = supRows
     .map((s) => ({
       id: s.id,
+      slug: supplierRouteSlug(s),
       name: (isEn ? s.nameEn : s.name) ?? s.name,
       location: (isEn ? s.locationEn : s.location) ?? "",
       verified: Boolean(s.verified),

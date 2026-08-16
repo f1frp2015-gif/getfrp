@@ -204,26 +204,29 @@ export default async function ClaimSupplierPage({
                     {searchResults.length} possible matches
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="grid gap-3 sm:grid-cols-2">
+                <CardContent className="divide-y divide-border/70 p-0">
                   {searchResults.map((supplier) => (
                     <Link
                       key={supplier.id}
                       href={`/suppliers/claim?supplier=${encodeURIComponent(supplier.slug ?? supplier.id)}` as never}
-                      className="rounded-lg border p-4 transition-colors hover:border-primary/50 hover:bg-muted/20"
+                      className="grid min-h-24 gap-3 px-6 py-5 transition-colors hover:bg-muted/35 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <div className="font-semibold">{supplier.name}</div>
-                          <div className="mt-1 text-xs text-muted-foreground">
-                            {supplier.location || "China"}
-                          </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold">{supplier.name}</div>
+                        <div className="mt-1 text-xs text-muted-foreground">
+                          {supplier.location || "China"}
                         </div>
+                      </div>
+                      <div className="flex items-center gap-3 sm:justify-end">
                         {supplier.verified && <Badge variant="signal">Identity checked</Badge>}
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                          Select company <ArrowRight size={13} />
+                        </span>
                       </div>
                     </Link>
                   ))}
                   {searchResults.length === 0 && (
-                    <div className="col-span-full rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">
+                    <div className="p-8 text-center text-sm text-muted-foreground">
                       No unclaimed company matched “{query}”. Try a shorter legal or brand name.
                     </div>
                   )}

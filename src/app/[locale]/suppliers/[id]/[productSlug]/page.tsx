@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowRight, BadgeCheck, Factory } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { JsonLd } from "@/components/json-ld";
+import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { loadApprovedSupplierProduct } from "@/lib/products/ugc-queries";
@@ -101,7 +102,7 @@ export default async function SupplierProductPage({ params }: Props) {
 
       <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-2"><div><h2 className="text-2xl font-semibold">Product specifications</h2><div className="mt-5 overflow-hidden rounded-xl border bg-background"><table className="w-full text-left text-sm"><tbody>{Object.entries(product.parameters).map(([key, value]) => <tr key={key} className="border-b last:border-0"><th className="w-2/5 px-4 py-3 font-medium">{key}</th><td className="px-4 py-3 text-muted-foreground">{value}</td></tr>)}</tbody></table></div></div><div><h2 className="text-2xl font-semibold">Compliance and supply scope</h2><dl className="mt-5 divide-y rounded-xl border bg-background"><Row label="Standards" value={product.standards.join(", ") || "Not declared"} /><Row label="Certifications" value={product.certifications.join(", ") || "Not declared"} /><Row label="Applications" value={product.applications.join(", ") || "General industrial use"} /></dl><p className="mt-4 text-xs leading-5 text-muted-foreground">Approval confirms that the submitted page passed GetFRP content review. Buyers must still verify current certificate scope, product grade and project-specific test evidence before purchase.</p></div></div></section>
 
-      <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><div className="rounded-xl border p-6"><div className="flex items-center gap-2"><Factory size={18} /><h2 className="text-xl font-semibold">Supplied by {product.supplier.name}</h2>{product.supplier.verified ? <BadgeCheck size={18} className="text-primary" /> : null}</div><p className="mt-3 text-sm text-muted-foreground">{product.supplier.location} · {product.supplier.certifications.slice(0, 4).join(" · ") || "Public supplier profile"}</p><Link href={`/suppliers/${product.supplier.slug}` as never} className="mt-5 inline-flex items-center gap-1 text-sm font-medium underline underline-offset-4">View supplier profile <ArrowRight size={14} /></Link></div></div></section>
+      <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><h2 className="text-xl font-semibold">Supplier profile</h2><SupplierList suppliers={[{ id: product.supplier.id, slug: product.supplier.slug, name: product.supplier.name, location: product.supplier.location, description: `Approved product listing for ${product.name}. Review the company profile for current factory scope and order-specific evidence.`, certifications: product.supplier.certifications, verified: product.supplier.verified, profilePublished: true }]} className="mt-5" /></div></section>
 
       <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-xl font-semibold">Related products and suppliers</h2><div className="mt-5 flex flex-wrap gap-2"><Link href={`/products/${product.category.slug}` as never} className="rounded-full border bg-background px-4 py-2 text-sm">{product.category.name} products</Link><Link href={`/suppliers/${product.supplier.slug}` as never} className="rounded-full border bg-background px-4 py-2 text-sm">{product.category.name} supplier — {product.supplier.name}</Link><Link href="/suppliers" className="rounded-full border bg-background px-4 py-2 text-sm">All China FRP suppliers</Link><Link href="/products" className="rounded-full border bg-background px-4 py-2 text-sm">All FRP product categories</Link></div></div></section>
 
