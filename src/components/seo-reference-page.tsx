@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -181,20 +182,11 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
       </section>
 
       <section className="border-b border-border/80 bg-muted/15">
-        <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             BUYER FAQ
           </div>
-          <div className="mt-6 divide-y divide-border/70 border-y border-border/70">
-            {page.faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h2 className="text-base font-semibold">{faq.question}</h2>
-                <p className="mt-2 text-[14px] leading-7 text-muted-foreground">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
+          <FaqGrid items={page.faqs} className="mt-6" />
         </div>
       </section>
 

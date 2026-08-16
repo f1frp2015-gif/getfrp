@@ -21,6 +21,7 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
 import { db } from "@/lib/db";
@@ -1189,9 +1190,9 @@ async function renderRegionPage(region: SupplierRegionPage) {
       </section>
 
       <section className="border-b border-border/80">
-        <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">REGIONAL FAQ</div>
-          <div className="mt-7 divide-y divide-border/70 border-y border-border/70">{region.faqs.map((faq) => <article key={faq.question} className="py-6"><h3 className="text-base font-semibold">{faq.question}</h3><p className="mt-2 text-[14px] leading-7 text-muted-foreground">{faq.answer}</p></article>)}</div>
+          <FaqGrid items={region.faqs} className="mt-7" />
         </div>
       </section>
 
@@ -1544,21 +1545,14 @@ export default async function SupplierCategoryPageRoute({
       </section>
 
       <section className="border-b border-border/80">
-        <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             BUYER FAQ
           </div>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">
             Questions specific to sourcing {category.shortName}
           </h2>
-          <div className="mt-7 divide-y divide-border/70 border-y border-border/70">
-            {category.faqs.map((faq) => (
-              <article key={faq.question} className="py-6">
-                <h3 className="text-base font-semibold">{faq.question}</h3>
-                <p className="mt-2 text-[14px] leading-7 text-muted-foreground">{faq.answer}</p>
-              </article>
-            ))}
-          </div>
+          <FaqGrid items={category.faqs} className="mt-7" />
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, ChevronRight, BookOpenCheck, CheckCircle2, ShieldCheck } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
+import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { NewsletterSignup } from "@/components/newsletter-signup";
@@ -333,27 +334,7 @@ export default async function SourcingTopicPage({
               FAQ
             </h2>
           </div>
-          <div className="divide-y divide-border/70 border-y border-border/70">
-            {t.faqs.map((q) => (
-              <details
-                key={q.question}
-                className="group cursor-pointer py-5 [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="flex items-start justify-between gap-3">
-                  <span className="text-[15px] font-semibold leading-snug tracking-tight">
-                    {q.question}
-                  </span>
-                  <ChevronRight
-                    size={14}
-                    className="mt-1 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
-                  />
-                </summary>
-                <p className="mt-3 max-w-3xl text-[14px] leading-[1.8] text-muted-foreground">
-                  {q.answer}
-                </p>
-              </details>
-            ))}
-          </div>
+          <FaqGrid items={t.faqs} />
         </section>
       )}
 
