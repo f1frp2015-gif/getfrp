@@ -86,24 +86,6 @@ export default async function SourceFromChinaPage({
     );
   })();
 
-  const total = verified.length;
-
-  // Province counts keyed by Chinese province token (DB native), then mapped
-  // to English at render time. Fixes a latent bug where the previous build
-  // looked up English keys against Chinese-stored values and got zero counts.
-  const provinceCounts = new Map<string, number>();
-  for (const row of verified) {
-    if (!row.province) continue;
-    provinceCounts.set(row.province, (provinceCounts.get(row.province) ?? 0) + 1);
-  }
-  const provincesCovered = provinceCounts.size;
-
-  const tierCounts = verified.reduce<Record<string, number>>((acc, s) => {
-    const t = s.scaleTier ?? "M";
-    acc[t] = (acc[t] ?? 0) + 1;
-    return acc;
-  }, {});
-  const majorPlusLarge = (tierCounts.XL ?? 0) + (tierCounts.L ?? 0);
   const sourcingMapData = buildChinaSourcingMapData(
     verified,
     supplierCategories.map((category) => ({
@@ -189,71 +171,6 @@ export default async function SourceFromChinaPage({
         title="Source FRP from China — products, clusters, one accountable desk"
         description="The whole China FRP supply base, audited and mapped. See what you can source, where each product category is concentrated, and the step-by-step path — then hand the factory-side work to one bilingual desk that sources as your principal."
       />
-
-      {/* TL;DR — scan UX. Western B2B buyers triage in 5-8 seconds; surface
-          the four most actionable answers above everything else so a buyer
-          can rule the page in or out without scrolling. */}
-      <section className="mb-10 rounded-xl border border-border/70 bg-muted/20 p-6">
-        <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-          TL;DR · WHAT THIS PAGE COVERS
-        </div>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {[
-            "What FRP products to source (profiles, grating, rebar, pipe) and the audited supply base behind them — by capability and scale tier",
-            "Province-by-province map of where each FRP product category is actually made (resin = Jiangsu, fiber = Shandong, etc.)",
-            "Verified supplier coverage by province and category, refreshed from the audited network every hour",
-            "A 6-step sourcing playbook from spec to delivered cargo, with payment / QC / Incoterms benchmarks",
-          ].map((line) => (
-            <li
-              key={line}
-              className="flex items-start gap-2 text-[13.5px] leading-relaxed text-foreground/90"
-            >
-              <ChevronRight
-                size={13}
-                className="mt-1 shrink-0 text-foreground/60"
-              />
-              <span>{line}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Trust strip — lifted to top so Western readers see the proof before the chrome */}
-      <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatCard label="Plants audited on the ground" value={total} />
-        <StatCard label="Major + Large tier" value={majorPlusLarge} />
-        <StatCard label="Provinces covered" value={provincesCovered} />
-        <StatCard label="Capabilities mapped" value={sourcingMapData.categories.length} />
-      </div>
-
-      {/* Primary CTA strip */}
-      <div className="mb-14 flex flex-wrap items-center gap-3 border-y border-border/70 py-5">
-        <Link
-          href={"/rfq" as never}
-          className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-        >
-          Submit an RFQ
-          <ChevronRight size={14} />
-        </Link>
-        <Link
-          href="/suppliers"
-          className="inline-flex items-center gap-1.5 rounded-md border border-border px-5 py-2.5 text-sm transition-colors hover:bg-muted"
-        >
-          See the vetted network ({total.toLocaleString()})
-        </Link>
-        <Link
-          href="/ai?q=Is+it+feasible+to+source+EN+13706+FRP+grating+with+CE+marking+from+China%3F"
-          className="inline-flex items-center gap-1.5 rounded-md border border-border px-5 py-2.5 text-sm transition-colors hover:bg-muted"
-        >
-          Ask AI to check feasibility
-        </Link>
-        <Link
-          href="/rfq"
-          className="ml-auto inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Contact the sourcing desk →
-        </Link>
-      </div>
 
       {/* ═══ 01 — Verified suppliers by region ═══ */}
       <section id="regions" className="scroll-mt-20">
@@ -489,17 +406,6 @@ export default async function SourceFromChinaPage({
           </div>
         </div>
       </section>
-    </div>
-  );
-}
-
-function StatCard({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="border border-border/70 bg-background p-4 text-center">
-      <div className="text-2xl font-bold tabular-nums">{value.toLocaleString()}</div>
-      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-        {label}
-      </div>
     </div>
   );
 }
