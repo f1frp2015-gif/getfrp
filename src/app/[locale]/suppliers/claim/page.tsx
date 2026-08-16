@@ -10,9 +10,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/current-user";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { db } from "@/lib/db";
 import { supplierClaims, supplierListings } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 
 import { ClaimCompanyForm } from "./claim-company-form";
 
@@ -84,6 +86,7 @@ export default async function ClaimSupplierPage({
         .orderBy(desc(supplierListings.verified), supplierListings.nameEn)
         .limit(12)
     : [];
+  const displaySearchResults = searchResults.map(enrichSupplierWithCuratedProfile);
 
   const [latestClaim] = me && selectedSupplier
     ? await db
@@ -193,11 +196,11 @@ export default async function ClaimSupplierPage({
             {!selectedSupplier && query && (
               <div>
                 <h2 className="mb-4 text-lg font-semibold">
-                  {searchResults.length} possible matches
+                  {displaySearchResults.length} possible matches
                 </h2>
-                {searchResults.length > 0 ? (
+                {displaySearchResults.length > 0 ? (
                   <SupplierList
-                    suppliers={searchResults.map((supplier) => ({
+                    suppliers={displaySearchResults.map((supplier) => ({
                       id: supplier.id,
                       slug: supplier.slug ?? supplier.id,
                       name: supplier.nameEn ?? supplier.name,
@@ -210,7 +213,7 @@ export default async function ClaimSupplierPage({
                         supplier.certificationsEn ?? supplier.certifications ?? [],
                       standardsSupported: supplier.standardsSupported ?? [],
                       verified: Boolean(supplier.verified),
-                      profilePublished: Boolean(supplier.profilePublished),
+                      profilePublished: isSupplierProfileIndexable(supplier),
                       website: supplier.website,
                       logo: supplier.logo,
                       moqKg: supplier.moqKg,
