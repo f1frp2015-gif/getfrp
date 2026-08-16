@@ -5,10 +5,12 @@ import { ArrowRight, Factory, PackageSearch } from "lucide-react";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
+import { ProcessGuideContent } from "@/components/marketplace/process-guide-content";
 import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { marketplaceBreadcrumbTrail, relatedSearches, type MarketplacePage } from "@/lib/data/seo-marketplace-pages";
+import type { ManufacturingProcessGuide } from "@/lib/data/manufacturing-process-guides";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 import { CURRENT_SITE_URL } from "@/lib/sites";
@@ -22,9 +24,11 @@ function normalize(value: string) {
 export async function MarketplaceAggregationPage({
   page,
   filters = {},
+  processGuide,
 }: {
   page: MarketplacePage;
   filters?: Filters;
+  processGuide?: ManufacturingProcessGuide | null;
 }) {
   const [allSuppliers, products] = await Promise.all([
     getPublicSupplierDirectory("en"),
@@ -58,6 +62,7 @@ export async function MarketplaceAggregationPage({
   const pageUrl = `${CURRENT_SITE_URL}${page.path}`;
   const related = relatedSearches(page);
   const breadcrumbs = marketplaceBreadcrumbTrail(page);
+  const faqs = processGuide?.faqs ?? page.faqs;
 
   return (
     <main>
@@ -79,10 +84,35 @@ export async function MarketplaceAggregationPage({
           })),
         },
       }} />
+      {processGuide ? <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        headline: processGuide.seoTitle,
+        description: processGuide.metaDescription,
+        url: pageUrl,
+        inLanguage: "en",
+        dateModified: "2026-08-16",
+        author: { "@id": `${CURRENT_SITE_URL}/#organization` },
+        publisher: { "@id": `${CURRENT_SITE_URL}/#organization` },
+        about: processGuide.keywords.map((name) => ({ "@type": "Thing", name })),
+        citation: processGuide.sources.map((source) => source.url),
+      }} /> : null}
+      {processGuide ? <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: `How the ${processGuide.shortName} process works`,
+        description: processGuide.principle,
+        step: processGuide.steps.map((step, index) => ({
+          "@type": "HowToStep",
+          position: index + 1,
+          name: step.title,
+          text: `${step.description} Control: ${step.control}`,
+        })),
+      }} /> : null}
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: page.faqs.map((faq) => ({
+        mainEntity: faqs.map((faq) => ({
           "@type": "Question",
           name: faq.question,
           acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -90,7 +120,7 @@ export async function MarketplaceAggregationPage({
       }} />
       <BreadcrumbJsonLd items={breadcrumbs.map((item) => ({ name: item.name, url: `${CURRENT_SITE_URL}${item.href === "/" ? "" : item.href}` }))} />
 
-      <section className="border-b border-border/80">
+      {processGuide ? <ProcessGuideContent page={page} guide={processGuide} breadcrumbs={breadcrumbs} /> : <><section className="border-b border-border/80">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
           <nav className="text-xs text-muted-foreground" aria-label="Breadcrumb">{breadcrumbs.map((item, index) => <Fragment key={item.href}>{index ? <span className="mx-2">›</span> : null}{index === breadcrumbs.length - 1 ? <span>{item.name}</span> : <Link href={item.href as never}>{item.name}</Link>}</Fragment>)}</nav>
           <div className="mt-7 max-w-4xl"><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary">{page.eyebrow}</div><h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">{page.h1}</h1><p className="mt-5 text-[16px] leading-7 text-muted-foreground">{page.summary}</p></div>
@@ -100,7 +130,7 @@ export async function MarketplaceAggregationPage({
 
       <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><h2 className="text-2xl font-semibold">Buying notes and qualification boundaries</h2><div className="mt-5 max-w-4xl space-y-5 text-[15px] leading-7 text-muted-foreground">{page.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></div></section>
 
-      <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-2xl font-semibold">Browse subcategories</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{page.subcategories.map((item) => <Link key={item.href} href={item.href as never} className="rounded-xl border bg-background p-5 transition-colors hover:border-foreground/40"><div className="flex items-center justify-between gap-3 font-semibold">{item.label}<ArrowRight size={15} /></div><p className="mt-2 text-sm leading-6 text-muted-foreground">{item.note}</p></Link>)}</div></div></section>
+      <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-2xl font-semibold">Browse subcategories</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{page.subcategories.map((item) => <Link key={item.href} href={item.href as never} className="rounded-xl border bg-background p-5 transition-colors hover:border-foreground/40"><div className="flex items-center justify-between gap-3 font-semibold">{item.label}<ArrowRight size={15} /></div><p className="mt-2 text-sm leading-6 text-muted-foreground">{item.note}</p></Link>)}</div></div></section></>}
 
       <section className="border-b border-border/80" id="suppliers"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><div className="flex flex-wrap items-end justify-between gap-4"><div><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">REAL REVIEWED DATA</div><h2 className="mt-2 text-2xl font-semibold">Approved supplier matches</h2></div><form method="get" className="flex flex-wrap gap-2 text-xs"><Filter name="verified" label="Factory verified" checked={filters.verified} /><Filter name="export" label="Export ready" checked={filters.exportReady} /><Filter name="moq" label="MOQ declared" checked={filters.moq} /><Filter name="iso" label="ISO 9001" checked={filters.iso} /><button className="rounded-md bg-foreground px-3 py-2 text-background">Apply filters</button></form></div>
         {suppliers.length ? <SupplierList suppliers={suppliers} className="mt-7" /> : <EmptyState related={related} />}
@@ -108,7 +138,7 @@ export async function MarketplaceAggregationPage({
 
       <section className="border-b border-border/80 bg-muted/15" id="products"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">APPROVED UGC PRODUCTS</div><h2 className="mt-2 text-2xl font-semibold">Supplier-uploaded products</h2><p className="mt-3 max-w-3xl text-sm text-muted-foreground">Only approved supplier submissions appear here. Pending, rejected and demo rows are excluded from public queries and sitemap output.</p>{products.length ? <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{products.map((product) => <Link key={product.id} href={`/suppliers/${product.supplier.slug}/${product.slug}` as never} className="overflow-hidden rounded-xl border bg-background"><div className="relative aspect-[4/3] bg-muted"><Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 1023px) 50vw, 33vw" className="object-cover" /></div><div className="p-5"><h3 className="font-semibold">{product.name}</h3><p className="mt-2 text-xs text-muted-foreground">{product.supplier.name} · {product.material}</p></div></Link>)}</div> : <div className="mt-7 rounded-xl border border-dashed bg-background p-8 text-center"><PackageSearch className="mx-auto" /><h3 className="mt-3 font-semibold">No approved supplier products in this combination yet</h3><p className="mt-2 text-sm text-muted-foreground">Browse the reviewed supplier profiles above or submit an RFQ. GetFRP does not fill empty categories with synthetic products.</p></div>}</div></section>
 
-      <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><h2 className="text-2xl font-semibold">Buyer FAQ</h2><FaqGrid items={page.faqs} className="mt-6" /></div></section>
+      <section className="border-b border-border/80"><div className="mx-auto max-w-6xl px-4 py-14 sm:px-6"><h2 className="text-2xl font-semibold">Buyer FAQ</h2><FaqGrid items={faqs} className="mt-6" /></div></section>
 
       <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-xl font-semibold">Related searches</h2><div className="mt-5 flex flex-wrap gap-2">{related.map((item) => <Link key={item.href} href={item.href as never} className="rounded-full border bg-background px-4 py-2 text-sm hover:border-foreground/50">{item.label}</Link>)}</div><Link href={page.guideHref as never} className="mt-7 inline-flex items-center gap-2 font-medium underline underline-offset-4">Read the related China sourcing guide <ArrowRight size={15} /></Link></div></section>
 

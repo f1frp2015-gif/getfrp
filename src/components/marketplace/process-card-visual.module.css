@@ -33,6 +33,18 @@
   height: 100%;
 }
 
+.hero {
+  height: clamp(18rem, 36vw, 29rem);
+  margin: 0;
+  border-color: rgb(123 228 225 / 30%);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 82% 18%, rgb(25 195 200 / 20%), transparent 34%),
+    linear-gradient(145deg, #f8fafc, #edf6f7 66%, #dff7f5);
+  box-shadow: 0 28px 70px -42px rgb(10 31 68 / 85%);
+  content-visibility: visible;
+}
+
 .scanLine {
   position: absolute;
   inset: 0 auto 0 -25%;

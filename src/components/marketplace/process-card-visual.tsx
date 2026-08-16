@@ -3,6 +3,7 @@ import styles from "./process-card-visual.module.css";
 
 type ProcessCardVisualProps = {
   process: string;
+  variant?: "card" | "hero";
 };
 
 function TechnicalGrid() {
@@ -419,7 +420,7 @@ function ContinuousLaminationVisual() {
   );
 }
 
-export function ProcessCardVisual({ process }: ProcessCardVisualProps) {
+export function ProcessCardVisual({ process, variant = "card" }: ProcessCardVisualProps) {
   let visual: ReactNode;
 
   switch (process) {
@@ -472,7 +473,7 @@ export function ProcessCardVisual({ process }: ProcessCardVisualProps) {
   return (
     <div
       aria-hidden="true"
-      className={styles.stage}
+      className={`${styles.stage} ${variant === "hero" ? styles.hero : ""}`}
       data-process-animation={process}
     >
       {visual}
