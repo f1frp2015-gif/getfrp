@@ -70,8 +70,9 @@ function PrivacyEn() {
         </li>
         <li>
           <strong>Optional analytics</strong>: aggregated, pseudonymized
-          page-view data via Vercel Web Analytics and Google Analytics 4.
-          Loaded only after you accept the cookie banner.
+          page-view data via Vercel Web Analytics, Google Analytics 4, and
+          Ahrefs Web Analytics. Third-party analytics load only after you
+          accept the cookie banner.
         </li>
       </ul>
 

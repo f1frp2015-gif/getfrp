@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { AiChatWidget } from "@/components/ai-chat";
 import { CookieBanner } from "@/components/cookie-banner";
 import { ConsentedGoogleAnalytics } from "@/components/consented-google-analytics";
+import { ConsentedAhrefsAnalytics } from "@/components/consented-ahrefs-analytics";
 
 import { JsonLd } from "@/components/json-ld";
 import { routing } from "@/i18n/routing";
@@ -205,6 +206,7 @@ export default async function LocaleLayout({
         <ConsentedGoogleAnalytics
           measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
         />
+        <ConsentedAhrefsAnalytics />
       </body>
     </html>
   );
