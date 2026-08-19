@@ -1,0 +1,433 @@
+.root {
+  --icon-ink: #123f8c;
+  --icon-navy: #0a1f44;
+  --icon-aqua: #20b8b3;
+  --icon-aqua-light: #7be4e1;
+  --icon-warm: #f0a43c;
+  display: block;
+  height: 72px;
+  width: 72px;
+  overflow: visible;
+  color: var(--icon-ink);
+}
+
+.tile {
+  fill: #f4fbfb;
+  stroke: color-mix(in srgb, var(--icon-ink) 16%, transparent);
+  stroke-width: 1;
+}
+
+.ink {
+  stroke: var(--icon-ink);
+}
+
+.navy {
+  stroke: var(--icon-navy);
+}
+
+.aqua {
+  stroke: var(--icon-aqua);
+}
+
+.warm {
+  stroke: var(--icon-warm);
+}
+
+.softAqua {
+  fill: color-mix(in srgb, var(--icon-aqua-light) 24%, white);
+}
+
+.softWarm {
+  fill: color-mix(in srgb, var(--icon-warm) 16%, white);
+}
+
+.result,
+.check,
+.formula {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+}
+
+.key,
+.loadArrow,
+.coin,
+.flowDot,
+.formula,
+.check,
+.orbit,
+.sunRays,
+.pageCorner,
+.beam,
+.mass,
+.measure,
+.scaleNeedle,
+.standardPage,
+.compareArrow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.weight .mass {
+  animation: mass-settle 3.9s ease-in-out infinite;
+}
+
+.weight .measure {
+  stroke-dasharray: 38;
+  stroke-dashoffset: 38;
+  animation: measure-draw 3.9s ease-in-out infinite;
+}
+
+.weight .scaleNeedle {
+  animation: scale-read 3.9s ease-in-out infinite;
+}
+
+.standards .standardPage {
+  animation: compare-pages 4.2s ease-in-out infinite;
+}
+
+.standards .standardPage:nth-of-type(2) {
+  animation-delay: 180ms;
+}
+
+.standards .compareArrow {
+  animation: compare-swap 4.2s ease-in-out infinite;
+}
+
+.calculator .result {
+  animation: draw-line 4.2s ease-in-out infinite;
+}
+
+.calculator .key {
+  animation: key-pulse 4.2s ease-in-out infinite;
+}
+
+.calculator .key:nth-of-type(2) {
+  animation-delay: 140ms;
+}
+
+.calculator .key:nth-of-type(3) {
+  animation-delay: 280ms;
+}
+
+.calculator .key:nth-of-type(4) {
+  animation-delay: 420ms;
+}
+
+.span .loadArrow {
+  animation: apply-load 3.6s ease-in-out infinite;
+}
+
+.span .loadArrow:nth-of-type(2) {
+  animation-delay: 180ms;
+}
+
+.span .loadArrow:nth-of-type(3) {
+  animation-delay: 360ms;
+}
+
+.span .beam {
+  animation: beam-flex 3.6s ease-in-out infinite;
+}
+
+.price .coin {
+  animation: coin-rise 3.8s ease-in-out infinite;
+}
+
+.price .coin:nth-of-type(2) {
+  animation-delay: 200ms;
+}
+
+.price .coin:nth-of-type(3) {
+  animation-delay: 400ms;
+}
+
+.price .coin:nth-of-type(4) {
+  animation-delay: 600ms;
+}
+
+.thermal .sunRays {
+  animation: sun-turn 8s linear infinite;
+}
+
+.thermal .flowDot {
+  animation: heat-flow 3.1s ease-in-out infinite;
+}
+
+.thermal .flowDot:nth-of-type(2) {
+  animation-delay: 420ms;
+}
+
+.thermal .flowDot:nth-of-type(3) {
+  animation-delay: 840ms;
+}
+
+.method .formula {
+  animation: draw-line 4.4s ease-in-out infinite;
+}
+
+.method .formula:nth-of-type(2) {
+  animation-delay: 280ms;
+}
+
+.method .formula:nth-of-type(3) {
+  animation-delay: 560ms;
+}
+
+.method .pageCorner {
+  animation: page-lift 4.4s ease-in-out infinite;
+  transform-origin: 100% 100%;
+}
+
+.validation .orbit {
+  animation: orbit-spin 7s linear infinite;
+}
+
+.validation .check {
+  animation: draw-check 4s ease-in-out infinite;
+}
+
+:global(.group:hover) .calculator .result,
+:global(.group:focus-visible) .calculator .result,
+:global(.group:hover) .method .formula,
+:global(.group:focus-visible) .method .formula,
+:global(.group:hover) .validation .check,
+:global(.group:focus-visible) .validation .check {
+  animation-duration: 1.55s;
+}
+
+:global(.group:hover) .weight .mass,
+:global(.group:focus-visible) .weight .mass,
+:global(.group:hover) .weight .measure,
+:global(.group:focus-visible) .weight .measure,
+:global(.group:hover) .weight .scaleNeedle,
+:global(.group:focus-visible) .weight .scaleNeedle,
+:global(.group:hover) .standards .standardPage,
+:global(.group:focus-visible) .standards .standardPage,
+:global(.group:hover) .standards .compareArrow,
+:global(.group:focus-visible) .standards .compareArrow {
+  animation-duration: 1.8s;
+}
+
+:global(.group:hover) .span .loadArrow,
+:global(.group:focus-visible) .span .loadArrow,
+:global(.group:hover) .span .beam,
+:global(.group:focus-visible) .span .beam,
+:global(.group:hover) .price .coin,
+:global(.group:focus-visible) .price .coin,
+:global(.group:hover) .thermal .flowDot,
+:global(.group:focus-visible) .thermal .flowDot {
+  animation-duration: 1.8s;
+}
+
+:global(.group:hover) .sunRays,
+:global(.group:focus-visible) .sunRays,
+:global(.group:hover) .orbit,
+:global(.group:focus-visible) .orbit {
+  animation-duration: 2.8s;
+}
+
+@keyframes draw-line {
+  0%,
+  12% {
+    stroke-dashoffset: 24;
+  }
+  42%,
+  78% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes mass-settle {
+  0%,
+  18%,
+  72%,
+  100% {
+    transform: translateY(-2px);
+  }
+  38%,
+  58% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes measure-draw {
+  0%,
+  12% {
+    stroke-dashoffset: 38;
+  }
+  44%,
+  82% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -38;
+  }
+}
+
+@keyframes scale-read {
+  0%,
+  22%,
+  68%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  42%,
+  56% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes compare-pages {
+  0%,
+  18%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  38%,
+  56% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes compare-swap {
+  0%,
+  16%,
+  72%,
+  100% {
+    opacity: 0.5;
+    transform: scaleX(0.76);
+  }
+  38%,
+  58% {
+    opacity: 1;
+    transform: scaleX(1.08);
+  }
+}
+
+@keyframes draw-check {
+  0%,
+  16% {
+    stroke-dashoffset: 24;
+  }
+  46%,
+  86% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes key-pulse {
+  0%,
+  18%,
+  48%,
+  100% {
+    fill: #dfe9f6;
+    transform: scale(1);
+  }
+  30% {
+    fill: var(--icon-aqua-light);
+    transform: scale(1.18);
+  }
+}
+
+@keyframes apply-load {
+  0%,
+  18%,
+  62%,
+  100% {
+    opacity: 0.42;
+    transform: translateY(-3px);
+  }
+  36%,
+  50% {
+    opacity: 1;
+    transform: translateY(2px);
+  }
+}
+
+@keyframes beam-flex {
+  0%,
+  22%,
+  68%,
+  100% {
+    transform: scaleY(1);
+  }
+  42%,
+  55% {
+    transform: scaleY(1.28);
+  }
+}
+
+@keyframes coin-rise {
+  0%,
+  24%,
+  72%,
+  100% {
+    opacity: 0.58;
+    transform: translateY(3px);
+  }
+  42%,
+  60% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes sun-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heat-flow {
+  0% {
+    opacity: 0;
+    transform: translateX(-7px);
+  }
+  25%,
+  68% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+
+@keyframes page-lift {
+  0%,
+  20%,
+  70%,
+  100% {
+    transform: rotate(0deg);
+  }
+  42%,
+  56% {
+    transform: rotate(-9deg) translate(-1px, -1px);
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    animation: none !important;
+  }
+
+  .result,
+  .check,
+  .formula,
+  .measure {
+    stroke-dashoffset: 0;
+  }
+}
