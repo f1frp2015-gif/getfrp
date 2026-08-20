@@ -31,6 +31,10 @@ import { CURRENT_SITE_URL } from "@/lib/sites";
 import { CONTACT } from "@/lib/contact";
 
 const siteUrl = CURRENT_SITE_URL;
+const GA4_MEASUREMENT_ID = "G-TQV5E2KGGK";
+const shouldLoadGA4 =
+  process.env.NODE_ENV === "production" &&
+  process.env.VERCEL_ENV !== "preview";
 // Site identity is now sourced exclusively from messages/{locale}.json.
 // The earlier NEXT_PUBLIC_SITE_{NAME,TAGLINE,DESCRIPTION} env-var overrides
 // went stale and silently kept old marketing copy live in <title> / meta /
@@ -204,7 +208,7 @@ export default async function LocaleLayout({
         <SpeedInsights />
         <Analytics />
         <ConsentedGoogleAnalytics
-          measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          measurementId={shouldLoadGA4 ? GA4_MEASUREMENT_ID : undefined}
         />
         <ConsentedAhrefsAnalytics />
       </body>
