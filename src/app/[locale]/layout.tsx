@@ -31,7 +31,7 @@ import { CURRENT_SITE_URL } from "@/lib/sites";
 import { CONTACT } from "@/lib/contact";
 
 const siteUrl = CURRENT_SITE_URL;
-const GA4_MEASUREMENT_ID = "G-TQV5E2KGGK";
+const GA4_MEASUREMENT_ID = "G-RLKBKMZZ4S";
 const shouldLoadGA4 =
   process.env.NODE_ENV === "production" &&
   process.env.VERCEL_ENV !== "preview";
