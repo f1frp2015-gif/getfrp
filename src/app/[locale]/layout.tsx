@@ -75,13 +75,16 @@ export async function generateMetadata({
     description,
     // meta keywords intentionally omitted: Google ignores them and dense
     // keyword lists are flagged as over-optimization by some auditors.
+    // Keep one stable, high-resolution favicon URL so search engines can
+    // replace cached legacy branding without choosing between icon variants.
     icons: {
-      icon: [
-        { url: "/favicon.svg?v=n12a4", type: "image/svg+xml" },
-        { url: "/favicon.png?v=n12a4", type: "image/png", sizes: "32x32" },
-      ],
-      shortcut: "/favicon.png?v=n12a4",
-      apple: "/apple-icon.png?v=n12a4",
+      icon: {
+        url: "/favicon-512.png",
+        type: "image/png",
+        sizes: "512x512",
+      },
+      shortcut: "/favicon-512.png",
+      apple: "/apple-icon.png",
     },
     openGraph: {
       type: "website",
