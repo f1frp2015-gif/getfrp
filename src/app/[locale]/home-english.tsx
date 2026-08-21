@@ -2,9 +2,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
-  Boxes,
   ClipboardCheck,
-  Factory,
   FileSearch,
   Search,
 } from "lucide-react";
@@ -32,45 +30,6 @@ export const HOME_DESCRIPTION =
 // Jilin government disclosure (70K t/yr carbon fiber), Zhongfu Shenying's
 // 2025 annual-report release (29K t/yr) and Guangwei's 2024 annual report
 // (7,685 t/yr). Display values are deliberately rounded.
-
-const PROCESS_LINKS = [
-  {
-    name: "Pultrusion",
-    detail: "Profiles · rods · cable tray",
-    query: "pultrusion",
-    href: "/processes/pultrusion",
-  },
-  {
-    name: "Compression molding",
-    detail: "SMC · BMC · matched tooling",
-    query: "compression molding",
-    href: "/processes/compression-molding",
-  },
-  {
-    name: "Filament winding",
-    detail: "Pipe · tanks · pressure vessels",
-    query: "filament winding",
-    href: "/processes/filament-winding",
-  },
-  {
-    name: "Vacuum infusion",
-    detail: "Large parts · marine · wind",
-    query: "vacuum infusion",
-    href: "/suppliers/search?q=vacuum%20infusion",
-  },
-  {
-    name: "Hand lay-up / RTM",
-    detail: "Low-volume complex components",
-    query: "hand lay-up RTM",
-    href: "/suppliers/search?q=hand%20lay-up%20RTM",
-  },
-  {
-    name: "CNC & assembly",
-    detail: "Cutting · drilling · bonded kits",
-    query: "CNC assembly",
-    href: "/suppliers/search?q=CNC%20assembly",
-  },
-] as const;
 
 const CATEGORY_LINKS = [
   ["FRP grating", "frp-grating"],
@@ -551,81 +510,6 @@ export async function HomePageEnglish() {
               Submit your FRP RFQ <ArrowRight size={14} />
             </Link>
           </aside>
-        </div>
-      </section>
-
-      <section className="border-b border-[#d9dfe8] bg-[#f4f6f9]">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <SectionIntro
-              eyebrow="Browse the market"
-              title="Search by process or product category."
-              body="Use the manufacturing route when the process is fixed, or begin with the part family when you are still comparing production options."
-            />
-            <Link
-              href="/suppliers"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#123f8c] hover:underline"
-            >
-              Open supplier directory <ArrowUpRight size={14} />
-            </Link>
-          </div>
-
-          <div className="mt-9 grid gap-5 lg:grid-cols-2">
-            <div className="rounded-xl border border-[#d9dfe8] bg-white p-5 sm:p-6">
-              <div className="flex items-center gap-3 border-b border-[#d9dfe8] pb-4">
-                <span className="grid size-9 place-items-center rounded-lg bg-[#f4f6f9] text-[#123f8c]">
-                  <Factory size={18} />
-                </span>
-                <div>
-                  <h3 className="font-semibold text-[#0a1f44]">By manufacturing process</h3>
-                  <p className="mt-0.5 text-[11px] text-[#5d6672]">Match suppliers to the way the part must be made.</p>
-                </div>
-              </div>
-              <div className="mt-2 divide-y divide-[#d9dfe8]">
-                {PROCESS_LINKS.map((process) => (
-                  <Link
-                    key={process.name}
-                    href={process.href as never}
-                    className="group flex items-center justify-between gap-4 py-3.5"
-                  >
-                    <div>
-                      <div className="text-[13px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
-                        {process.name}
-                      </div>
-                      <div className="mt-0.5 text-[10px] text-[#5d6672]">{process.detail}</div>
-                    </div>
-                    <ArrowRight size={14} className="shrink-0 text-[#5d6672] transition-transform group-hover:translate-x-1 group-hover:text-[#123f8c]" />
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-[#d9dfe8] bg-white p-5 sm:p-6">
-              <div className="flex items-center gap-3 border-b border-[#d9dfe8] pb-4">
-                <span className="grid size-9 place-items-center rounded-lg bg-[#f4f6f9] text-[#123f8c]">
-                  <Boxes size={18} />
-                </span>
-                <div>
-                  <h3 className="font-semibold text-[#0a1f44]">By product category</h3>
-                  <p className="mt-0.5 text-[11px] text-[#5d6672]">Compare specifications, factory capability and buying checks.</p>
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3">
-                {CATEGORY_LINKS.map(([label, slug]) => (
-                  <Link
-                    key={slug}
-                    href={`/products/${slug}` as never}
-                    className="group flex min-h-20 flex-col justify-between rounded-lg border border-[#d9dfe8] bg-[#f4f6f9] p-3.5 transition-colors hover:border-[#7be4e1] hover:bg-[#f4f6f9]"
-                  >
-                    <Search size={14} className="text-[#5d6672] group-hover:text-[#123f8c]" />
-                    <span className="mt-3 text-[12px] font-semibold text-[#0a1f44] group-hover:text-[#123f8c]">
-                      {label}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
