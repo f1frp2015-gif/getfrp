@@ -233,7 +233,7 @@ export async function HomePageEnglish() {
             </p>
           </div>
 
-          <div className="mx-auto mt-7 max-w-5xl sm:mt-8">
+          <div className="mx-auto mt-7 max-w-6xl sm:mt-8">
             <HomeMarketplaceSearch />
           </div>
 
