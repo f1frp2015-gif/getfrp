@@ -13,6 +13,7 @@ import Image from "next/image";
 
 import { JsonLd } from "@/components/json-ld";
 import { FaqGrid } from "@/components/faq-grid";
+import { HomeChinaIndustryMap } from "@/components/home-china-industry-map";
 import { SupplierList } from "@/components/supplier-list";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
@@ -281,8 +282,8 @@ export async function HomePageEnglish() {
             aria-labelledby="china-frp-supply-chain"
             className="mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border border-white/15 bg-white/[0.07] backdrop-blur-sm"
           >
-            <div className="grid gap-3 border-b border-white/10 px-4 py-4 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
+            <div className="grid lg:grid-cols-[minmax(0,.92fr)_minmax(420px,1.08fr)]">
+              <div className="border-b border-white/10 px-4 py-5 sm:px-6 lg:border-b-0 lg:border-r">
                 <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7be4e1]">
                   China FRP supply chain
                 </div>
@@ -292,58 +293,112 @@ export async function HomePageEnglish() {
                 >
                   From reinforcement and resin to finished composite parts.
                 </h2>
-              </div>
-              <p className="max-w-md text-[11px] leading-5 text-[#d9dfe8] md:text-right">
-                Representative market leaders and rounded public disclosures
-                available August 2026 — a sourcing map, not a universal ranking.
-              </p>
-            </div>
+                <p className="mt-2 max-w-lg text-[10px] leading-5 text-[#b9c5d3]">
+                  Representative market leaders and rounded public disclosures
+                  available August 2026 — a sourcing map, not a universal ranking.
+                </p>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  value: "≈4.0M t/yr",
-                  label: "Glass fiber capacity",
-                  leaders: "China Jushi · Taishan Fiberglass · CPIC",
-                  detail: "Roving, yarn, mat, fabric and electronic glass.",
-                },
-                {
-                  value: "100K+ t/yr",
-                  label: "Carbon fiber capacity",
-                  leaders: "Jilin Chemical Fiber · Zhongfu Shenying · Guangwei",
-                  detail: "Precursor, carbon fiber, prepreg and pultruded parts.",
-                },
-                {
-                  value: "3 material platforms",
-                  label: "Resin & chemistry",
-                  leaders: "Wanhua Chemical · Sinopec · Swancor",
-                  detail: "Epoxy, vinyl ester, polyester, PU and curing systems.",
-                },
-                {
-                  value: `${formatPlantCount(verifiedPlantCount)} plants`,
-                  label: "Finished FRP products",
-                  leaders: "8 structured product families",
-                  detail: "Grating, profiles, pipe, rebar, SMC/BMC and custom parts.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="border-b border-white/10 px-4 py-4 last:border-b-0 sm:px-5 sm:py-5 sm:[&:nth-child(3)]:border-b-0 sm:[&:nth-child(odd)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0"
-                >
-                  <div className="text-xl font-semibold tracking-tight text-white">
-                    {item.value}
-                  </div>
-                  <h3 className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.11em] text-[#7be4e1]">
-                    {item.label}
-                  </h3>
-                  <p className="mt-3 text-[11px] font-medium leading-4 text-[#d9dfe8]">
-                    {item.leaders}
-                  </p>
-                  <p className="mt-1 text-[10px] leading-4 text-[#d9dfe8]">
-                    {item.detail}
-                  </p>
+                <div className="mt-5 grid overflow-hidden rounded-xl border border-white/10 sm:grid-cols-2">
+                  {[
+                    {
+                      value: "≈4.0M t/yr",
+                      label: "Glass fiber capacity",
+                      leaders: "China Jushi · Taishan · CPIC",
+                      detail: "Roving, yarn, mat, fabric and electronic glass.",
+                    },
+                    {
+                      value: "100K+ t/yr",
+                      label: "Carbon fiber capacity",
+                      leaders: "Jilin CF · Zhongfu Shenying · Guangwei",
+                      detail: "Precursor, carbon fiber, prepreg and pultruded parts.",
+                    },
+                    {
+                      value: "3 platforms",
+                      label: "Resin & chemistry",
+                      leaders: "Wanhua · Sinopec · Swancor",
+                      detail: "Epoxy, vinyl ester, polyester, PU and curing systems.",
+                    },
+                    {
+                      value: `${formatPlantCount(verifiedPlantCount)} plants`,
+                      label: "Finished FRP products",
+                      leaders: "8 structured product families",
+                      detail: "Grating, profiles, pipe, rebar, SMC/BMC and custom parts.",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="border-b border-white/10 p-3.5 last:border-b-0 sm:[&:nth-child(3)]:border-b-0 sm:[&:nth-child(4)]:border-b-0 sm:[&:nth-child(odd)]:border-r"
+                    >
+                      <div className="text-lg font-semibold tracking-tight text-white">
+                        {item.value}
+                      </div>
+                      <h3 className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.11em] text-[#7be4e1]">
+                        {item.label}
+                      </h3>
+                      <p className="mt-2 text-[10px] font-medium leading-4 text-[#d9dfe8]">
+                        {item.leaders}
+                      </p>
+                      <p className="mt-0.5 text-[9px] leading-4 text-[#aebdcd]">
+                        {item.detail}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+
+                <div className="mt-5 rounded-xl border border-white/10 bg-[#071d32]/35 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#7be4e1]">
+                      Industrial chain coverage
+                    </div>
+                    <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#91a3b7]">
+                      Input → finished system
+                    </div>
+                  </div>
+                  <ol className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {[
+                      {
+                        step: "01",
+                        title: "Reinforcement & chemistry",
+                        detail: "Glass · carbon · resin systems",
+                      },
+                      {
+                        step: "02",
+                        title: "Intermediate materials",
+                        detail: "Roving · fabric · mat · prepreg",
+                      },
+                      {
+                        step: "03",
+                        title: "Conversion processes",
+                        detail: "Pultrusion · winding · molding",
+                      },
+                      {
+                        step: "04",
+                        title: "Finished FRP systems",
+                        detail: "Profiles · grating · pipe · custom parts",
+                      },
+                    ].map((stage) => (
+                      <li
+                        key={stage.step}
+                        className="flex gap-2.5 rounded-lg border border-white/[0.08] bg-white/[0.035] p-2.5"
+                      >
+                        <span className="font-mono text-[9px] font-semibold text-[#7be4e1]">
+                          {stage.step}
+                        </span>
+                        <div>
+                          <div className="text-[10px] font-semibold leading-4 text-white">
+                            {stage.title}
+                          </div>
+                          <p className="text-[8px] leading-4 text-[#9fb0c3]">
+                            {stage.detail}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              <HomeChinaIndustryMap />
             </div>
 
             <div className="border-t border-white/10 px-4 py-3 text-[10px] leading-5 text-[#d9dfe8] sm:px-6">
