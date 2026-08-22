@@ -596,7 +596,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       </section>
 
       <section id="company-profile" className="scroll-mt-20 border-b border-border/80">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_340px]">
+        <div className="mx-auto max-w-6xl space-y-10 px-4 py-14 sm:px-6">
           <div className="min-w-0 space-y-10">
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.about}</div>
@@ -752,49 +752,6 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                 </div>
               </div>
 
-              {(supplierCategoryPage || supplierRegionPage || relatedSuppliers.length > 0) && (
-                <div>
-                  <h3 className="text-lg font-semibold">Continue the sourcing comparison</h3>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    {supplierCategoryPage && (
-                      <Link href={`/suppliers/${supplierCategoryPage.slug}` as never} className="border border-border/70 px-4 py-3 text-sm font-semibold hover:border-foreground/40">
-                        Compare China {supplierCategoryPage.shortName} suppliers <ArrowRight size={14} className="ml-1 inline" />
-                      </Link>
-                    )}
-                    {supplierRegionPage && (
-                      <Link href={`/suppliers/${supplierRegionPage.slug}` as never} className="border border-border/70 px-4 py-3 text-sm font-semibold hover:border-foreground/40">
-                        Explore {supplierRegionPage.name} composite suppliers <ArrowRight size={14} className="ml-1 inline" />
-                      </Link>
-                    )}
-                  </div>
-                  {relatedSuppliers.length > 0 && (
-                    <SupplierList
-                      className="mt-5"
-                      suppliers={relatedSuppliers.map((relatedSupplier) => {
-                        const englishSupplier = englishOnlySupplier(relatedSupplier);
-                        return {
-                          id: englishSupplier.id,
-                          slug: supplierRouteSlug(englishSupplier),
-                          name: englishSupplier.nameEn ?? englishSupplier.name,
-                          location: englishSupplier.locationEn ?? englishSupplier.location,
-                          category: englishSupplier.category,
-                          description: englishSupplier.descriptionEn ?? englishSupplier.description,
-                          products: (englishSupplier.productsEn ?? englishSupplier.products ?? []) as string[],
-                          processList: (englishSupplier.processListEn ?? englishSupplier.processList ?? []) as string[],
-                          certifications: (englishSupplier.certificationsEn ?? englishSupplier.certifications ?? []) as string[],
-                          standardsSupported: (englishSupplier.standardsSupported ?? []) as string[],
-                          verified: Boolean(englishSupplier.verified),
-                          profilePublished: Boolean(englishSupplier.profilePublished),
-                          website: englishSupplier.website,
-                          logo: englishSupplier.logo,
-                          moqKg: englishSupplier.moqKg,
-                          leadTimeDays: englishSupplier.leadTimeDays,
-                        };
-                      })}
-                    />
-                  )}
-                </div>
-              )}
             </section>
 
             <div id="ecatalog" className="scroll-mt-20">
@@ -830,31 +787,83 @@ async function renderSupplierProfile(profile: SupplierProfile) {
             </div>
           </div>
 
-          <aside id="contact" className="h-fit min-w-0 scroll-mt-20 rounded-xl border border-border/70 bg-background p-6">
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.contact}</div>
-            <Link href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never} className={`${buttonVariants()} mt-5 w-full`}>
-              {labels.contactSupplier} <ArrowRight size={15} />
-            </Link>
-            <div className="mt-5 space-y-4 text-sm">
-              {website && <a href={website} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 hover:underline"><Globe2 size={16} className="mt-0.5 shrink-0" /><span>{website.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span></a>}
-              {contactEmail && <a href={`mailto:${contactEmail}`} className="flex items-start gap-3 hover:underline"><Mail size={16} className="mt-0.5 shrink-0" /><span>{contactEmail}</span></a>}
-              {contactPhone && phoneHref && <a href={phoneHref} className="flex items-start gap-3 hover:underline"><Phone size={16} className="mt-0.5 shrink-0" /><span>{contactPhone}</span></a>}
-              {address && <div className="flex items-start gap-3 text-muted-foreground"><MapPin size={16} className="mt-0.5 shrink-0" /><span>{address}</span></div>}
-            </div>
-            {!isClaimed && (
-              <div className="mt-6 border-t border-border/70 pt-5">
-                <p className="text-sm font-semibold">Is this your business?</p>
-                <Link
-                  href={`/sign-up?intent=supplier&redirect_url=${encodeURIComponent(`/suppliers/claim?supplier=${routeSlug}`)}` as never}
-                  className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-                >
-                  Claim your company <ArrowRight size={14} />
-                </Link>
+          <aside id="contact" className="min-w-0 scroll-mt-20 rounded-xl border border-border/70 bg-background p-6 sm:p-8">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+              <div className="min-w-0 flex-1">
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{labels.contact}</div>
+                <div className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+                  {website && <a href={website} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-start gap-3 hover:underline"><Globe2 size={16} className="mt-0.5 shrink-0" /><span className="break-all">{website.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span></a>}
+                  {contactEmail && <a href={`mailto:${contactEmail}`} className="flex min-w-0 items-start gap-3 hover:underline"><Mail size={16} className="mt-0.5 shrink-0" /><span className="break-all">{contactEmail}</span></a>}
+                  {contactPhone && phoneHref && <a href={phoneHref} className="flex items-start gap-3 hover:underline"><Phone size={16} className="mt-0.5 shrink-0" /><span>{contactPhone}</span></a>}
+                  {address && <div className="flex items-start gap-3 text-muted-foreground"><MapPin size={16} className="mt-0.5 shrink-0" /><span>{address}</span></div>}
+                </div>
               </div>
-            )}
+              <div className="w-full shrink-0 lg:w-72">
+                <Link href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never} className={`${buttonVariants()} w-full`}>
+                  {labels.contactSupplier} <ArrowRight size={15} />
+                </Link>
+                {!isClaimed && (
+                  <div className="mt-6 border-t border-border/70 pt-5">
+                    <p className="text-sm font-semibold">Is this your business?</p>
+                    <Link
+                      href={`/sign-up?intent=supplier&redirect_url=${encodeURIComponent(`/suppliers/claim?supplier=${routeSlug}`)}` as never}
+                      className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                    >
+                      Claim your company <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </aside>
         </div>
       </section>
+
+      {(supplierCategoryPage || supplierRegionPage || relatedSuppliers.length > 0) && (
+        <section className="border-b border-border/80 bg-muted/15">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+            <h2 className="text-2xl font-semibold">Continue the sourcing comparison</h2>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {supplierCategoryPage && (
+                <Link href={`/suppliers/${supplierCategoryPage.slug}` as never} className="border border-border/70 bg-background px-4 py-3 text-sm font-semibold hover:border-foreground/40">
+                  Compare China {supplierCategoryPage.shortName} suppliers <ArrowRight size={14} className="ml-1 inline" />
+                </Link>
+              )}
+              {supplierRegionPage && (
+                <Link href={`/suppliers/${supplierRegionPage.slug}` as never} className="border border-border/70 bg-background px-4 py-3 text-sm font-semibold hover:border-foreground/40">
+                  Explore {supplierRegionPage.name} composite suppliers <ArrowRight size={14} className="ml-1 inline" />
+                </Link>
+              )}
+            </div>
+            {relatedSuppliers.length > 0 && (
+              <SupplierList
+                className="mt-6"
+                suppliers={relatedSuppliers.map((relatedSupplier) => {
+                  const englishSupplier = englishOnlySupplier(relatedSupplier);
+                  return {
+                    id: englishSupplier.id,
+                    slug: supplierRouteSlug(englishSupplier),
+                    name: englishSupplier.nameEn ?? englishSupplier.name,
+                    location: englishSupplier.locationEn ?? englishSupplier.location,
+                    category: englishSupplier.category,
+                    description: englishSupplier.descriptionEn ?? englishSupplier.description,
+                    products: (englishSupplier.productsEn ?? englishSupplier.products ?? []) as string[],
+                    processList: (englishSupplier.processListEn ?? englishSupplier.processList ?? []) as string[],
+                    certifications: (englishSupplier.certificationsEn ?? englishSupplier.certifications ?? []) as string[],
+                    standardsSupported: (englishSupplier.standardsSupported ?? []) as string[],
+                    verified: Boolean(englishSupplier.verified),
+                    profilePublished: Boolean(englishSupplier.profilePublished),
+                    website: englishSupplier.website,
+                    logo: englishSupplier.logo,
+                    moqKg: englishSupplier.moqKg,
+                    leadTimeDays: englishSupplier.leadTimeDays,
+                  };
+                })}
+              />
+            )}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
