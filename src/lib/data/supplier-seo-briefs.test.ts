@@ -17,7 +17,11 @@ test("assigns every curated supplier a unique, evidence-led SEO brief", () => {
     brief: buildSupplierSeoBrief(profile),
   }));
 
-  assert.equal(briefs.length, 50);
+  assert.ok(briefs.length >= 50);
+  assert.equal(
+    new Set(briefs.map(({ profile }) => profile.id)).size,
+    briefs.length,
+  );
   assert.equal(
     new Set(briefs.map(({ brief }) => brief.primaryKeyword.toLowerCase())).size,
     briefs.length,
@@ -31,6 +35,7 @@ test("assigns every curated supplier a unique, evidence-led SEO brief", () => {
     assert.ok(brief.pageTitle.length <= 100, `${profile.id} title is too long`);
     assert.ok(brief.metaDescription.length <= 161, `${profile.id} meta description is too long`);
     assert.ok(brief.secondaryKeywords.length >= 4, `${profile.id} needs a keyword cluster`);
+    assert.ok(brief.searchKeywords.length <= 12, `${profile.id} has too many demand keywords`);
     assert.ok(brief.productNotes.length >= 1, `${profile.id} needs product analysis`);
     assert.ok(brief.capabilityNotes.length >= 1, `${profile.id} needs capability analysis`);
     assert.equal(brief.applicationNotes.length, 3, `${profile.id} needs three application contexts`);

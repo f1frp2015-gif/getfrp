@@ -1,4 +1,5 @@
 import type { SupplierListing } from "@/lib/db/schema";
+import { getSupplierSearchKeywords } from "@/lib/data/supplier-search-keywords";
 
 export const SUPPLIER_SEO_MIN_WORDS = 1200;
 export const SUPPLIER_SEO_MAX_WORDS = 1800;
@@ -29,6 +30,8 @@ export type SupplierSeoBrief = {
   metaDescription: string;
   primaryKeyword: string;
   secondaryKeywords: string[];
+  searchKeywords: string[];
+  keywordContext: string | null;
   searchIntent: string;
   positioning: string;
   topicLabel: string;
@@ -625,6 +628,12 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.map(normalize).filter(Boolean)));
 }
 
+function naturalList(values: string[]): string {
+  if (values.length <= 1) return values[0] ?? "";
+  if (values.length === 2) return `${values[0]} and ${values[1]}`;
+  return `${values.slice(0, -1).join(", ")}, and ${values.at(-1)}`;
+}
+
 function productDetail(
   name: string,
   supplierName: string,
@@ -776,6 +785,8 @@ function corpusForCount(supplier: SupplierListing, brief: Omit<SupplierSeoBrief,
     ]),
     brief.searchIntent,
     brief.positioning,
+    brief.keywordContext,
+    ...brief.searchKeywords,
     ...brief.overview,
     ...brief.productNotes.flatMap((item) => [item.title, item.body]),
     ...brief.capabilityNotes.flatMap((item) => [item.title, item.body]),
@@ -797,12 +808,23 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
   const location = normalize(supplier.locationEn) || "China";
   const playbook = profileCategory(supplier);
   const primaryKeyword = `${shortName} ${topicLabel}`;
-  const secondaryKeywords = unique([
+  const searchKeywords = getSupplierSearchKeywords(supplier)
+    .map(({ phrase }) => phrase)
+    .slice(0, 12);
+  const brandedSecondaryKeywords = [
     ...products.slice(1, 4).map((product) => `${shortName} ${topicLabelForProduct(product, supplier)}`),
     ...processes.slice(0, 2).map((process) => `${shortName} ${compactPhrase(process, 48)}`),
     `${shortName} ${location} supplier`,
     `${shortName} official catalog`,
-  ]).slice(0, 8);
+  ];
+  const secondaryKeywords = unique([
+    ...searchKeywords,
+    ...brandedSecondaryKeywords,
+  ]).slice(0, 12);
+  const keywordLead = searchKeywords[0] ?? primaryProduct;
+  const keywordContext = searchKeywords.length > 0
+    ? `The reviewed product and process scope makes this supplier relevant to buyer searches for ${naturalList(searchKeywords.slice(0, 4))}. These phrases describe products or processes supported by the cited public scope; they do not expand the supplier's catalog or replace technical qualification.`
+    : null;
   const titleName = supplierShortName(name);
   const titleTopic = compactPhrase(
     topicLabel,
@@ -810,7 +832,7 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
   );
   const pageTitle = `${titleName} — ${titleTopic} | GetFRP`;
   const metaDescription = truncateAtWord(
-    `Source-reviewed ${name} profile for ${primaryProduct}, capabilities, certificates, official catalogs and RFQ qualification in ${location}.`,
+    `${name}: source-reviewed ${keywordLead} supplier profile covering products, capabilities, official catalogs and RFQ qualification in ${location}.`,
     160,
   );
   const capabilityLabel = supplier.category === "distributor"
@@ -825,8 +847,12 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
     metaDescription,
     primaryKeyword,
     secondaryKeywords,
-    searchIntent: `Evaluate ${name} as a potential ${playbook.label} for ${primaryProduct}, verify the public evidence and prepare a comparable RFQ.`,
-    positioning: `${shortName} is presented as a source-reviewed supplier profile centered on ${topicLabel}, with company-published capability separated from buyer-side verification requirements.`,
+    searchKeywords,
+    keywordContext,
+    searchIntent: `Evaluate ${name} as a potential ${playbook.label} for ${keywordLead}, verify the public evidence and prepare a comparable RFQ.`,
+    positioning: searchKeywords.length > 0
+      ? `${shortName} is a source-reviewed supplier profile for ${naturalList(searchKeywords.slice(0, 3))}, with every search topic tied to company-published product or process evidence and separated from buyer-side verification requirements.`
+      : `${shortName} is presented as a source-reviewed supplier profile centered on ${topicLabel}, with company-published capability separated from buyer-side verification requirements.`,
     topicLabel,
     overview,
     productNotes: products.slice(0, 4).map((product, index) =>
@@ -847,11 +873,11 @@ export function buildSupplierSeoBrief(supplier: SupplierListing): SupplierSeoBri
 
   while (
     wordCount(corpusForCount(supplier, baseBrief)) > SUPPLIER_SEO_MAX_WORDS &&
-    (baseBrief.productNotes.length > 3 || baseBrief.capabilityNotes.length > 3)
+    (baseBrief.productNotes.length > 1 || baseBrief.capabilityNotes.length > 1)
   ) {
-    if (baseBrief.productNotes.length > 3) {
+    if (baseBrief.productNotes.length >= baseBrief.capabilityNotes.length && baseBrief.productNotes.length > 1) {
       baseBrief.productNotes.pop();
-    } else {
+    } else if (baseBrief.capabilityNotes.length > 1) {
       baseBrief.capabilityNotes.pop();
     }
   }

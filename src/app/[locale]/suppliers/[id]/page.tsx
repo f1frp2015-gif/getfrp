@@ -392,6 +392,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
           }
         : undefined,
       knowsAbout: [
+        ...seoBrief.searchKeywords,
         ...productNames,
         ...processes,
       ],
@@ -515,6 +516,26 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                 </div>
               </div>
               <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">{description}</p>
+              {seoBrief.keywordContext && (
+                <div className="mt-5 max-w-3xl rounded-xl border border-border/70 bg-muted/20 p-4">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                    Reviewed product search fit
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {seoBrief.keywordContext}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2" aria-label="Reviewed supplier product keywords">
+                    {seoBrief.searchKeywords.slice(0, 6).map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="rounded-full border border-border/70 bg-background px-2.5 py-1 text-xs font-medium text-foreground/80"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="mt-7 flex flex-wrap gap-2">
                 <Link
                   href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never}
@@ -1038,6 +1059,11 @@ export async function generateMetadata({
   return {
     title: { absolute: title },
     description,
+    keywords: Array.from(new Set([
+      seoBrief.primaryKeyword,
+      ...seoBrief.searchKeywords,
+      ...seoBrief.secondaryKeywords,
+    ])).slice(0, 15),
     alternates: alternates(`/suppliers/${routeSlug}`),
     openGraph: og(`/suppliers/${routeSlug}`, {
       title,
