@@ -68,7 +68,7 @@ const batch = [
 
 test("publishes exactly five deduplicated profiles in the third CCE batch", () => {
   assert.equal(batch.length, 5);
-  assert.equal(CURATED_SUPPLIER_PROFILES.length, 138);
+  assert.equal(CURATED_SUPPLIER_PROFILES.length, 143);
 
   for (const { profile, id, slug, identity } of batch) {
     assert.equal(getCuratedSupplierProfile(id), profile);

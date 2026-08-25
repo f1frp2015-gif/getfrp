@@ -110,6 +110,11 @@ import {
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { JHPK_SUPPLIER_PROFILE } from "@/lib/data/jhpk-supplier-profile";
 import { JIANGSU_SHINO_POLYIMIDE_FIBER_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-shino-polyimide-fiber-supplier-profile";
+import { JIANGSU_AOSHENG_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-aosheng-composites-supplier-profile";
+import { JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-aulland-frp-supplier-profile";
+import { JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-changhai-fiberglass-supplier-profile";
+import { JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-esone-ptfe-fabrics-supplier-profile";
+import { JIANGSU_JUNHUA_PEEK_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-junhua-peek-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -301,6 +306,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: HEDRICH_XIAMEN_SUPPLIER_PROFILE },
   { profile: HRC_COMPOSITES_SUPPLIER_PROFILE },
   { profile: JIANGSU_SHINO_POLYIMIDE_FIBER_SUPPLIER_PROFILE },
+  { profile: JIANGSU_AOSHENG_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE },
+  { profile: JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE },
+  { profile: JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_PROFILE },
+  { profile: JIANGSU_JUNHUA_PEEK_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(

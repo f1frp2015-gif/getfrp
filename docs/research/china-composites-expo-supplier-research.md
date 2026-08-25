@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.7.0"
+version: "1.8.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.8.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE J 字母页；第九批新增 5 家可索引供应商，补充澳盛集团事业部、君华/君航子公司、长海用途纱与终端制品、ESONE 品牌历史以及第三方 Logo CDN 失效边界，并收紧 pultruded fiberglass 的同产品证据规则。"
   - version: "1.7.0"
     date: "2026-08-25"
     changes: "继续核验 CCE F/H/J 字母页；第八批新增 5 家可索引供应商，补充全球牌号/中国法人、集团技术/厦门装配、聚酰亚胺材料身份、再生碳纤维关键词及浏览器证书边界。"
@@ -36,7 +39,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -121,21 +124,38 @@ changelog:
 | HRC（亨睿碳纤维） | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-1921-4501508.html) | [官网](https://www.grouphrc.com/)、[量产工艺](https://www.grouphrc.com/cn/services/production)、[再生产品](https://www.grouphrc.com/cn/sustainability)、[联系页](https://www.grouphrc.com/contact) | 汽车/航空碳纤部件，注塑、HP-RTM、湿法模压、热压罐、缠绕，以及再生粒子、无纺布、热塑毡、预浸料、板材、建筑模板、匹克球拍和行李箱 | 已发布、可索引；集团品牌询价时须确认具体法人和场地 |
 | 江苏先诺新材料科技有限公司 | [CCE J 增强材料页](https://www.chinacompositesexpo.com/cn/netshow.php?head=J&kind_id=47) | [官网](https://www.jsshino.com/)、[产品中心](https://www.jsshino.com/main/product/)、[织物规格](https://www.jsshino.com/main/product/zw/226.html)、[S10T 纤维](https://jsshino.com/main/product/ngw/204.html)、[联系页](https://www.jsshino.com/contact/) | Shinofil 高强高模/耐高温聚酰亚胺长丝、短纤、W-60/W-100/W-200 织物、聚酰亚胺制品和 Astra 星绵；明确 PI 纤维不等同于芳纶、碳纤或玻纤 | 已发布、可索引 |
 
+## 2026-08-25 第九批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 江苏澳盛复合材料科技股份有限公司 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | [现行官网](https://www.aoshenghi-tech.com/)、[基础材料](https://www.aoshenghi-tech.com/products-and-applications/basic-materials)、[风电业务](https://www.aoshenghi-tech.com/products-and-applications/wind-power-business)、[业务版图](https://www.aoshenghi-tech.com/about-us)、[2026 手册](https://www.aoshenghi-tech.com/Public/Uploads/uploadfile/files/20260307/AOSHENGBrochure1.pdf) | 碳纤织物/混编织物、预浸料、风电拉挤板和 UD 块材，以及官网集团应用；运动、汽车、氢能产品标注事业部/子公司询价，未把预浸料终端应用写成自产钓鱼竿 | 已发布、可索引；旧域名 `aosheng-china.com` 返回 403，采用页脚明确江苏澳盛主体的现行域名与官方深色 Logo |
+| 江苏澳兰德新材料科技有限公司 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | [官网](https://www.jsald.com/)、[公司简介](https://en.jsald.com/about.html)、[产品目录](https://en.jsald.com/products/p-0-9.html)、[拉挤型材](https://en.jsald.com/products/1045723444189945856-36-9.html)、[联系页](https://en.jsald.com/contact.html) | 模塑/拉挤/酚醛/微孔/覆板 FRP 格栅，I/H 梁、条材、管材、踢脚板、扶手、楼梯、爬梯和异型材；对应 grating 与 pultruded fiberglass 实测词 | 已发布、可索引；英文子域偶发关闭连接，中文官网可访问；官方 OMO Logo 资源返回 567，使用文字回退 |
+| 江苏长海复合材料股份有限公司 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | [产品中心](https://en.changhaigfrp.com/Products/1.html)、[粗纱](https://en.changhaigfrp.com/Products/Glass_fiber_roving.html)、[玻纤制品](https://en.changhaigfrp.com/Products/Glass_fiber_products.html)、[短切毡](https://en.changhaigfrp.com/Products_1/Glass_fiber_chopped_strand_mat.html)、[热塑产品](https://en.changhaigfrp.com/Products/Glass_Fiber_products_for_thermoplastics.html) | 粗纱、短切原丝、短切/表面/连续/湿法毡、无捻粗纱布、缝编复合毡、LFT、CFRT 带材、连续玻纤增强 PP 和 CFRT 蒙皮蜂窝板；用途纱不等于终端管道或拉挤件 | 已发布、可索引；官方 Logo CDN 返回 567，使用文字回退 |
+| 江苏君华特种高分子材料股份有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-2820-7883932.html) | [官网](https://en.chinapeek.com/)、[产品中心](https://en.chinapeek.com/product/)、[复材应用](https://en.chinapeek.com/product/applications/composite_materials_industry/)、[CF/PEEK 板](https://en.chinapeek.com/cfpeek_composite_sheet/)、[君航子公司](https://en.chinapeek.com/changzhou_junhang_high_performance_composite_materials/)、[联系页](https://en.chinapeek.com/contact-us/) | PEEK5600G/GF30/CF30/LF30、PEEK 板棒管、注塑/CNC 件，以及连续 CF/PEEK 板、棒、梁和热塑预浸料；连续纤维业务标明君航子公司边界 | 已发布、可索引；`pultruded fiberglass` 改为同一产品同时具备玻纤与拉挤证据，避免把君华玻纤复合料与碳纤拉挤棒错误拼接 |
+| 江苏永盛氟塑新材料有限公司（ESONE） | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | [官网](https://www.esone.com/)、[公司简介](https://www.esone.com/about-us/)、[PTFE 玻纤布](https://www.esone.com/product-cate/ptfe-fabrics/)、[工业系列](https://www.esone.com/product-cate/ptfe-fabrics/ptfe-coated-fiberglass-industrial/)、[硅胶布](https://www.esone.com/product-cate/silicone-fabric/)、[工业带](https://www.esone.com/product-cate/ptfe-belt/) | PTFE/硅胶涂覆玻纤布、玻纤胶带、芳纶涂覆织物和输送/网格/层压/无缝带；fiberglass cloth 限定为涂覆基布，不宣称原始玻纤生产 | 已发布、可索引；江苏 ESONE 采用官网明确的 2014 年，不把 Youngsun 1990 年品牌/关联历史转移给现行法人 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 江苏 Hansu 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `hansucomp.com`，但干净浏览器返回 `ERR_CONNECTION_CLOSED`，无法稳定核验当前产品、联系和 Logo | 延后，待官网恢复 |
+| 江苏 Dali 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `jsdljn.com`，但标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID` | 延后，待官网证书链修复 |
+| 江苏 Double Horses 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `cnjssm.com`，但标准浏览器返回无效证书，不能建立安全官网证据链 | 延后，待 TLS 修复 |
+| 江苏 Bi-Gold 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 英文官方域名 `en.composite-cn.com` 在标准浏览器返回 SSL protocol error | 延后，待官网恢复现代 HTTPS |
+| J&C 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | `jcxc-jm.com` 在干净浏览器触发“异常访问”WAF，当前无法可靠核验产品和联系内容 | 延后，待官网允许正常访问 |
+| Aomingwei 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 本轮只找到 B2B 平台或第三方页面，未确认独立企业官网 | 按“无官网跳过”规则处理 |
+| Aolin 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 本轮未找到能与展商主体独立对应的企业自有官网 | 跳过，待官网出现后复核 |
 | 沧州睿鹏复合材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 本轮检索未找到能与该法人独立对应的企业自有官网；展会简介不足以替代官网 | 跳过，待官网出现后复核 |
 | 阿默泰材料科技（赣州）有限公司 | [CCE 网上展厅首页](https://www.chinacompositesexpo.com/cn/netshow.php) | 搜索结果与多家名称相近但业务无关的 AMTE/安迈特企业混杂，未找到可确认属于该展商的自有官网 | 跳过，避免错配主体 |
 | IEN 碳匠科技有限公司 | [CCE 网上展厅首页](https://www.chinacompositesexpo.com/cn/netshow.php) | 未找到可核验的企业自有官网；搜索中的“碳匠”域名属于建筑碳核算服务，与展商碳纤维制品业务不一致 | 跳过，避免错配域名 |

@@ -1,0 +1,105 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const JIANGSU_AULLAND_FRP_SUPPLIER_ID = "sup-jiangsu-aulland-frp";
+export const JIANGSU_AULLAND_FRP_SUPPLIER_SLUG = "jiangsu-aulland-frp";
+
+// Curated from Aulland's official company, product, profile and contact pages
+// plus the 2026 CCE directory. The current official logo is served by a
+// third-party OMO asset host that returned HTTP 567 and a broken image in a
+// clean browser on 2026-08-25, so the profile deliberately uses text fallback.
+export const JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE: SupplierListing = {
+  id: JIANGSU_AULLAND_FRP_SUPPLIER_ID,
+  name: "江苏澳兰德新材料科技有限公司",
+  nameEn: "Jiangsu Aulland New Material Technology Co., Ltd.",
+  slug: JIANGSU_AULLAND_FRP_SUPPLIER_SLUG,
+  location: "江苏南通",
+  locationEn: "Nantong, Jiangsu, China",
+  province: "江苏",
+  category: "manufacturer",
+  products: [
+    "玻璃钢模塑格栅板",
+    "玻璃钢拉挤格栅板",
+    "酚醛玻璃钢格栅",
+    "微孔和铺砂盖板玻璃钢格栅",
+    "玻璃钢 I 型梁、H 型梁和平板条",
+    "玻璃钢方管、扁管和踢脚板",
+    "玻璃钢扶手和护栏系统",
+    "玻璃钢楼梯踏步和爬梯",
+    "定制玻璃钢拉挤异型材",
+    "玻璃钢模压件和手糊制品",
+  ],
+  productsEn: [
+    "Molded FRP fiberglass grating panels",
+    "Pultruded fiberglass grating panels",
+    "Phenolic FRP fiberglass grating",
+    "Micromesh and covered FRP fiberglass grating",
+    "FRP fiberglass I-beams, H-beams and flat bars",
+    "FRP fiberglass square tubes, flat tubes and kick plates",
+    "FRP fiberglass handrail and guardrail systems",
+    "FRP fiberglass stair treads and ladders",
+    "Custom pultruded fiberglass profiles",
+    "FRP fiberglass molded and hand-lay-up parts",
+  ],
+  processList: [
+    "玻璃钢格栅模压成型",
+    "玻璃钢型材连续拉挤",
+    "型材和格栅切割",
+    "钻孔、倒角和边缘加工",
+    "表面铺砂和防滑处理",
+    "格栅覆板与粘接",
+    "护栏、楼梯和爬梯预制装配",
+    "手糊玻璃钢成型",
+    "异型截面模具与样件开发",
+    "按图尺寸检验和出口包装",
+  ],
+  processListEn: [
+    "Compression molding of FRP grating",
+    "Continuous pultrusion of fiberglass profiles",
+    "Profile and grating cutting",
+    "Drilling, chamfering and edge machining",
+    "Gritted and anti-slip surface finishing",
+    "Covered-grating lamination and bonding",
+    "Prefabrication and assembly of handrails, stairs and ladders",
+    "Hand lay-up of fiberglass parts",
+    "Custom-section tooling and prototype development",
+    "Drawing-based dimensional inspection and export packing",
+  ],
+  established: 2015,
+  verified: false,
+  description:
+    "江苏澳兰德新材料科技有限公司是南通的玻璃钢格栅和拉挤型材供应商。2026 中国国际复材展名录及官网当前产品页支持模塑格栅、拉挤格栅、酚醛格栅、微孔/盖板格栅、I/H 梁、平板条、管材、踢脚板、扶手、楼梯、爬梯和异型材。本页据此植入 fiberglass grating、FRP grating、fiberglass pultruded grating、molded FRP grating 和 pultruded fiberglass 等实测需求词，而不把手糊或拉挤工艺扩展成官网未列出的管道、板材或钢筋产品。官网自述 ASTM E84、ABS、ISO 9001 等信息，但本轮没有取得可对应法人、地址、范围、编号和有效期的证书文件，因此不标记验证。",
+  descriptionEn:
+    "Jiangsu Aulland New Material Technology Co., Ltd. is a Nantong supplier of FRP grating, pultruded fiberglass profiles and access structures. Its current official product pages and the 2026 China Composites Expo directory support molded grating, pultruded grating, phenolic grating, micromesh and covered panels, I- and H-beams, flat bars, tubes, kick plates, handrails, stair treads, ladders and custom sections. GetFRP therefore assigns measured-demand phrases including fiberglass grating, FRP grating, fiberglass pultruded grating, molded FRP grating and pultruded fiberglass to explicit offers. Hand lay-up or pultrusion capability is not expanded into pipe, sheet or rebar products that the reviewed catalog did not publish. The English subdomain was intermittently unavailable during review, while the official Chinese domain remained accessible. The site's current logo depends on a third-party OMO asset that returned HTTP 567 and rendered broken in a clean browser, so this profile uses a text fallback. ASTM E84, ABS and ISO 9001 references remain company claims because certificate files aligned to the legal entity, address, scope, number and validity date were not verified.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "澳兰德产品目录的核心是模塑和拉挤两类格栅，以及围绕工业平台、通道、楼梯和防腐结构的拉挤型材。模塑格栅 RFQ 应明确树脂体系、阻燃/低烟或酚醛要求、网格尺寸、整板尺寸、厚度、承载方向、玻纤含量、表面形式、颜色、紫外稳定、跨距、集中/均布载荷、挠度限值、切边封闭和夹具；微孔、铺砂、凹面和覆板结构不能互换。拉挤格栅和 I 梁、H 梁、平板条、方管、扁管、踢脚板等型材应给出截面图、长度、公差、直线度、树脂、玻纤粗纱/毡结构、表面毡、力学性能、玻璃化温度、耐腐蚀介质、火焰性能和加工孔位。扶手、楼梯、踏步和爬梯项目还需提交平台布置、节点、连接件材质、护栏高度、踢脚板、载荷组合、现场切割限制和安装责任。定制异型材应在模具前冻结关键尺寸、脱模斜度、壁厚、圆角、表面质量、首件和模具所有权。官网展示 ASTM E84、ABS、ISO 9001、规模和出口比例等宣传信息，但未在本轮形成可逐项验证的证书链，买方应索取原件并核对持证法人、地址、产品范围、测试方法、样品厚度和有效期。英文子域偶发关闭连接，中文官网仍可访问；官网 Logo 所在第三方 OMO 资源返回 HTTP 567，因此 GetFRP 使用文字标识，不热链失效图片。报价前应同时确认最小订单、模具费、样品周期、批量交期、包装、托盘、集装箱装载、Incoterms、目的港文件及售后补件。",
+  productsServicesSummaryEn:
+    "Aulland's reviewed catalog is centered on molded and pultruded grating plus pultruded members for industrial platforms, walkways, stairs and corrosion-resistant structures. A molded-grating RFQ should define resin family, flame or low-smoke requirement, whether a phenolic system is required, mesh, panel size, thickness, load direction, glass content, surface, color, UV stabilization, span, point and distributed loads, deflection limit, sealed cut edges and hold-down clips. Micromesh, gritted, concave and solid-covered constructions are not interchangeable. Pultruded grating and I-beam, H-beam, flat-bar, square-tube, flat-tube and kick-plate inquiries need cross-section drawings, cut length, tolerances, straightness, resin, roving and mat architecture, surface veil, mechanical properties, Tg, chemical exposure, fire behavior and drilled-hole locations. Handrail, stair-tread and ladder projects should add platform layout, connection details, fastener material, rail height, kick plate, load combinations, site-cut restrictions and installation responsibility. A custom profile needs its critical dimensions, draft, wall thickness, radii, cosmetic surface, first-article plan and tool ownership frozen before the die is released. The official site displays ASTM E84, ABS, ISO 9001, scale and export-ratio claims, but this review did not establish a certificate chain for each statement. Buyers should request original files and verify holder, legal address, product scope, test method, specimen thickness and validity date. The English subdomain intermittently closed connections while the Chinese official site remained accessible. Its logo is served by a third-party OMO asset that returned HTTP 567, so GetFRP uses a text mark instead of hotlinking a broken image. Before award, confirm MOQ, tool charge, sample timing, production lead time, packing, pallets, container loading, Incoterms, destination documents and replacement-part support.",
+  ecatalogs: [
+    { title: "澳兰德官网", titleEn: "Official Aulland Website", description: "公司与产品中文入口。", descriptionEn: "Official company and product entry.", url: "https://www.jsald.com/", format: "Official website" },
+    { title: "公司简介", titleEn: "Aulland Company Profile", description: "企业历史和业务范围。", descriptionEn: "Company history and published scope.", url: "https://en.jsald.com/about.html", format: "Company page" },
+    { title: "产品目录", titleEn: "Aulland Product Catalog", description: "格栅、型材和结构件。", descriptionEn: "Grating, profiles and structures.", url: "https://en.jsald.com/products/p-0-9.html", format: "Product catalog" },
+    { title: "拉挤型材", titleEn: "Aulland Pultruded Profiles", description: "I/H 梁、条材、管材和异型材。", descriptionEn: "I/H beams, bars, tubes and custom sections.", url: "https://en.jsald.com/products/1045723444189945856-36-9.html", format: "Product category" },
+    { title: "联系澳兰德", titleEn: "Official Aulland Contact", description: "南通地址、电话和邮箱。", descriptionEn: "Published Nantong address, phones and email.", url: "https://en.jsald.com/contact.html", format: "Contact page" },
+    { title: "中国国际复材展 J 字母页", titleEn: "China Composites Expo — J Directory", description: "展商主体来源。", descriptionEn: "Organizer source for exhibitor identity.", url: "https://www.chinacompositesexpo.com/en/netshow.php?head=J", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: null,
+  contactEmail: "jim@frpcomposites.cn",
+  contactPhone: "+86 513 8567 1558",
+  address: "No. 289 Jiangyun Road, Development Zone, Nantong, Jiangsu, China",
+  website: "https://www.jsald.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 26,
+  viewCount: 0,
+  capabilities: ["molded FRP grating", "pultruded fiberglass grating", "fiberglass profiles", "handrails", "stair treads", "ladders", "custom pultrusion", "FRP fabrication"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
