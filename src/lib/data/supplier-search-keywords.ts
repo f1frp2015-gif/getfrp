@@ -405,10 +405,13 @@ export const SUPPLIER_SEARCH_KEYWORD_CATALOG: readonly SupplierSearchKeywordRule
     cpcUsd: 4.31,
     priority: "P0",
     source: "US Google",
-    matches: (evidence) => (
-      hasOffer(evidence, /\bpultrud/) ||
-      (evidence.category === "manufacturer" && hasProcess(evidence, /\bpultrusion\b/))
-    ) && hasContext(evidence, GLASS),
+    // Keep the material and process evidence in the same published offer.
+    // A supplier can separately sell glass-filled material and pultrude carbon
+    // profiles; global page context must not combine those into this phrase.
+    matches: (evidence) =>
+      entryHasAll(evidence.offers, /\bpultrud/, GLASS) ||
+      (entryHasAll(evidence.offers, /\bpultrud/, FRP) &&
+        hasContext(evidence, GLASS)),
   },
   {
     phrase: "fiberglass reinforced plastic rebar",

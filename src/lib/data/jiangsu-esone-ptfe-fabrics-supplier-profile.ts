@@ -1,0 +1,108 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_ID =
+  "sup-jiangsu-esone-ptfe-fabrics";
+export const JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_SLUG =
+  "jiangsu-esone-ptfe-fabrics";
+
+// Curated from ESONE's official about, PTFE-fabric, industrial-fabric,
+// silicone-fabric, belt and contact pages plus the 2026 CCE directory. The
+// current official ESONE logo was downloaded from esone.com on 2026-08-25.
+export const JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_PROFILE: SupplierListing = {
+  id: JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_ID,
+  name: "江苏永盛氟塑新材料有限公司",
+  nameEn: "Jiangsu ESONE New Material Co., Ltd.",
+  slug: JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_SLUG,
+  location: "江苏泰兴",
+  locationEn: "Taixing, Jiangsu, China",
+  province: "江苏",
+  category: "manufacturer",
+  products: [
+    "工业级和优质级 PTFE 涂覆玻璃纤维布",
+    "多孔 PTFE 涂覆玻纤织物和离型剥离布",
+    "防静电、抗撕裂和重型 PTFE 玻纤布",
+    "单面 PTFE 涂覆玻纤布和保温套织物",
+    "PTFE 涂覆芳纶织物",
+    "PTFE 玻纤基自粘胶带",
+    "硅橡胶涂覆玻璃纤维布和玻璃布",
+    "PTFE 输送带、网格带和无缝带",
+    "PTFE 层压带、封口带和熔接机带",
+    "太阳能层压机织物和定制裁切缝制件",
+  ],
+  productsEn: [
+    "Industrial and premium PTFE-coated fiberglass fabrics",
+    "Porous PTFE-coated fiberglass fabric and release peel ply",
+    "Antistatic, tear-resistant and heavy-duty PTFE fiberglass cloth",
+    "One-side PTFE-coated fiberglass fabric and insulation-jacket cloth",
+    "PTFE-coated aramid and Kevlar fabrics",
+    "PTFE fiberglass-cloth adhesive tapes",
+    "Silicone-coated fiberglass fabric and glass cloth",
+    "PTFE conveyor belts, mesh belts and seamless belts",
+    "PTFE laminated, heat-sealer and fusing-machine belts",
+    "Solar-laminator fabrics and custom cut or sewn components",
+  ],
+  processList: [
+    "玻璃纤维基布整经与织造",
+    "PTFE 分散液浸渍和多道涂覆",
+    "硅橡胶涂覆和复合",
+    "防静电和单面涂层配方加工",
+    "玻纤布胶粘剂涂布与离型复合",
+    "PTFE 织物层压和热定型",
+    "输送带接头、封边和网格带制作",
+    "卷材分切和片材裁切",
+    "缝制、边缘增强和定制装配",
+    "厚度、涂覆量、外观和离型检验",
+  ],
+  processListEn: [
+    "Fiberglass base-cloth warping and weaving",
+    "PTFE-dispersion impregnation and multiple-pass coating",
+    "Silicone-rubber coating and lamination",
+    "Antistatic and one-side coating formulation",
+    "Adhesive coating and release-liner lamination of glass cloth",
+    "PTFE-fabric lamination and heat setting",
+    "Conveyor-belt joining, edge finishing and mesh-belt fabrication",
+    "Roll slitting and sheet cutting",
+    "Sewing, edge reinforcement and custom assembly",
+    "Thickness, coating weight, appearance and release inspection",
+  ],
+  established: 2014,
+  verified: false,
+  description:
+    "江苏永盛氟塑新材料有限公司以 ESONE 品牌在泰兴提供 PTFE 和硅橡胶涂覆玻纤织物、胶带及工业输送带。2026 中国国际复材展名录和官网支持工业级、优质级、多孔、防静电、抗撕裂、重型及单面 PTFE 涂覆玻纤布，硅胶玻纤布，PTFE 玻纤胶带，以及输送/网格/层压/无缝带。本页把 fiberglass cloth 这一有实测需求的词限定为涂覆玻纤基布，不把 ESONE 描述为原始玻纤粗纱或未涂覆织物制造商。官网叙述还追溯 Youngsun 前身至 1990 年，但明确江苏 ESONE 成立于 2014 年，因此本主页采用 2014，不把品牌/关联历史转移给现行法人。认证和规模仍属公司自述。",
+  descriptionEn:
+    "Jiangsu ESONE New Material Co., Ltd. supplies PTFE- and silicone-coated fiberglass fabrics, adhesive tapes and industrial belts from Taixing under the ESONE brand. Its current official catalog and the 2026 China Composites Expo directory support industrial, premium, porous, antistatic, tear-resistant, heavy-duty and one-side-coated PTFE glass fabric, silicone-coated glass cloth, PTFE fiberglass-cloth tape, and conveyor, mesh, laminated or seamless belts. GetFRP assigns the measured-demand phrase fiberglass cloth specifically to these coated fiberglass substrates; it does not relabel ESONE as a producer of raw glass roving or uncoated reinforcement fabric. The corporate history discusses a Youngsun predecessor dating to 1990 but separately states that Jiangsu ESONE was established in 2014. This legal-entity profile therefore uses 2014 and does not transfer the broader brand or affiliate history to the current company. Published certifications, capacity and global-coverage statements remain company claims until matched to current legal-entity records and certificate files.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "ESONE 官网把产品分为 PTFE 玻纤布、PTFE 胶带、硅胶布和 PTFE 工业带。PTFE 涂覆玻纤布 RFQ 应明确基布组织、克重、成品总厚度、PTFE 含量、涂层次数、表面纹理、颜色、孔隙率、透气率、离型性、耐温、介电、抗拉、耐折、边缘散丝和卷宽卷长。工业级、优质级、多孔、防静电、抗撕裂、重型和单面涂覆系列具有不同结构，不能仅按“特氟龙布”通用名称互换。用于热封、太阳能层压、橡胶离型、PVC 地板或保温套的产品，应提交温度/压力/时间工况、接触材料、清洁方式、寿命和法规要求。硅橡胶涂覆玻纤布需锁定单/双面、硅胶类型、涂覆量、阻燃、耐油/化学、耐候、颜色、附着和柔韧性。PTFE 玻纤胶带还需指定胶系、剥离力、耐温、离型膜、卷芯和储存期。输送带、网格带、层压带、无缝带和熔接机带项目应提供周长、宽度、网孔、厚度、接头形式、边缘增强、导向条、扣件、张力、运行速度、温度和跟踪要求；定制裁切或缝制件须冻结图纸、公差、缝线和包装。官网把 Youngsun 业务历史追溯至 1990 年，同时明确江苏 ESONE 成立于 2014 年，本页只采用现行主体年份。官网公开的生产规模、出口国家、体系和产品合规信息本轮未取得与法人、地址、范围、编号及有效期逐项一致的证书，因此认证和支持标准保持为空；买方应索取当前 TDS、SDS、COA、食品接触/阻燃等适用报告，并用实际工况样品验证。",
+  productsServicesSummaryEn:
+    "ESONE's official site groups its offer into PTFE glass fabric, PTFE tape, silicone fabric and PTFE industrial belts. A PTFE-coated fiberglass-fabric RFQ should define base-cloth weave and mass, finished thickness, PTFE loading, number of coating passes, surface texture, color, porosity, air permeability, release behavior, service temperature, dielectric performance, tensile and flex endurance, edge fray, usable width and roll length. Industrial, premium, porous, antistatic, tear-resistant, heavy-duty and one-side-coated constructions have different structures and should not be substituted under the generic name Teflon cloth. Heat sealing, solar lamination, rubber release, PVC-floor processing or insulation-jacket use requires the actual temperature, pressure and dwell cycle, contact material, cleaning method, life target and regulatory conditions. Silicone-coated fiberglass should specify one- or two-side coating, silicone type and loading, flame behavior, oil or chemical resistance, weathering, color, adhesion and flexibility. PTFE fiberglass-cloth tape additionally needs adhesive chemistry, peel, temperature, release liner, core and shelf life. Conveyor, mesh, laminated, seamless and fusing-machine belt projects should provide circumference, width, mesh, thickness, joint, edge reinforcement, guide, fastener, tension, speed, temperature and tracking requirements. Custom-cut or sewn parts need a controlled drawing, tolerances, sewing thread and packing. The official history traces the broader Youngsun business to 1990 but separately states that Jiangsu ESONE was established in 2014, which is the date used for this legal-entity profile. Published production scale, export coverage, management systems and compliance remain company claims because this review did not match certificate files to holder, address, scope, number and validity. Buyers should obtain current TDS, SDS, COA and any applicable food-contact or flame reports, then validate a sample in the real operating cycle.",
+  ecatalogs: [
+    { title: "ESONE 官网", titleEn: "Official ESONE Website", description: "公司与完整产品入口。", descriptionEn: "Official company and full product entry.", url: "https://www.esone.com/", format: "Official website" },
+    { title: "公司简介", titleEn: "About Jiangsu ESONE", description: "主体成立年份和生产范围。", descriptionEn: "Legal-entity date and published scope.", url: "https://www.esone.com/about-us/", format: "Company page" },
+    { title: "PTFE 玻纤布", titleEn: "PTFE Fabrics", description: "涂覆玻纤布系列目录。", descriptionEn: "PTFE-coated fiberglass-fabric families.", url: "https://www.esone.com/product-cate/ptfe-fabrics/", format: "Product category" },
+    { title: "工业 PTFE 玻纤布", titleEn: "Industrial PTFE-Coated Fiberglass", description: "工业系列规格入口。", descriptionEn: "Industrial coated-fabric range.", url: "https://www.esone.com/product-cate/ptfe-fabrics/ptfe-coated-fiberglass-industrial/", format: "Product category" },
+    { title: "硅胶布", titleEn: "Silicone Fabrics", description: "硅胶涂覆玻纤产品。", descriptionEn: "Silicone-coated fiberglass products.", url: "https://www.esone.com/product-cate/silicone-fabric/", format: "Product category" },
+    { title: "PTFE 工业带", titleEn: "PTFE Belts", description: "输送、网格、层压和无缝带。", descriptionEn: "Conveyor, mesh, laminated and seamless belts.", url: "https://www.esone.com/product-cate/ptfe-belt/", format: "Product category" },
+    { title: "ESONE 联系页", titleEn: "Official ESONE Contact", description: "泰兴地址、电话和邮箱。", descriptionEn: "Published Taixing address, phone and email.", url: "https://www.esone.com/contact-us/", format: "Contact page" },
+    { title: "中国国际复材展 J 字母页", titleEn: "China Composites Expo — J Directory", description: "江苏永盛展商主体来源。", descriptionEn: "Organizer source for Jiangsu ESONE exhibitor identity.", url: "https://www.chinacompositesexpo.com/en/netshow.php?head=J", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/jiangsu-esone-logo.jpg",
+  contactEmail: "sale@esone.com",
+  contactPhone: "+86 523 8759 0206",
+  address: "Gugao Road, Agricultural Products Processing Zone, Taixing, Jiangsu, China",
+  website: "https://www.esone.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 27,
+  viewCount: 0,
+  capabilities: ["PTFE-coated fiberglass fabric", "silicone-coated fiberglass cloth", "PTFE adhesive tape", "PTFE conveyor belts", "mesh belts", "laminated belts", "custom cutting", "sewn coated-fabric parts"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
