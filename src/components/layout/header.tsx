@@ -58,9 +58,6 @@ export function Header() {
         </nav>
 
         <div className="ml-4 hidden shrink-0 items-center gap-3 border-l border-brand-cool-gray/80 pl-4 text-[11px] xl:flex">
-          <Link href="/services/china-export-growth" className="font-semibold text-brand-blue hover:text-brand-navy">
-            CN Services
-          </Link>
           <span className="font-semibold text-brand-blue" aria-label="English language">EN</span>
           <Link href="/rfq" className="rounded-md bg-brand-navy px-3 py-2 font-semibold text-white transition-colors hover:bg-brand-blue">
             Post RFQ
@@ -76,9 +73,7 @@ export function Header() {
           <SheetContent side="right" className="w-[min(90vw,360px)] overflow-y-auto p-5 pt-12">
             <nav aria-label="Mobile navigation">
               <div className="mb-4 flex items-center justify-between border-b border-brand-cool-gray/80 pb-4 text-xs">
-                <Link href="/services/china-export-growth" onClick={() => setOpen(false)} className="font-semibold text-brand-blue">
-                  CN Services
-                </Link>
+                <span className="font-semibold text-brand-blue" aria-label="English language">EN</span>
                 <Link href="/sign-in" onClick={() => setOpen(false)} className="text-brand-graphite/70 hover:text-brand-blue">Sign in</Link>
               </div>
               {PRIMARY_NAVIGATION.map((group) => (
