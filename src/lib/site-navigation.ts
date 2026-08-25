@@ -51,6 +51,7 @@ export const STANDARD_LINKS = [
 ] as const satisfies readonly NavigationLink[];
 
 export const SOURCING_GUIDE_LINKS = [
+  { label: "CN Services", href: "/services/china-export-growth" },
   { label: "Verify a China supplier", href: "/source-from-china/verify-supplier" },
   { label: "Source FRP grating", href: "/sourcing/frp-grating" },
   { label: "Pultruded vs molded grating", href: "/source-from-china/frp-grating-vs-molded-grating" },

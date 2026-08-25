@@ -81,6 +81,7 @@ export function Footer() {
             <Link href="/rfq" className="font-semibold text-[#123f8c] hover:text-[#0a1f44]">Post RFQ →</Link>
             <Link href="/about" className="hover:text-foreground">About</Link>
             <Link href="/contact" className="hover:text-foreground">Contact</Link>
+            <Link href="/services/china-export-growth" className="font-semibold text-[#123f8c] hover:text-[#0a1f44]">China Export Services</Link>
             <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
             <Link href="/sitemap" className="hover:text-foreground">Sitemap</Link>

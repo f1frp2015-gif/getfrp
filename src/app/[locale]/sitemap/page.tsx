@@ -30,6 +30,7 @@ const CORE_LABELS: Record<string, string> = {
   "/suppliers": "China supplier directory",
   "/standards": "International FRP standards comparison",
   "/services/frp-engineering-qa": "FRP engineering & QA services",
+  "/services/china-export-growth": "China FRP export and overseas growth services",
   "/methodology": "Research and supplier verification methodology",
   "/ai": "Composite sourcing AI",
   "/about": "About GetFRP",
