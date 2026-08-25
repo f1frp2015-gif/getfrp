@@ -98,6 +98,7 @@ import { TLB_SUPPLIER_PROFILE } from "@/lib/data/tlb-supplier-profile";
 import { TOPGLOW_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/topglow-shanghai-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "@/lib/data/tuotian-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
+import { WEIHAI_DUSHI_SUPPLIER_PROFILE } from "@/lib/data/weihai-dushi-composite-materials-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "@/lib/data/yuto-new-material-supplier-profile";
@@ -177,6 +178,7 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
+  { profile: WEIHAI_DUSHI_SUPPLIER_PROFILE },
   { profile: JUSHI_SUPPLIER_PROFILE, legacySlugs: [JUSHI_LEGACY_SLUG] },
   { profile: CPIC_SUPPLIER_PROFILE },
   { profile: EASTFRP_SUPPLIER_PROFILE },
