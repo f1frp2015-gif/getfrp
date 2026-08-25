@@ -64,7 +64,12 @@ import { DEZHOU_HONGYU_COMPO_TECH_SUPPLIER_PROFILE } from "@/lib/data/dezhou-hon
 import { DEZHOU_HAILIDA_MOLDING_SUPPLIER_PROFILE } from "@/lib/data/dezhou-hailida-molding-supplier-profile";
 import { DEZHOU_JUNTENG_MATERIAL_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/dezhou-junteng-material-technology-supplier-profile";
 import { DIAB_TECHNOLOGY_CHANGSHU_SUPPLIER_PROFILE } from "@/lib/data/diab-technology-changshu-supplier-profile";
+import { DONGGUAN_ACTION_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-action-composites-supplier-profile";
+import { DONGGUAN_GBOS_LASER_SUPPLIER_PROFILE } from "@/lib/data/dongguan-gbos-laser-supplier-profile";
+import { DONGGUAN_JULI_COMPOSITE_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/dongguan-juli-composite-technology-supplier-profile";
 import { DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-maikos-composites-supplier-profile";
+import { DONGGUAN_PRONOTEK_VACUUM_SUPPLIER_PROFILE } from "@/lib/data/dongguan-pronotek-vacuum-supplier-profile";
+import { DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-tstar-composites-supplier-profile";
 import { ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-dasheng-mould-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
 import { EXEL_COMPOSITES_NANJING_SUPPLIER_PROFILE } from "@/lib/data/exel-composites-nanjing-supplier-profile";
@@ -191,7 +196,12 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: DANYANG_YIXUN_SUPPLIER_PROFILE },
   { profile: DARBOND_TECHNOLOGY_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE },
+  { profile: DONGGUAN_ACTION_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: DONGGUAN_GBOS_LASER_SUPPLIER_PROFILE },
+  { profile: DONGGUAN_JULI_COMPOSITE_TECHNOLOGY_SUPPLIER_PROFILE },
   { profile: DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: DONGGUAN_PRONOTEK_VACUUM_SUPPLIER_PROFILE },
+  { profile: DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_PROFILE },
   { profile: DEEPSEA_PRECISION_TECH_SHENZHEN_SUPPLIER_PROFILE },
   { profile: DELLAHOL_CNC_TECHNOLOGY_SUZHOU_SUPPLIER_PROFILE },
   { profile: DEQING_GUOTAI_FIREPROOF_MATERIAL_FACTORY_SUPPLIER_PROFILE },

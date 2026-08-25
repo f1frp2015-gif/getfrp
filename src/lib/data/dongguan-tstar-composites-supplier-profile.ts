@@ -1,0 +1,160 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_ID =
+  "sup-dongguan-tstar-composites";
+export const DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_SLUG =
+  "dongguan-tstar-composites";
+
+// Curated from Tstar's current official website and the 2026 China Composites
+// Expo D directory. The organizer identifies the exact Dongguan legal entity;
+// product and process pages support each listed product family. Customer,
+// capacity, quality and certification statements remain company- or organizer-
+// published and are not converted into verified credentials. Official logo
+// downloaded 2026-08-25 from: https://www.tstarco.com/uploads/e7e1f7053.png
+export const DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_PROFILE: SupplierListing = {
+  id: DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_ID,
+  name: "东莞天石达复合材料有限公司",
+  nameEn: "Dongguan Tstar Composites Co., Ltd.",
+  slug: DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_SLUG,
+  location: "广东东莞",
+  locationEn: "Dongguan, Guangdong, China",
+  province: "广东",
+  category: "manufacturer",
+  products: [
+    "碳纤维管、棒、板与异型材",
+    "玻璃纤维管、棒、扁条与拉挤型材",
+    "拉编碳纤维/玻纤编织管",
+    "卷制碳纤维圆管与锥形管",
+    "SMC/BMC/DMC 模压格栅、桥架、箱体及定制件",
+    "玻纤筋材、螺纹棒与植物支撑杆",
+    "碳纤维桨、棒球棒、护腿板及其他体育户外制品",
+    "玻璃纤维钓鱼竿及钓鱼类伸缩制品",
+  ],
+  productsEn: [
+    "Carbon fiber tubes, rods, sheets and custom profiles",
+    "Fiberglass FRP tubes, rods, flat bars and pultruded profiles",
+    "Pull-braided carbon-fiber and fiberglass tubes",
+    "Roll-wrapped carbon fiber round and tapered tubes",
+    "SMC, BMC and DMC molded grating, cable trays, enclosures and custom parts",
+    "Fiberglass FRP rebar, threaded bars and plant-support stakes",
+    "Carbon fiber paddles, baseball bats, shin guards and other sporting goods",
+    "Fiberglass fishing rods and telescopic fishing products",
+  ],
+  processList: [
+    "玻纤与碳纤维拉挤成型",
+    "连续纤维拉编/编织包覆成型",
+    "预浸料卷管与锥形卷制",
+    "SMC/BMC/DMC 压缩模塑",
+    "预浸料模压与定制零件成型（展会声明）",
+    "涂装与外观处理",
+    "CNC 切割、钻孔与二次加工",
+    "按图纸、尺寸与应用定制产品",
+  ],
+  processListEn: [
+    "Fiberglass and carbon-fiber pultrusion",
+    "Continuous-fiber pull-braiding and over-braided tube forming",
+    "Prepreg roll wrapping and tapered-tube rolling",
+    "SMC, BMC and DMC compression molding",
+    "Prepreg compression molding and custom-part forming (expo claim)",
+    "Coating and cosmetic finishing",
+    "CNC cutting, drilling and secondary machining",
+    "Drawing-, size- and application-based product customization",
+  ],
+  established: 2012,
+  verified: false,
+  description:
+    "东莞天石达复合材料有限公司是位于广东东莞的碳纤维与玻璃纤维制品制造商。中国国际复材展以该完整中文主体收录企业，称其 2012 年成立并具备拉挤、拉编、卷管、预浸料模压、SMC/BMC、涂装与 CNC 工序。现行官网的产品导航独立列出碳纤维管、棒、板、型材，玻纤管、棒、扁条和型材，以及拉挤、卷制、模压、SMC/BMC/DMC 和体育户外产品；钓鱼页明确公开玻璃纤维伸缩钓鱼制品，而非碳纤维钓鱼竿。本页据此植入实际产品关键词，不把相邻品类推断为未公开产品。",
+  descriptionEn:
+    "Dongguan Tstar Composites Co., Ltd. is a Dongguan, Guangdong manufacturer of carbon-fiber and fiberglass products. China Composites Expo lists the full Chinese entity and says it was established in 2012 with pultrusion, pull-braiding, roll wrapping, prepreg compression molding, SMC/BMC, coating and CNC operations. The current official site separately publishes carbon-fiber tube, rod, sheet and profile families; fiberglass tube, rod, flat-bar and profile families; and process directories for pultrusion, roll wrapping, compression molding and SMC/BMC/DMC, plus sports and outdoor products. Its fishing page specifically shows a telescopic fiberglass fishing product rather than a carbon-fiber fishing rod. GetFRP therefore injects only supported product keywords and does not infer an unlisted product from an adjacent category.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "天石达同时覆盖标准截面、定制型材、卷管、拉编管、模压件和体育户外制品，采购方应按工艺族分别询价。拉挤碳纤/玻纤管、棒、扁条、角钢、槽钢、工字钢、T/Z 型和筋材 RFQ 应注明截面图、长度、直线度、扭转、尺寸与孔位公差、树脂体系、纤维种类、表面毡或 3K 外观、纤维体积分数目标、纵横向力学、电绝缘、阻燃、耐候、耐介质和工作温度。卷制或拉编管还需说明圆形/方形/锥形几何、内外径、壁厚、铺层方向、编织角、接缝与表面纹理、端部加工、同心度和动平衡。碳纤维板/片 RFQ 应锁定厚度、尺寸、铺层、0/90 或准各向同性要求、表面光泽/哑光、平面度、孔加工和边缘封闭，不能只按“3K 碳板”比较。SMC/BMC/DMC 格栅、桥架、电表箱、百叶、冷却塔或定制模压件要明确材料牌号、模具与所有权、嵌件、成型收缩、表面等级、颜色、阻燃/电气/耐候试验、首件和持续检验。体育与户外产品应使用对应产品图和性能规格：官网支持碳纤维桨、棒球/垒球棒、护腿板等，以及玻纤钓鱼类产品；不能把“Fishing”分类直接改写成碳纤维钓鱼竿。供应商应提交当前图纸、材料/铺层规范、TDS/SDS、批次 CoA 字段、尺寸和外观检验报告、代表性首件以及具体牌号和构造的测试方法。试样必须按拟定量产工艺制造，并记录原料批次、模具、固化、拉挤速度或铺层、二次加工和包装。对长条型材和管材，还要确认最大出货长度、拼接限制、端部保护、捆扎、木箱/托架、集装箱装载、挠曲支撑和到货直线度。商务报价需拆分模具、样件、量产单价、MOQ、交期、CNC/涂装、检验、包装和 Incoterm，并确认签约与出口主体、英文文件、变更通知和不合格处置。本轮未取得同时具备完整法律主体、证书号、范围、发证机构和有效期的现行证书文件，故不记录已验证认证。",
+  productsServicesSummaryEn:
+    "Tstar spans standard sections, custom profiles, roll-wrapped and pull-braided tubes, molded parts and sporting goods, so buyers should qualify each process family separately. A pultruded carbon or fiberglass tube, rod, flat bar, angle, channel, I-, T- or Z-section or rebar RFQ should provide the section drawing, length, straightness, twist, dimensional and hole tolerances, resin, reinforcement, veil or 3K cosmetic layer, target fiber volume, longitudinal and transverse properties, electrical, flame, weathering, chemical and temperature requirements. Roll-wrapped or pull-braided tubes also require round, square or tapered geometry; inside and outside diameter; wall; lay-up orientation or braid angle; seams and surface texture; end machining; concentricity and balance. A carbon-fiber sheet inquiry should lock thickness, size, lay-up, 0/90 or quasi-isotropic intent, gloss or matte face, flatness, holes and sealed edges instead of comparing only a generic 3K label. SMC, BMC or DMC grating, cable tray, meter box, louver, cooling-tower or custom molded part needs material grade, mold and ownership, inserts, shrinkage, surface class, color, flame, electrical and weathering tests, first article and recurring inspection. Sporting products must use product-specific drawings and performance criteria. The official site supports carbon paddles, baseball or softball bats and shin guards, plus fiberglass fishing products; the Fishing category must not be rewritten as a carbon-fiber fishing rod. Require current drawings, material or lay-up specification, TDS and SDS, lot COA fields, dimensional and cosmetic inspection, representative first article and test methods for the offered grade and construction. Samples should use the proposed production route and record material lot, tooling, cure, pulling speed or lay-up, secondary operations and packaging. For long profiles and tubes, confirm maximum shipping length, splice limits, end protection, bundles, crates or supports, container loading, deflection support and arrival straightness. Separate tooling, samples, recurring unit price, MOQ, lead time, CNC or coating, inspection, packing and Incoterm, and confirm contracting and export entity, English documents, change notification and nonconformance handling. No current certificate document with complete legal identity, number, scope, issuer and validity was reviewed, so none is recorded as verified.",
+  ecatalogs: [
+    {
+      title: "天石达官方网站",
+      titleEn: "Official Tstar Website",
+      description: "现行产品、工艺、应用与联系入口。",
+      descriptionEn: "Current product, process, application and contact entry point.",
+      url: "https://www.tstarco.com/zh/",
+      format: "Official website",
+    },
+    {
+      title: "碳纤维产品目录",
+      titleEn: "Carbon Fiber Product Directory",
+      description: "碳纤维管、棒、板与型材。",
+      descriptionEn: "Official carbon-fiber tube, rod, sheet and profile families.",
+      url: "https://www.tstarco.com/zh/products/carbon-fiber-products/",
+      format: "Product directory",
+    },
+    {
+      title: "玻璃纤维产品目录",
+      titleEn: "Fiberglass Product Directory",
+      description: "玻纤管、棒、扁条与型材。",
+      descriptionEn: "Official fiberglass tube, rod, flat-bar and profile families.",
+      url: "https://www.tstarco.com/zh/products/fiberglass-products/",
+      format: "Product directory",
+    },
+    {
+      title: "拉挤产品与截面",
+      titleEn: "Pultrusion Products and Sections",
+      description: "棒、管、型材、筋材及拉挤工艺目录。",
+      descriptionEn: "Official rod, tube, profile, rebar and pultrusion directory.",
+      url: "https://www.tstarco.com/zh/products/different-technology/pultrusion/",
+      format: "Process directory",
+    },
+    {
+      title: "卷制产品目录",
+      titleEn: "Roll-Wrapped Product Directory",
+      description: "卷制圆管和锥形管产品入口。",
+      descriptionEn: "Official roll-wrapped round and tapered tube entry point.",
+      url: "https://www.tstarco.com/zh/products/different-technology/roll-wrapped/",
+      format: "Process directory",
+    },
+    {
+      title: "天石达公司简介",
+      titleEn: "Tstar Company Profile",
+      description: "企业与工厂公开信息。",
+      descriptionEn: "Published company and factory information.",
+      url: "https://www.tstarco.com/zh/about-us/company-profile/",
+      format: "Company profile",
+    },
+    {
+      title: "中国国际复材展 D 字母展商页",
+      titleEn: "China Composites Expo Exhibitors — D",
+      description: "天石达法律主体、工艺与制品范围。",
+      descriptionEn: "Organizer source for the Tstar entity, processes and finished-product scope.",
+      url: "https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300",
+      format: "Exhibitor directory",
+    },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/dongguan-tstar-logo.png",
+  contactEmail: "tina@tstarco.com",
+  contactPhone: "+86 186 8005 2270",
+  address: "Jilong Industrial Park, Changlong, Huangjiang Town, Dongguan, Guangdong, China",
+  website: "https://www.tstarco.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 25,
+  viewCount: 0,
+  capabilities: [
+    "carbon fiber tubes, rods, sheets and profiles",
+    "fiberglass tubes, rods and pultruded profiles",
+    "pultrusion",
+    "pull-braiding",
+    "roll-wrapped composite tubes",
+    "SMC, BMC and DMC compression molding",
+    "CNC secondary machining",
+    "sporting and outdoor composite products",
+  ],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
