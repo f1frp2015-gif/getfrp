@@ -255,7 +255,7 @@ export default async function ChinaExportGrowthPage({
       </section>
 
       <section id="services" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 sm:py-24">
-        <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+        <div className="grid gap-5 border-b border-brand-cool-gray pb-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-16">
           <div>
             <div className="text-[11px] font-semibold tracking-[0.18em] text-brand-blue">
               服务范围
@@ -263,41 +263,41 @@ export default async function ChinaExportGrowthPage({
             <h2 className="mt-3 text-3xl font-semibold leading-tight text-brand-navy sm:text-4xl">
               从“能生产”到“能在海外持续成交”
             </h2>
-            <p className="mt-5 text-[15px] leading-7 text-brand-graphite/70">
-              出海不是简单翻译一套画册。我们会把产品证据、客户需求、交易路径和风险控制放在同一个项目框架中，根据企业阶段选择所需服务。
-            </p>
           </div>
+          <p className="max-w-2xl text-[15px] leading-7 text-brand-graphite/70 lg:justify-self-end">
+            出海不是简单翻译一套画册。我们会把产品证据、客户需求、交易路径和风险控制放在同一个项目框架中，根据企业阶段选择所需服务。
+          </p>
+        </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {SERVICES.map(({ Icon, number, title: serviceTitle, summary, items, ...service }) => (
-              <article
-                key={number}
-                className="group rounded-2xl border border-brand-cool-gray bg-white p-6 transition-colors hover:border-brand-blue/40"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-brand-aqua/25 text-brand-blue">
-                    <Icon size={20} />
-                  </div>
-                  <span className="font-mono text-xs text-brand-graphite/35">{number}</span>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {SERVICES.map(({ Icon, number, title: serviceTitle, summary, items, ...service }) => (
+            <article
+              key={number}
+              className="group rounded-2xl border border-brand-cool-gray bg-white p-6 transition-colors hover:border-brand-blue/40"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-brand-aqua/25 text-brand-blue">
+                  <Icon size={20} />
                 </div>
-                <h3 className="mt-5 text-xl font-semibold text-brand-navy">{serviceTitle}</h3>
-                <p className="mt-3 text-sm leading-7 text-brand-graphite/70">{summary}</p>
-                <ul className="mt-5 space-y-2.5 border-t border-brand-cool-gray pt-5">
-                  {items.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-[13px] leading-6 text-brand-graphite/80">
-                      <CheckCircle2 size={15} className="mt-1 shrink-0 text-brand-teal" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                {"note" in service ? (
-                  <p className="mt-4 rounded-lg bg-[#f4f6f9] p-3 text-[11px] leading-5 text-brand-graphite/60">
-                    {service.note}
-                  </p>
-                ) : null}
-              </article>
-            ))}
-          </div>
+                <span className="font-mono text-xs text-brand-graphite/35">{number}</span>
+              </div>
+              <h3 className="mt-5 text-xl font-semibold text-brand-navy">{serviceTitle}</h3>
+              <p className="mt-3 text-sm leading-7 text-brand-graphite/70">{summary}</p>
+              <ul className="mt-5 space-y-2.5 border-t border-brand-cool-gray pt-5">
+                {items.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-[13px] leading-6 text-brand-graphite/80">
+                    <CheckCircle2 size={15} className="mt-1 shrink-0 text-brand-teal" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              {"note" in service ? (
+                <p className="mt-4 rounded-lg bg-[#f4f6f9] p-3 text-[11px] leading-5 text-brand-graphite/60">
+                  {service.note}
+                </p>
+              ) : null}
+            </article>
+          ))}
         </div>
       </section>
 
