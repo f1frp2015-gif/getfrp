@@ -1,0 +1,105 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const HANGZHOU_HOLYCORE_SUPPLIER_ID = "sup-hangzhou-holycore";
+export const HANGZHOU_HOLYCORE_SUPPLIER_SLUG = "hangzhou-holycore";
+
+// Curated from Holycore's current official composite-material, company and
+// contact pages plus the 2026 CCE H directory. The official logo was
+// downloaded 2026-08-25 from https://www.holycore.com/uploads/40134/logo1.png;
+// the server returns WebP content, so the local file uses a .webp extension.
+export const HANGZHOU_HOLYCORE_SUPPLIER_PROFILE: SupplierListing = {
+  id: HANGZHOU_HOLYCORE_SUPPLIER_ID,
+  name: "杭州华聚复合材料有限公司",
+  nameEn: "Hangzhou Holycore Composite Material Co., Ltd.",
+  slug: HANGZHOU_HOLYCORE_SUPPLIER_SLUG,
+  location: "浙江杭州",
+  locationEn: "Hangzhou, Zhejiang, China",
+  province: "浙江",
+  category: "core",
+  products: [
+    "HolyPan® 玻纤增强 PP 蜂窝夹芯板",
+    "UDPan® CFRT 面层 PP 蜂窝板",
+    "CFRT PET 泡沫夹芯板",
+    "CFRT XPS 泡沫夹芯板",
+    "PP 蜂窝芯与无纺布覆面蜂窝芯",
+    "FRP 蜂窝夹芯板",
+    "FRP PET 泡沫夹芯板",
+    "FRP XPS 保温夹芯板",
+    "GWT® 玻纤布增强 PP 复合片材",
+    "FRP 玻璃纤维平板、压花板与防滑板",
+    "HexWood 木纹装饰蜂窝板",
+    "干货与冷藏车厢 CKD 套件",
+  ],
+  productsEn: [
+    "HolyPan glass-fiber reinforced PP honeycomb sandwich panels",
+    "UDPan CFRT-skin PP honeycomb panels",
+    "CFRT PET-foam sandwich panels",
+    "CFRT XPS-foam sandwich panels",
+    "PP honeycomb cores and nonwoven-faced PP honeycomb cores",
+    "FRP fiberglass honeycomb sandwich panels",
+    "FRP PET-foam sandwich panels",
+    "FRP XPS-insulation sandwich panels",
+    "GWT glass-fabric reinforced PP composite sheets",
+    "FRP fiberglass flat, embossed and anti-slip sheets",
+    "HexWood decorative honeycomb panels",
+    "Dry-freight and refrigerated truck-body CKD kits",
+  ],
+  processList: [
+    "PP 蜂窝芯连续制造与表面覆无纺布",
+    "CFRT 面层与蜂窝芯热熔复合",
+    "FRP 玻纤面板连续生产",
+    "PET、XPS、PP 蜂窝芯夹芯板复合",
+    "真空负压加热复合成型",
+    "板材表面涂装、压花与防滑处理",
+    "板材尺寸、厚度、面层和芯材定制",
+    "车厢设计、材料、配件与 CKD 交付",
+  ],
+  processListEn: [
+    "Continuous PP-honeycomb manufacture and nonwoven facing",
+    "Thermal lamination of CFRT skins and honeycomb cores",
+    "Continuous manufacture of FRP fiberglass skins",
+    "Lamination of PET, XPS and PP-honeycomb sandwich panels",
+    "Vacuum negative-pressure heated composite molding",
+    "Panel coating, embossing and anti-slip finishing",
+    "Custom panel dimensions, thickness, skins and core construction",
+    "Truck-body design, materials, accessories and CKD delivery",
+  ],
+  established: 2012,
+  verified: false,
+  description:
+    "杭州华聚复合材料有限公司（Holycore）是位于杭州临安的轻量夹芯板、蜂窝芯和 CKD 车厢方案供应商。现行英文官网公开杭州 Holycore 主体、2012 年创立口径、临安地址、电话和企业邮箱，并说明公司属于华立集团和华正新材体系；中国国际复材展以相同中英文主体收录企业，重点列出 PP 蜂窝板和复材成品。官网当前目录包括 HolyPan、UDPan、CFRT PET/XPS 板、PP 蜂窝芯、FRP 蜂窝/PET/XPS 夹芯板、GWT 玻纤布增强 PP 片材、FRP 平板/压花板/防滑板、装饰板和车厢 CKD 套件。本页根据实际目录植入“fiberglass sheets”和“fiberglass panels”等有搜索量的词，但只在产品明确包含 FRP/玻纤面层或片材时触发，不把所有蜂窝芯都误写成玻纤制品。",
+  descriptionEn:
+    "Hangzhou Holycore Composite Material Co., Ltd. is a Lin'an, Hangzhou supplier of lightweight sandwich panels, honeycomb cores and CKD truck-body solutions. Its current English website publishes the Hangzhou Holycore identity, a company-stated 2012 founding, Lin'an address, telephone and company email, and describes Holycore as part of Holley Group and Wazam New Materials. China Composites Expo lists the matching Chinese and English entity, emphasizing PP honeycomb panels and finished composite parts. The current catalog covers HolyPan, UDPan, CFRT PET and XPS panels, PP honeycomb cores, FRP honeycomb, PET and XPS sandwich panels, GWT glass-fabric reinforced PP sheet, flat, embossed and anti-slip FRP sheet, decorative panels and truck-body CKD kits. GetFRP assigns measured-demand phrases such as fiberglass sheets and fiberglass panels only where a listed product explicitly has an FRP or fiberglass skin or sheet; it does not relabel every honeycomb core as a fiberglass product.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "官网产品页区分热塑与热固夹芯结构。HolyPan 使用玻纤增强 PP 蜂窝芯，UDPan 使用 CFRT 连续玻纤热塑片材面层与 PP 蜂窝芯；其他页面展示 PET、XPS 和 PP 蜂窝芯与 CFRT 或 FRP 面层的组合，以及 GWT 玻纤布增强 PP 片材。采购 RFQ 应用剖面图锁定面层材料与生产商、树脂、玻纤类型/面密度/含量、表面膜或涂层、芯材类型、孔格与方向、密度、厚度、总板厚、幅宽、长度、拼接、胶粘剂或热熔界面、边封、嵌件和局部加强。性能要求需指定试验方法和试样方向，包括面密度、尺寸公差、平整度、剥离、剪切、弯曲、压缩、冲击、蠕变、热导率、吸水、耐湿热、冻融、耐候、阻燃/烟毒、VOC、食品接触或运输法规；星级对比和通用“高强轻质”不是验收值。FRP 面板还需锁定玻纤、树脂、胶衣/表面膜、纤维含量、固化、巴氏硬度、孔隙、露纤、色差、光泽、波纹、耐化学和修补限度。PP 蜂窝与热塑面层要验证热复合窗口、面层回缩、剥离、耐温、焊接/连接和回收边界；FRP 与泡沫芯用胶应验证涂胶量、开放时间、固化、耐热耐水和长期剥离。要求代表性尺寸样板、首件和量产批次按受控 BOM 与工艺验证，并提供原料/胶黏剂 TDS、SDS、批次 CoA、检验记录、变更通知和追溯。车厢 CKD 项目还需锁定设计责任、结构计算、连接、冷桥、密封、门件、五金、电气、装配工装、包装、备件、安装说明和法规责任。官网自述 ISO 9001、IATF 16949、SGS 测试、产能和专利数量，但本轮未逐项获得可核对主体、地址、范围、证书号、报告号和有效期的文件，因此认证数组保持为空，规模等级也不按营销数字填写。",
+  productsServicesSummaryEn:
+    "The official catalog separates thermoplastic and thermoset sandwich constructions. HolyPan uses a glass-fiber reinforced PP honeycomb core, while UDPan uses CFRT continuous-glass thermoplastic skins around a PP honeycomb. Other entries combine PET foam, XPS foam or PP honeycomb with CFRT or FRP skins, and GWT is described as glass-fabric reinforced PP sheet. An RFQ should use a cross-section drawing to lock skin material and producer, resin, glass type, areal weight or content, surface film or coating, core type, cell geometry and direction, density and thickness, overall panel thickness, width, length, joints, adhesive or melt-bond interface, edge closeout, inserts and local reinforcement. Performance requirements need named methods and specimen direction for mass per area, dimensions, flatness, peel, shear, flexure, compression, impact, creep, thermal conductivity, water uptake, damp heat, freeze-thaw, weathering, flame, smoke and toxicity, VOC, food contact or transport rules. Star-rating comparisons and generic high-strength or lightweight wording are not acceptance values. FRP skins also need controlled glass, resin, gelcoat or film, fiber content, cure, Barcol hardness, voids, exposed fiber, color, gloss, waviness, chemical resistance and repair limits. PP honeycomb and thermoplastic skins require validation of the thermal-lamination window, skin shrinkage, peel, service temperature, joining and recycling boundary. Adhesively bonded FRP and foam cores require coat weight, open time, cure, hot-wet durability and long-term peel. Require representative-size samples, first articles and production lots built to a controlled BOM and process, with raw-material and adhesive TDS and SDS, lot CoAs, inspection records, change notification and traceability. A truck-body CKD project should additionally lock design responsibility, structural calculations, joints, thermal bridges, sealing, doors, hardware, electrical scope, assembly tooling, packing, spares, instructions and regulatory responsibility. The website claims ISO 9001, IATF 16949, SGS testing, capacity and patent counts, but this review did not obtain documents aligning legal entity, address, scope, certificate or report number and validity. No certification is recorded as verified, and marketing capacity figures are not used for a scale tier.",
+  ecatalogs: [
+    { title: "Holycore 官网", titleEn: "Official Holycore Website", description: "公司、产品与联系入口。", descriptionEn: "Official company, product and contact entry.", url: "https://www.holycore.com/", format: "Official website" },
+    { title: "复合材料目录", titleEn: "Composite Materials Directory", description: "热塑/热固夹芯板、芯材和 FRP 片材。", descriptionEn: "Thermoplastic and thermoset panels, cores and FRP sheets.", url: "https://www.holycore.com/composite-materials/", format: "Product directory" },
+    { title: "PP 蜂窝芯目录", titleEn: "PP Honeycomb Core Directory", description: "PP 蜂窝及覆面芯材。", descriptionEn: "PP honeycomb and faced-core products.", url: "https://www.holycore.com/composite-materials/pp-honeycomb-core/", format: "Product directory" },
+    { title: "FRP 夹芯板目录", titleEn: "FRP Sandwich Panel Directory", description: "FRP 蜂窝、PET 与 XPS 板。", descriptionEn: "FRP honeycomb, PET and XPS panels.", url: "https://www.holycore.com/composite-materials/frp-sandwich-panel/", format: "Product directory" },
+    { title: "Holycore 联系方式", titleEn: "Official Holycore Contact", description: "杭州临安地址、电话与邮箱。", descriptionEn: "Published Lin'an address, telephone and email.", url: "https://www.holycore.com/contact-us", format: "Contact page" },
+    { title: "中国国际复材展 H 字母页", titleEn: "China Composites Expo Exhibitors — H", description: "杭州展商主体、蜂窝板与复材部件范围。", descriptionEn: "Organizer source for the Hangzhou entity, honeycomb and finished-composite scope.", url: "https://www.chinacompositesexpo.com/en/netshow.php?head=H", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/hangzhou-holycore-logo.webp",
+  contactEmail: "info@holycore.com",
+  contactPhone: "+86 133 6219 8844",
+  address: "No. 299 Gaoqing Road, Lin'an District, Hangzhou, Zhejiang, China",
+  website: "https://www.holycore.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 27,
+  viewCount: 0,
+  capabilities: ["PP honeycomb core", "thermoplastic sandwich panels", "FRP sandwich panels", "fiberglass sheets", "PET and XPS foam panels", "vacuum heated lamination", "truck-body CKD kits", "custom panel construction"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};

@@ -77,6 +77,11 @@ import { FANGXIN_RESIN_ANHUI_SUPPLIER_PROFILE } from "@/lib/data/fangxin-resin-a
 import { GUANGDONG_HUEDUR_AUTOMATION_SUPPLIER_PROFILE } from "@/lib/data/guangdong-huedur-automation-supplier-profile";
 import { GUANGDONG_JINMING_NEW_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/guangdong-jinming-new-materials-supplier-profile";
 import { GUANGDONG_RUIZHOU_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/guangdong-ruizhou-technology-supplier-profile";
+import { GLOTECH_ELECTRONICS_SUZHOU_SUPPLIER_PROFILE } from "@/lib/data/glotech-electronics-suzhou-supplier-profile";
+import { GPM_MACHINERY_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/gpm-machinery-shanghai-supplier-profile";
+import { HANGZHOU_FUJIKURA_RUBBER_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-fujikura-rubber-supplier-profile";
+import { HANGZHOU_HOLYCORE_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-holycore-supplier-profile";
+import { HANGZHOU_IECHO_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-iecho-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { HS_HYOSUNG_CARBON_MATERIALS_JIANGSU_SUPPLIER_PROFILE } from "@/lib/data/hs-hyosung-carbon-materials-jiangsu-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
@@ -281,6 +286,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: GUANGDONG_JINMING_NEW_MATERIALS_SUPPLIER_PROFILE },
   { profile: GUANGDONG_HUEDUR_AUTOMATION_SUPPLIER_PROFILE },
   { profile: GUANGDONG_RUIZHOU_TECHNOLOGY_SUPPLIER_PROFILE },
+  { profile: GLOTECH_ELECTRONICS_SUZHOU_SUPPLIER_PROFILE },
+  { profile: GPM_MACHINERY_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: HANGZHOU_FUJIKURA_RUBBER_SUPPLIER_PROFILE },
+  { profile: HANGZHOU_HOLYCORE_SUPPLIER_PROFILE },
+  { profile: HANGZHOU_IECHO_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
