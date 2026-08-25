@@ -8,6 +8,11 @@ import { ATCC_SUPPLIER_PROFILE } from "@/lib/data/atcc-supplier-profile";
 import { BAODING_VISIGHT_SUPPLIER_PROFILE } from "@/lib/data/baoding-visight-supplier-profile";
 import { BEIJING_BAIRUIDING_SUPPLIER_PROFILE } from "@/lib/data/beijing-bairuiding-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
+import { CHANGCHUN_BOCHAO_SUPPLIER_PROFILE } from "@/lib/data/changchun-bochao-supplier-profile";
+import { CHANGCHUN_CHANGGUANG_HIGH_PERFORMANCE_SUPPLIER_PROFILE } from "@/lib/data/changchun-changguang-high-performance-supplier-profile";
+import { CHANGSHU_DONGYU_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/changshu-dongyu-fiberglass-supplier-profile";
+import { CHANGSHU_JIANGNAN_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/changshu-jiangnan-fiberglass-supplier-profile";
+import { CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_PROFILE } from "@/lib/data/changzhou-huake-polymers-supplier-profile";
 import { CHANGZHOU_AOLANTE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-aolante-supplier-profile";
 import { CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-hongfa-zongheng-supplier-profile";
 import { CHANGZHOU_JIANLIN_SUPPLIER_PROFILE } from "@/lib/data/changzhou-jianlin-supplier-profile";
@@ -241,6 +246,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: BAODING_VISIGHT_SUPPLIER_PROFILE },
   { profile: BEIJING_BAIRUIDING_SUPPLIER_PROFILE },
   { profile: IDI_COMPOSITES_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: CHANGCHUN_BOCHAO_SUPPLIER_PROFILE },
+  { profile: CHANGCHUN_CHANGGUANG_HIGH_PERFORMANCE_SUPPLIER_PROFILE },
+  { profile: CHANGSHU_JIANGNAN_FIBERGLASS_SUPPLIER_PROFILE },
+  { profile: CHANGSHU_DONGYU_FIBERGLASS_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(

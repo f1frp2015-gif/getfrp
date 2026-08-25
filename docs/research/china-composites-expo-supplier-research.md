@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.1.0"
+version: "1.2.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.2.0"
+    date: "2026-08-25"
+    changes: "继续核验 C 字母页；第三批新增 5 家可索引供应商，补充官网限流、主体沿革冲突、页面元数据异常和无独立官网记录。"
   - version: "1.1.0"
     date: "2026-08-25"
     changes: "继续核验 CCE A/B 字母页；第二批新增 5 家可索引供应商，并补充无官网、主体过期和 Logo 不可用记录。"
@@ -18,7 +21,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -43,16 +46,26 @@ changelog:
 | 北京柏瑞鼎科技有限公司 | [CCE B 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=B) | [官网](http://www.3dbraiding.com/)、[产品示例](http://www.3dbraiding.com/product/11.html) | 三维编织预制体、杆/绳/弹簧/法兰/桁架/板件，三维编织机、复材制造、仿真和测试服务 | 已发布、可索引；官网 Logo CDN 拒绝访问，使用文字回退 |
 | 艾蒂复合材料（上海）有限公司 | [CCE A 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=A) | [中国官网](https://www.idichina.com/)、[公司概况](https://www.idichina.com/gongyi/1.html)、[BMC](https://www.idichina.com/product/5.html)、[SMC](https://www.idichina.com/product/6.html)、[联系页](https://www.idichina.com/contact.html)、[全球官网](https://idicomposites.com/) | 玻纤增强 BMC、SMC、定制聚酯/乙烯基酯热固性模塑料和压塑/注塑应用支持；保留上海实体名称与成立日期边界 | 已发布、可索引 |
 
+## 2026-08-25 第三批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 长春博超汽车零部件股份有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | [官网](https://www.bochaoautoparts.com/)、[产品体系](https://www.bochaoautoparts.com/products.html)、[研发能力](https://www.bochaoautoparts.com/research.html) | 麻/竹等天然植物纤维复合板材，汽车门板、顶棚、行李箱、座椅背板和衣帽架内饰件，绿色家装及运动用品材料；记录当前与旧版地址差异 | 已发布、可索引 |
+| 长春长光高性能材料有限公司 | [CCE C 字母页联合展商](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | [官网](https://www.cccgam.net/)、[公司介绍](https://www.cccgam.net/gywm)、[预浸料](https://www.cccgam.net/fqszyjl.html)、[胶粘剂](https://www.cccgam.net/jzj)、[联系页](https://www.cccgam.net/lxwm) | 环氧/氰酸酯/双马/邻苯二甲腈树脂，碳纤/玻纤预浸料，胶粘剂/胶膜，高精度碳纤维管、功能板和结构件；以 2025 年新法人而非母公司全部历史为边界 | 已发布、可索引 |
+| 常熟江南玻璃纤维有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | [官网](https://www.jnglassfiber.com/)、[产品目录](https://www.jnglassfiber.com/products)、[玻纤布](https://www.jnglassfiber.com/Fiberglass-Cloth-Series)、[复合布](https://www.jnglassfiber.com/Glass-Fiber-Cloth-Composite-Series)、[防火毯](https://www.jnglassfiber.com/Fire-Blankets)、[联系页](https://www.jnglassfiber.com/contact-us.html) | 玻纤工业布、涂层/热处理/膨体布、网格布、复合布及消防、车辆、焊接防火毯；成立年份因 1956/1992 口径冲突留空 | 已发布、可索引 |
+| 常熟市东宇绝缘复合材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | [官网](https://www.dongyufiberglass.com/)、[公司介绍](https://www.dongyufiberglass.com/gsgk)、[短切毡](https://www.dongyufiberglass.com/productinfo/1528439.html)、[表面毡](https://www.dongyufiberglass.com/productinfo/1504128.html)、[直接纱](https://www.dongyufiberglass.com/productinfo/1603075.html?templateId=1133605)、[联系页](https://www.dongyufiberglass.com/lxwm) | 粉剂/乳液短切毡、表面毡、玻纱、无捻粗纱布、电子布、多轴向织物、复合毡、防火毯和碳纤维织物 | 已发布、可索引 |
+| 常州华科聚合物股份有限公司 | [CCE C 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=C) | [官网](https://www.xsresin.com/)、[公司介绍](https://www.xsresin.com/about/about.php?id=850)、[产品分类](https://www.xsresin.com/product/product.php?id=854)、[不饱和聚酯树脂](https://www.xsresin.com/product/product.php?id=874)、[应用牌号](https://www.xsresin.com/product/show_product.php?id=2242)、[英文页](https://www.xsresin.com/about/about.php?id=891) | 不饱和聚酯、乙烯基酯、聚氨酯等手糊、缠绕、拉挤、模压、机制板、CIPP 和真空导入用树脂，胶衣、色浆与助剂 | 已发布、可索引 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家。
 
 ## 本轮跳过与延后
 
@@ -68,6 +81,11 @@ changelog:
 | AGY 上海相关展商身份 | [CCE A 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=A) | 公开历史资料显示原 AGY 上海业务早已出售并更名，当前展商名称不能作为仍由 AGY 运营的可靠主体证据 | 跳过过期身份，待按当前法人重新核验 |
 | 保定朗诺复合材料有限公司 | [CCE B 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=B) | 本轮仅找到工商聚合和行业文章，未找到可核验的企业自有官网 | 跳过，待官网出现后复核 |
 | 北京碧岩特种材料有限公司 | [CCE B 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=B) | 本轮仅找到第三方企业信息页面，未找到当前企业自有官网 | 跳过，避免以聚合页替代官网 |
+| 长春珑鑫新材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 可找到展会、协会等第三方介绍，但本轮未找到能与该法人稳定对应且可访问的企业自有官网 | 跳过，待官网出现后复核 |
+| 常熟市奥欣复合材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 展会简介包含碳纤维管、板、模压件和辊筒，但检索结果只有展会名单、工商或 B2B 页面，未找到独立官网 | 按“无官网跳过”规则处理 |
+| 常熟市耀星玻纤绝缘制品有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 可找到由第三方平台托管的企业商铺和政府名单，但未确认企业自有独立官网 | 跳过，避免把平台店铺当官网 |
+| 常州宝博复合材料科技有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 展会简介提到汽车 FRP 件、风电叶片、导流罩和机舱罩，但本轮未找到当前可核验的企业自有官网 | 跳过，待官网出现后复核 |
+| 常州桦立柯新材料有限公司 / 常州康帕斯德新材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 公开资料在 `huolike.com`、`kpsd.com.cn` 及两个关联主体之间交叉，当前检索未能稳定确认官网所有权、主体边界和有效内容 | 延后，待域名与法人关系可独立核对 |
 
 ## 证据边界与复核提醒
 
@@ -80,6 +98,11 @@ changelog:
 - 维赛官网列出多个生产或运营实体；不同 Vicell 系列的实际生产法人、场地和证书范围应在 RFQ 中确认。
 - 艾蒂中国官网在不同位置使用多个中文实体名称，公开运营年份也无法与所有工商主体直接统一；主页暂不填写成立年份，采购方需核实签约和生产主体。
 - 艾达索、维赛和柏瑞鼎官网存在 HTTPS 或浏览器安全兼容问题；柏瑞鼎官方页眉 Logo CDN 在核验时拒绝访问，因此按项目规则使用文字回退，而不是复制第三方图片。
+- 博超当前官网地址为宝来街 888 号，同域名旧版页面曾列高尔夫路 399 号；主页采用当前地址并提醒采购方复核实际签约和生产地点。
+- 长光高材是 2025 年成立并由长光宇航控股的新法人；主页只收录新公司官网可支持的产品和能力，不把母公司的全部资质、合同和历史自动迁移。其联系页搜索标题出现无关垃圾文本，正文联系信息仍与全站一致，已加入安全复核提醒。
+- 江南玻纤官网使用 1956 年企业沿革，展会和公开法人资料存在 1992 年等口径；在品牌前身与当前法人时间无法统一前，成立年份保持空值。
+- 东宇官网在自动浏览核验时一度返回 429，但同域名普通网页请求、产品页、联系页和备案主体保持一致；主页记录限流而不把它误判为网站失效。
+- 华科官网有危化品经营提示，树脂采购除技术牌号外还需把 SDS、UN 分类、温控、危险品运输、进口许可和废弃物处置写入交易核验。
 
 ## 后续维护方法
 

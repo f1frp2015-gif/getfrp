@@ -1,0 +1,161 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_ID =
+  "sup-changzhou-huake-polymers";
+export const CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_SLUG =
+  "changzhou-huake-polymers";
+
+// Curated from Huake Polymers' current official company, resin, application,
+// English and contact pages and the 2026 China Composites Expo C directory.
+// Official logo downloaded on 2026-08-25 from the current website header:
+// https://www.xsresin.com/template/web/images/logo.png
+export const CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_PROFILE: SupplierListing = {
+  id: CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_ID,
+  name: "常州华科聚合物股份有限公司",
+  nameEn: "Changzhou Huake Polymers Co., Ltd.",
+  slug: CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_SLUG,
+  location: "江苏常州",
+  locationEn: "Changzhou, Jiangsu, China",
+  province: "江苏",
+  category: "resin",
+  products: [
+    "手糊、喷射、浇铸和机制板用不饱和聚酯树脂",
+    "储罐和管道纤维缠绕用树脂",
+    "邻苯、间苯、乙烯基酯和聚氨酯拉挤树脂",
+    "SMC/BMC 模压树脂及低收缩添加剂",
+    "耐腐蚀和 CIPP 管道修复用乙烯基酯树脂",
+    "真空导入树脂体系",
+    "胶衣、彩色胶浆、水性/特种树脂和助剂",
+  ],
+  productsEn: [
+    "Unsaturated-polyester resins for hand lay-up, spray-up, casting and continuous sheet",
+    "Filament-winding resin grades for tanks and pipes",
+    "Orthophthalic, isophthalic, vinyl-ester and polyurethane pultrusion resins",
+    "Resins and low-shrink additives for SMC and BMC compression molding",
+    "Vinyl-ester resins for corrosion control and CIPP pipe rehabilitation",
+    "Vacuum-infusion resin systems",
+    "Gelcoat resins, color pastes, waterborne or specialty resins and additives",
+  ],
+  processList: [
+    "不饱和聚酯与乙烯基酯树脂合成",
+    "手糊、喷射和浇铸用树脂配方",
+    "湿法缠绕与拉挤树脂应用开发",
+    "SMC/BMC 模压树脂和低收缩体系开发",
+    "真空导入和 RTM 树脂适配",
+    "风电、船舶、轨交、建筑和防腐应用支持",
+  ],
+  processListEn: [
+    "Unsaturated-polyester and vinyl-ester resin synthesis",
+    "Resin formulation for hand lay-up, spray-up and casting",
+    "Wet-winding and pultrusion resin application development",
+    "SMC and BMC molding-resin and low-shrink system development",
+    "Vacuum infusion and RTM resin adaptation",
+    "Wind, marine, rail, infrastructure and corrosion-control application support",
+  ],
+  established: 2001,
+  verified: false,
+  description:
+    "常州华科聚合物股份有限公司官网称公司成立于 2001 年，专业研发、生产和销售不饱和聚酯树脂、乙烯基酯树脂及相关聚合物产品，为复合材料和胶粘剂等领域提供解决方案。当前产品分类包括不饱和聚酯、乙烯基酯、水性树脂、彩胶色浆、特种树脂、聚氨酯和助剂；应用页进一步公开手糊、喷射、缠绕、模压、拉挤、机制板、真空导入和其他工艺用树脂牌号。中国国际复材展 C 字母页收录同一主体，归入不饱和聚酯、乙烯基酯、其他树脂、胶衣和色浆/颜料。产能、牌号数量、认证、性能和应用陈述均为企业或展会发布，尚未由 GetFRP 独立审计。",
+  descriptionEn:
+    "Changzhou Huake Polymers Co., Ltd. states on its official website that it was founded in 2001 and develops, manufactures and sells unsaturated-polyester, vinyl-ester and related polymer products for composites, adhesives and adjacent markets. Its current categories include unsaturated polyester, vinyl ester, waterborne resin, colored gelcoat and pigment paste, specialty resin, polyurethane and additives. The official application pages further publish grades for hand lay-up, spray-up, winding, compression molding, pultrusion, continuous sheet, vacuum infusion and other processes. China Composites Expo lists the same entity under unsaturated polyester, vinyl ester, other resins, gelcoat and pigment paste. Capacity, grade-count, certification, performance and application statements remain supplier- or organizer-published and have not been independently audited by GetFRP.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "华科官网按工艺而非只按树脂大类组织部分选型信息。例如建筑与基础设施页列出 HS-902、HS-1125、HS-1520 等模压树脂及低收缩剂，HS-1008A、HS-2252、HS-4483B、HS-5733 等邻苯/间苯/乙烯基酯/聚氨酯拉挤体系，以及手糊和机制板牌号；不饱和聚酯目录还明确列出缠绕、模压、拉挤和真空导入工艺。采购方不能只写“191 树脂”或“乙烯基树脂”：RFQ 应约定具体牌号与化学体系、单体和受限物质、黏度、触变指数、酸值、固含、凝胶/峰值/固化时间、放热、收缩、浇铸体机械性能、HDT/Tg、耐水和耐介质、颜色、储存温度与保质期、引发剂/促进剂/填料体系及批次 CoA。真空导入、RTM、缠绕、拉挤、SMC/BMC 和 CIPP 的流变、反应窗口、设备和现场条件差异明显，必须在实际纤维、芯材、模具和固化制度上试料。食品接触、船级社、轨交阻燃、电气、饮用水、CIPP 或建筑项目需核验目的市场和具体牌号的当前批准。官网展示或提到若干体系、船级和产品合规信息，但本轮没有完整现行证书包可同时核对法人、玉龙北路场地、范围、证书号和有效期，因此认证保持为空。官网公开危化品经营提示；树脂和配套化学品还应在订单前核对 SDS、UN 运输分类、温控、包装、危险品承运、进口许可和废弃物处置。",
+  productsServicesSummaryEn:
+    "Huake organizes part of its selection guidance by process rather than only by resin family. Its building and infrastructure page lists HS-902, HS-1125 and HS-1520 molding resins plus low-shrink additives; HS-1008A, HS-2252, HS-4483B and HS-5733 orthophthalic, isophthalic, vinyl-ester and polyurethane pultrusion systems; and multiple hand-lay-up and continuous-sheet grades. The unsaturated-polyester directory also explicitly covers winding, molding, pultrusion and vacuum-infusion processes. A buyer should not order merely “191 resin” or “vinyl ester.” The RFQ needs the exact grade and chemistry; monomer and restricted-substance limits; viscosity; thixotropic index; acid value; solids; gel, peak-exotherm and cure time; shrinkage; neat-resin mechanical properties; HDT or Tg; water and chemical resistance; color; storage and shelf life; initiator, promoter and filler package; and batch CoA. Vacuum infusion, RTM, winding, pultrusion, SMC or BMC and CIPP impose materially different rheology, reaction windows, equipment and field conditions, so the grade must be trialed with the actual reinforcement, core, tool and cure schedule. Food contact, marine class, rail fire, electrical, potable-water, CIPP and building programs require destination-market and grade-specific current approvals. The site displays or mentions management-system, marine and product-compliance information, but the reviewed public material did not expose a complete current package sufficient to verify the legal entity, Yulong North Road site, scope, certificate number and validity; the certification arrays remain empty. The website also displays a hazardous-chemicals notice. Before ordering resin or associated chemicals, review the SDS, UN transport classification, temperature control, package, dangerous-goods carrier, import permit and waste-disposal responsibilities.",
+  ecatalogs: [
+    {
+      title: "华科聚合物官网",
+      titleEn: "Official Huake Polymers Website",
+      description: "公司、产品、应用市场、新闻和当前联系信息。",
+      descriptionEn: "Official company, products, applications, news and current contact information.",
+      url: "https://www.xsresin.com/",
+      format: "Official website",
+    },
+    {
+      title: "华科聚合物公司介绍",
+      titleEn: "Huake Polymers Company Profile",
+      description: "公司范围、行业应用和企业定位。",
+      descriptionEn: "Official scope, application markets and company positioning.",
+      url: "https://www.xsresin.com/about/about.php?id=850",
+      format: "Company profile",
+    },
+    {
+      title: "华科产品分类",
+      titleEn: "Huake Product Categories",
+      description: "不饱和聚酯、乙烯基酯、水性、特种、聚氨酯和助剂。",
+      descriptionEn: "Unsaturated polyester, vinyl ester, waterborne, specialty, polyurethane and additives.",
+      url: "https://www.xsresin.com/product/product.php?id=854",
+      format: "Product directory",
+    },
+    {
+      title: "华科不饱和聚酯树脂",
+      titleEn: "Huake Unsaturated-polyester Resins",
+      description: "手糊、喷射、缠绕、模压、拉挤和真空导入工艺入口。",
+      descriptionEn: "Official hand lay-up, spray-up, winding, molding, pultrusion and vacuum-infusion process entry.",
+      url: "https://www.xsresin.com/product/product.php?id=874",
+      format: "Technical product directory",
+    },
+    {
+      title: "华科建筑与基础设施用树脂",
+      titleEn: "Huake Resins for Building and Infrastructure",
+      description: "模压、手糊、拉挤和机制板公开牌号及特性。",
+      descriptionEn: "Published molding, hand-lay-up, pultrusion and continuous-sheet grades.",
+      url: "https://www.xsresin.com/product/show_product.php?id=2242",
+      format: "Technical application page",
+    },
+    {
+      title: "华科英文公司页",
+      titleEn: "Huake English Company Page",
+      description: "英文公司、应用和出口询价联系信息。",
+      descriptionEn: "English company, application and international inquiry information.",
+      url: "https://www.xsresin.com/about/about.php?id=891",
+      format: "Official English profile",
+    },
+    {
+      title: "华科联系方式",
+      titleEn: "Huake Contact Page",
+      description: "常州地址、销售电话和业务邮箱。",
+      descriptionEn: "Official Changzhou address, sales telephone and business email.",
+      url: "https://www.xsresin.com/contact/contact.php?id=849",
+      format: "Official contact",
+    },
+    {
+      title: "中国国际复材展 C 字母展商页",
+      titleEn: "China Composites Expo Exhibitors — C",
+      description: "华科展商身份、产品类别和展会简介。",
+      descriptionEn: "Organizer entry for Huake, its categories and exhibitor description.",
+      url: "https://www.chinacompositesexpo.com/cn/netshow.php?head=C",
+      format: "Exhibitor directory",
+    },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/changzhou-huake-polymers-logo.png",
+  contactEmail: "marketing@xsresin.com",
+  contactPhone: "+86 519 8692 1273",
+  address:
+    "No. 602 Yulong North Road, Xinbei District, Changzhou, Jiangsu 213127, China",
+  website: "https://www.xsresin.com/",
+  enterpriseId: null,
+  scaleTier: "L",
+  brandPriority: 25,
+  viewCount: 0,
+  capabilities: [
+    "unsaturated polyester resin",
+    "vinyl-ester resin",
+    "pultrusion resin",
+    "filament-winding resin",
+    "vacuum-infusion resin",
+    "SMC and BMC molding resin",
+    "gelcoat resin",
+    "CIPP rehabilitation resin",
+  ],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
