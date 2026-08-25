@@ -27,7 +27,7 @@ const CONTACT_HREF =
   "mailto:inquriy@getfrp.com?subject=GetFRP%20%E5%A4%8D%E6%9D%90%E5%87%BA%E6%B5%B7%E6%9C%8D%E5%8A%A1%E5%92%A8%E8%AF%A2";
 const title = "复材出海服务｜出口代理、法务咨询与海外推广｜GetFRP";
 const description =
-  "GetFRP 为中国复材材料商与制品企业提供海外市场进入、出口代理、法律法务咨询及 GetFRP.com 在线推广服务，由拥有30年以上经验的复材专家与洛杉矶办公室协同支持。";
+  "GetFRP 为中国复材材料商与制品企业提供海外市场进入、出口代理、法律法务咨询及 GetFRP.com 在线推广服务，由拥有30年纤维复材国际贸易经验的海外专家与洛杉矶办公室协同支持。";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -212,9 +212,9 @@ export default async function ChinaExportGrowthPage({
               </div>
               <div className="mt-6 space-y-6">
                 <div>
-                  <div className="text-3xl font-semibold">30+ 年</div>
+                  <div className="text-3xl font-semibold">30 年</div>
                   <p className="mt-1 text-sm leading-6 text-slate-300">
-                    拥有30年以上行业经验的复材专家参与项目研判
+                    拥有30年纤维复材国际贸易经验的海外专家参与项目研判
                   </p>
                 </div>
                 <div className="border-t border-white/15 pt-6">
