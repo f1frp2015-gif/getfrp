@@ -53,6 +53,7 @@ import { DEZHOU_JUNTENG_MATERIAL_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/
 import { DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-maikos-composites-supplier-profile";
 import { ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-dasheng-mould-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
+import { EXEL_COMPOSITES_NANJING_SUPPLIER_PROFILE } from "@/lib/data/exel-composites-nanjing-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
@@ -85,6 +86,7 @@ import { RUNSING_SUPPLIER_PROFILE } from "@/lib/data/runsing-supplier-profile";
 import { SHANGHAI_MOYAN_SUPPLIER_PROFILE } from "@/lib/data/shanghai-moyan-supplier-profile";
 import { SHENGLI_LIMITED_SUPPLIER_PROFILE } from "@/lib/data/shengli-limited-supplier-profile";
 import { SHANGHAI_TRONXT_SUPPLIER_PROFILE } from "@/lib/data/shanghai-tronxt-supplier-profile";
+import { SINOPEC_SHANGHAI_PETROCHEMICAL_SUPPLIER_PROFILE } from "@/lib/data/sinopec-shanghai-petrochemical-supplier-profile";
 import { SINAUVA_SUPPLIER_PROFILE } from "@/lib/data/sinauva-composites-supplier-profile";
 import { SINO_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/sino-composite-supplier-profile";
 import { SUZHOU_GREENTECH_SUPPLIER_PROFILE } from "@/lib/data/suzhou-greentech-supplier-profile";
@@ -98,10 +100,12 @@ import { TLB_SUPPLIER_PROFILE } from "@/lib/data/tlb-supplier-profile";
 import { TOPGLOW_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/topglow-shanghai-supplier-profile";
 import { TUOTIAN_SUPPLIER_PROFILE } from "@/lib/data/tuotian-supplier-profile";
 import { WANHUA_SUPPLIER_PROFILE } from "@/lib/data/wanhua-supplier-profile";
+import { WEIHAI_GUANGWEI_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/weihai-guangwei-composites-supplier-profile";
 import { WEIHAI_DUSHI_SUPPLIER_PROFILE } from "@/lib/data/weihai-dushi-composite-materials-supplier-profile";
 import { WELLS_WAM_SUPPLIER_PROFILE } from "@/lib/data/wells-wam-supplier-profile";
 import { XIAMEN_LFT_SUPPLIER_PROFILE } from "@/lib/data/xiamen-lft-supplier-profile";
 import { YUTO_NEW_MATERIAL_SUPPLIER_PROFILE } from "@/lib/data/yuto-new-material-supplier-profile";
+import { YIXING_HUAHENG_SUPPLIER_PROFILE } from "@/lib/data/yixing-huaheng-supplier-profile";
 import { ZHEJIANG_HUAFENG_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-huafeng-supplier-profile";
 import { ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-tianhe-resin-supplier-profile";
 import {
@@ -223,6 +227,10 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: ZHEJIANG_HUAFENG_SUPPLIER_PROFILE },
   { profile: ZHEJIANG_TIANHE_RESIN_SUPPLIER_PROFILE },
   { profile: ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE },
+  { profile: WEIHAI_GUANGWEI_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: YIXING_HUAHENG_SUPPLIER_PROFILE },
+  { profile: SINOPEC_SHANGHAI_PETROCHEMICAL_SUPPLIER_PROFILE },
+  { profile: EXEL_COMPOSITES_NANJING_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
