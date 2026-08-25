@@ -82,7 +82,11 @@ import { GPM_MACHINERY_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/gpm-machiner
 import { HANGZHOU_FUJIKURA_RUBBER_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-fujikura-rubber-supplier-profile";
 import { HANGZHOU_HOLYCORE_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-holycore-supplier-profile";
 import { HANGZHOU_IECHO_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-iecho-supplier-profile";
+import { HANGZHOU_JLS_FLAME_RETARDANTS_SUPPLIER_PROFILE } from "@/lib/data/hangzhou-jls-flame-retardants-supplier-profile";
+import { HB_FULLER_CHINA_SUPPLIER_PROFILE } from "@/lib/data/hb-fuller-china-supplier-profile";
+import { HEDRICH_XIAMEN_SUPPLIER_PROFILE } from "@/lib/data/hedrich-xiamen-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
+import { HRC_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/hrc-composites-supplier-profile";
 import { HS_HYOSUNG_CARBON_MATERIALS_JIANGSU_SUPPLIER_PROFILE } from "@/lib/data/hs-hyosung-carbon-materials-jiangsu-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
@@ -105,6 +109,7 @@ import {
 } from "@/lib/data/jushi-supplier-profile";
 import { JIUDING_SUPPLIER_PROFILE } from "@/lib/data/jiuding-supplier-profile";
 import { JHPK_SUPPLIER_PROFILE } from "@/lib/data/jhpk-supplier-profile";
+import { JIANGSU_SHINO_POLYIMIDE_FIBER_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-shino-polyimide-fiber-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -291,6 +296,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: HANGZHOU_FUJIKURA_RUBBER_SUPPLIER_PROFILE },
   { profile: HANGZHOU_HOLYCORE_SUPPLIER_PROFILE },
   { profile: HANGZHOU_IECHO_SUPPLIER_PROFILE },
+  { profile: HANGZHOU_JLS_FLAME_RETARDANTS_SUPPLIER_PROFILE },
+  { profile: HB_FULLER_CHINA_SUPPLIER_PROFILE },
+  { profile: HEDRICH_XIAMEN_SUPPLIER_PROFILE },
+  { profile: HRC_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: JIANGSU_SHINO_POLYIMIDE_FIBER_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(

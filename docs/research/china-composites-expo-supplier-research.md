@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.6.0"
+version: "1.7.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.7.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE F/H/J 字母页；第八批新增 5 家可索引供应商，补充全球牌号/中国法人、集团技术/厦门装配、聚酰亚胺材料身份、再生碳纤维关键词及浏览器证书边界。"
   - version: "1.6.0"
     date: "2026-08-25"
     changes: "继续核验 CCE G/H 字母页；第七批新增 5 家可索引供应商，补充电子玻纤/石英纤维、热塑复材生产线、蜂窝夹芯板、数字裁切和藤仓中国联系与集团碳轴边界。"
@@ -33,7 +36,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -108,16 +111,26 @@ changelog:
 | 杭州爱科科技股份有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H)、[深圳 CCE 企业页](https://shenzhen.chinacompositesexpo.com/en/netshow-125-2247162.html) | [官网](https://www.iechocutter.com/)、[复材切割方案](https://www.iechocutter.com/applications/cutting-solution-for-composite-materials/)、[公司简介](https://www.iechocutter.com/about-iecho/)、[联系页](https://www.iechocutter.com/contact-us/) | AK4、BK4/BK2、TK4S、SK2、GLSA/GLSC，刀具、真空送料、排版和软件；碳纤、玻纤、预浸料和 FRP 仅为被切材料 | 已发布、可索引 |
 | 杭州藤仓橡胶有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | [Fujikura Composites](https://www.fujikuracomposites.jp/en/)、[集团子公司](https://www.fujikuracomposites.jp/en/company-en/)、[杭州中国联系](https://www.fujikuracomposites.jp/control/en/agency-en/)、[Fujikura Shaft](https://www.fujikurashaft.jp/en/)、[DIAMOND SPEEDER](https://www.fujikurashaft.jp/en/en_material/en_jewel_line/diamond_speeder/) | 展会与集团官网共同支持碳纤高尔夫轴关联，另有气缸、调压器和阀件；只作为杭州询价/确认范围，不宣称集团碳轴由杭州制造 | 已发布、可索引；杭州本地域名当前空白，使用集团官方证据链 |
 
+## 2026-08-25 第八批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 富乐（中国）粘合剂有限公司 | [CCE F 字母页第 2 页：7Q12](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=F) | [中国运营主体/地址](https://www.hbfuller.com/en/about-us/supplier-resources/welcome-information)、[航空复材应用](https://www.hbfuller.com/en/markets/aerospace)、[航空牌号](https://www.hbfuller.com/en/campaigns/aerospace-campaign)、[风电应用](https://www.hbfuller.com/en/markets/wind-energy) | 复材修补、夹芯板封边/芯填充、航空聚硫密封、风电腹板与涡流发生器粘接、机舱密封、灌封和紧固件材料；全球牌号只作集团询价范围，不推定广州制造 | 已发布、可索引 |
+| 赫德瑞意（厦门）真空设备制造有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-2911-3379101.html) | [HEDRICH 中国](https://www.hedrich.com/chn/company/hedrich-international/hedrich-china)、[树脂绝缘设备](https://www.hedrich.com/chn/products/technologies/equipment-for-cast-resin-insulation)、[压力成型/混合计量](https://www.hedrich.com/chn/products/technologies/clamping-machines-moulds-mixing-and-dosing-systems)、[VPI](https://www.hedrich.com/chn/products/technologies/equipment-for-vacuum-pressure-impregnation-vpi) | 真空树脂浇注、APG、定量灌封、真空注射、VPI、油纸干燥、合模/模具、LSR 混配和真空泵组；区分集团技术与厦门装配、进口、调试和服务 | 已发布、可索引；设备企业不注入材料词 |
+| 杭州捷尔思阻燃化工有限公司 | [CCE H 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=H) | [官网](https://en.jlschemical.com/)、[产品目录](https://en.jlschemical.com/PRODUCTS.html)、[CFRT 阻燃母粒](https://m.en.jlschemical.com/product/HALOGEN_FREE_FLAME_RETARDANT_MASTERBATCH_111515/JLS_MB36B_D_Series.html)、[联系页](https://en.jlschemical.com/CONTACT_US.html) | PNA、MB、PMP、MC、APP 和 FR 系列，覆盖 GFPP/GFPA/CFRT、热固树脂、PVC/ABS 和 TPE/TPU；玻纤为适配基材，不把添加剂供应商写成玻纤制造商 | 已发布、可索引 |
+| HRC（亨睿碳纤维） | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-1921-4501508.html) | [官网](https://www.grouphrc.com/)、[量产工艺](https://www.grouphrc.com/cn/services/production)、[再生产品](https://www.grouphrc.com/cn/sustainability)、[联系页](https://www.grouphrc.com/contact) | 汽车/航空碳纤部件，注塑、HP-RTM、湿法模压、热压罐、缠绕，以及再生粒子、无纺布、热塑毡、预浸料、板材、建筑模板、匹克球拍和行李箱 | 已发布、可索引；集团品牌询价时须确认具体法人和场地 |
+| 江苏先诺新材料科技有限公司 | [CCE J 增强材料页](https://www.chinacompositesexpo.com/cn/netshow.php?head=J&kind_id=47) | [官网](https://www.jsshino.com/)、[产品中心](https://www.jsshino.com/main/product/)、[织物规格](https://www.jsshino.com/main/product/zw/226.html)、[S10T 纤维](https://jsshino.com/main/product/ngw/204.html)、[联系页](https://www.jsshino.com/contact/) | Shinofil 高强高模/耐高温聚酰亚胺长丝、短纤、W-60/W-100/W-200 织物、聚酰亚胺制品和 Astra 星绵；明确 PI 纤维不等同于芳纶、碳纤或玻纤 | 已发布、可索引 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家。
 
 ## 本轮跳过与延后
 
@@ -155,11 +168,18 @@ changelog:
 | 福建省睿步科技有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | 检索结果未能独立确认当前企业官网，无法完成主体和产品一致性核验 | 按“无官网跳过”规则处理 |
 | 广东仁达智能装备有限公司 | [CCE G 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=G) | 仅找到展会或第三方平台线索，未确认当前企业自有独立官网 | 跳过，避免把平台页面当官网 |
 | 杭州马尔克森复合材料有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | 可定位 `hzmarkson.com`，但标准浏览器返回证书域名不匹配，HTTP 入口又被浏览器安全策略拦截，无法可靠核验现行产品、联系和 Logo | 延后，待官网 TLS 修复后复核 |
-| 杭州航辰科技有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | `hangchentechnology.com` 当前返回不受信任的证书链，HTTP 入口不可用，无法形成可靠官网证据链 | 延后，待官网证书修复后复核 |
+| 航宸石家庄新材料科技有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | `hangchentechnology.com` 属于该石家庄主体而非“杭州航辰”；当前 HTTPS 返回不受信任证书链、HTTP 入口不可用，无法形成可靠官网证据链 | 延后，纠正主体后待官网证书修复 |
 | 杭州新世管道集团有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | 可定位 `hz-xinshi.com`，但本轮标准浏览器无法访问可核验内容 | 按“官网失效跳过”规则处理 |
 | 杭州明达玻璃纤维有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | 可定位 `hz-mingda.com`，但当前浏览器无法稳定访问产品与联系方式 | 延后，待官网恢复后复核 |
 | 杭州科雷机电工业有限公司（Coleitec） | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | HTTP 入口被拦截，HTTPS 返回证书域名不匹配，无法可靠核验当前主体、产品和 Logo | 延后，待官网安全配置修复 |
 | H.J. Unkel 上海相关展商 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | 可定位集团网站，但现行站点向本轮普通浏览器请求返回 403，未能核对中国展商主体与当前复材产品目录 | 延后，待官网可访问后复核 |
+| 哈尔滨玻璃钢研究院有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=H) | 官方域名 `harbinfrp.com` 的 HTTPS 使用自签证书，HTTP 在标准浏览器被安全策略拦截；无法以正常访问路径核验当前产品、联系与 Logo | 延后，待官网恢复受信任 HTTPS |
+| 杭州和兴碳纤维科技有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=H) | 母公司和顺科技官网可支持项目关联，但 `hzheshun.com` 当前为自签证书且 HTTP 内容不可用；不在不安全连接上发布 T800/M 级等项目声明 | 延后，待官方安全站点可访问 |
+| 合肥合锻智能制造股份有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=H) | 官方 `hfpress.com` 的带 `www` 站点证书域名不匹配、裸域证书已过期，HTTP 返回 403，不能完成标准浏览器证据链 | 延后，待 TLS 修复 |
+| 杭州阳涛科技有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/en/netshow-3126-91139238.html) | 可从展会资料定位官方域名 `hzyangtao.cn`，但当前 HTTPS TLS 握手异常、HTTP 返回站点过滤 404，无法核验当前设备与联系方式 | 延后，待官网恢复 |
+| 河北盛宝环保设备有限公司 | [CCE H 字母页第 4 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=90&head=H) | `shengbao999.com` 搜索抓取可见玻璃钢管、罐、SMC 水箱等页面，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，不满足官网安全准入 | 延后，待证书域名修复 |
+| 惠州市海龙新材料科技有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-3358-81014512.html) | 英文官方域名可被搜索抓取，但标准自动浏览进入“异常访问”拦截页；中文站证书域名不匹配，无法稳定核验当前模具、工艺和联系内容 | 延后，待官网允许正常浏览并修复证书 |
+| 杭州昂瑞材料科技有限公司 | [CCE H 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=H) | 本轮未找到能与该法人独立对应的企业自有官网；`vulcan-hz.com` 属于另一家杭州碳热场企业，不能错配给昂瑞 | 跳过，避免错配主体 |
 
 ## 证据边界与复核提醒
 
@@ -195,6 +215,11 @@ changelog:
 - 国塑与爱科都是设备企业。国塑产线可加工碳纤、玻纤、芳纶和 UHMWPE，爱科设备可裁切碳纤布、玻纤布、预浸料和 FRP；这些被加工材料不成为两家公司自产产品或材料 SEO 词。
 - 华聚官网把 PP 蜂窝芯、CFRT 面层、FRP 面层、PET/XPS 泡沫和装饰板分成不同结构。`fiberglass sheets` 与 `fiberglass panels` 只由明确包含 FRP/玻纤片材或面层的产品触发，不覆盖纯 PP 芯材。
 - 藤仓集团官网列出杭州子公司和中国控制设备联系方式，CCE 展商说明又提到高尔夫碳轴；但球杆轴官网的部分产品明确标注日本制造。杭州主页仅记录集团产品询价与确认范围，不宣称杭州制造碳轴，也不把 CCE 宽泛的环氧、纤维原料或切割分类扩写成无官网型号的产品。
+- 富乐官网把广州、南京、苏州和烟台列为不同中国主体；航空和风电目录又属于集团全球产品范围。广州主页不把美国制造的航空牌号或其他中国工厂范围自动写成广州制造，询价必须确认销售法人、产地、批准版本和冷链/危运条件。
+- HEDRICH 官网同时展示集团全球技术和厦门本地运营。主页可列集团官网明确导航的设备系列，但设备是否在厦门完整制造、进口、集成、调试或仅提供服务，必须在合同中按模块拆分。
+- 捷尔思的 GFPP、GFPA 和 CFRT 是阻燃剂适配基材，不代表企业生产玻璃纤维、预浸带或复材板；没有触发 fiberglass 产品搜索词。
+- HRC 以集团品牌参加展会并公开常熟多个业务基地。主页可映射官网明确展示的碳纤维板材、匹克球拍和其他终端产品词，但项目签约前必须确认汽车、航空、研发或碳中和业务的具体法人、场地和量产状态。
+- 先诺的聚酰亚胺纤维是独立的高性能有机纤维类别，不等同于芳纶、碳纤维或玻璃纤维。W-60/W-100/W-200 与 S10T 数据只按对应牌号引用，不能跨规格或跨材料外推。
 
 ## 后续维护方法
 

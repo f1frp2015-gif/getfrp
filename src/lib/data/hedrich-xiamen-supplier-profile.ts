@@ -1,0 +1,103 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const HEDRICH_XIAMEN_SUPPLIER_ID = "sup-hedrich-xiamen";
+export const HEDRICH_XIAMEN_SUPPLIER_SLUG = "hedrich-xiamen";
+
+// Curated from HEDRICH's current official China, technology and contact pages
+// plus the exact 2026 CCE exhibitor page. The current official logo was
+// downloaded 2026-08-25 from hedrich.com/cdn/logos/hedrich_logo_2024_02.jpg.
+export const HEDRICH_XIAMEN_SUPPLIER_PROFILE: SupplierListing = {
+  id: HEDRICH_XIAMEN_SUPPLIER_ID,
+  name: "赫德瑞意（厦门）真空设备制造有限公司",
+  nameEn: "HEDRICH Xiamen Vacuum Equipment Manufacturing Co., Ltd.",
+  slug: HEDRICH_XIAMEN_SUPPLIER_SLUG,
+  location: "福建厦门",
+  locationEn: "Xiamen, Fujian, China",
+  province: "福建",
+  category: "equipment",
+  products: [
+    "真空树脂浇注设备",
+    "APG 真空压力凝胶设备",
+    "真空定量灌封设备",
+    "真空注射设备",
+    "MTB 技术真空树脂浇注设备",
+    "真空热风与氮气干燥设备",
+    "真空干燥浸渍与电缆浸渍设备",
+    "自动压力凝胶（APG）压力成型机",
+    "液态硅橡胶压力成型及混合计量系统",
+    "真空压力浸渍设备（VPI）与真空泵组",
+  ],
+  productsEn: [
+    "Vacuum resin casting equipment",
+    "APG vacuum pressure gelation equipment",
+    "Vacuum shot-dosing and potting equipment",
+    "Vacuum infusion equipment",
+    "Vacuum resin casting equipment with MTB technology",
+    "Vacuum hot-air and nitrogen drying equipment",
+    "Vacuum drying, impregnating and cable-impregnation equipment",
+    "Automatic pressure gelation (APG) clamping units",
+    "Liquid-silicone-rubber clamping, mixing and dosing systems",
+    "Vacuum pressure impregnation (VPI) equipment and pumping units",
+  ],
+  processList: [
+    "树脂储存、预处理、脱气与温控",
+    "双组分树脂混合、计量与定量输送",
+    "真空树脂浇注与绝缘件固化",
+    "自动压力凝胶 APG 成型",
+    "真空注射与灌封",
+    "VPI 真空压力浸渍",
+    "油纸绝缘真空干燥与稳定化",
+    "模具、合模机与混配系统集成",
+    "真空系统设计、泵组配置与泄漏控制",
+    "厦门本地设备装配、调试、服务与备件支持",
+  ],
+  processListEn: [
+    "Resin storage, conditioning, degassing and temperature control",
+    "Two-component resin mixing, metering and shot dosing",
+    "Vacuum resin casting and insulation-part cure",
+    "Automatic pressure gelation (APG) molding",
+    "Vacuum infusion and potting",
+    "Vacuum pressure impregnation (VPI)",
+    "Vacuum drying and stabilization of oil-paper insulation",
+    "Mold, clamping-unit and mixing-system integration",
+    "Vacuum-system design, pump selection and leak control",
+    "Xiamen equipment assembly, commissioning, service and spare support",
+  ],
+  established: 1996,
+  verified: false,
+  description:
+    "赫德瑞意（厦门）真空设备制造有限公司是德国 HEDRICH 集团在厦门设立的全资子公司。HEDRICH 中国官网公开其 1996 年进入厦门、2000 年启用 6000 平方米基地的公司口径，以及阳台路 7 号地址、电话和企业邮箱；中国国际复材展以相同主体收录真空混合计量、浇注、灌封、浸渍和相关设备。官网目录覆盖真空树脂浇注、APG、定量灌封、真空注射、VPI、油纸干燥、压力成型、模具、液态硅橡胶混配和真空泵组。本页将其定义为复材/电气绝缘生产设备供应商，因此不植入 carbon fiber 或 fiberglass material 类流量词，避免把设备误写成材料现货。",
+  descriptionEn:
+    "HEDRICH Xiamen Vacuum Equipment Manufacturing Co., Ltd. is identified by HEDRICH's official China page as the German group's wholly owned Xiamen subsidiary. The page states a local presence since 1996, a 6,000-square-meter site opened in 2000, and publishes the Yangtai Road address, telephone and company email. China Composites Expo lists the matching entity for vacuum mixing, metering, casting, potting, impregnation and related equipment. HEDRICH's current navigation covers vacuum resin casting, APG, shot dosing, vacuum infusion, VPI, oil-paper drying, clamping systems, molds, liquid-silicone mixing and vacuum pumping. GetFRP classifies the company as a composite and electrical-insulation production-equipment supplier; no carbon-fiber or fiberglass material traffic phrase is injected because machinery is not reinforcing-fiber stock. Group-developed technologies are shown as HEDRICH scope, while the RFQ must confirm which modules are assembled, imported, commissioned and warranted by the Xiamen legal entity.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "真空浇注、APG、灌封、注射和 VPI 项目必须用工件、树脂体系、节拍和验收方案定义，而不能只按设备名称询价。RFQ 应提供零件尺寸/重量、年产量、模具数、环氧/聚氨酯/硅橡胶组分、填料、黏度、混合比、可使用时间、脱气目标、浇注温度、真空度、压力、加热/冷却、固化曲线、清洗方式、换料频率和防爆/环保要求。混合计量系统需锁定泵型、流量和精度、动态/静态混合、储罐、搅拌、加热、过滤、真空、管路死角、称重/流量反馈、配方管理、数据记录、报警和追溯；真空系统需定义极限真空、抽速、泄漏率、负载曲线、冷阱/过滤、泵油和备用配置。APG、合模机和模具还要确认锁模力、开距、温控分区、注射接口、脱模、嵌件、自动化、安全联锁和模具责任；VPI 与油纸干燥系统需明确罐体尺寸、温度均匀性、溶剂/油处理、压力等级和法规。采购方应要求工艺流程图、P&ID、电气图、BOM、软件备份、接口表、FAT/SAT、代表性材料试浇、培训、备件、远程支持、质保、安装边界和公用工程清单，并书面确认 Xiamen 与德国/其他集团工厂的设计、制造、进口、调试和售后分工。官网对全球技术和厦门运营均有说明，但不证明每一型号在厦门完整制造；本轮也未取得对应厦门主体、地址、范围、编号和有效期的体系证书原件，因此认证与标准数组为空。",
+  productsServicesSummaryEn:
+    "A vacuum casting, APG, potting, infusion or VPI project must be defined by the part, resin system, cycle and acceptance plan, not by the machine label alone. The RFQ should provide part dimensions and mass, annual volume, mold count, epoxy, polyurethane or silicone components, filler, viscosity, mix ratio, working life, degassing target, casting temperature, vacuum, pressure, heating or cooling, cure cycle, cleaning method, changeover frequency and explosion-protection or environmental requirements. A mixing and dosing system needs pump type, flow and accuracy, dynamic or static mixing, tanks, agitation, heating, filtration, vacuum, piping dead volume, weighing or flow feedback, recipe control, data logging, alarms and traceability. Define ultimate pressure, pumping speed, leak rate, load curve, traps or filtration, pump-fluid management and redundancy for the vacuum package. APG clamping and molds additionally require clamp force, daylight, heating zones, injection interface, demolding, inserts, automation, safety interlocks and tooling responsibility. VPI and oil-paper drying systems require vessel envelope, temperature uniformity, solvent or oil handling, pressure rating and applicable vessel rules. Require a process flow, P&ID, electrical drawings, BOM, software backup, interface list, FAT and SAT, a trial with representative material, training, spares, remote support, warranty, installation boundary and utility schedule. The contract should state how Xiamen and German or other HEDRICH sites divide design, fabrication, import, commissioning and after-sales responsibility. The official page proves a Xiamen operation but not that every global model is wholly manufactured there. No source certificate aligning the Xiamen legal entity, address, scope, number and validity was obtained, so certifications and supported standards remain empty.",
+  ecatalogs: [
+    { title: "HEDRICH 中国公司页", titleEn: "Official HEDRICH China Page", description: "厦门主体、运营历史和联系方式。", descriptionEn: "Xiamen entity, operating history and contacts.", url: "https://www.hedrich.com/chn/company/hedrich-international/hedrich-china", format: "Official company page" },
+    { title: "树脂绝缘设备目录", titleEn: "Cast-Resin Insulation Equipment", description: "真空浇注、APG、灌封与注射。", descriptionEn: "Vacuum casting, APG, shot dosing and infusion.", url: "https://www.hedrich.com/chn/products/technologies/equipment-for-cast-resin-insulation", format: "Product directory" },
+    { title: "压力成型与计量", titleEn: "Clamping, Molds, Mixing and Dosing", description: "APG/LSR 合模、模具及混配系统。", descriptionEn: "APG and LSR clamping, molds and mixing systems.", url: "https://www.hedrich.com/chn/products/technologies/clamping-machines-moulds-mixing-and-dosing-systems", format: "Product directory" },
+    { title: "VPI 设备", titleEn: "Vacuum Pressure Impregnation Equipment", description: "真空压力浸渍技术。", descriptionEn: "Vacuum pressure impregnation technology.", url: "https://www.hedrich.com/chn/products/technologies/equipment-for-vacuum-pressure-impregnation-vpi", format: "Product page" },
+    { title: "中国国际复材展 HEDRICH 页面", titleEn: "China Composites Expo — HEDRICH Xiamen", description: "厦门展商主体与设备范围。", descriptionEn: "Organizer source for the Xiamen exhibitor and equipment scope.", url: "https://www.chinacompositesexpo.com/cn/netshow-2911-3379101.html", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/hedrich-xiamen-logo.jpg",
+  contactEmail: "info@hedrich.com.cn",
+  contactPhone: "+86 592 651 3188",
+  address: "No. 7 Yangtai Road, Xinyang Industrial Park, Haicang, Xiamen, Fujian 361026, China",
+  website: "https://www.hedrich.com/chn/company/hedrich-international/hedrich-china",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 24,
+  viewCount: 0,
+  capabilities: ["vacuum resin casting equipment", "APG equipment", "vacuum dosing", "vacuum infusion equipment", "VPI systems", "mixing and metering", "vacuum pumping", "commissioning and service"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
