@@ -4,6 +4,12 @@ import ts from "typescript";
 
 const outputRoot = resolve(".next/server/app");
 const cjk = /[\p{Script=Han}]/gu;
+// GetFRP is English-first, with one intentional Chinese service landing page
+// for China-based composite suppliers. Keep the exception exact so Chinese
+// copy cannot leak into any other public route unnoticed.
+const ALLOWED_CJK_HTML = new Set([
+  "en/services/china-export-growth.html",
+]);
 const stockAiPhrases = [
   "as an ai",
   "delve into",
@@ -85,6 +91,8 @@ if (dynamicLanguageViolations.length > 0) {
 }
 
 const languageViolations = files.flatMap((file) => {
+  const renderedPath = relative(outputRoot, file);
+  if (ALLOWED_CJK_HTML.has(renderedPath)) return [];
   const html = readFileSync(file, "utf8");
   const matches = [...html.matchAll(cjk)];
   if (matches.length === 0) return [];
@@ -92,7 +100,7 @@ const languageViolations = files.flatMap((file) => {
   const snippet = html
     .slice(Math.max(0, first - 80), first + 120)
     .replace(/\s+/g, " ");
-  return [{ file: relative(outputRoot, file), count: matches.length, snippet }];
+  return [{ file: renderedPath, count: matches.length, snippet }];
 });
 
 if (languageViolations.length > 0) {
