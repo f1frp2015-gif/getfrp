@@ -1,0 +1,102 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const HANGZHOU_IECHO_SUPPLIER_ID = "sup-hangzhou-iecho";
+export const HANGZHOU_IECHO_SUPPLIER_SLUG = "hangzhou-iecho";
+
+// Curated from IECHO's current official product, composite-solution, company
+// and contact pages plus the 2026 CCE H directory. Official logo downloaded
+// 2026-08-25 from the image URL used in the iechocutter.com header.
+export const HANGZHOU_IECHO_SUPPLIER_PROFILE: SupplierListing = {
+  id: HANGZHOU_IECHO_SUPPLIER_ID,
+  name: "杭州爱科科技股份有限公司",
+  nameEn: "Hangzhou IECHO Science & Technology Co., Ltd.",
+  slug: HANGZHOU_IECHO_SUPPLIER_SLUG,
+  location: "浙江杭州",
+  locationEn: "Hangzhou, Zhejiang, China",
+  province: "浙江",
+  category: "equipment",
+  products: [
+    "AK4 智能复材切割系统",
+    "BK4 高速数字切割系统",
+    "BK2 单层/少层柔性材料切割系统",
+    "TK4S 大幅面数字切割系统",
+    "SK2 高精度柔性材料切割系统",
+    "GLSA 自动多层切割系统",
+    "GLSC 自动多层切割系统",
+    "电子振动刀、圆刀、气动刀与铣刀模块",
+    "CUTSERVER 云端控制与数据转换软件",
+    "IBrightCut、IMulCut 与 IPlyCut 软件",
+    "自动送料、真空吸附与智能排版模块",
+  ],
+  productsEn: [
+    "AK4 intelligent composite-material cutting systems",
+    "BK4 high-speed digital cutting systems",
+    "BK2 single- and few-ply flexible-material cutting systems",
+    "TK4S large-format digital cutting systems",
+    "SK2 high-precision flexible-material cutting systems",
+    "GLSA automatic multi-ply cutting systems",
+    "GLSC automatic multi-ply cutting systems",
+    "Electronic oscillating, rotary, pneumatic and routing tool modules",
+    "CUTSERVER cloud-control and data-conversion software",
+    "IBrightCut, IMulCut and IPlyCut software",
+    "Automatic feeding, vacuum hold-down and intelligent nesting modules",
+  ],
+  processList: [
+    "碳纤维布、玻纤布、预浸料与纤维增强塑料数控裁切",
+    "单层、少层与多层铺层切割",
+    "全切、半切、冲孔、开槽、标记与铣削",
+    "卷料自动放卷、送料与连续裁切",
+    "CAD 数据转换、智能排版与材料利用率优化",
+    "真空吸附、压料和裁片收集",
+    "客户材料试切、打样与刀具选型",
+    "安装、软件培训、远程诊断与售后支持",
+  ],
+  processListEn: [
+    "CNC cutting of carbon fabric, fiberglass, prepreg and fiber-reinforced plastics",
+    "Single-, few- and multi-ply cutting",
+    "Through cutting, kiss cutting, punching, grooving, marking and routing",
+    "Automatic roll unwinding, feeding and continuous cutting",
+    "CAD conversion, intelligent nesting and material-yield optimization",
+    "Vacuum hold-down, material restraint and ply collection",
+    "Customer-material trials, samples and tool selection",
+    "Installation, software training, remote diagnostics and after-sales support",
+  ],
+  established: 1992,
+  verified: false,
+  description:
+    "杭州爱科科技股份有限公司（IECHO，科创板代码 688092）是杭州的非金属材料智能切割设备与软件供应商。现行官网公开杭州主体、产品目录、复合材料/纤维增强塑料应用、公司与工厂地址及企业邮箱；中国国际复材展以相同中英文主体收录企业并将其归入切割设备。官网显示 AK4、BK/BK2/BK3/BK4、TK4S、SK2、GLSA/GLSC 等机型，以及 CUTSERVER、IBrightCut、IMulCut 和 IPlyCut 软件；复材方案明确提到碳纤维自行车、玻纤增强滑雪板及复合材料精细裁切。IECHO 是设备和软件供应商，机器可以切割碳纤布、玻纤布、预浸料或 FRP，不代表 IECHO 自身生产或销售这些材料，因此本页不会获得碳纤维、玻纤或预浸料材料供应商关键词。",
+  descriptionEn:
+    "Hangzhou IECHO Science & Technology Co., Ltd. (IECHO, Shanghai STAR Market code 688092) supplies intelligent non-metal cutting equipment and software from Hangzhou. Its current official website publishes the Hangzhou identity, product catalog, composite and fiber-reinforced-plastic applications, company and factory addresses and company email. China Composites Expo lists the matching Chinese and English entity under cutting machinery. The official catalog includes AK4, BK, BK2, BK3, BK4, TK4S, SK2, GLSA and GLSC systems plus CUTSERVER, IBrightCut, IMulCut and IPlyCut software. Its composite solution explicitly discusses precision cutting for examples such as carbon-fiber bicycles and glass-fiber reinforced snowboards. IECHO is an equipment and software supplier. Machine compatibility with carbon fabric, fiberglass, prepreg or FRP does not make IECHO a producer or seller of those materials, so the profile receives no carbon-fiber, fiberglass or prepreg material-supplier keywords.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "官网将 BK4、AK4 和 BK2 等用于复材行业的单层/少层系统与 GLSA/GLSC 多层系统分开，并列出振动刀、圆刀、气动刀、铣刀、V 槽、冲孔、压痕、标记、真空吸附、卷料送料、排版和 CAD 数据转换功能。设备选型不能只按“复合材料”总称，应向供应商提供真实材料：纤维种类与织法、干布或预浸料、树脂状态与背纸、单层厚度、铺层数、总厚度、幅宽、卷径/卷重、黏着性、硬度、夹芯构造、粉尘和 SDS。RFQ 要定义裁片包络、孔槽和锐角、尺寸/重复性、边缘毛羽、拉丝、分层、树脂拖拽、背纸损伤、首末层偏移、套料利用率、节拍、收集和标签。刀具试验应分别记录振动频率/振幅、圆刀牵引、气动供气、铣刀转速与进给、刀片材料和寿命、真空分区、压料、台面耗材、送料纠偏及集尘。碳纤粉尘导电，必须由买卖双方确认源头捕集、过滤、设备接地、与电气元件隔离、清洁方式、火灾/爆炸风险评估和当地职业卫生要求，通用真空吸附系统不能替代经验证的除尘。要求用代表性材料完成试切、FAT 和现场 SAT，记录文件版本、排版、刀具、速度、加速度、真空、环境、尺寸和缺陷，并验证连续运行、换卷、断电恢复、报警、急停、护罩和安全感应。数字化范围需锁定支持的 CAD/DXF 版本、许可数量、离线/云端、用户权限、配方审计、条码、MES/ERP 接口、备份、网络安全和远程访问审批。交付包要包含总图、地基、供电/气源/真空/排风、控制 BOM、程序备份、软件许可、说明书、易损件、培训、质保和海外支持。官网与展会公开规模、研发比例、上市和资质信息，但本轮没有逐项核对当前证书文件及具体设备合规范围，认证数组为空。",
+  productsServicesSummaryEn:
+    "The official catalog separates single- and few-ply composite systems such as BK4, AK4 and BK2 from GLSA and GLSC multi-ply systems, and lists oscillating, rotary, pneumatic, routing, V-groove, punching, creasing, marking, vacuum hold-down, roll feed, nesting and CAD-conversion functions. Equipment cannot be selected against the word composites alone. Supply representative materials with fiber and weave, dry fabric or prepreg state, resin tack and backing paper, single-ply thickness, ply count, total stack, width, roll diameter and mass, hardness, sandwich construction, dust and SDS. The RFQ should define ply envelope, holes, slots and sharp corners, dimensional accuracy and repeatability, edge fuzz, fiber pull, delamination, resin drag, backing damage, top-to-bottom ply shift, nesting yield, takt, collection and labeling. Tool trials should separately record oscillation frequency and amplitude, rotary drag, pneumatic supply, router speed and feed, blade material and life, vacuum zones, restraint, table consumables, web guiding and extraction. Carbon-fiber dust is conductive; buyer and seller must define source capture, filtration, grounding, electrical segregation, cleaning, fire or explosion risk review and local occupational-hygiene controls. A generic hold-down vacuum is not a qualified dust-extraction system. Require representative-material trials, FAT and site SAT, recording file revision, nesting, tool, speed, acceleration, vacuum, environment, dimensions and defects, and validate endurance, roll change, power-loss recovery, alarms, E-stops, guarding and safety sensing. Digital scope should lock supported CAD and DXF revisions, license count, offline or cloud operation, user permissions, recipe audit, barcodes, MES or ERP interfaces, backup, cybersecurity and approval of remote access. Obtain layout, foundation, electrical, air, vacuum and exhaust requirements, controls BOM, source and backups, software licenses, manuals, consumables, training, warranty and overseas support. The website and expo publish scale, R&D share, listing and qualification statements, but this review did not align current certificate documents or machine-specific compliance scope, so no certification is recorded as verified.",
+  ecatalogs: [
+    { title: "IECHO 官网", titleEn: "Official IECHO Website", description: "设备、软件与行业应用入口。", descriptionEn: "Official equipment, software and industry-application entry.", url: "https://www.iechocutter.com/", format: "Official website" },
+    { title: "复合材料切割方案", titleEn: "Composite-Material Cutting Solution", description: "复材难点、BK4 和工具方案。", descriptionEn: "Official composite challenges, BK4 and tool solution.", url: "https://www.iechocutter.com/applications/cutting-solution-for-composite-materials/", format: "Solution page" },
+    { title: "IECHO 产品目录", titleEn: "IECHO Product Catalog", description: "数字切割、多层、激光、模切与软件。", descriptionEn: "Digital, multi-ply, laser, die-cutting and software catalog.", url: "https://www.iechocutter.com/", format: "Product directory" },
+    { title: "IECHO 公司简介", titleEn: "IECHO Company Profile", description: "企业历史、主体与能力边界。", descriptionEn: "Official history, identity and capability boundary.", url: "https://www.iechocutter.com/about-iecho/", format: "Company profile" },
+    { title: "IECHO 官方联系方式", titleEn: "Official IECHO Contact", description: "杭州公司、工厂和邮箱。", descriptionEn: "Published Hangzhou company, factory and email.", url: "https://www.iechocutter.com/contact-us/", format: "Contact page" },
+    { title: "中国国际复材展 H 字母页", titleEn: "China Composites Expo Exhibitors — H", description: "杭州主体与切割设备范围。", descriptionEn: "Organizer source for the Hangzhou entity and cutting-equipment scope.", url: "https://www.chinacompositesexpo.com/en/netshow.php?head=H", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/hangzhou-iecho-logo.png",
+  contactEmail: "info@iechosoft.com",
+  contactPhone: null,
+  address: "Building 1, No. 1 Weiye Road, Binjiang District, Hangzhou, Zhejiang, China",
+  website: "https://www.iechocutter.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 26,
+  viewCount: 0,
+  capabilities: ["digital composite cutting", "single- and multi-ply cutting", "oscillating and rotary tools", "prepreg ply cutting", "CAD conversion and nesting", "vacuum hold-down and feeding", "customer-material trials", "software and overseas support"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
