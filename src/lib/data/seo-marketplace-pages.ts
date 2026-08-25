@@ -1,3 +1,5 @@
+import { getProductSearchIntent } from "./product-search-intents";
+
 export type MarketplacePage = {
   slug: string;
   path: string;
@@ -81,47 +83,126 @@ function page(input: Omit<MarketplacePage, "faqs"> & { faqDimension: string }): 
   return { ...rest, faqs: faqSet(faqSubject, faqDimension) };
 }
 
+const PRODUCT_ROUTE_CONTEXT: Record<
+  string,
+  {
+    process: { label: string; href: string; note: string };
+    application: { label: string; href: string; note: string };
+    evidence: { label: string; href: string; note: string };
+  }
+> = {
+  "carbon-fiber": {
+    process: { label: "Prepreg & autoclave", href: "/manufacturing/prepreg-autoclave", note: "Review storage, lay-up and cure controls." },
+    application: { label: "Carbon fiber prepreg", href: "/products/carbon-fiber-prepreg", note: "Compare a controlled intermediate material." },
+    evidence: { label: "Carbon fiber vs fiberglass", href: "/insights/carbon-fiber-vs-fiberglass", note: "Separate stiffness, cost and design intent." },
+  },
+  "carbon-fiber-prepreg": {
+    process: { label: "Prepreg & autoclave", href: "/manufacturing/prepreg-autoclave", note: "Control cold-chain, out-time and cure." },
+    application: { label: "Automated fiber placement", href: "/manufacturing/automated-fiber-placement", note: "Review an automated conversion route." },
+    evidence: { label: "Carbon fiber materials", href: "/products/carbon-fiber", note: "Return to the reinforcement family." },
+  },
+  "frp-cable-tray": {
+    process: { label: "Pultrusion", href: "/manufacturing/pultrusion", note: "Review profile and secondary-fabrication controls." },
+    application: { label: "Electrical applications", href: "/applications/electrical", note: "Define dielectric, fire and load requirements." },
+    evidence: { label: "FRP engineering & QA", href: "/services/frp-engineering-qa", note: "Build a product-specific acceptance plan." },
+  },
+  "frp-tank": {
+    process: { label: "Filament winding", href: "/manufacturing/filament-winding", note: "Review winding, liner and cure controls." },
+    application: { label: "Chemical processing", href: "/applications/chemical-processing", note: "Define media, temperature and code basis." },
+    evidence: { label: "FRP pipe systems", href: "/products/frp-pipe", note: "Coordinate piping and vessel interfaces." },
+  },
+  "frp-corrosion-equipment": {
+    process: { label: "Hand lay-up", href: "/manufacturing/hand-layup", note: "Review large-part laminate and cure controls." },
+    application: { label: "Chemical processing", href: "/applications/chemical-processing", note: "Set the corrosion and operating envelope." },
+    evidence: { label: "FRP tanks", href: "/products/frp-tank", note: "Compare related corrosion vessels." },
+  },
+  "frp-manhole-cover": {
+    process: { label: "SMC molding", href: "/manufacturing/smc-molding", note: "Review compound, charge and press controls." },
+    application: { label: "Construction", href: "/applications/construction", note: "Define load class and interface conditions." },
+    evidence: { label: "SMC & BMC", href: "/products/smc-bmc", note: "Compare the material and molding route." },
+  },
+  "frp-handrail": {
+    process: { label: "Pultrusion", href: "/manufacturing/pultrusion", note: "Review profile and fabrication controls." },
+    application: { label: "Wastewater treatment", href: "/applications/wastewater-treatment", note: "Define corrosion, load and installation." },
+    evidence: { label: "FRP grating", href: "/products/frp-grating", note: "Coordinate an industrial access system." },
+  },
+  "frp-ladder": {
+    process: { label: "Pultrusion", href: "/manufacturing/pultrusion", note: "Review rail, rung and joint controls." },
+    application: { label: "Electrical applications", href: "/applications/electrical", note: "Define insulation, fire and access loads." },
+    evidence: { label: "FRP handrail", href: "/products/frp-handrail", note: "Coordinate guard and access systems." },
+  },
+  "fiberglass-panel": {
+    process: { label: "Continuous lamination", href: "/manufacturing/continuous-lamination", note: "Review reinforcement, cure and line controls." },
+    application: { label: "Construction", href: "/applications/construction", note: "Define panel, surface and interface loads." },
+    evidence: { label: "Fiberglass sheet", href: "/products/fiberglass-sheet", note: "Compare solid industrial laminates." },
+  },
+  "composite-core-materials": {
+    process: { label: "Vacuum infusion", href: "/manufacturing/vacuum-infusion", note: "Review resin flow and core integration." },
+    application: { label: "Marine applications", href: "/applications/marine", note: "Define density, shear and water exposure." },
+    evidence: { label: "Fiberglass panels", href: "/products/fiberglass-panel", note: "Compare finished sandwich systems." },
+  },
+  "frp-enclosure": {
+    process: { label: "SMC molding", href: "/manufacturing/smc-molding", note: "Review compound and repeat molding controls." },
+    application: { label: "Electrical applications", href: "/applications/electrical", note: "Define fire, ingress and dielectric performance." },
+    evidence: { label: "SMC & BMC", href: "/products/smc-bmc", note: "Compare compound and molded-part evidence." },
+  },
+  "recycled-composites": {
+    process: { label: "Thermoplastic forming", href: "/manufacturing/thermoplastic-forming", note: "Review feedstock and forming controls." },
+    application: { label: "Composite 3D printing", href: "/manufacturing/composite-3d-printing", note: "Compare a recovered-material conversion route." },
+    evidence: { label: "Fiberglass suppliers", href: "/products/fiber-glass", note: "Compare virgin reinforcement formats." },
+  },
+};
+
 export const ADDITIONAL_PRODUCT_PAGES: MarketplacePage[] = [
   ["carbon-fiber", "Carbon Fiber", "carbon fiber products", "carbon fiber", "PAN-based carbon fiber, woven fabrics, prepreg and pultruded carbon profiles for lightweight structural, industrial and sporting applications."],
+  ["carbon-fiber-prepreg", "Carbon Fiber Prepreg", "carbon fiber prepreg materials", "carbon fiber prepreg", "Carbon-fiber prepreg systems compared by fiber grade, resin content, areal weight, tack, cure cycle, storage life and qualification evidence."],
   ["frp-cable-tray", "FRP Cable Tray", "FRP cable tray", "cable tray", "Pultruded and molded cable-management systems for corrosive, electrical, rail, marine and process-plant installations."],
   ["frp-tank", "FRP Tank", "FRP tanks", "tank", "Filament-wound and contact-molded storage and process tanks specified around chemical service, temperature, laminate design and nozzle loads."],
+  ["frp-corrosion-equipment", "FRP Corrosion Equipment", "FRP corrosion equipment", "scrubber", "Corrosion-resistant FRP ducts, scrubbers, stacks and process vessels specified around media, temperature, resin system, laminate design and inspection code."],
   ["frp-manhole-cover", "FRP Manhole Cover", "FRP manhole covers", "manhole cover", "Compression-molded composite covers and frames for municipal, utility and industrial access points with controlled load class and surface finish."],
   ["frp-handrail", "FRP Handrail", "FRP handrail systems", "handrail", "Modular pultruded FRP rails, posts, kick plates and fittings for corrosion-resistant access platforms and industrial walkways."],
   ["frp-ladder", "FRP Ladder", "FRP ladders", "ladder", "Fixed, cage, step and access ladders made from pultruded FRP profiles for electrical insulation and corrosive environments."],
   ["frp-sheet", "FRP Sheet", "FRP sheets", "frp sheet", "Glass-fiber-reinforced sheet and laminate products for corrosion barriers, electrical insulation, fabrication and structural panels."],
   ["fiberglass-panel", "Fiberglass Panel", "fiberglass panels", "panel", "Continuous-laminated, pultruded, molded and sandwich fiberglass panels for corrosion, insulation, architectural and enclosure uses."],
-].map(([slug, name, subject, keyword, summary]) => page({
-  slug,
-  path: `/products/${slug}`,
-  title: `China ${name} Manufacturers, Suppliers & Wholesale | getfrp`,
-  h1: `China ${name} Manufacturers & Suppliers`,
-  eyebrow: "PRODUCT CATEGORY",
-  summary,
-  category: slug,
-  supplierTerms: [keyword, subject, name],
-  paragraphs: [
-    `${name} sourcing begins with the service condition and the manufacturing route, not a generic unit price. Chinese manufacturers may offer several resin systems, reinforcement architectures and finishing levels under the same product name. Buyers should define loads, exposure, dimensions, interfaces, quantity and destination standard before comparing ${subject}.`,
-    `A useful ${name} supplier comparison separates company identity from product evidence. GetFRP aggregates reviewed public factory profiles and approved supplier-uploaded products, then exposes material, process, certification, MOQ and export-readiness signals. Certificate logos alone are not treated as proof; scope, legal entity, product construction and report validity still need to match the offer.`,
-    `For an export order, freeze the drawing revision, inspection method, sampling level, packing and release documents in the RFQ. This makes ${subject} quotations comparable and reduces substitutions after award. If this category has no approved product pages yet, the empty state is intentional: GetFRP does not manufacture placeholder products or companies to fill a directory.`,
-  ],
-  subcategories: [
-    { label: `${name} by manufacturing process`, href: "/manufacturing/pultrusion", note: "Compare process fit and controls." },
-    { label: `${name} for wastewater treatment`, href: "/applications/wastewater-treatment", note: "Review corrosion and access requirements." },
-    { label: `${name} standards`, href: "/standards/iso-9001", note: "Separate QMS and product evidence." },
-  ],
-  related: [
-    { label: "FRP grating manufacturers", href: "/products/frp-grating" },
-    { label: "Pultruded FRP profiles", href: "/products/pultruded-profiles" },
-    { label: "FRP pipe suppliers", href: "/products/frp-pipe" },
-    { label: "FRP rebar manufacturers", href: "/products/frp-rebar" },
-    { label: "Fiberglass panels", href: "/products/fiberglass-panel" },
-    { label: "FRP tanks", href: "/products/frp-tank" },
-    { label: "Wastewater FRP products", href: "/applications/wastewater-treatment/frp-grating" },
-    { label: "China sourcing guide", href: "/source-from-china/verify-supplier" },
-  ],
-  guideHref: "/source-from-china/verify-supplier",
-  faqDimension: "material, process and project standard",
-}));
+  ["composite-core-materials", "Composite Core Materials", "composite core materials", "structural foam", "Structural foam, balsa and honeycomb core materials for lightweight sandwich laminates, compared by density, shear, compression, resin uptake and forming limits."],
+  ["frp-enclosure", "FRP Enclosure", "FRP enclosures", "fiberglass enclosure", "Electrical, utility and industrial FRP enclosures specified around dielectric behavior, fire class, weathering, ingress rating, hardware and dimensional interfaces."],
+  ["recycled-composites", "Recycled Composite Materials", "recycled composite materials", "recycled carbon fiber", "Recovered carbon and glass fiber materials compared by feedstock, recovery route, contamination control, retained properties, lot consistency and lifecycle evidence."],
+].map(([slug, name, subject, keyword, summary]) => {
+  const searchIntent = getProductSearchIntent(slug);
+  const context = PRODUCT_ROUTE_CONTEXT[slug] ?? {
+    process: { label: `${name} by manufacturing process`, href: "/manufacturing/pultrusion", note: "Compare process fit and controls." },
+    application: { label: `${name} for wastewater treatment`, href: "/applications/wastewater-treatment", note: "Review corrosion and access requirements." },
+    evidence: { label: `${name} standards`, href: "/standards/iso-9001", note: "Separate QMS and product evidence." },
+  };
+  return page({
+    slug,
+    path: `/products/${slug}`,
+    title: searchIntent?.title ?? `China ${name} Manufacturers, Suppliers & Wholesale | getfrp`,
+    h1: searchIntent?.h1 ?? `China ${name} Manufacturers & Suppliers`,
+    eyebrow: "PRODUCT CATEGORY",
+    summary,
+    category: slug,
+    supplierTerms: [keyword, subject, name],
+    paragraphs: [
+      `${name} sourcing begins with the service condition and the manufacturing route, not a generic unit price. Chinese manufacturers may offer several resin systems, reinforcement architectures and finishing levels under the same product name. Buyers should define loads, exposure, dimensions, interfaces, quantity and destination standard before comparing ${subject}.`,
+      `A useful ${name} supplier comparison separates company identity from product evidence. GetFRP aggregates reviewed public factory profiles and approved supplier-uploaded products, then exposes material, process, certification, MOQ and export-readiness signals. Certificate logos alone are not treated as proof; scope, legal entity, product construction and report validity still need to match the offer.`,
+      `For an export order, freeze the drawing revision, inspection method, sampling level, packing and release documents in the RFQ. This makes ${subject} quotations comparable and reduces substitutions after award. If this category has no approved product pages yet, the empty state is intentional: GetFRP does not manufacture placeholder products or companies to fill a directory.`,
+    ],
+    subcategories: [context.process, context.application, context.evidence],
+    related: [
+      { label: "FRP grating manufacturers", href: "/products/frp-grating" },
+      { label: "Pultruded FRP profiles", href: "/products/pultruded-profiles" },
+      { label: "FRP pipe suppliers", href: "/products/frp-pipe" },
+      { label: "FRP rebar manufacturers", href: "/products/frp-rebar" },
+      { label: "Fiberglass panels", href: "/products/fiberglass-panel" },
+      { label: "FRP tanks", href: "/products/frp-tank" },
+      { label: "Wastewater FRP products", href: "/applications/wastewater-treatment/frp-grating" },
+      { label: "China sourcing guide", href: "/source-from-china/verify-supplier" },
+    ],
+    guideHref: "/source-from-china/verify-supplier",
+    faqDimension: "material, process and project standard",
+  });
+});
 
 const PROCESS_INFO = [
   ["pultrusion", "Pultrusion", "Continuous profiles with aligned reinforcement, controlled resin impregnation, heated dies and secondary machining.", "pultrusion"],
@@ -240,10 +321,10 @@ export const STANDARD_PAGES = STANDARD_INFO.map(([slug, name, summary]) => page(
 }));
 
 export const COMBINATION_PAGES: MarketplacePage[] = [
-  page({ slug: "pultruded-frp-grating", path: "/products/pultruded-frp-grating", title: "Pultruded FRP Grating Manufacturers in China | getfrp", h1: "Pultruded FRP Grating Manufacturers in China", eyebrow: "PRODUCT × PROCESS", summary: "Compare reviewed Chinese suppliers and approved products for load-bearing pultruded FRP grating.", category: "frp-grating", process: "pultrusion", supplierTerms: ["pultruded grating", "pultrusion", "grating"], paragraphs: ["Pultruded FRP grating uses load-bearing profiles assembled with cross rods, so bearing-bar section, pitch, span direction and connection method control the product definition. Buyers should not substitute a molded panel on price alone.", "Supplier comparison should tie resin, reinforcement architecture, bar geometry, load-table basis and fire evidence to the offered line. GetFRP shows reviewed public manufacturers and approved supplier products that match both grating and pultrusion signals.", "The RFQ should freeze panel size, span, loads, deflection limit, surface, cut plan, clips, edge sealing and packing. When fewer than three reviewed matches exist, related categories remain available without fabricated listings."], subcategories: [{ label: "FRP grating", href: "/products/frp-grating", note: "Return to the product family." }, { label: "Pultrusion", href: "/manufacturing/pultrusion", note: "Review the process controls." }], related: [{ label: "Fiberglass grating manufacturers", href: "/products/fiberglass-grating-manufacturers" }, { label: "Wastewater FRP grating", href: "/applications/wastewater-treatment/frp-grating" }, { label: "Pultruded profiles", href: "/products/pultruded-profiles" }, { label: "EN 13706 profiles", href: "/standards/en-13706/pultruded-profiles" }], guideHref: "/source-from-china/how-to-source-frp-grating", faqDimension: "pultrusion, bar geometry and load evidence" }),
+  page({ slug: "pultruded-frp-grating", path: "/products/pultruded-frp-grating", title: "Pultruded FRP Grating Manufacturers in China | getfrp", h1: "Pultruded FRP Grating Manufacturers in China", eyebrow: "PRODUCT × PROCESS", summary: "Compare reviewed Chinese suppliers and approved products for load-bearing pultruded FRP grating.", category: "frp-grating", process: "pultrusion", supplierTerms: ["pultruded grating", "pultrusion", "grating"], paragraphs: ["Pultruded FRP grating uses load-bearing profiles assembled with cross rods, so bearing-bar section, pitch, span direction and connection method control the product definition. Buyers should not substitute a molded panel on price alone.", "Supplier comparison should tie resin, reinforcement architecture, bar geometry, load-table basis and fire evidence to the offered line. GetFRP shows reviewed public manufacturers and approved supplier products that match both grating and pultrusion signals.", "The RFQ should freeze panel size, span, loads, deflection limit, surface, cut plan, clips, edge sealing and packing. When fewer than three reviewed matches exist, related categories remain available without fabricated listings."], subcategories: [{ label: "FRP grating", href: "/products/frp-grating", note: "Return to the product family." }, { label: "Pultrusion", href: "/manufacturing/pultrusion", note: "Review the process controls." }], related: [{ label: "FRP grating manufacturers", href: "/products/frp-grating" }, { label: "Wastewater FRP grating", href: "/applications/wastewater-treatment/frp-grating" }, { label: "Pultruded profiles", href: "/products/pultruded-profiles" }, { label: "EN 13706 profiles", href: "/standards/en-13706/pultruded-profiles" }], guideHref: "/sourcing/frp-grating", faqDimension: "pultrusion, bar geometry and load evidence" }),
   page({ slug: "carbon-fiber-pultrusion-profiles", path: "/products/carbon-fiber-pultrusion-profiles", title: "Carbon Fiber Pultrusion Profiles Manufacturers in China | getfrp", h1: "Carbon Fiber Pultrusion Profiles Manufacturers in China", eyebrow: "PRODUCT × MATERIAL", summary: "Find reviewed suppliers for carbon-fiber pultruded rods, tubes and constant-section profiles.", category: "pultruded-profiles", material: "carbon fiber", process: "pultrusion", supplierTerms: ["carbon fiber", "pultrusion", "carbon profile"], paragraphs: ["Carbon fiber pultrusion profiles combine aligned reinforcement with continuous processing, producing high axial stiffness at low mass. The design must address transverse properties, joints, galvanic contact and the exact fiber and resin system.", "A credible supplier comparison connects carbon-fiber grade, tow, fiber volume, cure, dimensional control and test specimens to the production profile. Reviewed company records and approved product uploads provide discovery evidence without inventing catalog SKUs.", "Buyers should issue drawings, property minima, surface and machining requirements, annual volume, inspection methods and packing. Samples should be tested using the same orientation and conditioning expected in the final application."], subcategories: [{ label: "Carbon fiber", href: "/products/carbon-fiber", note: "Review the material family." }, { label: "Pultruded profiles", href: "/products/pultruded-profiles", note: "Compare profile suppliers." }], related: [{ label: "Pultrusion manufacturers", href: "/manufacturing/pultrusion" }, { label: "EN 13706 profiles", href: "/standards/en-13706/pultruded-profiles" }, { label: "Fiberglass panels", href: "/products/fiberglass-panel" }, { label: "Carbon fiber vs fiberglass", href: "/insights/carbon-fiber-vs-fiberglass" }], guideHref: "/source-from-china/verify-supplier", faqDimension: "carbon fiber, pultrusion and directional properties" }),
-  page({ slug: "fiberglass-grating-manufacturers", path: "/products/fiberglass-grating-manufacturers", title: "Fiberglass Grating Manufacturers in China | getfrp", h1: "Fiberglass Grating Manufacturers in China", eyebrow: "PRODUCT × MANUFACTURER INTENT", summary: "Compare real Chinese fiberglass grating manufacturers, public capability profiles and approved product pages.", category: "frp-grating", material: "fiberglass", supplierTerms: ["fiberglass grating", "frp grating", "grating"], paragraphs: ["Fiberglass grating may be molded or pultruded and can use polyester, vinyl ester or phenolic resin. Mesh, depth, load-bar geometry, surface and span must be specified before a manufacturer quotation is meaningful.", "GetFRP differentiates public company identity, reviewed capability signals and approved supplier-uploaded products. The directory does not treat a logo or generic certificate as product proof, and it does not create placeholder factories to inflate results.", "For comparable quotations, state design load, support span, deflection, resin, fire requirement, color, cut plan, clips and packing. Current reports and batch documents should be checked before release."], subcategories: [{ label: "Pultruded FRP grating", href: "/products/pultruded-frp-grating", note: "Compare the load-bearing process." }, { label: "Wastewater grating", href: "/applications/wastewater-treatment/frp-grating", note: "Review a corrosive application." }], related: [{ label: "FRP grating", href: "/products/frp-grating" }, { label: "FRP handrail", href: "/products/frp-handrail" }, { label: "FRP ladder", href: "/products/frp-ladder" }, { label: "How to source FRP grating", href: "/source-from-china/how-to-source-frp-grating" }], guideHref: "/source-from-china/how-to-source-frp-grating", faqDimension: "grating construction, resin and load evidence" }),
-  page({ slug: "wastewater-treatment-frp-grating", path: "/applications/wastewater-treatment/frp-grating", title: "FRP Grating for Wastewater Treatment Manufacturers in China | getfrp", h1: "FRP Grating for Wastewater Treatment", eyebrow: "PRODUCT × APPLICATION", summary: "Source corrosion-resistant FRP grating for wastewater plants from reviewed Chinese manufacturers.", category: "frp-grating", application: "wastewater treatment", supplierTerms: ["grating", "wastewater", "water treatment"], paragraphs: ["FRP grating for wastewater treatment is selected around wet chemical exposure, slip resistance, access loads, span, fire rules and cleaning. Resin compatibility and panel detailing matter more than a generic corrosion-resistant label.", "Reviewed suppliers should show the relevant grating process, resin options, fabrication, load evidence and experience with municipal or industrial water environments. Approved product pages expose the supplier's own specifications without AI-generated inventory.", "An RFQ should include tank or walkway layout, loads, support spacing, mesh, depth, resin, grit, clips, cutouts and packing. Edge sealing and field installation requirements should be agreed before production."], subcategories: [{ label: "Wastewater treatment FRP", href: "/applications/wastewater-treatment", note: "Browse the application directory." }, { label: "FRP grating", href: "/products/frp-grating", note: "Return to the category." }], related: [{ label: "Pultruded FRP grating", href: "/products/pultruded-frp-grating" }, { label: "FRP handrail", href: "/products/frp-handrail" }, { label: "FRP tanks", href: "/products/frp-tank" }, { label: "FRP pipe", href: "/products/frp-pipe" }], guideHref: "/source-from-china/how-to-source-frp-grating", faqDimension: "wastewater exposure, loads and installation" }),
+  page({ slug: "fiberglass-grating-manufacturers", path: "/products/fiberglass-grating-manufacturers", title: "Fiberglass Grating Manufacturers in China | getfrp", h1: "Fiberglass Grating Manufacturers in China", eyebrow: "PRODUCT × MANUFACTURER INTENT", summary: "Compare real Chinese fiberglass grating manufacturers, public capability profiles and approved product pages.", category: "frp-grating", material: "fiberglass", supplierTerms: ["fiberglass grating", "frp grating", "grating"], paragraphs: ["Fiberglass grating may be molded or pultruded and can use polyester, vinyl ester or phenolic resin. Mesh, depth, load-bar geometry, surface and span must be specified before a manufacturer quotation is meaningful.", "GetFRP differentiates public company identity, reviewed capability signals and approved supplier-uploaded products. The directory does not treat a logo or generic certificate as product proof, and it does not create placeholder factories to inflate results.", "For comparable quotations, state design load, support span, deflection, resin, fire requirement, color, cut plan, clips and packing. Current reports and batch documents should be checked before release."], subcategories: [{ label: "Pultruded FRP grating", href: "/products/pultruded-frp-grating", note: "Compare the load-bearing process." }, { label: "Wastewater grating", href: "/applications/wastewater-treatment/frp-grating", note: "Review a corrosive application." }], related: [{ label: "FRP grating", href: "/products/frp-grating" }, { label: "FRP handrail", href: "/products/frp-handrail" }, { label: "FRP ladder", href: "/products/frp-ladder" }, { label: "How to source FRP grating", href: "/sourcing/frp-grating" }], guideHref: "/sourcing/frp-grating", faqDimension: "grating construction, resin and load evidence" }),
+  page({ slug: "wastewater-treatment-frp-grating", path: "/applications/wastewater-treatment/frp-grating", title: "FRP Grating for Wastewater Treatment Manufacturers in China | getfrp", h1: "FRP Grating for Wastewater Treatment", eyebrow: "PRODUCT × APPLICATION", summary: "Source corrosion-resistant FRP grating for wastewater plants from reviewed Chinese manufacturers.", category: "frp-grating", application: "wastewater treatment", supplierTerms: ["grating", "wastewater", "water treatment"], paragraphs: ["FRP grating for wastewater treatment is selected around wet chemical exposure, slip resistance, access loads, span, fire rules and cleaning. Resin compatibility and panel detailing matter more than a generic corrosion-resistant label.", "Reviewed suppliers should show the relevant grating process, resin options, fabrication, load evidence and experience with municipal or industrial water environments. Approved product pages expose the supplier's own specifications without AI-generated inventory.", "An RFQ should include tank or walkway layout, loads, support spacing, mesh, depth, resin, grit, clips, cutouts and packing. Edge sealing and field installation requirements should be agreed before production."], subcategories: [{ label: "Wastewater treatment FRP", href: "/applications/wastewater-treatment", note: "Browse the application directory." }, { label: "FRP grating", href: "/products/frp-grating", note: "Return to the category." }], related: [{ label: "Pultruded FRP grating", href: "/products/pultruded-frp-grating" }, { label: "FRP handrail", href: "/products/frp-handrail" }, { label: "FRP tanks", href: "/products/frp-tank" }, { label: "FRP pipe", href: "/products/frp-pipe" }], guideHref: "/sourcing/frp-grating", faqDimension: "wastewater exposure, loads and installation" }),
   page({ slug: "en-13706-pultruded-profiles", path: "/standards/en-13706/pultruded-profiles", title: "EN 13706 Pultruded Profiles Manufacturers in China | getfrp", h1: "EN 13706 Pultruded Profiles Manufacturers in China", eyebrow: "PRODUCT × STANDARD", summary: "Compare Chinese pultruded-profile suppliers that declare EN 13706 capability and verify product-level evidence.", category: "pultruded-profiles", standard: "EN 13706", process: "pultrusion", supplierTerms: ["EN 13706", "pultruded profile", "pultrusion"], paragraphs: ["EN 13706 provides a framework for pultruded reinforced-plastic profiles, but buyers must still identify the applicable grade, dimensions, property minima and project use. A broad standards claim cannot replace a controlled datasheet and test basis.", "GetFRP matches reviewed profiles and approved products using both pultrusion and EN 13706 signals. Buyers should inspect the complete report, specimen orientation, conditioning, laboratory, legal entity and connection to the production laminate.", "The RFQ should freeze drawings, resin, reinforcement, mechanical values, tolerances, fire and UV requirements, machining and inspection. Where ASTM or GB methods are used, document the crosswalk and any non-equivalence."], subcategories: [{ label: "EN 13706", href: "/standards/en-13706", note: "Review the standard scope." }, { label: "Pultruded profiles", href: "/products/pultruded-profiles", note: "Return to the product family." }], related: [{ label: "Pultrusion manufacturers", href: "/manufacturing/pultrusion" }, { label: "Carbon pultrusion profiles", href: "/products/carbon-fiber-pultrusion-profiles" }, { label: "Standards comparison", href: "/tools/standard-comparison" }, { label: "Verify a supplier", href: "/source-from-china/verify-supplier" }], guideHref: "/source-from-china/verify-supplier", faqDimension: "EN 13706 grade, profile properties and test evidence" }),
 ];
 

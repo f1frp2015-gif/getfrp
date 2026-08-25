@@ -72,7 +72,14 @@ export type StaticRoute = {
   lastModified: string;
 };
 
-const CONTENT_REVIEW_DATE = "2026-08-09";
+const CONTENT_REVIEW_DATE = "2026-08-25";
+
+export const RETIRED_INDEX_PATHS = new Set([
+  "/products/frp-sheet",
+  "/products/fiberglass-grating-manufacturers",
+  "/source-from-china/how-to-source-frp-grating",
+  "/source-from-china/how-to-source-frp-pipe",
+]);
 
 export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/", lastModified: CONTENT_REVIEW_DATE },
@@ -108,9 +115,6 @@ export const RESOURCE_SITEMAP_PATHS = [
   "/technical",
   "/guides",
   "/suppliers/resources",
-  "/processes/pultrusion",
-  "/processes/filament-winding",
-  "/processes/compression-molding",
   ...SEO_REFERENCE_PAGES.map((page) => `/${page.group}/${page.slug}`),
   ...MANUFACTURING_PAGES.map((page) => page.path),
   ...APPLICATION_PAGES.map((page) => page.path),
@@ -168,14 +172,23 @@ export async function buildSitemapEntries(
             slug: product.slug,
             updatedAt: CONTENT_REVIEW_DATE,
           }));
-      const catalogEntries = publishedRows.map((row) =>
-        toEntry(`/products/${row.slug}`, row.updatedAt),
-      );
+      const catalogEntries = publishedRows.flatMap((row) => {
+        const path = `/products/${row.slug}`;
+        return RETIRED_INDEX_PATHS.has(path)
+          ? []
+          : [toEntry(path, row.updatedAt)];
+      });
       const programmaticEntries = [
         ...ADDITIONAL_PRODUCT_PAGES,
         ...COMBINATION_PAGES.filter((page) => page.path.startsWith("/products/")),
-      ].map((page) => toEntry(page.path, CONTENT_REVIEW_DATE));
-      return [...catalogEntries, ...programmaticEntries];
+      ].flatMap((page) => RETIRED_INDEX_PATHS.has(page.path)
+        ? []
+        : [toEntry(page.path, CONTENT_REVIEW_DATE)]);
+      return Array.from(
+        new Map(
+          [...catalogEntries, ...programmaticEntries].map((entry) => [entry.url, entry]),
+        ).values(),
+      );
     }
 
     case "suppliers": {
@@ -248,16 +261,19 @@ export async function buildSitemapEntries(
         ...sourcingTopicSlugs.map((slug) => ({
           ...toEntry(`/sourcing/${slug}`, "2026-08-04"),
         })),
-        ...SOURCE_FROM_CHINA_PAGES.map((page) =>
-          toEntry(`/source-from-china/${page.slug}`, CONTENT_REVIEW_DATE),
-        ),
+        ...SOURCE_FROM_CHINA_PAGES.flatMap((page) => {
+          const path = `/source-from-china/${page.slug}`;
+          return RETIRED_INDEX_PATHS.has(path)
+            ? []
+            : [toEntry(path, CONTENT_REVIEW_DATE)];
+        }),
       ];
     }
 
     case "resources": {
       if (!isEn) return [];
       return RESOURCE_SITEMAP_PATHS.map((path) => ({
-        ...toEntry(path, path.startsWith("/processes/") ? CONTENT_REVIEW_DATE : "2026-08-04"),
+        ...toEntry(path, "2026-08-04"),
       }));
     }
 

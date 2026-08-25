@@ -19,6 +19,11 @@ import {
 import { HELP_PAGES } from "./data/help-pages";
 import { SupplierProductPageInput } from "./products/ugc-input";
 import { SUPPLIER_SOURCING_CATALOGS } from "./data/supplier-sourcing-catalogs";
+import { PRODUCT_SEARCH_INTENTS } from "./data/product-search-intents";
+import {
+  PROCESS_SEARCH_CLUSTERS,
+  PRODUCT_SEARCH_CATEGORIES,
+} from "./data/search-demand-catalog";
 import {
   HELP_LINKS,
   HOT_SEARCHES,
@@ -33,7 +38,11 @@ import {
 test("required L2 and L3 marketplace routes are present and unique", () => {
   const required = [
     "/products/carbon-fiber",
-    "/products/frp-sheet",
+    "/products/carbon-fiber-prepreg",
+    "/products/composite-core-materials",
+    "/products/frp-corrosion-equipment",
+    "/products/frp-enclosure",
+    "/products/recycled-composites",
     "/products/frp-cable-tray",
     "/products/frp-tank",
     "/products/frp-manhole-cover",
@@ -42,7 +51,6 @@ test("required L2 and L3 marketplace routes are present and unique", () => {
     "/products/fiberglass-panel",
     "/products/pultruded-frp-grating",
     "/products/carbon-fiber-pultrusion-profiles",
-    "/products/fiberglass-grating-manufacturers",
     "/applications/wastewater-treatment/frp-grating",
     "/standards/en-13706/pultruded-profiles",
     "/manufacturing/spray-up",
@@ -68,6 +76,31 @@ test("required L2 and L3 marketplace routes are present and unique", () => {
   assert.equal(MANUFACTURING_PAGES.length, 14);
   assert.equal(APPLICATION_PAGES.length, 5);
   assert.equal(STANDARD_PAGES.length, 4);
+});
+
+test("product and process hubs map search intent to canonical destinations", () => {
+  assert.equal(PRODUCT_SEARCH_CATEGORIES.length, 13);
+  assert.equal(PROCESS_SEARCH_CLUSTERS.length, 8);
+  assert.ok(Object.keys(PRODUCT_SEARCH_INTENTS).length >= 20);
+
+  const retiredPaths = new Set([
+    "/products/frp-sheet",
+    "/products/fiberglass-grating-manufacturers",
+    "/source-from-china/how-to-source-frp-grating",
+    "/source-from-china/how-to-source-frp-pipe",
+  ]);
+  for (const destination of PRODUCT_SEARCH_CATEGORIES.flatMap((category) => category.destinations)) {
+    assert.ok(destination.href.startsWith("/"), `${destination.href} must be internal`);
+    assert.equal(retiredPaths.has(destination.href), false, `${destination.href} must use its canonical route`);
+  }
+
+  const clusteredProcessPaths = PROCESS_SEARCH_CLUSTERS.flatMap((cluster) =>
+    cluster.routes.map((route) => route.href),
+  );
+  assert.deepEqual(
+    new Set(clusteredProcessPaths),
+    new Set(MANUFACTURING_PAGES.map((page) => page.path)),
+  );
 });
 
 test("long-form source and insight pages exceed 800 rendered words", () => {
@@ -152,10 +185,9 @@ test("global navigation and search meet the crawlable discovery contract", () =>
   for (const path of ["/products/fiberglass-sheet", "/products/smc-bmc", "/products/resin-gelcoat", "/products/fiber-glass"]) {
     assert.ok(PRODUCT_LINKS.some((item) => item.href === path), `missing legacy L2 product entry for ${path}`);
   }
-  assert.deepEqual(
-    new Set(SOURCING_GUIDE_LINKS.map((item) => item.href)),
-    new Set(SOURCE_FROM_CHINA_PAGES.map((item) => `/source-from-china/${item.slug}`)),
-  );
+  assert.ok(SOURCING_GUIDE_LINKS.some((item) => item.href === "/sourcing/frp-grating"));
+  assert.ok(SOURCING_GUIDE_LINKS.some((item) => item.href === "/sourcing/frp-piping"));
+  assert.equal(SOURCING_GUIDE_LINKS.some((item) => item.href.includes("how-to-source-frp-")), false);
   for (const link of STATIC_L2_LINKS) {
     const isInPrimaryDropdown = PRIMARY_NAVIGATION.some((group) =>
       group.items.some((item) => item.href === link.href),

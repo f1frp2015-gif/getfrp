@@ -59,10 +59,10 @@ export async function generateMetadata({
   if (locale === "en") {
     return {
       title: {
-        absolute: "China FRP Manufacturers & Suppliers Directory | getfrp",
+        absolute: "FRP Manufacturers & Fiberglass Suppliers in China | getfrp",
       },
       description:
-        "Search China FRP manufacturers and source by composites catalog, including fibers, resins, intermediates, processes, products, equipment and application markets.",
+        "Search reviewed FRP manufacturers, fiberglass suppliers and composite factories in China by product, material, process, evidence and export capability.",
       alternates: alternates("/suppliers"),
     };
   }
@@ -105,7 +105,7 @@ export default async function SuppliersPage({
     "@id": `${CURRENT_SITE_URL}/suppliers#supplier-catalogs`,
     url: `${CURRENT_SITE_URL}/suppliers`,
     inLanguage: locale,
-    name: "China FRP supplier sourcing catalogs",
+    name: "FRP manufacturers and fiberglass suppliers in China",
     description:
       "Browse China FRP suppliers across the composites value chain, manufacturing processes, products and application markets.",
     mainEntity: {
@@ -144,7 +144,7 @@ export default async function SuppliersPage({
               China composites supplier directory
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              China FRP Manufacturers &amp; Suppliers Directory
+              FRP Manufacturers &amp; Fiberglass Suppliers in China
             </h1>
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-slate-200 sm:text-base">
               Find manufacturers by product, material, process, company or end-use market—then compare published capability and verification records.
