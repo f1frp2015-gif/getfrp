@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
-import { and, asc, desc, eq, isNotNull, ne, or, sql } from "drizzle-orm";
+import { and, eq, isNotNull, ne, or } from "drizzle-orm";
 import { cache } from "react";
 import {
   ArrowRight,
@@ -95,6 +95,7 @@ import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import { SupplierClaimButton } from "@/components/supplier-claim-button";
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { englishOnlySupplier } from "@/lib/english-only";
+import { getPublicSupplierRows } from "@/lib/public-supplier-directory";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -892,34 +893,10 @@ async function renderSupplierProfile(profile: SupplierProfile) {
 async function loadCategoryNetwork(
   category: SupplierCategoryPage,
 ): Promise<NetworkRow[]> {
-  try {
-    const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
-    const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
-    const rows = await db
-      .select({
-        supplier: supplierListings,
-        enterpriseLogo: enterprises.logo,
-        enterpriseWebsite: enterprises.website,
-        employeeCount: enterprises.employeeCount,
-        annualRevenue: enterprises.annualRevenue,
-      })
-      .from(supplierListings)
-      .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
-      .orderBy(
-        desc(pinnedRank),
-        desc(supplierListings.profilePublished),
-        desc(supplierListings.verified),
-        desc(supplierListings.brandPriority),
-        desc(tierRank),
-        desc(supplierListings.viewCount),
-        asc(supplierListings.name),
-      );
-    return publicNetworkRows(rows)
-      .filter((row) => supplierMatchesCategory(category, row.supplier))
-      .map(serializeNetworkRow);
-  } catch {
-    return [];
-  }
+  const rows = await getPublicSupplierRows();
+  return publicNetworkRows(rows)
+    .filter((row) => supplierMatchesCategory(category, row.supplier))
+    .map(serializeNetworkRow);
 }
 
 function normalizedCerts(row: NetworkRow): string[] {
@@ -1074,33 +1051,10 @@ export async function generateMetadata({
 }
 
 async function loadRegionNetwork(region: SupplierRegionPage): Promise<NetworkRow[]> {
-  try {
-    const pinnedRank = sql<number>`CASE WHEN ${supplierListings.id} = ${PINNED_SUPPLIER_ID} THEN 1 ELSE 0 END`;
-    const tierRank = sql`CASE ${supplierListings.scaleTier} WHEN 'XL' THEN 4 WHEN 'L' THEN 3 WHEN 'M' THEN 2 WHEN 'S' THEN 1 ELSE 0 END`;
-    const rows = await db
-      .select({
-        supplier: supplierListings,
-        enterpriseLogo: enterprises.logo,
-        enterpriseWebsite: enterprises.website,
-        employeeCount: enterprises.employeeCount,
-        annualRevenue: enterprises.annualRevenue,
-      })
-      .from(supplierListings)
-      .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
-      .where(eq(supplierListings.province, region.provinceToken))
-      .orderBy(
-        desc(pinnedRank),
-        desc(supplierListings.profilePublished),
-        desc(supplierListings.verified),
-        desc(supplierListings.brandPriority),
-        desc(tierRank),
-        desc(supplierListings.viewCount),
-        asc(supplierListings.name),
-      );
-    return publicNetworkRows(rows).map(serializeNetworkRow);
-  } catch {
-    return [];
-  }
+  const rows = await getPublicSupplierRows();
+  return publicNetworkRows(rows)
+    .filter(({ supplier }) => supplier.province === region.provinceToken)
+    .map(serializeNetworkRow);
 }
 
 async function renderRegionPage(region: SupplierRegionPage) {

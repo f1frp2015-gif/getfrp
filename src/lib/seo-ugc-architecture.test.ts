@@ -218,6 +218,17 @@ test("the header is English-only and search appears only in the homepage body", 
   assert.match(homepage, /<HomeMarketplaceSearch \/>/);
 });
 
+test("the manufacturing hub retains the animated process card directory", () => {
+  const manufacturingHub = readFileSync(
+    new URL("../app/[locale]/manufacturing/page.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(manufacturingHub, /ProcessCardVisual/);
+  assert.match(manufacturingHub, /MANUFACTURING_PAGES\.map/);
+  assert.match(manufacturingHub, /id="process-animations"/);
+});
+
 test("L4 pages link back to home within three clicks and expose 8-12 related searches", () => {
   const l4ToHome = [
     "/suppliers/acme-frp/pultruded-grating",

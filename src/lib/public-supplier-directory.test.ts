@@ -65,6 +65,8 @@ import {
   ZHONGSHENG_FIBERGLASS_SUPPLIER_PROFILE,
 } from "./data/zhongsheng-fiberglass-supplier-profile";
 import { CURATED_SUPPLIER_PROFILES } from "./data/curated-supplier-profiles";
+import { buildChinaSourcingMapData } from "./data/china-sourcing-map";
+import { supplierCategories } from "./data/suppliers";
 import { supplierRouteSlug } from "./supplier-slugs";
 
 process.env.DATABASE_URL ??= "postgresql://user:pass@localhost/getfrp-test";
@@ -612,6 +614,43 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.match(
     CHONGQING_DUJIANG_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
     /past their printed validity dates/i,
+  );
+});
+
+test("keeps Git-backed profiles in aggregate consumers when the database is partial", async () => {
+  const { mergePublicSupplierRows } = await loadDirectory();
+  const rows = mergePublicSupplierRows([
+    {
+      supplier: F1_COMPOSITE_SUPPLIER_PROFILE,
+      enterpriseLogo: null,
+      enterpriseWebsite: null,
+      employeeCount: null,
+      annualRevenue: null,
+    },
+  ]);
+  const publishedRows = rows
+    .filter(({ supplier }) => supplier.profilePublished)
+    .map(({ supplier }) => ({
+      category: supplier.category,
+      province: supplier.province,
+    }));
+  const map = buildChinaSourcingMapData(
+    publishedRows,
+    supplierCategories.map((category) => ({
+      id: category.id,
+      label: category.nameEn,
+    })),
+  );
+
+  assert.equal(
+    rows.filter(({ supplier }) => supplier.id === F1_COMPOSITE_SUPPLIER_ID)
+      .length,
+    1,
+  );
+  assert.ok(map.mappedTotal > 1, "a partial database row must not collapse the map");
+  assert.ok(
+    (map.provinces.find(({ name }) => name === "Jiangsu")?.total ?? 0) > 0,
+    "Git-backed Jiangsu profiles must remain available to regional pages",
   );
 });
 

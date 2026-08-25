@@ -12,6 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { JsonLd } from "@/components/json-ld";
+import { ProcessCardVisual } from "@/components/marketplace/process-card-visual";
 import { buttonVariants } from "@/components/ui/button";
 import {
   MANUFACTURING_PAGES,
@@ -139,6 +140,49 @@ export default async function ManufacturingHub({
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section
+        id="process-animations"
+        className="border-b border-border/70 bg-background"
+      >
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-18">
+          <div className="max-w-3xl">
+            <div className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#123f8c]">
+              14 manufacturing routes · animated
+            </div>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
+              See how each composite process moves material
+            </h2>
+            <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-[15px]">
+              Use the motion diagrams to distinguish feed, tooling, pressure,
+              cure and consolidation before opening the detailed factory-control
+              guide for each route.
+            </p>
+          </div>
+
+          <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {MANUFACTURING_PAGES.map((process) => (
+              <Link
+                key={process.path}
+                href={process.path as never}
+                className="group rounded-xl border border-border/80 bg-white p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/40 hover:shadow-lg hover:shadow-brand-navy/5 focus-visible:ring-2 focus-visible:ring-brand-teal motion-reduce:transform-none motion-reduce:transition-none"
+              >
+                <ProcessCardVisual process={process.slug} />
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-xl font-semibold">{process.h1}</h3>
+                  <ArrowRight
+                    size={16}
+                    className="mt-1 shrink-0 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+                  />
+                </div>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  {process.summary}
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
