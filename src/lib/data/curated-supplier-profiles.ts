@@ -1,8 +1,12 @@
 import type { SupplierListing } from "@/lib/db/schema";
+import { ADESSO_WUHU_TIANDAO_SUPPLIER_PROFILE } from "@/lib/data/adesso-wuhu-tiandao-supplier-profile";
 import { ALTA_PERFORMANCE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/alta-performance-materials-supplier-profile";
+import { ANDAO_MACHINERY_SHANDONG_SUPPLIER_PROFILE } from "@/lib/data/andao-machinery-shandong-supplier-profile";
 import { AOC_SUPPLIER_PROFILE } from "@/lib/data/aoc-supplier-profile";
 import { ANJIE_SUPPLIER_PROFILE } from "@/lib/data/anjie-supplier-profile";
 import { ATCC_SUPPLIER_PROFILE } from "@/lib/data/atcc-supplier-profile";
+import { BAODING_VISIGHT_SUPPLIER_PROFILE } from "@/lib/data/baoding-visight-supplier-profile";
+import { BEIJING_BAIRUIDING_SUPPLIER_PROFILE } from "@/lib/data/beijing-bairuiding-supplier-profile";
 import { CHANGSHENG_CARBON_SUPPLIER_PROFILE } from "@/lib/data/changsheng-carbon-supplier-profile";
 import { CHANGZHOU_AOLANTE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-aolante-supplier-profile";
 import { CHANGZHOU_HONGFA_ZONGHENG_SUPPLIER_PROFILE } from "@/lib/data/changzhou-hongfa-zongheng-supplier-profile";
@@ -67,6 +71,7 @@ import {
   HONGFU_TONGXIN_SUPPLIER_PROFILE,
 } from "@/lib/data/hongfu-tongxin-supplier-profile";
 import { HORSE_CONSTRUCTION_SUPPLIER_PROFILE } from "@/lib/data/horse-construction-supplier-profile";
+import { IDI_COMPOSITES_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/idi-composites-shanghai-supplier-profile";
 import { JUFA_SUPPLIER_PROFILE } from "@/lib/data/jufa-supplier-profile";
 import { KEERDA_SUPPLIER_PROFILE } from "@/lib/data/keerda-supplier-profile";
 import {
@@ -231,6 +236,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: YIXING_HUAHENG_SUPPLIER_PROFILE },
   { profile: SINOPEC_SHANGHAI_PETROCHEMICAL_SUPPLIER_PROFILE },
   { profile: EXEL_COMPOSITES_NANJING_SUPPLIER_PROFILE },
+  { profile: ADESSO_WUHU_TIANDAO_SUPPLIER_PROFILE },
+  { profile: ANDAO_MACHINERY_SHANDONG_SUPPLIER_PROFILE },
+  { profile: BAODING_VISIGHT_SUPPLIER_PROFILE },
+  { profile: BEIJING_BAIRUIDING_SUPPLIER_PROFILE },
+  { profile: IDI_COMPOSITES_SHANGHAI_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
