@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.3.0"
+version: "1.4.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.4.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE D 字母页及 2026 深圳最终展商名单；第五批新增 5 家可索引供应商，补充官网 TLS、HTTP 429、Logo CDN、集团/中国法人和品牌年份边界。"
   - version: "1.3.0"
     date: "2026-08-25"
     changes: "继续核验 C/D 字母页；第四批新增 5 家可索引供应商，补充 HTTP-only 官网、全球集团与中国法人边界、域名未绑定、主体注销和清算记录。"
@@ -24,7 +27,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -69,16 +72,26 @@ changelog:
 | 戴铂科技（常熟）有限公司 | [CCE D 字母页：6G12](https://www.chinacompositesexpo.com/cn/netshow.php?head=D) | [中国官网](https://www.diabgroup.com/cn/)、[芯材目录](https://www.diabgroup.com/cn/产品-products/)、[PVC](https://www.diabgroup.com/cn/产品-products/divinycell-pvc/)、[轻木](https://www.diabgroup.com/cn/产品-products/balsa/)、[技术下载](https://www.diabgroup.com/cn/证书和技术参数-下载/)、[常熟联系记录](https://www.diabgroup.com/cn/关于戴铂-about-diab/活动/) | Divinycell PVC/PET/PES/PEI 泡沫、ProBalsa 轻木、开槽/穿孔/曲面处理、预切套材和芯材选型服务；把全球集团历史与常熟法人分开 | 已发布、可索引 |
 | 德州海力达模塑有限公司 | [CCE D 字母页第 2 页：7W06](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | [官网](http://www.hailidacn.com/)、[公司介绍](http://www.hailidacn.com/h-col-101.html)、[模具目录](http://www.hailidacn.com/h-col-106.html)、[产品目录](http://www.hailidacn.com/h-col-103.html)、[联系页](http://www.hailidacn.com/h-col-102.html) | SMC/BMC/LFT-D/PCM/PDCPD/HP-RTM 模具，汽车、轨交、电力通信、卫浴、充电桩和其他模压部件；成立年份与证书保持待核 | 已发布、可索引 |
 
+## 2026-08-25 第五批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 东莞市光博士激光科技股份有限公司 | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300)、[2026 展品名单](https://www.chinacompositesexpo.com/en/news-detail-128-16494.html) | [官网](https://www.gboslaser.cn/)、[产品中心](https://www.gboslaser.cn/products)、[公司简介](https://www.gboslaser.cn/about)、[联系页](https://www.gboslaser.cn/contact-us) | 数字刀片裁切、激光切割/打标、三维五轴、AI 排版、IoT Bridge、视觉送料及自动化；保持设备供应商边界，不注入碳纤/玻纤材料词 | 已发布、可索引 |
+| 东莞天石达复合材料有限公司 | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300) | [官网](https://www.tstarco.com/zh/)、[碳纤产品](https://www.tstarco.com/zh/products/carbon-fiber-products/)、[玻纤产品](https://www.tstarco.com/zh/products/fiberglass-products/)、[拉挤](https://www.tstarco.com/zh/products/different-technology/pultrusion/)、[卷制](https://www.tstarco.com/zh/products/different-technology/roll-wrapped/) | 碳纤/玻纤管、棒、板、型材，拉挤、拉编、卷管、SMC/BMC/DMC 模压、体育户外和玻纤钓鱼制品；不把钓鱼分类误写为碳纤维钓鱼竿 | 已发布、可索引 |
+| 东莞艾可迅复合材料有限公司 | [CCE 2026 深圳展商最终名单：543](https://shenzhen.chinacompositesexpo.com/cn/news.php?c_id=252&top_c_id=4) | [中国官网](https://www.action-composites.com.cn/)、[公司简介](https://www.action-composites.com.cn/about-us/)、[亮点产品](https://www.action-composites.com.cn/product/)、[联系页](https://www.action-composites.com.cn/contact-us/) | 汽车 CFRP 防滚架、稳定杆/连接杆、轮毂、弹簧、后视镜壳和 Class-A 内外饰；把东莞主体与集团其他场地、体系和批准分开 | 已发布、可索引 |
+| 东莞市聚力复合材料科技有限公司（CCE 名称：东莞市聚力玻纤制品有限公司） | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300)、[深圳英文网上展厅](https://shenzhen.chinacompositesexpo.com/en/netshow-1368-91123416.html) | [官网](https://www.carbonfiber360.com/)、[公司简介](https://www.carbonfiber360.com/about.html)、[产品中心](https://www.carbonfiber360.com/product/5/)、[工艺页](https://www.carbonfiber360.com/Pultruded-Process.html)、[联系页](https://www.carbonfiber360.com/Contact.html) | 碳纤维管/棒/板/条/型材/模压件，玻纤棒管型材，拉挤、拉缠、卷管、热压罐与体育/机器人/无人机部件；记录现行官网名与展会旧/备用名边界 | 已发布、可索引；官方 Logo CDN 返回 567 且浏览器破图，使用文字回退 |
+| 东莞市普诺克真空科技有限公司 | [CCE D 字母页：6Y25](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300)、[2026 展品名单](https://www.chinacompositesexpo.com/en/news-detail-128-16494.html) | [官网](https://pronotek.com/)、[产品目录](https://pronotek.com/products.html)、[真空系统](https://pronotek.com/products/vacuum-systems.html)、[公司简介](https://pronotek.com/company/about-pronotek.html)、[联系页](https://pronotek.com/contact/contact.html) | 旋片、罗茨、干式螺杆、无油旋片、涡旋、活塞泵，中央真空站、定制系统、配件和维修；以 2017 中国业务起点区别 1988 意大利品牌历史 | 已发布、可索引 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家。
 
 ## 本轮跳过与延后
 
@@ -106,6 +119,10 @@ changelog:
 | 成都科宜高分子科技有限公司（Coryes） | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | `coryes.com` 仍返回页面壳，但当前主流浏览器环境出现过时 TLS/加密套件错误，无法可靠浏览产品与联系内容 | 延后，待官网恢复现代浏览器可访问性 |
 | 德州虹辉复合材料有限公司 | [CCE D 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | 展会条目包含预浸料、碳管、碳板和体育用品，但本轮未找到独立企业官网 | 按“无官网跳过”规则处理 |
 | 德州联合拓普复合材料科技有限公司 | [CCE D 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | 只找到复材 B2B 平台店铺、展会和行业资料，未确认当前企业自有官网 | 跳过，避免把平台商铺当官网 |
+| 东莞市德泰复合材料有限公司 | [CCE D 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=D) | 可定位 `detaicompositematerial.com` 及预浸料产品缓存，但本轮 `curl` TLS 握手失败且干净浏览器返回 `ERR_CONNECTION_CLOSED`，无法可靠浏览现行官网 | 延后，待官网恢复后复核 |
+| 东莞市冠博精密机电有限公司 | [CCE D 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=D) | 官方域名 `guanbochina.com` 当前向普通请求和干净浏览器返回 HTTP 429，无法稳定复核产品、联系和 Logo | 延后，待官网解除限流后复核 |
+| 东莞市久耐机械有限公司 | [CCE D 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=D)、[2026 深圳展商名单](https://shenzhen.chinacompositesexpo.com/cn/news.php?c_id=252&top_c_id=4) | 可定位 RTM/HP-RTM 和拉挤注胶设备官网 `dgjnjx.com`，但当前 HTTPS 证书链无法由标准客户端验证 | 延后，待证书链修复后复核 |
+| 东营汇新和瑞新材料有限公司 | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=D) | 行业资料指向 `huixinherui.com`，但本轮 HTTP 返回空响应、HTTPS 握手失败，无法核实现行泡沫芯材与联系内容 | 按“官网失效跳过”规则处理 |
 
 ## 证据边界与复核提醒
 
@@ -128,6 +145,11 @@ changelog:
 - 悦腾是设备企业。CFRT 线能配置玻纤、碳纤、芳纶和玄武岩，并不表示悦腾自身销售这些预浸带、板材或管道；因此不注入材料产品搜索词。
 - 戴铂官网为全球集团站点，但中文页脚明确列出常熟法人。主页保留常熟主体，集团历史、全球产能、案例和批准不自动归入该法人，成立年份留空。
 - 海力达官网和展会资料对经营年限、设备和能力采用不同口径；主页保留模具与公开部件范围，成立年份、证书、设备数量和客户验证均待审厂或文件包确认。
+- 光博士与普诺克均为设备企业。复材展的裁切或真空设备分类只建立行业相关性，不表示企业自身销售碳纤维、玻纤、预浸料、真空辅材或成品，因此不注入材料产品搜索词。
+- 天石达官网钓鱼分类实际显示玻纤伸缩钓鱼产品；主页可映射 `fiberglass fishing rod`，但明确排除 `carbon fiber fishing rod`，避免用用户想要的热门词覆盖真实产品边界。
+- 艾可迅官网公开集团多地布局与多项体系陈述；主页只保留东莞中国主体的汽车 CFRP 范围，未取得现行完整证书文件前不把 IATF/ISO/SA 或其他国家场地能力列为验证项。
+- 聚力现行官网名称与 CCE 展商名称不同；品牌、产品、创办人叙述和东莞位置支持去重，但主页不把这解释为已独立核验的工商更名。官网 Logo 第三方 CDN 本轮返回 HTTP 567 并在干净浏览器显示破图，因此依规则采用文字回退。
+- 普诺克的 1988 年是展会所述意大利品牌历史；东莞中国业务公开起点为 2017 年。具体复材真空导入、脱泡或热压罐辅助工况仍须按介质、抽速、极限压力、捕集与安全重新选型。
 
 ## 后续维护方法
 
