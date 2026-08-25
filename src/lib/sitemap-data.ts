@@ -84,6 +84,7 @@ export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/standards", lastModified: CONTENT_REVIEW_DATE },
   { path: "/insights", lastModified: CONTENT_REVIEW_DATE },
   { path: "/services/frp-engineering-qa", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/services/china-export-growth", lastModified: "2026-08-24" },
   { path: "/methodology", lastModified: CONTENT_REVIEW_DATE },
   { path: "/ai", lastModified: "2026-08-04" },
   { path: "/about", lastModified: CONTENT_REVIEW_DATE },
