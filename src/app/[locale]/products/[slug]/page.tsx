@@ -29,6 +29,7 @@ import {
   findPage,
 } from "@/lib/data/seo-marketplace-pages";
 import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
+import { getProductSearchIntent } from "@/lib/data/product-search-intents";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -82,7 +83,9 @@ export async function generateMetadata({
   }
   const product = await loadProductBySlug(slug);
   if (!product) return { robots: { index: false, follow: false } };
-  const title = `China ${product.nameEn} Manufacturers, Suppliers & Wholesale | getfrp`;
+  const searchIntent = getProductSearchIntent(slug);
+  const title = searchIntent?.title
+    ?? `China ${product.nameEn} Manufacturers, Suppliers & Wholesale | getfrp`;
   return {
     title: { absolute: title },
     description: product.summary,
@@ -125,6 +128,7 @@ export default async function ProductDetailPage({
   }
   const product = await loadProductBySlug(slug);
   if (!product) notFound();
+  const searchIntent = getProductSearchIntent(product.slug);
   const [allSuppliers, supplierProductPages] = await Promise.all([
     loadSuppliersForProduct(product),
     loadApprovedSupplierProducts({ category: product.slug }),
@@ -158,7 +162,7 @@ export default async function ProductDetailPage({
           name: product.nameEn,
           description: product.summary,
           inLanguage: "en",
-          dateModified: "2026-08-09",
+          dateModified: "2026-08-25",
           mainEntity: {
             "@type": "DefinedTerm",
             "@id": `${pageUrl}#product-family`,
@@ -220,11 +224,26 @@ export default async function ProductDetailPage({
                 {product.category}
               </div>
               <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-6xl">
-                China {product.nameEn} Manufacturers &amp; Suppliers
+                {searchIntent?.h1 ?? `China ${product.nameEn} Manufacturers & Suppliers`}
               </h1>
               <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">
                 {product.summary}
               </p>
+              {searchIntent && (
+                <div className="mt-5 max-w-3xl rounded-xl border border-[#123f8c]/15 bg-[#123f8c]/[0.035] p-4">
+                  <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#123f8c]">
+                    Buyer scope
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {searchIntent.audienceNote}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {searchIntent.primaryTerms.map((term) => (
+                      <Badge key={term} variant="outline">{term}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="mt-7 flex flex-wrap gap-3">
                 <a href="#products" className={buttonVariants({ size: "lg" })}>
                   Product List
@@ -312,7 +331,7 @@ export default async function ProductDetailPage({
           <dl className="rounded-xl border border-border/70 bg-white p-6 text-sm">
             <div className="flex justify-between gap-5 border-b border-border/70 pb-3">
               <dt className="text-muted-foreground">Last editorial review</dt>
-              <dd className="font-medium">9 August 2026</dd>
+              <dd className="font-medium">25 August 2026</dd>
             </div>
             <div className="flex justify-between gap-5 border-b border-border/70 py-3">
               <dt className="text-muted-foreground">Supplier records linked</dt>

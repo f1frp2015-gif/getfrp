@@ -19,7 +19,7 @@ export const PRODUCT_LINKS = [
   { label: "FRP manhole cover", href: "/products/frp-manhole-cover" },
   { label: "FRP handrail", href: "/products/frp-handrail" },
   { label: "FRP ladder", href: "/products/frp-ladder" },
-  { label: "FRP sheet", href: "/products/frp-sheet" },
+  { label: "Carbon fiber prepreg", href: "/products/carbon-fiber-prepreg" },
   { label: "Fiberglass panel", href: "/products/fiberglass-panel" },
   { label: "Fiberglass sheet", href: "/products/fiberglass-sheet" },
   { label: "SMC / BMC", href: "/products/smc-bmc" },
@@ -53,10 +53,10 @@ export const STANDARD_LINKS = [
 export const SOURCING_GUIDE_LINKS = [
   { label: "CN Services", href: "/services/china-export-growth" },
   { label: "Verify a China supplier", href: "/source-from-china/verify-supplier" },
-  { label: "Source FRP grating", href: "/source-from-china/how-to-source-frp-grating" },
+  { label: "Source FRP grating", href: "/sourcing/frp-grating" },
   { label: "Pultruded vs molded grating", href: "/source-from-china/frp-grating-vs-molded-grating" },
   { label: "China FRP grating prices", href: "/source-from-china/frp-grating-price-china" },
-  { label: "Source FRP pipe", href: "/source-from-china/how-to-source-frp-pipe" },
+  { label: "Source FRP pipe", href: "/sourcing/frp-piping" },
 ] as const satisfies readonly NavigationLink[];
 
 export const TOOL_LINKS = [
