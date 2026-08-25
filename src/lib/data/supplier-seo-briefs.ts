@@ -389,7 +389,7 @@ const TOPIC_LABEL_RULES: Array<{ pattern: RegExp; label: string }> = [
   { pattern: /membrane.*(?:pressure vessel|housing)|(?:pressure vessel|housing).*membrane/i, label: "FRP Membrane Housings" },
   { pattern: /(?:multiaxial|biaxial).*warp-knitting|warp-knitting.*(?:glass|carbon|composite)/i, label: "Composite Warp-Knitting Machines" },
   { pattern: /structural adhesives?.*(?:composite|high-end equipment)|(?:composite|high-end equipment).*structural adhesives?/i, label: "Industrial Structural Adhesives" },
-  { pattern: /composite compression molds?|SMC.*(?:molds?|moulds?)/i, label: "Composite Compression Molds" },
+  { pattern: /composite compression (?:molds?|moulds?)\b|SMC.*(?:molds?|moulds?)\b/i, label: "Composite Compression Molds" },
   { pattern: /composite (?:mold|mould) release agents?|(?:mold|mould) release agents?.*composite/i, label: "Composite Mold Release Agents" },
   { pattern: /industrial CT inspection|X-ray digital radiography/i, label: "Industrial X-ray and CT Inspection Systems" },
   { pattern: /high-precision heavy-cutting machining centers?|CNC profile machining centers?/i, label: "CNC Profile and Five-Axis Machining Centers" },
