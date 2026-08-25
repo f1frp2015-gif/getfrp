@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.4.0"
+version: "1.5.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.5.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE F/G 字母页；第六批新增 5 家可索引供应商，补充试生产、集团/中国法人、官网旧主体名及设备与材料关键词边界。"
   - version: "1.4.0"
     date: "2026-08-25"
     changes: "继续核验 CCE D 字母页及 2026 深圳最终展商名单；第五批新增 5 家可索引供应商，补充官网 TLS、HTTP 429、Logo CDN、集团/中国法人和品牌年份边界。"
@@ -27,7 +30,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -82,16 +85,26 @@ changelog:
 | 东莞市聚力复合材料科技有限公司（CCE 名称：东莞市聚力玻纤制品有限公司） | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300)、[深圳英文网上展厅](https://shenzhen.chinacompositesexpo.com/en/netshow-1368-91123416.html) | [官网](https://www.carbonfiber360.com/)、[公司简介](https://www.carbonfiber360.com/about.html)、[产品中心](https://www.carbonfiber360.com/product/5/)、[工艺页](https://www.carbonfiber360.com/Pultruded-Process.html)、[联系页](https://www.carbonfiber360.com/Contact.html) | 碳纤维管/棒/板/条/型材/模压件，玻纤棒管型材，拉挤、拉缠、卷管、热压罐与体育/机器人/无人机部件；记录现行官网名与展会旧/备用名边界 | 已发布、可索引；官方 Logo CDN 返回 567 且浏览器破图，使用文字回退 |
 | 东莞市普诺克真空科技有限公司 | [CCE D 字母页：6Y25](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=300)、[2026 展品名单](https://www.chinacompositesexpo.com/en/news-detail-128-16494.html) | [官网](https://pronotek.com/)、[产品目录](https://pronotek.com/products.html)、[真空系统](https://pronotek.com/products/vacuum-systems.html)、[公司简介](https://pronotek.com/company/about-pronotek.html)、[联系页](https://pronotek.com/contact/contact.html) | 旋片、罗茨、干式螺杆、无油旋片、涡旋、活塞泵，中央真空站、定制系统、配件和维修；以 2017 中国业务起点区别 1988 意大利品牌历史 | 已发布、可索引 |
 
+## 2026-08-25 第六批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 方鑫树脂（安徽）有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | [方鑫官网](https://www.fangxinresin.com/)、[手糊树脂](https://www.fangxinresin.com/hand-lay-up-resin)、[拉挤/格栅树脂](https://www.fangxinresin.com/pultrusiongrid-resin)、[公司介绍](https://www.fangxinresin.com/About-us)、[联系页](https://www.fangxinresin.com/Contact-us) | 不饱和聚酯、乙烯基酯、手糊/喷射、机制板、拉挤/格栅、SMC/BMC、RTM、船用、缠绕、阻燃树脂和胶衣；安徽线体为 2026 年 7 月试生产，集团历史和南通总部资料不自动转移 | 已发布、可索引 |
+| 高胜晓星碳材料（江苏）有限公司 | [CCE G 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=G) | [HS HYOSUNG Advanced Materials](https://www.hshyosungadvancedmaterials.com/en/)、[TANSOME 产品页](https://www.hshyosungadvancedmaterials.com/en/business/carbon-fiber)、[全球网络](https://www.hshyosungadvancedmaterials.com/en/company/global-network)、[公司手册](https://www.hshyosung.com/resources/front/ebook/en/HS_HYOSUNG_PROFILE_EN.pdf) | TANSOME 标准模量 6K/12K/24K、中间模量 12K/24K、超高强 12K 碳纤维及压力容器、电缆芯、航空航天、风电、体育、工业和建筑应用；区分集团体系与江苏工厂 | 已发布、可索引 |
+| 广东锦明新材料科技有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/en/netshow-3827-7890981.html) | [官网](https://www.jmfiber.cn/)、[产品中心](https://www.jmfiber.cn/products/)、[公司介绍](https://www.jmfiber.cn/about/)、[联系页](https://www.jmfiber.cn/contact/) | 碳纤维管、板、片材、拉编和模压件，机器人臂、无人机外壳、桨板、摄影、医疗及汽车制品和彩色玻纤管；披露官网旧主体名，不推断碳纤维钓鱼竿 | 已发布、可索引 |
+| 广东汇德自动化科技有限公司 | [CCE G 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=G) | [官网](https://huedur.com/)、[产品中心](https://huedur.com/c/i/2.html)、[拉挤缠绕切割线](https://huedur.com/c/i/24.html)、[联系页](https://huedur.com/c/i/34.html) | 往复式/履带拉挤机、在线切割、拉挤-缠绕/编织集成、双组分注胶、分切、搅拌、纱架和拉挤模具；只作为设备供应商，不分配材料成品词 | 已发布、可索引 |
+| 广东瑞洲科技有限公司 | [CCE G 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=G) | [官网](https://www.ruizhou.com.cn/)、[复材切割方案](https://www.ruizhou.com.cn/industry/11.html)、[公司介绍](https://www.ruizhou.com.cn/about/index.html)、[联系页](https://www.ruizhou.com.cn/contact/index.html) | RZCRT5 复材数控切割机，振动/圆/气动/V 形/铣刀、传送、真空吸附、排版、标注、压痕、半刀和全刀；碳纤、玻纤和预浸料仅为被加工材料 | 已发布、可索引 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家。
 
 ## 本轮跳过与延后
 
@@ -123,6 +136,11 @@ changelog:
 | 东莞市冠博精密机电有限公司 | [CCE D 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=D) | 官方域名 `guanbochina.com` 当前向普通请求和干净浏览器返回 HTTP 429，无法稳定复核产品、联系和 Logo | 延后，待官网解除限流后复核 |
 | 东莞市久耐机械有限公司 | [CCE D 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=D)、[2026 深圳展商名单](https://shenzhen.chinacompositesexpo.com/cn/news.php?c_id=252&top_c_id=4) | 可定位 RTM/HP-RTM 和拉挤注胶设备官网 `dgjnjx.com`，但当前 HTTPS 证书链无法由标准客户端验证 | 延后，待证书链修复后复核 |
 | 东营汇新和瑞新材料有限公司 | [CCE D 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=D) | 行业资料指向 `huixinherui.com`，但本轮 HTTP 返回空响应、HTTPS 握手失败，无法核实现行泡沫芯材与联系内容 | 按“官网失效跳过”规则处理 |
+| 佛山佛塑科技集团股份有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | 展会资料仍提到 PVC 结构泡沫，但现行官网产品与业务目录未找到对应复材泡沫的当前产品页，无法确认继续供应 | 跳过，避免依据过期展品建立主页 |
+| 福建立亚新材有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | 本轮未确认能与展会主体独立对应且可访问的企业自有官网 | 按“无官网跳过”规则处理 |
+| 福州宏兰德科技有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | 可确认展会线索，但未找到可稳定访问并核对产品、联系和 Logo 的独立官网 | 跳过，待官网出现后复核 |
+| 福建省睿步科技有限公司 | [CCE F 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=F) | 检索结果未能独立确认当前企业官网，无法完成主体和产品一致性核验 | 按“无官网跳过”规则处理 |
+| 广东仁达智能装备有限公司 | [CCE G 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=G) | 仅找到展会或第三方平台线索，未确认当前企业自有独立官网 | 跳过，避免把平台页面当官网 |
 
 ## 证据边界与复核提醒
 
@@ -150,6 +168,10 @@ changelog:
 - 艾可迅官网公开集团多地布局与多项体系陈述；主页只保留东莞中国主体的汽车 CFRP 范围，未取得现行完整证书文件前不把 IATF/ISO/SA 或其他国家场地能力列为验证项。
 - 聚力现行官网名称与 CCE 展商名称不同；品牌、产品、创办人叙述和东莞位置支持去重，但主页不把这解释为已独立核验的工商更名。官网 Logo 第三方 CDN 本轮返回 HTTP 567 并在干净浏览器显示破图，因此依规则采用文字回退。
 - 普诺克的 1988 年是展会所述意大利品牌历史；东莞中国业务公开起点为 2017 年。具体复材真空导入、脱泡或热压罐辅助工况仍须按介质、抽速、极限压力、捕集与安全重新选型。
+- 方鑫安徽主体在集团官方新闻中为 2026 年 7 月进入试生产；主页不使用集团 1992 年历史作为安徽公司成立时间，也不默认南通目录全部牌号已在安徽商业量产。官网公开联系人属于南通总部，询价需书面确认安徽生产、签约、开票、收款和出口主体。
+- 高胜晓星江苏公司与 TANSOME 产品体系由集团全球网络和产品页相互印证；韩国集团历史、总产能、认证和应用批准不自动成为江苏工厂的已验证数据。
+- 锦明展会使用“广东锦明新材料科技有限公司”，官网仍显示“东莞市锦明复合材料有限公司”。产品、工艺和东莞地址支持作为同一供应商去重，但未取得独立工商更名文件；体育分类与碳纤维桨板不能推导出碳纤维钓鱼竿。
+- 汇德和瑞洲是设备企业。汇德生产线案例中的碳梁板、FRP 筋材、门窗型材，以及瑞洲可切割的碳纤维、玻纤和预浸料，都不是这两家公司自产材料；关键词映射器将纱架等设备也排除在材料词触发之外。
 
 ## 后续维护方法
 
