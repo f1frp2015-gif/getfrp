@@ -19,7 +19,7 @@ import { englishOnlyList, englishOnlyText } from "@/lib/english-only";
 const PINNED_SUPPLIER_ID = F1_COMPOSITE_SUPPLIER_ID;
 const SCALE_RANK: Record<string, number> = { XL: 4, L: 3, M: 2, S: 1 };
 
-type PublicSupplierRow = {
+export type PublicSupplierRow = {
   supplier: SupplierListing;
   enterpriseLogo: string | null;
   enterpriseWebsite: string | null;
@@ -100,6 +100,21 @@ export function mergePublicSupplierDirectory(
   databaseRows: PublicSupplierRow[],
   locale: string,
 ): SerializedSupplier[] {
+  return mergePublicSupplierRows(databaseRows).map((row) =>
+    serializeSupplierRow(row, locale),
+  );
+}
+
+/**
+ * Merge database-managed suppliers with the reviewed Git-backed profiles.
+ *
+ * Every public supplier surface must use this merge before filtering. A
+ * partial database response is not a complete directory: Git-backed profiles
+ * that are absent from the response still need to remain visible.
+ */
+export function mergePublicSupplierRows(
+  databaseRows: PublicSupplierRow[],
+): PublicSupplierRow[] {
   const enrichedDatabaseRows = databaseRows.map((row) => ({
     ...row,
     supplier: enrichSupplierWithCuratedProfile(row.supplier),
@@ -130,39 +145,43 @@ export function mergePublicSupplierDirectory(
   });
 
   return [...enrichedDatabaseRows, ...curatedFallbackRows]
-    .sort(compareSupplierRows)
-    .map((row) => serializeSupplierRow(row, locale));
+    .sort(compareSupplierRows);
 }
 
-export const getPublicSupplierDirectory = cache(
-  async (locale: string): Promise<SerializedSupplier[]> => {
-    let joinedRows: PublicSupplierRow[] = [];
-    try {
-      joinedRows = await db
-        .select({
-          supplier: supplierListings,
-          enterpriseLogo: enterprises.logo,
-          enterpriseWebsite: enterprises.website,
-          employeeCount: enterprises.employeeCount,
-          annualRevenue: enterprises.annualRevenue,
-        })
-        .from(supplierListings)
-        .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
-        .where(
-          and(
-            isNotNull(supplierListings.slug),
-            isNotNull(supplierListings.nameEn),
-            ne(supplierListings.nameEn, ""),
-          ),
-        );
-    } catch (error) {
-      console.warn(
-        `[supplier-directory] database unavailable; serving curated profiles: ${
-          error instanceof Error ? error.message : "unknown error"
-        }`,
+export const getPublicSupplierRows = cache(async (): Promise<PublicSupplierRow[]> => {
+  let joinedRows: PublicSupplierRow[] = [];
+  try {
+    joinedRows = await db
+      .select({
+        supplier: supplierListings,
+        enterpriseLogo: enterprises.logo,
+        enterpriseWebsite: enterprises.website,
+        employeeCount: enterprises.employeeCount,
+        annualRevenue: enterprises.annualRevenue,
+      })
+      .from(supplierListings)
+      .leftJoin(enterprises, eq(supplierListings.enterpriseId, enterprises.id))
+      .where(
+        and(
+          isNotNull(supplierListings.slug),
+          isNotNull(supplierListings.nameEn),
+          ne(supplierListings.nameEn, ""),
+        ),
       );
-    }
+  } catch (error) {
+    console.warn(
+      `[supplier-directory] database unavailable; serving curated profiles: ${
+        error instanceof Error ? error.message : "unknown error"
+      }`,
+    );
+  }
 
-    return mergePublicSupplierDirectory(joinedRows, locale);
-  },
+  return mergePublicSupplierRows(joinedRows);
+});
+
+export const getPublicSupplierDirectory = cache(
+  async (locale: string): Promise<SerializedSupplier[]> =>
+    (await getPublicSupplierRows()).map((row) =>
+      serializeSupplierRow(row, locale),
+    ),
 );

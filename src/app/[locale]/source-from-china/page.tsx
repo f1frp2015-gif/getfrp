@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { eq } from "drizzle-orm";
 import { setRequestLocale } from "next-intl/server";
 import {
   ClipboardCheck,
@@ -12,8 +11,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { db } from "@/lib/db";
-import { supplierListings } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
@@ -28,15 +25,15 @@ import { NewsletterSignup } from "@/components/newsletter-signup";
 import { TestimonialsBlock } from "@/components/testimonials-block";
 import { ChinaSourcingMapDashboard } from "@/components/china-sourcing-map-dashboard";
 import { supplierCategories } from "@/lib/data/suppliers";
-import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
 import { buildChinaSourcingMapData } from "@/lib/data/china-sourcing-map";
+import { getPublicSupplierRows } from "@/lib/public-supplier-directory";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 
 export const revalidate = 3600;
 
-type VerifiedRow = {
+type PublicMapRow = {
   category: string | null;
   province: string | null;
-  scaleTier: string | null;
 };
 
 export function generateMetadata(): Metadata {
@@ -57,37 +54,19 @@ export default async function SourceFromChinaPage({
   if (locale !== "en") notFound();
   setRequestLocale(locale);
 
-  // Aggregate-only query — the page presents the audited network in aggregate
-  // (counts by category / province / cert / tier), NEVER named suppliers. No
-  // factory identity reaches the client; getfrp sources as a principal.
-  const verified: VerifiedRow[] = await (async () => {
-    try {
-      const databaseRows = await db
-        .select({
-          category: supplierListings.category,
-          province: supplierListings.province,
-          scaleTier: supplierListings.scaleTier,
-        })
-        .from(supplierListings)
-        .where(eq(supplierListings.verified, true));
-      if (databaseRows.length > 0) return databaseRows;
-    } catch {
-      // The Git-backed profiles keep the public sourcing map useful during
-      // database outages and in preview builds without production credentials.
-    }
-    return CURATED_SUPPLIER_PROFILES.flatMap(({ profile }) =>
-      profile.verified
-        ? [{
-            category: profile.category,
-            province: profile.province,
-            scaleTier: profile.scaleTier,
-          }]
-        : [],
-    );
-  })();
+  // Use the same database + Git merge as the public supplier directory. A
+  // partial database response must not erase reviewed Git-backed profiles from
+  // this aggregate map. Only counts reach the client; no supplier identity is
+  // exposed by the visualization.
+  const publicProfiles: PublicMapRow[] = (await getPublicSupplierRows())
+    .filter(({ supplier }) => isSupplierProfileIndexable(supplier))
+    .map(({ supplier }) => ({
+      category: supplier.category,
+      province: supplier.province,
+    }));
 
   const sourcingMapData = buildChinaSourcingMapData(
-    verified,
+    publicProfiles,
     supplierCategories.map((category) => ({
       id: category.id,
       label: category.nameEn,
@@ -106,7 +85,7 @@ export default async function SourceFromChinaPage({
           inLanguage: "en",
           name: "Source composites from China",
           description:
-            "Verified Chinese FRP suppliers mapped by province and category, with supply-cluster insights and a sourcing playbook for overseas buyers.",
+            "Reviewed public Chinese FRP supplier profiles mapped by province and category, with supply-cluster insights and a sourcing playbook for overseas buyers.",
         }}
       />
       {/* FAQPage schema: explicit Q&A surface that Perplexity, Google AI
@@ -179,9 +158,9 @@ export default async function SourceFromChinaPage({
           title="Find the right composites cluster before you send the RFQ"
         />
         <p className="mb-7 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-          Filter the audited supplier network by supply-chain role, compare
+          Filter reviewed public supplier profiles by supply-chain role, compare
           province-level density, and inspect the category mix behind each hub.
-          Counts are generated from verified supplier records and refreshed with
+          Counts are generated from the same resilient directory used across GetFRP and refreshed with
           this page every hour.
         </p>
         <ChinaSourcingMapDashboard data={sourcingMapData} />

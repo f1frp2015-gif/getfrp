@@ -182,8 +182,9 @@ export function ChinaSourcingMapDashboard({
               China Fiber &amp; Composites Sourcing Map
             </h3>
             <p className="mt-2 max-w-xl text-sm leading-6 text-slate-300">
-              Explore verified supplier density by province and supply-chain role.
-              Every view is rebuilt from the audited supplier dataset.
+              Explore reviewed public supplier-profile density by province and
+              supply-chain role. Every view uses the same resilient data merge
+              as the GetFRP supplier directory.
             </p>
           </div>
           <div className="flex items-center gap-2 self-start rounded-full border border-[#7be4e1]/25 bg-[#7be4e1]/10 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-[#7be4e1]">
@@ -306,7 +307,8 @@ export function ChinaSourcingMapDashboard({
               </title>
               <desc id="china-map-description">
                 A geographic map of China. Province colors and numeric markers
-                represent verified supplier counts for the selected category.
+                represent reviewed public supplier-profile counts for the
+                selected category.
               </desc>
 
               <g>
@@ -390,8 +392,8 @@ export function ChinaSourcingMapDashboard({
           </div>
           <p className="mt-3 text-[10px] leading-5 text-slate-500">
             Province boundaries provide geographic reference. Color and numeric
-            markers show verified supplier records, not production capacity or
-            market share. Boundary geometry: DataV GeoAtlas.
+            markers show reviewed public supplier profiles, not production
+            capacity or market share. Boundary geometry: DataV GeoAtlas.
           </p>
         </div>
 
@@ -454,7 +456,7 @@ export function ChinaSourcingMapDashboard({
 
           {data.unmappedTotal > 0 && category === ALL_CATEGORIES && (
             <p className="mt-5 border-t border-white/10 pt-4 text-[10px] leading-5 text-slate-500">
-              {data.unmappedTotal} verified record
+              {data.unmappedTotal} public profile
               {data.unmappedTotal === 1 ? " is" : "s are"} excluded from the map
               because a province has not been assigned.
             </p>
@@ -509,7 +511,8 @@ export function ChinaSourcingMapDashboard({
                 </div>
               ) : (
                 <p className="text-xs leading-5 text-slate-400">
-                  No verified supplier records are currently mapped to this province.
+                  No reviewed public supplier profiles are currently mapped to
+                  this province.
                 </p>
               )}
             </div>
