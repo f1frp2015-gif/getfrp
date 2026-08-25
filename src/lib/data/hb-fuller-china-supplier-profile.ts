@@ -1,0 +1,103 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const HB_FULLER_CHINA_SUPPLIER_ID = "sup-hb-fuller-china";
+export const HB_FULLER_CHINA_SUPPLIER_SLUG = "hb-fuller-china";
+
+// Curated from H.B. Fuller's current official China-location, aerospace and
+// wind pages plus the 2026 CCE exhibitor directory. The official logo was
+// downloaded 2026-08-25 from hbfuller.com and is stored locally as SVG.
+export const HB_FULLER_CHINA_SUPPLIER_PROFILE: SupplierListing = {
+  id: HB_FULLER_CHINA_SUPPLIER_ID,
+  name: "富乐（中国）粘合剂有限公司",
+  nameEn: "H.B. Fuller (China) Adhesives Co., Ltd.",
+  slug: HB_FULLER_CHINA_SUPPLIER_SLUG,
+  location: "广东广州",
+  locationEn: "Guangzhou, Guangdong, China",
+  province: "广东",
+  category: "resin",
+  products: [
+    "EY3804 复合材料修补结构胶",
+    "FE6046 复合材料修补胶粘剂",
+    "EY2536 夹芯板封边与芯材填充胶",
+    "EY3010 阻燃低释气灌封/填充胶",
+    "WS-8020RC 航空燃油箱聚硫密封剂",
+    "LCA-9/BA-5 与 LCA-4LV 低释气胶粘剂",
+    "风电叶片腹板结构胶粘剂方案",
+    "风机机舱与法兰密封材料",
+    "涡流发生器粘接与防雷系统灌封材料",
+    "螺纹锁固、螺栓润滑与防咬合材料",
+  ],
+  productsEn: [
+    "EY3804 structural adhesive for composite repair",
+    "FE6046 adhesive for composite repair",
+    "EY2536 adhesive for sandwich-panel edge and core fill",
+    "EY3010 flame-retardant low-outgassing potting and fill compound",
+    "WS-8020RC aerospace fuel-tank polysulfide sealant",
+    "LCA-9/BA-5 and LCA-4LV low-outgassing adhesives",
+    "Structural adhesive systems for wind-blade web plate bonding",
+    "Wind-turbine nacelle and flange sealants",
+    "Vortex-generator bonding and lightning-system potting materials",
+    "Threadlocking, bolt-lubrication and anti-seize materials",
+  ],
+  processList: [
+    "环氧与聚氨酯结构粘接选型",
+    "复合材料现场修补与补强粘接",
+    "蜂窝芯/夹芯板封边、填充与嵌件灌封",
+    "聚硫密封剂混配、施涂与固化",
+    "风电叶片腹板与组件结构粘接",
+    "风机机舱、法兰和螺栓区域密封",
+    "低释气导电/导热电子胶粘与灌封",
+    "胶粘剂应用测试与工艺支持",
+    "双组分胶包装与计量施胶方案",
+    "热循环、湿热、QUV、盐雾和疲劳扭转载荷评估",
+  ],
+  processListEn: [
+    "Epoxy and polyurethane structural-adhesive selection",
+    "Composite field repair and reinforcement bonding",
+    "Honeycomb and sandwich-panel edge fill, core fill and insert potting",
+    "Polysulfide sealant mixing, application and cure",
+    "Wind-blade web and component structural bonding",
+    "Nacelle, flange and fastener-area sealing",
+    "Low-outgassing conductive or thermal electronics bonding and potting",
+    "Adhesive application testing and process support",
+    "Two-part packaging, metering and dispensing support",
+    "Thermal-cycle, damp-heat, QUV, salt-mist and fatigue-torsion evaluation",
+  ],
+  established: null,
+  verified: false,
+  description:
+    "富乐（中国）粘合剂有限公司是 H.B. Fuller 官网列出的广州中国法人/运营地址，也是中国国际复材展 2026 收录的环氧树脂、胶粘剂、助剂和密封材料展商。H.B. Fuller 全球官网当前公开航空复材修补、蜂窝/夹芯板填充、聚硫密封、风电叶片腹板粘接、机舱密封、涡流发生器粘接、灌封、螺纹锁固和润滑等产品及应用。本页将这些目录作为富乐集团可询价范围展示，但不推定所有全球牌号均由广州工厂制造、库存或签约供应；采购前必须由富乐确认具体牌号在中国的销售主体、产地、法规状态、包装和交期。",
+  descriptionEn:
+    "H.B. Fuller (China) Adhesives Co., Ltd. is the Guangzhou China entity/location published in H.B. Fuller's official supplier-location information and the matching 2026 China Composites Expo exhibitor for epoxy resin, adhesives, additives and sealing materials. H.B. Fuller's current global pages publish aerospace composite repair, honeycomb or sandwich-panel fill, polysulfide sealing, wind-blade web bonding, nacelle sealing, vortex-generator bonding, potting, threadlocking and lubrication solutions. This profile presents those items as H.B. Fuller group products available for inquiry; it does not infer that every global grade is manufactured, stocked or contracted by the Guangzhou operation. Before qualification, H.B. Fuller must confirm the China selling entity, manufacturing site, regulatory status, package and lead time for the exact grade. No measured carbon-fiber or fiberglass material term is assigned because this supplier sells bonding and sealing chemistry rather than the reinforcing fibers themselves.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "航空与风电胶粘剂必须按具体牌号、材料组合和工况验证，不能只按“环氧胶”或“密封剂”采购。航空复材修补、夹芯板封边/芯填充、嵌件灌封和结构粘接 RFQ 应锁定被粘材料与表面处理、胶层厚度、混合比、黏度与触变、操作时间、固化温度/压力、搭接和剥离强度、热湿老化、耐燃油/液压油/清洗剂、阻燃、烟毒、释气、导热/导电、储存温度、冷链、保质期、包装方式和返工限度。风电腹板粘接、涡流发生器、防雷系统灌封、机舱/法兰密封、螺纹锁固及润滑应进一步确认胶缝尺寸、放热、垂直面抗流挂、低温施工、疲劳、盐雾、UV、吸水、耐候、可维修性和现场施胶设备。H.B. Fuller 官网列有全球产品与标准/认证声明，但 2021 航空产品指南中的制造地点多为美国，不能据此把牌号写成广州制造。买方应要求富乐书面确认销售法人、实际生产地、原产地、TDS/SDS、批次 CoA、变更通知、法规声明、客户或行业批准的适用版本，以及标准号、批准范围和有效状态。还应确认双筒、A-Pack、预混冷冻针筒或套装包装的可供性、最小订单、危险品运输、温控、海关归类和失效处置。本轮没有取得能把所列标准或体系证书逐一对应广州法律主体、地址、范围、证书号和有效期的原始文件，因此认证与 standardsSupported 均为空；页面索引不等于 GetFRP 对材料适用性或航空放行的认可。",
+  productsServicesSummaryEn:
+    "Aerospace and wind adhesives must be qualified by exact grade, substrate combination and duty; a generic request for epoxy adhesive or sealant is insufficient. An RFQ for composite repair, sandwich-panel edge or core fill, insert potting and structural bonding should lock the substrates and surface preparation, bond-line thickness, mix ratio, viscosity and thixotropy, working life, cure temperature and pressure, lap-shear and peel strength, hot-wet aging, resistance to fuel, hydraulic fluid and cleaners, flame, smoke and toxicity, outgassing, thermal or electrical behavior, storage temperature, cold chain, shelf life, package and rework limit. Wind-blade web bonding, vortex-generator attachment, lightning-system potting, nacelle or flange sealing, threadlocking and lubrication additionally require joint geometry, exotherm, vertical sag, low-temperature application, fatigue, salt mist, UV, water uptake, weathering, repairability and dispensing equipment. H.B. Fuller's official site publishes global products and standards or approval statements, but the aerospace guide identifies US manufacturing locations for many grades; that evidence does not make a grade Guangzhou-made. Require written confirmation of the selling legal entity, actual plant, origin, current TDS and SDS, lot CoA, change notification, regulatory declaration, applicable customer or industry approval revision, and each standard's scope and current status. Also confirm availability of dual cartridges, A-Packs, premixed frozen syringes or barrier kits, minimum order, dangerous-goods transport, temperature control, customs classification and expired-material disposal. This review did not obtain source certificates aligning the listed systems or approvals to the Guangzhou legal entity, address, scope, certificate number and validity. Certifications and supported standards remain empty, and publication is not an aerospace release or endorsement of material fitness.",
+  ecatalogs: [
+    { title: "富乐中国运营地址", titleEn: "Official H.B. Fuller China Locations", description: "广州及其他中国主体/地址。", descriptionEn: "Published Guangzhou and other China entities and addresses.", url: "https://www.hbfuller.com/en/about-us/supplier-resources/welcome-information", format: "Official location page" },
+    { title: "航空胶粘与密封", titleEn: "Aerospace Adhesives and Sealants", description: "复材结构、夹芯板、密封与电子应用。", descriptionEn: "Composite structure, sandwich panel, sealing and electronics applications.", url: "https://www.hbfuller.com/en/markets/aerospace", format: "Market page" },
+    { title: "航空产品与牌号", titleEn: "Aerospace Product Campaign", description: "修补、填充和聚硫密封牌号。", descriptionEn: "Repair, fill and polysulfide product grades.", url: "https://www.hbfuller.com/en/campaigns/aerospace-campaign", format: "Product page" },
+    { title: "风电胶粘与密封", titleEn: "Wind Energy Bonding and Sealing", description: "腹板、机舱、涡流发生器、紧固件应用。", descriptionEn: "Web, nacelle, vortex-generator and fastener applications.", url: "https://www.hbfuller.com/en/markets/wind-energy", format: "Market page" },
+    { title: "中国国际复材展富乐页面", titleEn: "China Composites Expo — H.B. Fuller", description: "广州展商主体与产品类别。", descriptionEn: "Organizer source for the Guangzhou exhibitor and product categories.", url: "https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=F", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/hb-fuller-logo.svg",
+  contactEmail: null,
+  contactPhone: null,
+  address: "No. 88 Hefeng Road, Guangzhou Yonghe Development Zone, Guangzhou, Guangdong, China",
+  website: "https://www.hbfuller.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 28,
+  viewCount: 0,
+  capabilities: ["structural adhesives", "composite repair adhesives", "sandwich panel core fill", "aerospace polysulfide sealants", "wind blade web bonding", "potting compounds", "nacelle sealing", "application testing"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};
