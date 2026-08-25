@@ -13,6 +13,8 @@
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
+import { PRODUCT_SEARCH_INTENTS } from "../src/lib/data/product-search-intents";
+import { SUPPLIER_CATEGORY_PAGES } from "../src/lib/data/supplier-category-pages";
 
 type Severity = "error" | "warn";
 
@@ -283,6 +285,79 @@ function checkStandaloneGetfrpSeo(): Violation[] {
   return out;
 }
 
+function exactPhraseCount(text: string, phrase: string): number {
+  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.match(new RegExp(`(?<![a-z])${escaped}(?![a-z])`, "gi"))?.length ?? 0;
+}
+
+function checkCoreProductOnPageSeo(): Violation[] {
+  const out: Violation[] = [];
+
+  for (const page of SUPPLIER_CATEGORY_PAGES) {
+    const route = `/products/${page.slug}`;
+    const intent = PRODUCT_SEARCH_INTENTS[page.slug];
+    if (
+      !intent?.primaryKeyword ||
+      !intent.openingParagraph ||
+      !intent.selectionParagraph
+    ) {
+      out.push({
+        page: route,
+        field: "primary-keyword",
+        severity: "error",
+        message: "core product page must define a primary keyword, opening paragraph and selection paragraph",
+      });
+      continue;
+    }
+
+    for (const [field, value] of [
+      ["title", intent.title],
+      ["h1", intent.h1],
+      ["opening-paragraph", intent.openingParagraph],
+      ["selection-paragraph", intent.selectionParagraph],
+    ] as const) {
+      if (exactPhraseCount(value, intent.primaryKeyword) !== 1) {
+        out.push({
+          page: route,
+          field,
+          severity: "error",
+          message: `must contain the exact primary keyword once: ${intent.primaryKeyword}`,
+        });
+      }
+    }
+
+    if (intent.primaryTerms[0]?.toLowerCase() !== intent.primaryKeyword.toLowerCase()) {
+      out.push({
+        page: route,
+        field: "primary-terms",
+        severity: "error",
+        message: "primary keyword must be the first visible search-intent term",
+      });
+    }
+
+    const renderedBody = [
+      intent.openingParagraph,
+      intent.audienceNote,
+      ...intent.primaryTerms,
+      intent.selectionParagraph,
+      ...page.overview,
+    ].join(" ");
+    const bodyCount = exactPhraseCount(renderedBody, intent.primaryKeyword);
+    if (bodyCount < 2 || bodyCount > 3) {
+      out.push({
+        page: route,
+        field: "body-keyword-count",
+        severity: "error",
+        message: `exact primary keyword appears ${bodyCount} times; expected 2-3`,
+      });
+    }
+
+    out.push(...checkLength(route, "metaTitle", intent.title, TITLE_MIN, TITLE_MAX));
+  }
+
+  return out;
+}
+
 function checkIndexCleanup(): Violation[] {
   const out: Violation[] = [];
   const goneRoutes = [
@@ -414,6 +489,7 @@ function main() {
   // Structural canonical coverage across all page.tsx routes.
   violations.push(...checkAlternatesCoverage());
   violations.push(...checkStandaloneGetfrpSeo());
+  violations.push(...checkCoreProductOnPageSeo());
   violations.push(...checkIndexCleanup());
 
   const errors = violations.filter((v) => v.severity === "error");
