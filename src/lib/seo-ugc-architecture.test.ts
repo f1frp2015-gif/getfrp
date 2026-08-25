@@ -20,6 +20,7 @@ import { HELP_PAGES } from "./data/help-pages";
 import { SupplierProductPageInput } from "./products/ugc-input";
 import { SUPPLIER_SOURCING_CATALOGS } from "./data/supplier-sourcing-catalogs";
 import { PRODUCT_SEARCH_INTENTS } from "./data/product-search-intents";
+import { SUPPLIER_CATEGORY_PAGES } from "./data/supplier-category-pages";
 import {
   PROCESS_SEARCH_CLUSTERS,
   PRODUCT_SEARCH_CATEGORIES,
@@ -34,6 +35,11 @@ import {
   SOURCING_GUIDE_LINKS,
   STATIC_L2_LINKS,
 } from "./site-navigation";
+
+function exactPhraseCount(text: string, phrase: string): number {
+  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.match(new RegExp(`(?<![a-z])${escaped}(?![a-z])`, "gi"))?.length ?? 0;
+}
 
 test("required L2 and L3 marketplace routes are present and unique", () => {
   const required = [
@@ -101,6 +107,39 @@ test("product and process hubs map search intent to canonical destinations", () 
     new Set(clusteredProcessPaths),
     new Set(MANUFACTURING_PAGES.map((page) => page.path)),
   );
+});
+
+test("eight core product pages enforce one primary on-page keyword", () => {
+  assert.equal(SUPPLIER_CATEGORY_PAGES.length, 8);
+
+  for (const page of SUPPLIER_CATEGORY_PAGES) {
+    const intent = PRODUCT_SEARCH_INTENTS[page.slug];
+    assert.ok(intent, `${page.slug} must have a search intent`);
+    assert.ok(intent.primaryKeyword, `${page.slug} must have a primary keyword`);
+    assert.ok(intent.openingParagraph, `${page.slug} must have an opening paragraph`);
+    assert.ok(intent.selectionParagraph, `${page.slug} must have a selection paragraph`);
+
+    const keyword = intent.primaryKeyword.toLowerCase();
+    for (const [field, value] of [
+      ["title", intent.title],
+      ["h1", intent.h1],
+      ["opening paragraph", intent.openingParagraph],
+      ["selection paragraph", intent.selectionParagraph],
+    ] as const) {
+      assert.ok(value.toLowerCase().includes(keyword), `${page.slug} ${field} is missing ${keyword}`);
+    }
+    assert.equal(intent.primaryTerms[0].toLowerCase(), keyword);
+
+    const body = [
+      intent.openingParagraph,
+      intent.audienceNote,
+      ...intent.primaryTerms,
+      intent.selectionParagraph,
+      ...page.overview,
+    ].join(" ");
+    const bodyCount = exactPhraseCount(body, intent.primaryKeyword);
+    assert.ok(bodyCount >= 2 && bodyCount <= 3, `${page.slug} repeats ${keyword} ${bodyCount} times`);
+  }
 });
 
 test("long-form source and insight pages exceed 800 rendered words", () => {

@@ -227,7 +227,7 @@ export default async function ProductDetailPage({
                 {searchIntent?.h1 ?? `China ${product.nameEn} Manufacturers & Suppliers`}
               </h1>
               <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">
-                {product.summary}
+                {searchIntent?.openingParagraph ?? product.summary}
               </p>
               {searchIntent && (
                 <div className="mt-5 max-w-3xl rounded-xl border border-[#123f8c]/15 bg-[#123f8c]/[0.035] p-4">
@@ -406,7 +406,7 @@ export default async function ProductDetailPage({
 
       <section className="border-b border-border/80">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_360px]">
-          <div>
+          <div className="min-w-0">
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               Product structure
             </div>
@@ -430,6 +430,7 @@ export default async function ProductDetailPage({
               </div>
             </div>
             <div className="mt-10 space-y-4 text-[15px] leading-7 text-muted-foreground">
+              {searchIntent?.selectionParagraph && <p>{searchIntent.selectionParagraph}</p>}
               {product.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
           </div>

@@ -3,6 +3,9 @@ export type ProductSearchIntent = {
   h1: string;
   primaryTerms: readonly string[];
   audienceNote: string;
+  primaryKeyword?: string;
+  openingParagraph?: string;
+  selectionParagraph?: string;
 };
 
 /**
@@ -14,52 +17,92 @@ export type ProductSearchIntent = {
  */
 export const PRODUCT_SEARCH_INTENTS: Record<string, ProductSearchIntent> = {
   "frp-grating": {
-    title: "FRP Grating Manufacturers in China | Fiberglass & GRP",
-    h1: "FRP, Fiberglass & GRP Grating Manufacturers in China",
-    primaryTerms: ["FRP grating", "fiberglass grating", "GRP grating"],
+    title: "FRP Grating Manufacturer Directory in China | GetFRP",
+    h1: "Compare FRP Grating Manufacturer Capabilities in China",
+    primaryKeyword: "FRP grating manufacturer",
+    primaryTerms: ["FRP grating manufacturer", "fiberglass grating", "GRP grating"],
     audienceNote: "Industrial flooring, walkways, trench covers and access systems",
+    openingParagraph:
+      "Use this FRP grating manufacturer directory to compare Chinese factories for molded and pultruded panels, stair treads, trench covers and custom-cut access systems. Filter the shortlist by resin system, load evidence, fire performance, production capability and export readiness before sending one controlled RFQ.",
+    selectionParagraph:
+      "When evaluating an FRP grating manufacturer, tie every load table and fire report to the offered construction, depth, resin, surface and support span. Then freeze cut plans, edge sealing, clips, inspection criteria and export packing before comparing landed quotations.",
   },
   "pultruded-profiles": {
-    title: "Pultruded FRP Profiles in China | Manufacturers & Custom Shapes",
-    h1: "Pultruded FRP Profile Manufacturers in China",
-    primaryTerms: ["FRP profiles", "pultruded fiberglass", "custom pultrusion"],
+    title: "Pultruded FRP Profile Manufacturer in China | GetFRP",
+    h1: "Compare Pultruded FRP Profile Manufacturer Capabilities in China",
+    primaryKeyword: "pultruded FRP profile manufacturer",
+    primaryTerms: ["pultruded FRP profile manufacturer", "pultruded FRP profiles", "custom pultrusion"],
     audienceNote: "Structural shapes, rods, tubes and drawing-controlled custom profiles",
+    openingParagraph:
+      "Use this pultruded FRP profile manufacturer directory to compare Chinese factories for standard structural shapes and drawing-controlled custom sections. Review resin, reinforcement architecture, tolerances, tooling, test evidence, secondary machining and export capability before requesting samples or quotations.",
+    selectionParagraph:
+      "When shortlisting a pultruded FRP profile manufacturer, confirm the drawing revision, die ownership, laminate architecture, longitudinal and transverse properties, dimensional tolerances and packing length. Supplier-specific evidence matters because identical outside dimensions can conceal materially different stiffness and durability.",
   },
   "fiberglass-sheet": {
-    title: "Fiberglass Sheet Manufacturers in China | Industrial FRP Panels",
-    h1: "Industrial Fiberglass Sheet & FRP Panel Manufacturers in China",
-    primaryTerms: ["FRP sheets", "fiberglass sheets", "fiberglass panels"],
+    title: "Fiberglass Sheet Manufacturer Directory | GetFRP",
+    h1: "Compare Fiberglass Sheet Manufacturer Capabilities in China",
+    primaryKeyword: "fiberglass sheet manufacturer",
+    primaryTerms: ["fiberglass sheet manufacturer", "FRP sheets", "fiberglass panels"],
     audienceNote: "Industrial laminates, corrosion panels and electrical insulation",
+    openingParagraph:
+      "Use this fiberglass sheet manufacturer directory to compare Chinese factories for industrial laminates, corrosion panels, electrical insulation and enclosure sheet. Match process, resin, reinforcement, thickness tolerance, surface finish and test evidence to the application before requesting production samples.",
+    selectionParagraph:
+      "When evaluating a fiberglass sheet manufacturer, define the laminate construction and conditioning behind every mechanical, electrical, fire or corrosion value. Control usable dimensions, flatness, cut edges, colour, surface defects, batch traceability and protective packing in the same RFQ.",
   },
   "frp-rebar": {
-    title: "GFRP & Fiberglass Rebar Manufacturers in China | FRP Rebar",
-    h1: "GFRP, Fiberglass & FRP Rebar Manufacturers in China",
-    primaryTerms: ["fiberglass rebar", "GFRP rebar", "FRP rebar"],
+    title: "FRP Rebar Manufacturer Directory in China | GetFRP",
+    h1: "Compare FRP Rebar Manufacturer Capabilities in China",
+    primaryKeyword: "FRP rebar manufacturer",
+    primaryTerms: ["FRP rebar manufacturer", "GFRP rebar", "fiberglass rebar"],
     audienceNote: "Concrete reinforcement for bridges, tunnels, marine works and slabs",
+    openingParagraph:
+      "Use this FRP rebar manufacturer directory to compare Chinese GFRP and fiberglass reinforcement factories for bridges, tunnels, marine works and concrete slabs. Review bar geometry, resin system, bond performance, tensile evidence, production controls and export documentation against the project standard.",
+    selectionParagraph:
+      "When shortlisting an FRP rebar manufacturer, verify that tensile, modulus, bond, durability and bend evidence covers the offered diameter, surface and production site. Freeze couplers, bend restrictions, bundle identity, ultraviolet protection and handling instructions before commercial approval.",
   },
   "frp-pipe": {
-    title: "FRP, GRP & GRE Pipe Manufacturers in China | Pipe Suppliers",
-    h1: "FRP, GRP & GRE Pipe Manufacturers in China",
-    primaryTerms: ["FRP pipe", "GRP pipe", "fiberglass pipe"],
+    title: "FRP Pipe Manufacturer Directory in China | GetFRP",
+    h1: "Compare FRP Pipe Manufacturer Capabilities in China",
+    primaryKeyword: "FRP pipe manufacturer",
+    primaryTerms: ["FRP pipe manufacturer", "GRP pipe", "GRE pipe"],
     audienceNote: "Water, wastewater, chemical, marine and oilfield piping systems",
+    openingParagraph:
+      "Use this FRP pipe manufacturer directory to compare Chinese suppliers of GRP and GRE piping for water, wastewater, chemical, marine and oilfield service. Match process, resin and liner, pressure and stiffness class, joining system, test evidence and export capability to the operating envelope.",
+    selectionParagraph:
+      "When evaluating an FRP pipe manufacturer, lock the design code, diameter, pressure, temperature, media, burial loads, joint details and acceptance tests before pricing. Require traceable hydrostatic or stiffness evidence, dimensional inspection and packing that protects machined or adhesive-bonded ends.",
   },
   "smc-bmc": {
-    title: "SMC & BMC Compound Manufacturers in China | Molded Parts",
-    h1: "SMC & BMC Compound and Molded Part Manufacturers in China",
-    primaryTerms: ["SMC compound", "sheet molding compound", "BMC compound"],
+    title: "SMC BMC Manufacturer Directory in China | GetFRP",
+    h1: "Compare SMC BMC Manufacturer Capabilities in China",
+    primaryKeyword: "SMC BMC manufacturer",
+    primaryTerms: ["SMC BMC manufacturer", "sheet molding compound", "bulk molding compound"],
     audienceNote: "Repeat molded components, enclosures, covers and transport parts",
+    openingParagraph:
+      "Use this SMC BMC manufacturer directory to compare Chinese compounders and compression molders for repeat components, enclosures, covers and transport parts. Review formulation control, charge preparation, tooling, press capacity, dimensional capability, qualification evidence and production traceability.",
+    selectionParagraph:
+      "When shortlisting an SMC BMC manufacturer, connect every material property and certificate to the approved formulation, fibre content, part thickness, moulding cycle and production site. Define tool ownership, first-article approval, cosmetic limits, inserts, lot sampling and change control before launch.",
   },
   "resin-gelcoat": {
-    title: "Vinyl Ester, Epoxy & Polyester Resin Suppliers in China",
-    h1: "Composite Resin & Gelcoat Suppliers in China",
-    primaryTerms: ["vinyl ester resin", "epoxy resin suppliers", "polyester resin suppliers"],
+    title: "Composite Resin Manufacturer Directory in China | GetFRP",
+    h1: "Compare Composite Resin Manufacturer Capabilities in China",
+    primaryKeyword: "composite resin manufacturer",
+    primaryTerms: ["composite resin manufacturer", "vinyl ester resin", "FRP gelcoat"],
     audienceNote: "Composite-grade resin systems, gelcoats and formulation evidence",
+    openingParagraph:
+      "Use this composite resin manufacturer directory to compare Chinese suppliers of polyester, vinyl ester, epoxy and gelcoat systems for FRP production. Screen chemistry, viscosity and cure window, reinforcement compatibility, batch controls, regulatory documents and application support before plant trials.",
+    selectionParagraph:
+      "When evaluating a composite resin manufacturer, identify the exact grade, manufacturing site, shelf life, storage conditions and test method behind every published value. Approve the complete catalyst, accelerator, pigment and filler package on the buyer's actual reinforcement and process before scale-up.",
   },
   "fiber-glass": {
-    title: "Fiberglass Suppliers in China | Roving, Mat, Fabric & Veil",
-    h1: "Fiberglass Suppliers & Manufacturers in China",
-    primaryTerms: ["fiberglass suppliers", "fiberglass roving", "fiberglass mat"],
+    title: "Fiberglass Manufacturer Directory in China | GetFRP",
+    h1: "Compare Fiberglass Manufacturer Capabilities in China",
+    primaryKeyword: "fiberglass manufacturer",
+    primaryTerms: ["fiberglass manufacturer", "fiberglass roving", "fiberglass mat"],
     audienceNote: "Industrial reinforcement formats with sizing and batch traceability",
+    openingParagraph:
+      "Use this fiberglass manufacturer directory to compare Chinese producers of roving, chopped strand mat, woven and stitched fabrics, veil and other reinforcement formats. Match glass type, sizing, tex or areal weight, process compatibility, batch evidence and export packaging to the laminate specification.",
+    selectionParagraph:
+      "When shortlisting a fiberglass manufacturer, verify the product code, sizing chemistry, resin and process compatibility, moisture limits and test basis for each format. Control roll or package construction, splice limits, lot identity, storage, shelf life and container protection before approving supply.",
   },
   "carbon-fiber": {
     title: "Carbon Fiber Manufacturers in China | Tow, Fabric & Profiles",
