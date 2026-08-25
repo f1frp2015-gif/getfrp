@@ -42,7 +42,7 @@ function evidenceFor(supplier: SupplierListing): SupplierKeywordEvidence {
   const equipmentCategory = ["equipment", "mold", "tooling", "service"].includes(
     supplier.category ?? "",
   );
-  const equipmentOffer = /\b(?:machines?|machinery|equipment|systems?|lines?|winders?|projects?|solutions?|services?|presses?|molds?|moulds?|dies?|automation units?|inspection|grinding|repair)\b/;
+  const equipmentOffer = /\b(?:machines?|machinery|equipment|systems?|lines?|winders?|creels?|projects?|solutions?|services?|presses?|molds?|moulds?|dies?|automation units?|inspection|grinding|repair)\b/;
   const offers = equipmentCategory
     ? publishedOffers.filter((offer) => !equipmentOffer.test(offer))
     : publishedOffers;

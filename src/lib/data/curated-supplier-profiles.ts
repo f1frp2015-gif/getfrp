@@ -73,7 +73,12 @@ import { DONGGUAN_TSTAR_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-
 import { ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-dasheng-mould-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
 import { EXEL_COMPOSITES_NANJING_SUPPLIER_PROFILE } from "@/lib/data/exel-composites-nanjing-supplier-profile";
+import { FANGXIN_RESIN_ANHUI_SUPPLIER_PROFILE } from "@/lib/data/fangxin-resin-anhui-supplier-profile";
+import { GUANGDONG_HUEDUR_AUTOMATION_SUPPLIER_PROFILE } from "@/lib/data/guangdong-huedur-automation-supplier-profile";
+import { GUANGDONG_JINMING_NEW_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/guangdong-jinming-new-materials-supplier-profile";
+import { GUANGDONG_RUIZHOU_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/guangdong-ruizhou-technology-supplier-profile";
 import { HEBEI_WEITONG_SUPPLIER_PROFILE } from "@/lib/data/hebei-weitong-supplier-profile";
+import { HS_HYOSUNG_CARBON_MATERIALS_JIANGSU_SUPPLIER_PROFILE } from "@/lib/data/hs-hyosung-carbon-materials-jiangsu-supplier-profile";
 import { HONGYU_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/hongyu-composite-supplier-profile";
 import { CROTTI_SUPPLIER_PROFILE } from "@/lib/data/crotti-supplier-profile";
 import { FANGHUA_SUPPLIER_PROFILE } from "@/lib/data/fanghua-supplier-profile";
@@ -271,6 +276,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGSHU_JIANGNAN_FIBERGLASS_SUPPLIER_PROFILE },
   { profile: CHANGSHU_DONGYU_FIBERGLASS_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_HUAKE_POLYMERS_SUPPLIER_PROFILE },
+  { profile: FANGXIN_RESIN_ANHUI_SUPPLIER_PROFILE },
+  { profile: HS_HYOSUNG_CARBON_MATERIALS_JIANGSU_SUPPLIER_PROFILE },
+  { profile: GUANGDONG_JINMING_NEW_MATERIALS_SUPPLIER_PROFILE },
+  { profile: GUANGDONG_HUEDUR_AUTOMATION_SUPPLIER_PROFILE },
+  { profile: GUANGDONG_RUIZHOU_TECHNOLOGY_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
