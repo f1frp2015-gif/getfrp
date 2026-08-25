@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.2.0"
+version: "1.3.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.3.0"
+    date: "2026-08-25"
+    changes: "继续核验 C/D 字母页；第四批新增 5 家可索引供应商，补充 HTTP-only 官网、全球集团与中国法人边界、域名未绑定、主体注销和清算记录。"
   - version: "1.2.0"
     date: "2026-08-25"
     changes: "继续核验 C 字母页；第三批新增 5 家可索引供应商，补充官网限流、主体沿革冲突、页面元数据异常和无独立官网记录。"
@@ -21,7 +24,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -56,16 +59,26 @@ changelog:
 | 常熟市东宇绝缘复合材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | [官网](https://www.dongyufiberglass.com/)、[公司介绍](https://www.dongyufiberglass.com/gsgk)、[短切毡](https://www.dongyufiberglass.com/productinfo/1528439.html)、[表面毡](https://www.dongyufiberglass.com/productinfo/1504128.html)、[直接纱](https://www.dongyufiberglass.com/productinfo/1603075.html?templateId=1133605)、[联系页](https://www.dongyufiberglass.com/lxwm) | 粉剂/乳液短切毡、表面毡、玻纱、无捻粗纱布、电子布、多轴向织物、复合毡、防火毯和碳纤维织物 | 已发布、可索引 |
 | 常州华科聚合物股份有限公司 | [CCE C 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=C) | [官网](https://www.xsresin.com/)、[公司介绍](https://www.xsresin.com/about/about.php?id=850)、[产品分类](https://www.xsresin.com/product/product.php?id=854)、[不饱和聚酯树脂](https://www.xsresin.com/product/product.php?id=874)、[应用牌号](https://www.xsresin.com/product/show_product.php?id=2242)、[英文页](https://www.xsresin.com/about/about.php?id=891) | 不饱和聚酯、乙烯基酯、聚氨酯等手糊、缠绕、拉挤、模压、机制板、CIPP 和真空导入用树脂，胶衣、色浆与助剂 | 已发布、可索引 |
 
+## 2026-08-25 第四批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 常州市同创复合材料有限公司 | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | [官网](http://www.tc-smc.com/)、[公司介绍](http://www.tc-smc.com/about.asp?id=1)、[产品目录](http://www.tc-smc.com/products.asp)、[联系页](http://www.tc-smc.com/contact.asp) | SMC 片状模塑料、BMC/DMC 团状模塑料，电器绝缘、汽车、电池箱、板加工、天花板和其他模压制品；明确 HTTPS 失效和证书待核边界 | 已发布、可索引 |
+| 常州同维佳业新材料科技有限公司 | [CCE C 字母页第 3 页：7Q05](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | [官网](https://www.topweaving.com.cn/)、[公司介绍](https://www.topweaving.com.cn/aboutus.html)、[产品目录](https://www.topweaving.com.cn/product.html)、[3D 多层织物](https://www.topweaving.com.cn/3D-fabrics.html)、[混编织物](https://www.topweaving.com.cn/Product/Hybrid-woven-fabric.html)、[联系页](https://www.topweaving.com.cn/contactus.html) | 3D 正交、多层、双壁、蜂窝玻纤织物，玻纤/芳纶/UHMWPE/PET 混编、碳纤维、芳纶、UHMWPE 和聚丙烯扁丝织物 | 已发布、可索引 |
+| 常州市悦腾机械有限公司 | [CCE C 字母页第 3 页：8Y50](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | [官网](http://www.czyueteng.com/)、[公司介绍](http://www.czyueteng.com/about.html)、[设备目录](http://www.czyueteng.com/products_class_33.html)、[CFRT 线](http://www.czyueteng.com/Detail_pro_117.html)、[玻纤复合机组](http://www.czyueteng.com/Detail_pro_116.html)、[联系页](http://www.czyueteng.com/contact.html) | CFRT 连续纤维热塑性预浸带线、玻纤热塑复合片材机组、三维/多层/双层剑杆织机；不把设备产出自动当作供应商自营材料 | 已发布、可索引 |
+| 戴铂科技（常熟）有限公司 | [CCE D 字母页：6G12](https://www.chinacompositesexpo.com/cn/netshow.php?head=D) | [中国官网](https://www.diabgroup.com/cn/)、[芯材目录](https://www.diabgroup.com/cn/产品-products/)、[PVC](https://www.diabgroup.com/cn/产品-products/divinycell-pvc/)、[轻木](https://www.diabgroup.com/cn/产品-products/balsa/)、[技术下载](https://www.diabgroup.com/cn/证书和技术参数-下载/)、[常熟联系记录](https://www.diabgroup.com/cn/关于戴铂-about-diab/活动/) | Divinycell PVC/PET/PES/PEI 泡沫、ProBalsa 轻木、开槽/穿孔/曲面处理、预切套材和芯材选型服务；把全球集团历史与常熟法人分开 | 已发布、可索引 |
+| 德州海力达模塑有限公司 | [CCE D 字母页第 2 页：7W06](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | [官网](http://www.hailidacn.com/)、[公司介绍](http://www.hailidacn.com/h-col-101.html)、[模具目录](http://www.hailidacn.com/h-col-106.html)、[产品目录](http://www.hailidacn.com/h-col-103.html)、[联系页](http://www.hailidacn.com/h-col-102.html) | SMC/BMC/LFT-D/PCM/PDCPD/HP-RTM 模具，汽车、轨交、电力通信、卫浴、充电桩和其他模压部件；成立年份与证书保持待核 | 已发布、可索引 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家。
 
 ## 本轮跳过与延后
 
@@ -86,6 +99,13 @@ changelog:
 | 常熟市耀星玻纤绝缘制品有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 可找到由第三方平台托管的企业商铺和政府名单，但未确认企业自有独立官网 | 跳过，避免把平台店铺当官网 |
 | 常州宝博复合材料科技有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 展会简介提到汽车 FRP 件、风电叶片、导流罩和机舱罩，但本轮未找到当前可核验的企业自有官网 | 跳过，待官网出现后复核 |
 | 常州桦立柯新材料有限公司 / 常州康帕斯德新材料有限公司 | [CCE C 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=C) | 公开资料在 `huolike.com`、`kpsd.com.cn` 及两个关联主体之间交叉，当前检索未能稳定确认官网所有权、主体边界和有效内容 | 延后，待域名与法人关系可独立核对 |
+| 常州市协达玻纤有限公司 | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | 检索到的企业域名 `js-xd.cn` 当前只返回“域名或者端口未绑定”页面，不能作为可用官网 | 按“官网失效跳过”规则处理 |
+| 常州市愉悦复合材料科技有限公司、常州市郑陆特种纺机专件有限公司 | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | 本轮检索只有展会、工商、B2B 或招聘等第三方页面，未找到能与各自法人独立对应的自有官网 | 按“无官网跳过”规则处理 |
+| 常州中新天马玻璃纤维制品有限公司 | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | 公开集团报告曾将该主体列为注销；现有展会条目不足以证明该法人仍可签约经营 | 跳过过期主体，待当前法人证据出现后复核 |
+| 成都杰晟蜀邦新材料科技有限公司 | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | 公开法院与破产信息显示企业已进入破产清算程序；展会历史条目不能作为当前经营状态 | 跳过，不建立供应商主页 |
+| 成都科宜高分子科技有限公司（Coryes） | [CCE C 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=C) | `coryes.com` 仍返回页面壳，但当前主流浏览器环境出现过时 TLS/加密套件错误，无法可靠浏览产品与联系内容 | 延后，待官网恢复现代浏览器可访问性 |
+| 德州虹辉复合材料有限公司 | [CCE D 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | 展会条目包含预浸料、碳管、碳板和体育用品，但本轮未找到独立企业官网 | 按“无官网跳过”规则处理 |
+| 德州联合拓普复合材料科技有限公司 | [CCE D 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=D) | 只找到复材 B2B 平台店铺、展会和行业资料，未确认当前企业自有官网 | 跳过，避免把平台商铺当官网 |
 
 ## 证据边界与复核提醒
 
@@ -103,6 +123,11 @@ changelog:
 - 江南玻纤官网使用 1956 年企业沿革，展会和公开法人资料存在 1992 年等口径；在品牌前身与当前法人时间无法统一前，成立年份保持空值。
 - 东宇官网在自动浏览核验时一度返回 429，但同域名普通网页请求、产品页、联系页和备案主体保持一致；主页记录限流而不把它误判为网站失效。
 - 华科官网有危化品经营提示，树脂采购除技术牌号外还需把 SDS、UN 分类、温控、危险品运输、进口许可和废弃物处置写入交易核验。
+- 同创官网页脚写有 HTTPS 网址，但该地址在本轮 TLS 握手失败；其 HTTP 官网仍可访问。主页只映射 SMC/BMC/DMC 和实际模压制品关键词，证书与安全传输保持待核。
+- 同维佳业官网公开产品谱系较宽，部分页面同时包含技术条目与营销化性能、抗弹或认证文案；主页只采用明确的纤维/织物种类和工艺，不把缺少同页完整报告的数字写成保证值。
+- 悦腾是设备企业。CFRT 线能配置玻纤、碳纤、芳纶和玄武岩，并不表示悦腾自身销售这些预浸带、板材或管道；因此不注入材料产品搜索词。
+- 戴铂官网为全球集团站点，但中文页脚明确列出常熟法人。主页保留常熟主体，集团历史、全球产能、案例和批准不自动归入该法人，成立年份留空。
+- 海力达官网和展会资料对经营年限、设备和能力采用不同口径；主页保留模具与公开部件范围，成立年份、证书、设备数量和客户验证均待审厂或文件包确认。
 
 ## 后续维护方法
 

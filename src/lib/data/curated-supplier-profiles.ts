@@ -33,8 +33,11 @@ import { CHANGZHOU_SINAJET_SUPPLIER_PROFILE } from "@/lib/data/changzhou-sinajet
 import { CHANGZHOU_TENTOL_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tentol-supplier-profile";
 import { CHANGZHOU_TIANMA_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tianma-supplier-profile";
 import { CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tiansheng-composite-supplier-profile";
+import { CHANGZHOU_TONGCHUANG_COMPOSITE_MATERIALS_SUPPLIER_PROFILE } from "@/lib/data/changzhou-tongchuang-composite-materials-supplier-profile";
+import { CHANGZHOU_TOPWEAVING_SUPPLIER_PROFILE } from "@/lib/data/changzhou-topweaving-supplier-profile";
 import { CHANGZHOU_UTEK_SUPPLIER_PROFILE } from "@/lib/data/changzhou-utek-supplier-profile";
 import { CHANGZHOU_XINGAO_SUPPLIER_PROFILE } from "@/lib/data/changzhou-xingao-supplier-profile";
+import { CHANGZHOU_YUETENG_MACHINERY_SUPPLIER_PROFILE } from "@/lib/data/changzhou-yueteng-machinery-supplier-profile";
 import { CHENHECHEN_INTELLIGENT_EQUIPMENT_SUPPLIER_PROFILE } from "@/lib/data/chenhechen-intelligent-equipment-supplier-profile";
 import { CHENGDU_CHANGYUANSHUN_SUPPLIER_PROFILE } from "@/lib/data/chengdu-changyuanshun-supplier-profile";
 import { CHENGDU_LUCHEN_SUPPLIER_PROFILE } from "@/lib/data/chengdu-luchen-supplier-profile";
@@ -58,7 +61,9 @@ import { DEEPSEA_PRECISION_TECH_SHENZHEN_SUPPLIER_PROFILE } from "@/lib/data/dee
 import { DELLAHOL_CNC_TECHNOLOGY_SUZHOU_SUPPLIER_PROFILE } from "@/lib/data/dellahol-cnc-technology-suzhou-supplier-profile";
 import { DEQING_GUOTAI_FIREPROOF_MATERIAL_FACTORY_SUPPLIER_PROFILE } from "@/lib/data/deqing-guotai-fireproof-material-factory-supplier-profile";
 import { DEZHOU_HONGYU_COMPO_TECH_SUPPLIER_PROFILE } from "@/lib/data/dezhou-hongyu-compo-tech-supplier-profile";
+import { DEZHOU_HAILIDA_MOLDING_SUPPLIER_PROFILE } from "@/lib/data/dezhou-hailida-molding-supplier-profile";
 import { DEZHOU_JUNTENG_MATERIAL_TECHNOLOGY_SUPPLIER_PROFILE } from "@/lib/data/dezhou-junteng-material-technology-supplier-profile";
+import { DIAB_TECHNOLOGY_CHANGSHU_SUPPLIER_PROFILE } from "@/lib/data/diab-technology-changshu-supplier-profile";
 import { DONGGUAN_MAIKOS_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/dongguan-maikos-composites-supplier-profile";
 import { ZHEJIANG_DASHENG_MOULD_SUPPLIER_PROFILE } from "@/lib/data/zhejiang-dasheng-mould-supplier-profile";
 import { EASTFRP_SUPPLIER_PROFILE } from "@/lib/data/eastfrp-supplier-profile";
@@ -161,8 +166,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CHANGZHOU_TENTOL_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_TIANMA_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_TONGCHUANG_COMPOSITE_MATERIALS_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_TOPWEAVING_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_UTEK_SUPPLIER_PROFILE },
   { profile: CHANGZHOU_XINGAO_SUPPLIER_PROFILE },
+  { profile: CHANGZHOU_YUETENG_MACHINERY_SUPPLIER_PROFILE },
   { profile: CHENHECHEN_INTELLIGENT_EQUIPMENT_SUPPLIER_PROFILE },
   { profile: CHENGDU_CHANGYUANSHUN_SUPPLIER_PROFILE },
   { profile: CHENGDU_LUCHEN_SUPPLIER_PROFILE },
@@ -187,8 +195,10 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: DEEPSEA_PRECISION_TECH_SHENZHEN_SUPPLIER_PROFILE },
   { profile: DELLAHOL_CNC_TECHNOLOGY_SUZHOU_SUPPLIER_PROFILE },
   { profile: DEQING_GUOTAI_FIREPROOF_MATERIAL_FACTORY_SUPPLIER_PROFILE },
+  { profile: DEZHOU_HAILIDA_MOLDING_SUPPLIER_PROFILE },
   { profile: DEZHOU_HONGYU_COMPO_TECH_SUPPLIER_PROFILE },
   { profile: DEZHOU_JUNTENG_MATERIAL_TECHNOLOGY_SUPPLIER_PROFILE },
+  { profile: DIAB_TECHNOLOGY_CHANGSHU_SUPPLIER_PROFILE },
   { profile: HONGFU_TONGXIN_SUPPLIER_PROFILE },
   { profile: HORSE_CONSTRUCTION_SUPPLIER_PROFILE },
   { profile: WANHUA_SUPPLIER_PROFILE },
