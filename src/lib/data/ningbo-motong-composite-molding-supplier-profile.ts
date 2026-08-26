@@ -1,0 +1,43 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_ID = "sup-ningbo-motong-composite-molding";
+export const NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_SLUG = "ningbo-motong-composite-molding-solutions";
+
+// Curated from Motong's current official company and solution pages and the
+// CCE N directory. The complete official stylized MOT mark was downloaded
+// from mot-cn.com on 2026-08-25 without cropping.
+export const NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_PROFILE: SupplierListing = {
+  id: NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_ID,
+  name: "宁波摩通复合材料有限公司",
+  nameEn: "Ningbo Motong Composite Materials Co., Ltd.",
+  slug: NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_SLUG,
+  location: "浙江宁波",
+  locationEn: "Ningbo, Zhejiang, China",
+  province: "浙江",
+  category: "equipment",
+  products: ["PPCM 连续纤维复材模压工艺包", "免预成型预浸料一体化模压（PPCM）方案", "CFRP/GFRP 与金属混合模压方案", "CFRP/GFRP 与纸纤维/泡沫/蜂窝/芳纶夹芯模压方案", "Ⅳ型储氢气瓶完整成型工艺包", "Ⅳ型瓶内胆与瓶阀连接工艺方案", "高速低碳纤维缠绕工艺方案", "复材快速固化工艺方案", "SMC、HP-RTM 和高压釜技术开发储备", "复材产品、模具、设备和产线一体化开发服务"],
+  productsEn: ["PPCM continuous-fiber composite molding process package", "Non-preforming integrated prepreg compression-molding (PPCM) solution", "Hybrid compression-molding solution for CFRP or GFRP with metal", "Sandwich compression-molding solution for CFRP or GFRP with paper fiber, foam, honeycomb or aramid", "Complete Type IV hydrogen-cylinder forming-process package", "Type IV liner-to-valve connection process solution", "High-speed low-carbon filament-winding process solution", "Rapid composite-curing process solution", "SMC, HP-RTM and autoclave technology-development capability", "Integrated composite product, mold, equipment and production-line development service"],
+  processList: ["复材产品需求和工况定义", "材料体系与成型路线选择", "免预成型 PPCM 工艺开发", "连续纤维和金属混合模压", "连续纤维夹芯结构模压", "Ⅳ型瓶内胆和瓶口连接开发", "高速纤维缠绕路径与张力开发", "快速固化和循环时间优化", "模具、设备和产线集成", "试制、FAT/SAT、培训和产线升级"],
+  processListEn: ["Composite product requirement and duty definition", "Material-system and molding-route selection", "Non-preforming PPCM process development", "Continuous-fiber and metal hybrid compression molding", "Continuous-fiber sandwich compression molding", "Type IV liner and boss-connection development", "High-speed filament-winding path and tension development", "Rapid curing and cycle-time optimization", "Mold, equipment and production-line integration", "Pilot production, FAT/SAT, training and line upgrades"],
+  established: null,
+  verified: false,
+  description: "宁波摩通复合材料有限公司官网定位于连续纤维复合材料批量成型的产品、工艺、模具、装备和产线开发。其发布免预成型预浸料一体化模压（PPCM）、CFRP/GFRP 与金属或纸纤维/泡沫/蜂窝/芳纶的混合/夹芯模压，以及Ⅳ型储氢气瓶内胆、瓶口连接、高速低碳缠绕和快速固化完整工艺包，并列出 SMC、HP-RTM 和高压釜技术储备。中国国际复材展 N 字母页列出该宁波企业。本页把这些内容作为工艺与产线方案，不将 CFRP/GFRP、预浸料、金属、芯材或Ⅳ型瓶写成摩通常规原材料或已量产成品。",
+  descriptionEn: "Ningbo Motong Composite Materials Co., Ltd. presents an integrated product, process, mold, equipment and line-development offer for series production of continuous-fiber composites. Its current official website describes non-preforming integrated prepreg compression molding (PPCM), hybrid CFRP or GFRP molding with metal, sandwich molding with paper fiber, foam, honeycomb or aramid, and a complete Type IV hydrogen-cylinder forming-process package covering liner, boss connection, high-speed low-carbon winding and rapid curing. SMC, HP-RTM and autoclave are listed as technology reserves. China Composites Expo independently lists the Ningbo company in its N directory. GetFRP treats these as engineering, process and line solutions. CFRP, GFRP, prepreg, metals and core materials are process inputs, while the Type IV vessel is a process-package target; none is presented here as Motong's standard raw-material or finished-cylinder catalog.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary: "复材产线或工艺开发询价应先建立用户需求书：产品图纸和法规、材料与供应商、铺层/预制体、年产量和节拍、换型、尺寸和表面、孔隙、纤维体积分数、力学/气密/疲劳目标、追溯、人员、厂房、电力、热媒、压缩空气、真空、抽排、安全和数据接口。PPCM 或混合/夹芯模压需明确预浸料状态、铺层自动化、金属表面与连接、芯材类型和耐温、模内定位、加热/冷却、压力、脱模、修边和嵌件，验证厚度、皱褶、桥接、孔隙、胶接、翘曲和循环时间。Ⅳ型储氢气瓶工艺包必须锁定目标法规/标准及版本、工作和试验压力、容积、直径长度、内胆树脂和制造、瓶口/阀接口、纤维和树脂、缠绕路径/张力/速度、固化、质量、壁厚、渗透、爆破、循环、环境和失效验证；工艺包介绍不是成品气瓶认证。设备与产线报价需定义每个站点、模具、机器人/搬运、计量、加热、固化、检测、追溯、软件、控制、护罩、抽排和上/下游接口，以及买卖双方在材料、工艺知识、厂房、安装和达产中的责任。试制应记录批次、环境、设备参数、张力、温度、压力、固化曲线、尺寸、缺陷和性能；FAT 应用代表性材料持续运行验证产能、质量、安全联锁、报警、换型和恢复，SAT 再确认现场公用工程、安装、数据、培训和爬坡。取得布局、基础载荷、公用工程表、BOM、电气图、程序与参数备份、模具清单、软件许可、备件、耗材、维护、保修和支持条款。官网公布的 SMC、HP-RTM、高压釜或行业覆盖只表明开发方向，需逐项目确认当前宁波法人是否提供该工艺及供应边界。官网邮箱拼写和域名与企业官网不一致，本页为避免误投不展示邮箱；询价应通过官网渠道确认合同、收款、知识产权、保密、出口、Incoterm 和售后实体。",
+  productsServicesSummaryEn: "A composite process or production-line inquiry should begin with a user-requirement specification covering the product drawing and regulation, materials and approved sources, layup or preform, annual output and takt, changeover, dimensions and surface, voids, fiber volume, mechanical, leak and fatigue targets, traceability, staffing, building, power, thermal utilities, compressed air, vacuum, extraction, safety and data interfaces. PPCM or hybrid and sandwich compression molding needs the prepreg condition, layup automation, metal surface and joint, core type and temperature resistance, in-mold location, heating and cooling, pressure, release, trimming and inserts, with acceptance for thickness, wrinkles, bridging, voids, bonds, warpage and cycle time. A Type IV hydrogen-cylinder package must lock the destination regulation and edition, working and test pressure, volume and envelope, liner resin and manufacture, boss and valve interface, fiber and resin, winding path, tension and speed, cure, mass, wall, permeation, burst, cycling, environment and failure validation. A process-package description is not finished-cylinder certification. Equipment and line quotations should define every station, mold, robot or handling unit, metering, heating, cure, inspection, traceability, software, controls, guarding, extraction and upstream or downstream interface, plus buyer and supplier responsibilities for materials, process know-how, building, installation and ramp-up. Pilot work should record lots, environment, equipment settings, tension, temperature, pressure, cure, dimensions, defects and performance. FAT should use representative material during sustained operation to demonstrate output, quality, safety interlocks, alarms, changeover and recovery; SAT should confirm site utilities, installation, data, training and ramp. Obtain layouts, foundation loads, utility schedules, BOM, electrical drawings, program and parameter backups, tooling list, software licences, spares, consumables, maintenance, warranty and support terms. Published SMC, HP-RTM, autoclave or industry coverage is a development direction and must be confirmed for the Ningbo legal entity and quoted scope. The official website publishes an email with a different domain and a misspelled local part, so GetFRP omits it to avoid misrouting. Confirm the contracting, payee, IP, confidentiality, export, Incoterm and support entity through the official channel.",
+  ecatalogs: [
+    { title: "摩通官网", titleEn: "Motong Official Website", description: "公司和连续纤维复材成型方案。", descriptionEn: "Official company and continuous-fiber molding solutions.", url: "https://www.mot-cn.com/index.html", format: "Official website" },
+    { title: "摩通公司与技术", titleEn: "Motong Company and Technology", description: "PPCM、混合模压、Ⅳ型瓶工艺和产线服务。", descriptionEn: "Official PPCM, hybrid molding, Type IV process and line-service overview.", url: "https://www.mot-cn.com/about/", format: "Company page" },
+    { title: "中国国际复材展 N 字母页（第 3 页）", titleEn: "China Composites Expo — N Directory, Page 3", description: "宁波摩通展商记录。", descriptionEn: "Organizer source for the Ningbo Motong exhibitor.", url: "https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N", format: "Exhibitor directory" },
+  ],
+  profilePublished: true, profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/ningbo-motong-logo.png",
+  contactEmail: null, contactPhone: null,
+  address: "No. 668 Yincheng Avenue, Haishu District, Ningbo, Zhejiang, China",
+  website: "https://www.mot-cn.com/", enterpriseId: null, scaleTier: null, brandPriority: 26, viewCount: 0,
+  capabilities: ["continuous-fiber composite process development", "PPCM compression molding", "hybrid and sandwich molding", "Type IV tank process packages", "filament-winding process development", "mold and equipment integration", "production-line construction", "pilot and acceptance support"],
+  standardsSupported: [], moqKg: null, leadTimeDays: null, exportReady: false,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"), updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};

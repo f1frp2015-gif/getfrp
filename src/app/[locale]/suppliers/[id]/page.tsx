@@ -555,8 +555,14 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                   </a>
                 )}
                 {contactPhone && phoneHref && (
-                  <a href={phoneHref} className={buttonVariants({ variant: "outline" })}>
-                    <Phone size={15} /> {contactPhone}
+                  <a
+                    href={phoneHref}
+                    className={`${buttonVariants({ variant: "outline" })} h-auto max-w-full`}
+                  >
+                    <Phone size={15} className="shrink-0" />
+                    <span className="min-w-0 whitespace-normal break-words text-center">
+                      {contactPhone}
+                    </span>
                   </a>
                 )}
               </div>
@@ -816,7 +822,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                 <div className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
                   {website && <a href={website} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-start gap-3 hover:underline"><Globe2 size={16} className="mt-0.5 shrink-0" /><span className="break-all">{website.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span></a>}
                   {contactEmail && <a href={`mailto:${contactEmail}`} className="flex min-w-0 items-start gap-3 hover:underline"><Mail size={16} className="mt-0.5 shrink-0" /><span className="break-all">{contactEmail}</span></a>}
-                  {contactPhone && phoneHref && <a href={phoneHref} className="flex items-start gap-3 hover:underline"><Phone size={16} className="mt-0.5 shrink-0" /><span>{contactPhone}</span></a>}
+                  {contactPhone && phoneHref && <a href={phoneHref} className="flex min-w-0 items-start gap-3 hover:underline"><Phone size={16} className="mt-0.5 shrink-0" /><span className="min-w-0 break-words">{contactPhone}</span></a>}
                   {address && <div className="flex items-start gap-3 text-muted-foreground"><MapPin size={16} className="mt-0.5 shrink-0" /><span>{address}</span></div>}
                 </div>
               </div>
