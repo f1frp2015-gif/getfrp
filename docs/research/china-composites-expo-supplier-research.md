@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.12.0"
+version: "1.13.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.13.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE N 字母页第 1/2 页；第十四批新增 5 家可索引供应商，补充上海贸易主体/集团制造、上海销售公司/炉内工件、回收纤维/下游应用、格栅产品/工程案例及南亚昆山电子材料/同集团原纱法人边界；5 个官方 Logo 全貌本地化并纳入统一桌面与移动端不裁切验收。"
   - version: "1.12.0"
     date: "2026-08-25"
     changes: "继续核验 CCE N 字母页；第十三批新增 5 家可索引供应商，补充碳/玻纤拉挤型材与结构胶、拉挤装备/被加工材料、格栅目录/知识文章、复材温控设备/工艺材料以及玻纤毡制造/代理品边界；5 个完整官方 Logo 本地化并执行桌面与移动端不裁切验收。"
@@ -51,7 +54,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家；第十三批开始时为 158 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家；第十三批开始时为 158 家；第十四批开始时为 163 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -186,21 +189,33 @@ changelog:
 | 南京利德盛机械有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.ldsjx.com/)、[公司简介](https://www.ldsjx.com/?pages_19/)、[产品中心](https://www.ldsjx.com/?products_2/)、[非标温控](https://www.ldsjx.com/?products_15/)、[联系页](https://www.ldsjx.com/?pages_24/) | 水/油循环模温机、高温温控、冷水机、冷热一体机、反应釜和复材模压非标温控系统 | 已发布、可索引；碳纤、SMC、树脂和玻璃钢为温控设备处理材料，不映射复材材料/制品词；完整利德盛中英字标本地化 |
 | 南京天明复合材料有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.tmfiber.com/)、[公司简介](https://www.tmfiber.com/about.html)、[产品中心](https://www.tmfiber.com/product.html)、[短切毡](https://www.tmfiber.com/product_detail/2.html)、[拉挤方案](https://www.tmfiber.com/solution/2.html)、[联系页](https://www.tmfiber.com/contact.html) | 玻纤短切、连续、复合、针刺和表面毡，真空导入/拉挤/模压用毡，粗纱、短切玻纤和 TML 热塑复合板 | 已发布、可索引；只按毡材目录植入短切毡/玻纤毡等词，粗纱等代理品逐单确认制造商和产地；完整天明中英标志本地化 |
 
+## 2026-08-25 第十四批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 耐铝（上海）贸易有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [Nabaltec 公司与上海地址](https://www.nabaltec.de/en/company)、[产品总览](https://www.nabaltec.de/en/products)、[氢氧化铝](https://www.nabaltec.de/en/products/aluminum-hydroxide)、[勃姆石](https://www.nabaltec.de/en/products/boehmite)、[氧化铝](https://www.nabaltec.de/en/products/aluminum-oxide)、[陶瓷料](https://www.nabaltec.de/en/products/ceramic-bodies) | APYRAL 氢氧化铝阻燃填料、APYRAL AOH/ACTILOX 勃姆石、NABALOX 氧化铝和 GRANALOX 陶瓷料的中国贸易与技术资料接口 | 已发布、可索引；不把集团生产和证书归入上海贸易法人；完整 Nabaltec 字标与下划线本地化 |
+| 纳博热（上海）工业炉有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [中国官网](https://nabertherm.com/cn)、[上海销售公司](https://nabertherm.com/cn/gongsi/quanqiuxiaoshousi)、[热加工技术](https://nabertherm.com/cn/pulukete/gongye/rejiagongjishu)、[先进材料炉](https://nabertherm.com/cn/pulukete/gongye/xianjincailiao)、[实验室炉](https://nabertherm.com/cn/pulukete/shiyanshi) | 循环空气、辐射、高温、保护气氛/真空、马弗、管式、脱脂烧结、熔化保温、定制炉和控制记录系统 | 已发布、可索引；材料是炉内工件，不注入材料词；不从展会分类推导复材固化热压罐；完整黑黄字标和基线本地化 |
+| 南通复源新材料科技有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | [公司简介](https://www.rcffy.com/profile/index.aspx)、[发展历程](https://www.rcffy.com/history/index.aspx)、[短切再生碳纤维](https://www.rcffy.com/product/info.aspx?itemid=12)、[再生碳纤维毡](https://www.rcffy.com/product/info.aspx?itemid=10)、[联系页](https://www.rcffy.com/contact/index.aspx) | 3–12 mm 再生短切碳纤维、纯再生碳纤维无纺毡、PP/PA/PPS 混合毡及固化/未固化预浸料、废件和边角料回收服务 | 已发布、可索引；只映射再生碳纤维、短切纤维和毡材，不把应用清单扩为自产终端件；完整复源图形和中文名本地化 |
+| 南通久盛新材料科技有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | [官网](https://powergrate.com/)、[公司简介](https://powergrate.com/n-2/)、[产品总览](https://powergrate.com/n-6/)、[模塑格栅](https://powergrate.com/n-7/)、[拉挤格栅](https://powergrate.com/n-8/)、[拉挤型材](https://powergrate.com/n-9/)、[联系页](https://powergrate.com/n-44/) | 模塑/拉挤 FRP 格栅、拉挤玻纤型材、模压与手糊制品、格栅配件和玻璃钢模具 | 已发布、可索引；实际格栅/型材触发 fiberglass grating、FRP grating、pultruded fiberglass 等词；完整 POWERGRID 字标和注册标记本地化 |
+| 南亚电子材料（昆山）有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | [昆山厂](https://www.nypc.com.cn/j2nc/zhcn/facilities_KS.jsp)、[产品索引](https://www.nypc.com.cn/j2nc/zhcn/prodindex)、[电子玻纤布](https://www.nypc.com.cn/j2nc/zhcn/prod/Electronic%20Glass%20Fabrics)、[环氧树脂](https://www.nypc.com.cn/j2nc/zhcn/prod/Liquid%20Bisphenol-A%20%20Epoxy%20Resin) | 通用、超薄和低介电电子级玻纤布，EL127 环氧树脂，NP/FR-4/CEM-3 覆铜板和超薄铜箔 | 已发布、可索引；不把同官网另列的必成玻纤昆山原纱/短切业务归入本法人；完整南亚中英文字标本地化 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中、第十三批五家企业在 158 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中、第十三批五家企业在 158 家 Git 策展目录中、第十四批五家企业在 163 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家；第十三批完成后为 163 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家；第十三批完成后为 163 家；第十四批完成后为 168 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 南京傲马水射流候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `omaxchina.com`，但标准浏览器进入“人机验证”页，无法稳定核验现行主体、设备目录、联系和 Logo | 延后，待官网允许正常公开浏览 |
+| 南京特塑候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `njatc.cn`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，无法建立受信任官网证据链 | 延后，待证书域名修复 |
 | 南京博泰复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `botex-nj.com`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，无法建立安全且可复核的官网证据链 | 延后，待证书域名修复 |
 | 南京精恒复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `frp-jh.com`，但标准浏览器返回 `ERR_CONNECTION_CLOSED`，无法稳定核验现行产品、联系和 Logo | 延后，待官网恢复 |
 | 南京玻璃纤维研究设计院候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 官方候选域名 `fiberglasschina.com` 在标准浏览器返回 `ERR_TUNNEL_CONNECTION_FAILED` | 延后，待官网恢复正常访问 |
@@ -272,6 +287,12 @@ changelog:
 
 ## 证据边界与复核提醒
 
+- 从第十四批起，所有新企业卡片必须下载官网当前完整 Logo；图形标、中文/英文字标、基线、下划线、温度范围和注册标记均不得裁掉。只允许去除标志外部多余透明或纯色画布，卡片与主页使用固定容器 `object-contain`，并在桌面及 390 px 移动端逐卡目视确认完整、清晰、无溢出。该规则适用于所有企业，不因 Logo 横向、纵向、SVG 或位图而改变。
+- 耐铝上海是 Nabaltec 官网列出的贸易公司；德国/美国集团的工厂、产能、研发和证书不自动归入上海法人。下游电缆、PCB、塑料或陶瓷只是填料应用，不是上海公司自产终端件。
+- 纳博热上海是中国销售公司。炉内处理的复材、纤维、树脂、陶瓷和增材制造工件不是纳博热材料产品，CCE 设备分类也不能替代官网产品证据去创建“复材固化热压罐”。
+- 复源的再生短切碳纤维和无纺/混合毡可触发实际碳纤维与短切纤维词；官网列出的增强塑料、导电、建筑和耐火应用不能扩写为企业自产终端件。
+- 久盛的格栅、型材、模压和手糊制品必须按对应工艺、规格和结构分别询价；工程案例与历史认证文字不能替代现行产品目录、图纸、结构验算和当前证书原件。
+- 南亚电子材料昆山生产玻纤布、环氧树脂、覆铜板和铜箔；同一大陆官网另列的必成玻璃纤维（昆山）有限公司才是电子玻纤纱和短切纤维主体，集团垂直整合叙述不能跨法人归并产品。
 - 海拓同时销售碳/玻纤拉挤件、织物和结构胶；搜索词必须由具体销售品触发，系统应用、标准参与和品牌叙述不能替代牌号、图纸、TDS 或现行证书。
 - 豪力与利德盛均为设备企业。豪力设备可制造碳/玻纤型材，利德盛设备可服务碳纤、SMC、树脂和玻璃钢工艺，但这些材料和设备产出都不是两家公司的自产材料或复材制品关键词。
 - 明峰官网知识文章讨论的储罐、冷却塔、烟道等 FRP 应用不能扩大官网产品目录；主页只映射实际列出的 GFRP 管、棒、型材、格栅和终端制品。
