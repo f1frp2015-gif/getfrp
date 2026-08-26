@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.11.0"
+version: "1.12.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.12.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE N 字母页；第十三批新增 5 家可索引供应商，补充碳/玻纤拉挤型材与结构胶、拉挤装备/被加工材料、格栅目录/知识文章、复材温控设备/工艺材料以及玻纤毡制造/代理品边界；5 个完整官方 Logo 本地化并执行桌面与移动端不裁切验收。"
   - version: "1.11.0"
     date: "2026-08-25"
     changes: "继续核验 CCE L 字母页；第十二批新增 5 家可索引供应商，补充复合气瓶/碳纤维原料、缠绕设备/终端制品、裁剪设备/被切材料、复材涂层/基材和旧展商名/现行主体边界；4 个官方 Logo 完整本地化，1 个源站失效使用文字回退，并新增卡片完整 Logo 验收规则。"
@@ -48,7 +51,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家；第十三批开始时为 158 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -173,21 +176,38 @@ changelog:
 | 立邦涂料（中国）有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [官网](https://www.nipponpaint.com.cn/)、[纤邦彩碳纤维方案](https://www.nipponpaint.com.cn/paint/repairDetail/gac/102)、[复材涂装矩阵](https://www.nipponpaint.com.cn/news/2306)、[光伏边框方案](https://www.nipponpaint.com.cn/news/2273)、[联系页](https://www.nipponpaint.com.cn/contact) | 纤邦彩碳纤维/玻纤复材涂装、光伏复合材料边框、低温快固、高耐候、高硬度、添加剂和外观效果系列 | 已发布、可索引；碳纤维和玻纤是涂层基材，不映射原料/复材制品关键词；完整官方中英文标志本地化 |
 | 辽宁宇威科技有限公司 | [CCE L 字母页旧名“辽阳鑫宇化工”](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [官网](https://www.lnxinyu.com/)、[公司简介](https://www.lnxinyu.com/page/about-us.html)、[产品中心](https://www.lnxinyu.com/product)、[特种环氧](https://www.lnxinyu.com/product/test)、[活性稀释剂](https://www.lnxinyu.com/product/thinner)、[联系页](https://www.lnxinyu.com/page/contact-us.html) | 酚氧、氢化双酚 A、高耐热多官能、二聚酸改性、溴化、无卤阻燃、结晶和双酚 A 环氧树脂及缩水甘油醚活性稀释剂 | 已发布、可索引；CCE 旧名只作调查线索，不声称未经文件证明的法定更名/承继；完整官方 Logo 本地化 |
 
+## 2026-08-25 第十三批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 南京海拓复合材料有限责任公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.hitechfrp.com/)、[公司简介](https://www.hitechfrp.com/aboutus.html)、[碳纤维型材](https://www.hitechfrp.com/product_category/36419.html)、[玻纤型材](https://www.hitechfrp.com/product_category/36415.html)、[纤维织物](https://www.hitechfrp.com/product_category/Fabric.html)、[联系页](https://www.hitechfrp.com/contactus.html) | 拉挤碳板/棒/管/槽材/筋材，玻纤梁/槽钢/角钢/管/板/筋材/格栅，碳纤/玻纤织物及风电、碳板和工程结构胶 | 已发布、可索引；仅为同一实际产品映射碳板、碳管、织物、玻纤型材/格栅关键词；完整 HICOMA 中英字标本地化 |
+| 南京豪力液压设备有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.njhaoli.cn/)、[公司简介](https://www.njhaoli.cn/aboutus.html)、[产品中心](https://www.njhaoli.cn/product.html)、[伺服液压拉挤机](https://www.njhaoli.cn/Product/sfyyqyljjsb.html)、[履带拉挤机](https://www.njhaoli.cn/Product/ldsqyj.html) | 液压/伺服/履带拉挤机、拉缠、注胶、切割、切毡、收卷、编绕电缆管线、门窗型材设备、模具和工艺培训 | 已发布、可索引；碳纤/玻纤及产出的型材、管道均为设备应用对象，不注入材料/成品搜索词；完整 HAOLI 字标本地化 |
+| 南京明峰复合材料有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://njmf.com/)、[公司简介](https://njmf.com/il11.htm)、[产品目录](https://njmf.com/c.htm)、[拉挤格栅](https://njmf.com/cl92.htm)、[联系页](https://njmf.com/iv1.htm) | 拉挤 GFRP 管、棒、槽钢/I 梁，模塑/拉挤格栅，绝缘梯、工具手柄、护栏、旗杆、撑杆、天线罩和模压件 | 已发布、可索引；官网技术文章提到的储罐、冷却塔和烟道不扩写为现行产品；完整 MF/梅峰 MEI FENG 标志本地化 |
+| 南京利德盛机械有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.ldsjx.com/)、[公司简介](https://www.ldsjx.com/?pages_19/)、[产品中心](https://www.ldsjx.com/?products_2/)、[非标温控](https://www.ldsjx.com/?products_15/)、[联系页](https://www.ldsjx.com/?pages_24/) | 水/油循环模温机、高温温控、冷水机、冷热一体机、反应釜和复材模压非标温控系统 | 已发布、可索引；碳纤、SMC、树脂和玻璃钢为温控设备处理材料，不映射复材材料/制品词；完整利德盛中英字标本地化 |
+| 南京天明复合材料有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | [官网](https://www.tmfiber.com/)、[公司简介](https://www.tmfiber.com/about.html)、[产品中心](https://www.tmfiber.com/product.html)、[短切毡](https://www.tmfiber.com/product_detail/2.html)、[拉挤方案](https://www.tmfiber.com/solution/2.html)、[联系页](https://www.tmfiber.com/contact.html) | 玻纤短切、连续、复合、针刺和表面毡，真空导入/拉挤/模压用毡，粗纱、短切玻纤和 TML 热塑复合板 | 已发布、可索引；只按毡材目录植入短切毡/玻纤毡等词，粗纱等代理品逐单确认制造商和产地；完整天明中英标志本地化 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中、第十三批五家企业在 158 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家；第十三批完成后为 163 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 南京博泰复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `botex-nj.com`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，无法建立安全且可复核的官网证据链 | 延后，待证书域名修复 |
+| 南京精恒复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `frp-jh.com`，但标准浏览器返回 `ERR_CONNECTION_CLOSED`，无法稳定核验现行产品、联系和 Logo | 延后，待官网恢复 |
+| 南京玻璃纤维研究设计院候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 官方候选域名 `fiberglasschina.com` 在标准浏览器返回 `ERR_TUNNEL_CONNECTION_FAILED` | 延后，待官网恢复正常访问 |
+| 南京华鹏玻纤设备候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `hpbx.com`，但标准浏览器返回 `ERR_CONNECTION_CLOSED`，无法完成当前官网证据链 | 延后，待官网恢复 |
+| 南京禾阳复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 候选官网在标准自动浏览中进入“异常访问/可疑请求拦截”页，不能可靠核验公开产品和联系内容 | 延后，待官网允许正常浏览 |
+| 南京柯普复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 候选官网在标准自动浏览中进入“异常访问/可疑请求拦截”页，无法形成稳定官网证据链 | 延后，待官网允许正常浏览 |
+| 南京康特复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 本轮只找到复材平台店铺和第三方页面，未确认企业自有独立官网 | 按“无官网跳过”规则处理 |
 | 莱州耀胜自动化技术候选企业 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 可定位英文官网 `sheetmouldingtech.com`，但标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID`，无法建立受信任官网证据链 | 延后，待 TLS 证书链修复 |
 | 莱州市莱玉化工有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 官方候选域名 `laiyu.com` 在标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID`，无法可靠核验当前产品、联系和 Logo | 延后，待 TLS 证书链修复 |
 | 连云港中复连众复合材料集团有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 官方候选域名 `lzfrp.com` 在本轮标准浏览器返回 `ERR_TUNNEL_CONNECTION_FAILED` | 延后，待官网恢复正常访问 |
@@ -252,6 +272,11 @@ changelog:
 
 ## 证据边界与复核提醒
 
+- 海拓同时销售碳/玻纤拉挤件、织物和结构胶；搜索词必须由具体销售品触发，系统应用、标准参与和品牌叙述不能替代牌号、图纸、TDS 或现行证书。
+- 豪力与利德盛均为设备企业。豪力设备可制造碳/玻纤型材，利德盛设备可服务碳纤、SMC、树脂和玻璃钢工艺，但这些材料和设备产出都不是两家公司的自产材料或复材制品关键词。
+- 明峰官网知识文章讨论的储罐、冷却塔、烟道等 FRP 应用不能扩大官网产品目录；主页只映射实际列出的 GFRP 管、棒、型材、格栅和终端制品。
+- 天明的短切、连续、针刺、表面和复合毡可触发对应玻纤毡关键词；官网同时称部分粗纱及其他玻纤品为代理，询价必须确认实际制造商、生产厂和质量责任主体。
+- 本批 5 个 Logo 均来自企业当前官网并本地化，保留徽标、中文名、英文字标和注册标记的完整全貌；仅允许裁除多余透明画布，卡片统一固定容器 `object-contain`，桌面与 390 px 移动端都必须目视确认无裁切、无溢出。
 - 美托的碳纤维是复合高压气瓶的增强体，不代表企业销售碳纤维原丝、织物或预浸料；头部和页脚两个官方 Logo CDN 资源均返回 HTTP 567，主页使用完整企业名称文字回退。
 - 唯德销售缠绕、离心浇铸和配套生产装备，官网描述的管道、储氢瓶和灯杆是设备产出，不是其自产复材产品或材料搜索词。
 - 力克 Vector TechTex 可以裁切碳纤维等技术材料，但被切材料不是力克自产商品；上海主页也不继承全球集团成立年份。

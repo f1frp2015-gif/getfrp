@@ -133,7 +133,12 @@ import { LIAONING_YUWEI_SUPPLIER_PROFILE } from "@/lib/data/liaoning-yuwei-suppl
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
+import { NANJING_HAOLI_SUPPLIER_PROFILE } from "@/lib/data/nanjing-haoli-supplier-profile";
+import { NANJING_HITECH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/nanjing-hitech-composites-supplier-profile";
+import { NANJING_LIDESHENG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-lidesheng-supplier-profile";
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "@/lib/data/nanjing-loyalty-supplier-profile";
+import { NANJING_MINGFENG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-mingfeng-supplier-profile";
+import { NANJING_TIANMING_SUPPLIER_PROFILE } from "@/lib/data/nanjing-tianming-supplier-profile";
 import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "@/lib/data/newtech-group-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
@@ -271,7 +276,12 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: MAXTONE_SUPPLIER_PROFILE },
   { profile: MATEX_SUPPLIER_PROFILE },
   { profile: NANJING_EFG_SUPPLIER_PROFILE },
+  { profile: NANJING_HAOLI_SUPPLIER_PROFILE },
+  { profile: NANJING_HITECH_COMPOSITES_SUPPLIER_PROFILE },
+  { profile: NANJING_LIDESHENG_SUPPLIER_PROFILE },
   { profile: NANJING_LOYALTY_SUPPLIER_PROFILE },
+  { profile: NANJING_MINGFENG_SUPPLIER_PROFILE },
+  { profile: NANJING_TIANMING_SUPPLIER_PROFILE },
   { profile: NEWTECH_GROUP_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: KEERDA_SUPPLIER_PROFILE },
