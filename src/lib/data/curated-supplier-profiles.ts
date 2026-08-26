@@ -139,6 +139,11 @@ import { NANJING_LIDESHENG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-lidesheng
 import { NANJING_LOYALTY_SUPPLIER_PROFILE } from "@/lib/data/nanjing-loyalty-supplier-profile";
 import { NANJING_MINGFENG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-mingfeng-supplier-profile";
 import { NANJING_TIANMING_SUPPLIER_PROFILE } from "@/lib/data/nanjing-tianming-supplier-profile";
+import { NABALTEC_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/nabaltec-shanghai-supplier-profile";
+import { NABERTHERM_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/nabertherm-shanghai-supplier-profile";
+import { NANTONG_FUYUAN_SUPPLIER_PROFILE } from "@/lib/data/nantong-fuyuan-supplier-profile";
+import { NANTONG_JIUSHENG_SUPPLIER_PROFILE } from "@/lib/data/nantong-jiusheng-supplier-profile";
+import { NANYA_ELECTRONIC_KUNSHAN_SUPPLIER_PROFILE } from "@/lib/data/nanya-electronic-kunshan-supplier-profile";
 import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "@/lib/data/newtech-group-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
@@ -282,6 +287,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: NANJING_LOYALTY_SUPPLIER_PROFILE },
   { profile: NANJING_MINGFENG_SUPPLIER_PROFILE },
   { profile: NANJING_TIANMING_SUPPLIER_PROFILE },
+  { profile: NABALTEC_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: NABERTHERM_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: NANTONG_FUYUAN_SUPPLIER_PROFILE },
+  { profile: NANTONG_JIUSHENG_SUPPLIER_PROFILE },
+  { profile: NANYA_ELECTRONIC_KUNSHAN_SUPPLIER_PROFILE },
   { profile: NEWTECH_GROUP_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: KEERDA_SUPPLIER_PROFILE },

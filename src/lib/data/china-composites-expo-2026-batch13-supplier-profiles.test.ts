@@ -49,7 +49,7 @@ function phrases(profile: (typeof batch)[number]["profile"]): string[] {
 
 test("publishes exactly five deduplicated profiles in the thirteenth CCE batch", () => {
   assert.equal(batch.length, 5);
-  assert.equal(CURATED_SUPPLIER_PROFILES.length, 163);
+  assert.equal(CURATED_SUPPLIER_PROFILES.length, 168);
   for (const { profile, id, slug, identity } of batch) {
     assert.equal(getCuratedSupplierProfile(id), profile);
     assert.equal(getCuratedSupplierProfile(slug), profile);
