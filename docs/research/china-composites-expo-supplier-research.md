@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.13.0"
+version: "1.14.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.14.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE N 字母页第 3 页；第十五批新增 5 家可索引供应商，补充复材裁切设备/被切材料、LCP 纤维/下游应用、宁波法人/Refitech 集团、碳纤实际制品/行业标签及Ⅳ型瓶工艺包/成品气瓶边界；5 个官方 Logo 均按全貌规则本地化并纳入桌面与移动端不裁切验收。"
   - version: "1.13.0"
     date: "2026-08-25"
     changes: "继续核验 CCE N 字母页第 1/2 页；第十四批新增 5 家可索引供应商，补充上海贸易主体/集团制造、上海销售公司/炉内工件、回收纤维/下游应用、格栅产品/工程案例及南亚昆山电子材料/同集团原纱法人边界；5 个官方 Logo 全貌本地化并纳入统一桌面与移动端不裁切验收。"
@@ -54,7 +57,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家；第十三批开始时为 158 家；第十四批开始时为 163 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家；第十二批开始时为 153 家；第十三批开始时为 158 家；第十四批开始时为 163 家；第十五批开始时为 168 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -199,21 +202,35 @@ changelog:
 | 南通久盛新材料科技有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | [官网](https://powergrate.com/)、[公司简介](https://powergrate.com/n-2/)、[产品总览](https://powergrate.com/n-6/)、[模塑格栅](https://powergrate.com/n-7/)、[拉挤格栅](https://powergrate.com/n-8/)、[拉挤型材](https://powergrate.com/n-9/)、[联系页](https://powergrate.com/n-44/) | 模塑/拉挤 FRP 格栅、拉挤玻纤型材、模压与手糊制品、格栅配件和玻璃钢模具 | 已发布、可索引；实际格栅/型材触发 fiberglass grating、FRP grating、pultruded fiberglass 等词；完整 POWERGRID 字标和注册标记本地化 |
 | 南亚电子材料（昆山）有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | [昆山厂](https://www.nypc.com.cn/j2nc/zhcn/facilities_KS.jsp)、[产品索引](https://www.nypc.com.cn/j2nc/zhcn/prodindex)、[电子玻纤布](https://www.nypc.com.cn/j2nc/zhcn/prod/Electronic%20Glass%20Fabrics)、[环氧树脂](https://www.nypc.com.cn/j2nc/zhcn/prod/Liquid%20Bisphenol-A%20%20Epoxy%20Resin) | 通用、超薄和低介电电子级玻纤布，EL127 环氧树脂，NP/FR-4/CEM-3 覆铜板和超薄铜箔 | 已发布、可索引；不把同官网另列的必成玻纤昆山原纱/短切业务归入本法人；完整南亚中英文字标本地化 |
 
+## 2026-08-25 第十五批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 宁波经纬数控股份有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | [官网](https://www.jingwei.com.cn/)、[复材方案](https://www.jingwei.com.cn/fucai/)、[SC 复材裁切机](https://www.jingwei.com.cn/products/v28.html)、[CB03E-2516-RQ 样本](https://www.jingwei.com.cn/uploadfile/2026/0130/20260130043323150.pdf)、[联系页](https://www.jingwei.com.cn/contact/) | SC/CB03E 数字裁切系统，干碳布/预浸料、玻纤、固化碳板、环氧板、膜材、石墨和橡胶的切割/铣切/排版/真空吸附方案 | 已发布、可索引；全部复材为被加工材料，不注入碳纤/玻纤产品词；完整 JWEI、中文字标和注册标记本地化 |
+| 宁波海格拉新材料科技有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | [英文官网](https://yokolar.com/index_en)、[产品目录](https://www.yokolar.com/products_en)、[代表产品](https://www.yokolar.com/productshow_en/422)、[应用](https://www.yokolar.com/anli_en)、[服务](https://www.yokolar.com/server_en) | Higlar 高强、短切、单丝、加捻、彩色、低介电、多组分、柔软和高弹 LCP 纤维，以及织物、短纤纸和浆粕纸 | 已发布、可索引；2017/2018 成立年份冲突留空；5G、线缆、航天、防护和体育仅为应用；完整 Higlar 中英标志本地化 |
+| 宁波瑞菲科碳纤维有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | [中国官网](https://www.refitech.cn/)、[行业产品](https://www.refitech.cn/carbon-composite-products-for-different-industries/)、[eVTOL](https://www.refitech.cn/evtol/)、[宁波联系](https://www.refitech.cn/contact)、[集团地点](https://www.refitech.eu/about-us/) | 无人机、机器人、机器和 eVTOL 定制复材件，圆/矩形碳管、Refiflex 连接件、碳板/面板及模压装配 | 已发布、可索引；只归入宁波官网和地点证据，不自动承接集团其他工厂/证书；完整 Refitech 与 COMPOSITE SOLUTIONS 副标本地化 |
+| 宁波丽成复合材料制品有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | [当前官网](https://www.super-resin.cn/en/)、[公司简介](https://www.super-resin.cn/en/about.html)、[能力](https://super-resin.cn/en/support.html?scrollTo=a4)、[产品目录](https://en.super-resin.cn/product/)、[蜂窝板](https://en.super-resin.cn/product/20/)、[联系页](https://super-resin.cn/en/contact.html?scrollTo=a1) | 晶圆搬运件、碳辊/管/板、碳纤/芳纶及铝蜂窝板、X 射线面板、航空/无人机/汽车/摩托/假肢/高尔夫碳纤件 | 已发布、可索引；只映射官网实际产品，不用行业标签扩展产品；完整 Ningbo SUPER RESIN 与中文全称本地化 |
+| 宁波摩通复合材料有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | [官网](https://www.mot-cn.com/index.html)、[公司与技术](https://www.mot-cn.com/about/) | PPCM、CFRP/GFRP 金属混合和夹芯模压、Ⅳ型储氢气瓶内胆/瓶口/高速缠绕/快速固化工艺包及模具设备产线开发 | 已发布、可索引；工艺包不等于成品瓶目录，被加工材料不作为原料产品；完整官方 MOT 图形本地化 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中、第十三批五家企业在 158 家 Git 策展目录中、第十四批五家企业在 163 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中、第十二批五家企业在 153 家 Git 策展目录中、第十三批五家企业在 158 家 Git 策展目录中、第十四批五家企业在 163 家 Git 策展目录中、第十五批五家企业在 168 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家；第十三批完成后为 163 家；第十四批完成后为 168 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家；第十二批完成后为 158 家；第十三批完成后为 163 家；第十四批完成后为 168 家；第十五批完成后为 173 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 南京斯贝尔复合材料仪征有限公司 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 已有 `nanjing-spare-composites` 策展主页和相同主体/官网记录 | 去重跳过，不重复建页 |
+| 宁波聚嘉新材料科技有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | 官方候选域名 `copolymen.cn` 在标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID`，无法建立受信任官网证据链 | 延后，待证书链修复 |
+| 宁波索力特新材料科技有限公司 | [CCE N 字母页第 3 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=60&head=N) | 官方候选域名 `oursolid.com` 在标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID`，无法建立受信任官网证据链 | 延后，待证书链修复 |
+| 南通东泰新能源设备有限公司 | [CCE N 字母页第 2 页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=30&head=N) | 官网可访问，但当前官方页引用的 Logo CDN 对标准浏览器和下载均返回 HTTP 567，无法按统一规则取得完整官方标志 | 延后，待官方完整 Logo 可稳定获取 |
 | 南京傲马水射流候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `omaxchina.com`，但标准浏览器进入“人机验证”页，无法稳定核验现行主体、设备目录、联系和 Logo | 延后，待官网允许正常公开浏览 |
 | 南京特塑候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `njatc.cn`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，无法建立受信任官网证据链 | 延后，待证书域名修复 |
 | 南京博泰复合材料候选企业 | [CCE N 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=N) | 可定位 `botex-nj.com`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，无法建立安全且可复核的官网证据链 | 延后，待证书域名修复 |

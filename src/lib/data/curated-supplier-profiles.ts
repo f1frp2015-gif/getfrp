@@ -144,6 +144,11 @@ import { NABERTHERM_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/nabertherm-shan
 import { NANTONG_FUYUAN_SUPPLIER_PROFILE } from "@/lib/data/nantong-fuyuan-supplier-profile";
 import { NANTONG_JIUSHENG_SUPPLIER_PROFILE } from "@/lib/data/nantong-jiusheng-supplier-profile";
 import { NANYA_ELECTRONIC_KUNSHAN_SUPPLIER_PROFILE } from "@/lib/data/nanya-electronic-kunshan-supplier-profile";
+import { NINGBO_HAIGELA_LCP_FIBER_SUPPLIER_PROFILE } from "@/lib/data/ningbo-haigela-lcp-fiber-supplier-profile";
+import { NINGBO_JINGWEI_CNC_SUPPLIER_PROFILE } from "@/lib/data/ningbo-jingwei-cnc-supplier-profile";
+import { NINGBO_LICHENG_SUPER_RESIN_SUPPLIER_PROFILE } from "@/lib/data/ningbo-licheng-super-resin-supplier-profile";
+import { NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_PROFILE } from "@/lib/data/ningbo-motong-composite-molding-supplier-profile";
+import { NINGBO_REFITECH_CARBON_FIBER_SUPPLIER_PROFILE } from "@/lib/data/ningbo-refitech-carbon-fiber-supplier-profile";
 import { NEWTECH_GROUP_SUPPLIER_PROFILE } from "@/lib/data/newtech-group-supplier-profile";
 import { NOAH_COMPOSITES_SUPPLIER_PROFILE } from "@/lib/data/noah-composites-supplier-profile";
 import { PULWELL_SUPPLIER_PROFILE } from "@/lib/data/pulwell-supplier-profile";
@@ -292,6 +297,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: NANTONG_FUYUAN_SUPPLIER_PROFILE },
   { profile: NANTONG_JIUSHENG_SUPPLIER_PROFILE },
   { profile: NANYA_ELECTRONIC_KUNSHAN_SUPPLIER_PROFILE },
+  { profile: NINGBO_JINGWEI_CNC_SUPPLIER_PROFILE },
+  { profile: NINGBO_HAIGELA_LCP_FIBER_SUPPLIER_PROFILE },
+  { profile: NINGBO_REFITECH_CARBON_FIBER_SUPPLIER_PROFILE },
+  { profile: NINGBO_LICHENG_SUPER_RESIN_SUPPLIER_PROFILE },
+  { profile: NINGBO_MOTONG_COMPOSITE_MOLDING_SUPPLIER_PROFILE },
   { profile: NEWTECH_GROUP_SUPPLIER_PROFILE },
   { profile: JUFA_SUPPLIER_PROFILE },
   { profile: KEERDA_SUPPLIER_PROFILE },
