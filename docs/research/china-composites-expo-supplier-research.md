@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.8.0"
+version: "1.9.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.9.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE J/K/L 字母页；第十批新增 5 家可索引供应商，补充绝缘伸缩梯/钓鱼竿、树脂应用/终端型材、集团牌号/珠海法人、关联涂层工厂/兰溪主体以及离型布基材边界，并记录 3 个标准浏览器安全或访问失败候选。"
   - version: "1.8.0"
     date: "2026-08-25"
     changes: "继续核验 CCE J 字母页；第九批新增 5 家可索引供应商，补充澳盛集团事业部、君华/君航子公司、长海用途纱与终端制品、ESONE 品牌历史以及第三方 Logo CDN 失效边界，并收紧 pultruded fiberglass 的同产品证据规则。"
@@ -39,7 +42,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -134,21 +137,34 @@ changelog:
 | 江苏君华特种高分子材料股份有限公司 | [CCE 企业页](https://www.chinacompositesexpo.com/cn/netshow-2820-7883932.html) | [官网](https://en.chinapeek.com/)、[产品中心](https://en.chinapeek.com/product/)、[复材应用](https://en.chinapeek.com/product/applications/composite_materials_industry/)、[CF/PEEK 板](https://en.chinapeek.com/cfpeek_composite_sheet/)、[君航子公司](https://en.chinapeek.com/changzhou_junhang_high_performance_composite_materials/)、[联系页](https://en.chinapeek.com/contact-us/) | PEEK5600G/GF30/CF30/LF30、PEEK 板棒管、注塑/CNC 件，以及连续 CF/PEEK 板、棒、梁和热塑预浸料；连续纤维业务标明君航子公司边界 | 已发布、可索引；`pultruded fiberglass` 改为同一产品同时具备玻纤与拉挤证据，避免把君华玻纤复合料与碳纤拉挤棒错误拼接 |
 | 江苏永盛氟塑新材料有限公司（ESONE） | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | [官网](https://www.esone.com/)、[公司简介](https://www.esone.com/about-us/)、[PTFE 玻纤布](https://www.esone.com/product-cate/ptfe-fabrics/)、[工业系列](https://www.esone.com/product-cate/ptfe-fabrics/ptfe-coated-fiberglass-industrial/)、[硅胶布](https://www.esone.com/product-cate/silicone-fabric/)、[工业带](https://www.esone.com/product-cate/ptfe-belt/) | PTFE/硅胶涂覆玻纤布、玻纤胶带、芳纶涂覆织物和输送/网格/层压/无缝带；fiberglass cloth 限定为涂覆基布，不宣称原始玻纤生产 | 已发布、可索引；江苏 ESONE 采用官网明确的 2014 年，不把 Youngsun 1990 年品牌/关联历史转移给现行法人 |
 
+## 2026-08-25 第十批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 江苏博诚新科技材料有限公司 | [CCE J 涂覆制品页](https://www.chinacompositesexpo.com/cn/netshow.php?head=J&kind_id=40)、[2026 展商名单](https://www.chinacompositesexpo.com/en/news-detail-128-16494.html) | [官网](https://www.bcflon.com/)、[公司简介](https://www.bcflon.com/About-Us.html)、[PTFE 涂覆玻纤布](https://www.bcflon.com/products/Ptfe-Coated-Fiberglass-Fabric/)、[胶带](https://www.bcflon.com/products/Ptfe-Adhesive-Tape/)、[网格带](https://www.bcflon.com/products/Ptfe-Open-Mesh-Conveyor-Belt/) | PTFE/硅胶涂覆玻纤布、防静电布、玻纤胶带、网格/输送带及裁切成形件；fiberglass cloth/roll 只映射实际涂覆玻纤卷材 | 已发布、可索引；官方 JSBC Logo 已本地化 |
+| 昆明飞翔材料技术有限公司 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | [官网](https://www.frpladder.com/)、[公司简介](https://www.frpladder.com/aboutUs)、[产品中心](https://www.frpladder.com/products)、[联系页](https://www.frpladder.com/contactUs) | 拉挤 GFRP 型材、绝缘管/杆、光伏支架、绝缘梯/伸缩梯、脚手架、平台和带电作业工具 | 已发布、可索引；“鱼竿梯”按伸缩绝缘梯处理，排除 fishing rod 关键词 |
+| 卡德莱化工（珠海）有限公司 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | [中国官网](https://cn.cardolite.com/)、[公司简介](https://cn.cardolite.com/about/)、[复材产品](https://www.cardolite.com/zh/composites/)、[全球地点](https://cn.cardolite.com/locations/) | LITE 2401/2402 酚醛胺固化剂、NX-4005 交联剂、反应型稀释/柔性改性、环氧酚醛、多元醇和 FormuLITE | 已发布、可索引；工艺适用性不等于生产拉挤型材，集团牌号逐单确认珠海产销范围 |
+| 兰溪庄原玻璃纤维有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [官网](https://www.hzglass.com/cn/) | 玻纤布、硅胶涂覆布、铝箔复合布、防火/车辆/焊接毯、防火袋及焊接安全隔间；fiberglass cloth 限定为实际织物 | 已发布、可索引；2001 经营起点与当前法人年份未统一，关联涂层工厂/江西公司不自动归入兰溪主体 |
+| 科建高分子材料（上海）股份有限公司 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K)、[CCE K 类别页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=150&kind_id=19) | [官网](https://www.kejian-china.com/)、[公司简介](https://www.kejian-china.com/about.html)、[航天航空目录](https://www.kejian-china.com/products/1/6.html)、[KJ-662B](https://www.kejian-china.com/proInfo/183.html)、[PTFE 离型布](https://www.kejian-china.com/proInfo/170.html) | 高温密封带、工装橡胶、离型布/PTFE 离型布、丁基/硅胶/改性 PU/聚烯烃/PUR/丙烯酸/环氧胶粘剂 | 已发布、可索引；未确认基布前不把离型布写成玻纤布，真空袋类别不等于真空导入成品 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 开封鹏远玻璃纤维制品候选企业 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | 可定位 `pybx.com`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，HTTP 入口也不能形成安全可用证据链 | 延后，待证书域名修复 |
+| 科纺勒（太仓）相关展商 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | Chomarat 官方企业页在干净浏览器触发 NinjaFirewall 403，复材子域返回 HTTP 429，无法稳定核对中国法人、目录和 Logo | 延后，待官网允许正常浏览 |
+| 莱州市华泰绝缘材料候选企业 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 可定位候选官网，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，不满足安全官网准入 | 延后，待 TLS 修复 |
 | 江苏 Hansu 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `hansucomp.com`，但干净浏览器返回 `ERR_CONNECTION_CLOSED`，无法稳定核验当前产品、联系和 Logo | 延后，待官网恢复 |
 | 江苏 Dali 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `jsdljn.com`，但标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID` | 延后，待官网证书链修复 |
 | 江苏 Double Horses 候选企业 | [CCE J 字母页](https://www.chinacompositesexpo.com/en/netshow.php?head=J) | 可定位 `cnjssm.com`，但标准浏览器返回无效证书，不能建立安全官网证据链 | 延后，待 TLS 修复 |
@@ -240,6 +256,11 @@ changelog:
 - 捷尔思的 GFPP、GFPA 和 CFRT 是阻燃剂适配基材，不代表企业生产玻璃纤维、预浸带或复材板；没有触发 fiberglass 产品搜索词。
 - HRC 以集团品牌参加展会并公开常熟多个业务基地。主页可映射官网明确展示的碳纤维板材、匹克球拍和其他终端产品词，但项目签约前必须确认汽车、航空、研发或碳中和业务的具体法人、场地和量产状态。
 - 先诺的聚酰亚胺纤维是独立的高性能有机纤维类别，不等同于芳纶、碳纤维或玻璃纤维。W-60/W-100/W-200 与 S10T 数据只按对应牌号引用，不能跨规格或跨材料外推。
+- 博诚的 fiberglass cloth/roll 只对应 PTFE 或硅胶涂覆玻纤基布及其卷材，不代表原始玻璃纤维粗纱或未涂覆增强织物。
+- 飞翔展会资料中的“鱼竿梯”是鱼竿式伸缩结构的绝缘梯，不是体育用品钓鱼竿；2001 石家庄业务起点、2015 昆明迁移和当前 0311 销售电话需在合同主体、工厂和开票信息中统一。
+- Cardolite 官方复材页把 NX-4005 等体系列入拉挤、手糊或胶粘应用，这只证明树脂用途，不证明珠海法人制造拉挤型材；集团珠海/芒格洛尔产地和牌号销售范围须逐单确认。
+- 庄原官网的 2001 经营起点、南京涂层企业收购和江西关联投资不能直接转化为兰溪现行法人的注册年份、工厂和证书范围。
+- 科建的离型布与 PTFE 离型布只有在具体 TDS 明确玻纤基材时才可映射 fiberglass cloth；展会真空袋辅材类别也不等于企业生产真空导入复材成品。
 
 ## 后续维护方法
 

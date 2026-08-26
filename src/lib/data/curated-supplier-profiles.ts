@@ -115,6 +115,11 @@ import { JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-aulland
 import { JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-changhai-fiberglass-supplier-profile";
 import { JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-esone-ptfe-fabrics-supplier-profile";
 import { JIANGSU_JUNHUA_PEEK_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-junhua-peek-supplier-profile";
+import { JIANGSU_BOCHENG_PTFE_FABRICS_SUPPLIER_PROFILE } from "@/lib/data/jiangsu-bocheng-ptfe-fabrics-supplier-profile";
+import { KUNMING_FEIXIANG_FRP_SUPPLIER_PROFILE } from "@/lib/data/kunming-feixiang-frp-supplier-profile";
+import { CARDOLITE_ZHUHAI_SUPPLIER_PROFILE } from "@/lib/data/cardolite-zhuhai-supplier-profile";
+import { LANXI_JOEN_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/lanxi-joen-fiberglass-supplier-profile";
+import { KEJIAN_POLYMER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/kejian-polymer-shanghai-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -311,6 +316,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE },
   { profile: JIANGSU_ESONE_PTFE_FABRICS_SUPPLIER_PROFILE },
   { profile: JIANGSU_JUNHUA_PEEK_SUPPLIER_PROFILE },
+  { profile: JIANGSU_BOCHENG_PTFE_FABRICS_SUPPLIER_PROFILE },
+  { profile: KUNMING_FEIXIANG_FRP_SUPPLIER_PROFILE },
+  { profile: CARDOLITE_ZHUHAI_SUPPLIER_PROFILE },
+  { profile: LANXI_JOEN_FIBERGLASS_SUPPLIER_PROFILE },
+  { profile: KEJIAN_POLYMER_SHANGHAI_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
