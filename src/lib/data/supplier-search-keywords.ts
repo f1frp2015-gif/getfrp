@@ -333,7 +333,10 @@ export const SUPPLIER_SEARCH_KEYWORD_CATALOG: readonly SupplierSearchKeywordRule
     cpcUsd: 1,
     priority: "P1",
     source: "US Google",
-    matches: (evidence) => hasOffer(evidence, CARBON),
+    matches: (evidence) => evidence.offers.some((offer) =>
+      CARBON.test(offer) &&
+      !/\b(?:coatings?|coating solutions?|cylinders?|pressure vessels?)\b/.test(offer),
+    ),
   },
   {
     phrase: "carbon fiber panels",

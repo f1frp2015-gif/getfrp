@@ -125,6 +125,11 @@ import { LEISTER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/leister-shanghai-s
 import { LEUCO_TAICANG_SUPPLIER_PROFILE } from "@/lib/data/leuco-taicang-supplier-profile";
 import { LAP_LASER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/lap-laser-shanghai-supplier-profile";
 import { LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/lishi-testing-shanghai-supplier-profile";
+import { LIAONING_MEITUO_SUPPLIER_PROFILE } from "@/lib/data/liaoning-meituo-supplier-profile";
+import { LIANYUNGANG_WEIDE_SUPPLIER_PROFILE } from "@/lib/data/lianyungang-weide-supplier-profile";
+import { LECTRA_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/lectra-shanghai-supplier-profile";
+import { NIPPON_PAINT_CHINA_SUPPLIER_PROFILE } from "@/lib/data/nippon-paint-china-supplier-profile";
+import { LIAONING_YUWEI_SUPPLIER_PROFILE } from "@/lib/data/liaoning-yuwei-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -331,6 +336,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: LEUCO_TAICANG_SUPPLIER_PROFILE },
   { profile: LAP_LASER_SHANGHAI_SUPPLIER_PROFILE },
   { profile: LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: LIAONING_MEITUO_SUPPLIER_PROFILE },
+  { profile: LIANYUNGANG_WEIDE_SUPPLIER_PROFILE },
+  { profile: LECTRA_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: NIPPON_PAINT_CHINA_SUPPLIER_PROFILE },
+  { profile: LIAONING_YUWEI_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(
