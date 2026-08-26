@@ -33,4 +33,6 @@ independent from this split onward.
 
 - Every newly published supplier profile must first check the supplier's official website for its current logo.
 - Prefer downloading that official logo into `public/supplier-assets/` and referencing the local asset from the profile data; do not rely on an unverified hotlinked image.
+- Crop only surplus transparent or solid-color canvas around the official asset so the complete emblem and wordmark fill the card naturally. Never crop, stretch, redraw, recolor or omit any part of the logo. Visually verify the entire logo is centered, proportional and visible inside both desktop and mobile supplier-card containers.
+- Supplier-card rendering must use a fixed frame with `object-contain`; never use `object-cover` for company logos. Extremely wide or tall marks may retain breathing room, but source-file whitespace must not make the visible mark appear miniature.
 - If no official logo is available, use the profile's text fallback and record that the logo was unavailable. Keep logo provenance in the profile source comments or official catalog links.

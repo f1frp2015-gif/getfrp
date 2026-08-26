@@ -120,6 +120,11 @@ import { KUNMING_FEIXIANG_FRP_SUPPLIER_PROFILE } from "@/lib/data/kunming-feixia
 import { CARDOLITE_ZHUHAI_SUPPLIER_PROFILE } from "@/lib/data/cardolite-zhuhai-supplier-profile";
 import { LANXI_JOEN_FIBERGLASS_SUPPLIER_PROFILE } from "@/lib/data/lanxi-joen-fiberglass-supplier-profile";
 import { KEJIAN_POLYMER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/kejian-polymer-shanghai-supplier-profile";
+import { NANTONG_ENDURA_FRP_SUPPLIER_PROFILE } from "@/lib/data/nantong-endura-frp-supplier-profile";
+import { LEISTER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/leister-shanghai-supplier-profile";
+import { LEUCO_TAICANG_SUPPLIER_PROFILE } from "@/lib/data/leuco-taicang-supplier-profile";
+import { LAP_LASER_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/lap-laser-shanghai-supplier-profile";
+import { LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE } from "@/lib/data/lishi-testing-shanghai-supplier-profile";
 import { MAXTONE_SUPPLIER_PROFILE } from "@/lib/data/maxtone-supplier-profile";
 import { MATEX_SUPPLIER_PROFILE } from "@/lib/data/matex-supplier-profile";
 import { NANJING_EFG_SUPPLIER_PROFILE } from "@/lib/data/nanjing-efg-supplier-profile";
@@ -321,6 +326,11 @@ export const CURATED_SUPPLIER_PROFILES: readonly CuratedSupplierProfileEntry[] =
   { profile: CARDOLITE_ZHUHAI_SUPPLIER_PROFILE },
   { profile: LANXI_JOEN_FIBERGLASS_SUPPLIER_PROFILE },
   { profile: KEJIAN_POLYMER_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: NANTONG_ENDURA_FRP_SUPPLIER_PROFILE },
+  { profile: LEISTER_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: LEUCO_TAICANG_SUPPLIER_PROFILE },
+  { profile: LAP_LASER_SHANGHAI_SUPPLIER_PROFILE },
+  { profile: LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE },
 ];
 
 export function getCuratedSupplierProfile(

@@ -1,0 +1,102 @@
+import type { SupplierListing } from "@/lib/db/schema";
+
+export const NANTONG_ENDURA_FRP_SUPPLIER_ID = "sup-nantong-endura-frp";
+export const NANTONG_ENDURA_FRP_SUPPLIER_SLUG = "nantong-endura-frp";
+
+// Curated from Endura's current official product, company, service and contact
+// pages plus the China Composites Expo directory. The official Endura logo was
+// downloaded from enduragrid.com on 2026-08-25.
+export const NANTONG_ENDURA_FRP_SUPPLIER_PROFILE: SupplierListing = {
+  id: NANTONG_ENDURA_FRP_SUPPLIER_ID,
+  name: "南通力驰复合材料有限公司",
+  nameEn: "Nantong Endura Composites Co., Ltd.",
+  slug: NANTONG_ENDURA_FRP_SUPPLIER_SLUG,
+  location: "江苏南通",
+  locationEn: "Nantong, Jiangsu, China",
+  province: "江苏",
+  category: "manufacturer",
+  products: [
+    "模塑玻璃钢格栅",
+    "模塑玻璃钢格栅盖板",
+    "拉挤玻璃钢格栅",
+    "拉挤玻璃钢结构型材",
+    "拉挤玻璃钢梁、槽钢和角钢",
+    "玻璃钢平台与走道构件",
+    "玻璃钢护栏和扶手构件",
+    "拉缠玻璃钢管道结构",
+    "拉缠玻璃钢罐体和回转体结构",
+  ],
+  productsEn: [
+    "Molded fiberglass FRP grating",
+    "Molded fiberglass FRP grating cover panels",
+    "Pultruded fiberglass FRP grating",
+    "Pultruded fiberglass FRP structural profiles",
+    "Pultruded fiberglass FRP beams, channels and angles",
+    "Fiberglass FRP platform and walkway components",
+    "Fiberglass FRP guardrail and handrail components",
+    "Pultrusion-wound fiberglass FRP pipe structures",
+    "Pultrusion-wound fiberglass FRP tank and rotational structures",
+  ],
+  processList: [
+    "玻璃纤维增强材料与不饱和树脂配套",
+    "玻璃钢型材连续拉挤成型",
+    "玻璃钢格栅模塑成型",
+    "拉挤与缠绕一体化成型",
+    "格栅盖板组合与定尺加工",
+    "型材切割、钻孔和预装配",
+    "平台、走道和护栏系统深化",
+    "腐蚀环境材料和树脂体系选型",
+    "项目测量、安装配合和工程支持",
+  ],
+  processListEn: [
+    "Glass-reinforcement and unsaturated-resin system selection",
+    "Continuous FRP profile pultrusion",
+    "Molded FRP grating production",
+    "Integrated pultrusion and winding",
+    "Grating-cover assembly and cut-to-size conversion",
+    "Profile cutting, drilling and preassembly",
+    "Platform, walkway and guardrail system detailing",
+    "Corrosive-service material and resin selection",
+    "Project measurement, installation coordination and engineering support",
+  ],
+  established: null,
+  verified: false,
+  description:
+    "南通力驰复合材料有限公司以 Endura 品牌提供模塑玻璃钢格栅、格栅盖板、拉挤格栅和拉挤结构型材，并公开拉挤与缠绕结合的管道、罐体及回转结构产品。官网说明产品以玻璃纤维增强材料和不饱和树脂为基础，应用涉及化工平台、市政走道、污水处理、光伏检修、建筑、电力等环境。中国国际复材展目录也将该企业列入格栅、盖板、型材及工程服务范围。本页只植入其官网明确支持的玻璃钢格栅、拉挤型材和玻璃纤维增强管道词；耐腐蚀、承载、防火、电气或寿命性能必须按树脂、增强结构、厚度、跨距和具体产品文件核验。",
+  descriptionEn:
+    "Nantong Endura Composites Co., Ltd. supplies molded fiberglass FRP grating, grating cover panels, pultruded grating and pultruded structural profiles under the Endura identity, together with pipe, tank and rotational structures made through an integrated pultrusion-and-winding route. The current official site describes glass reinforcement with unsaturated resin and places these families in chemical platforms, municipal walkways, wastewater treatment, photovoltaic maintenance, building and power applications. The China Composites Expo directory independently supports the exhibitor identity and its grating, cover, profile and engineering-service scope. GetFRP assigns only product-demand phrases that the official catalog actually supports: fiberglass and FRP grating, pultruded fiberglass profiles and fiberglass-reinforced pipe. Corrosion, load, fire, electrical or service-life performance must be checked against the selected resin, reinforcement architecture, section, thickness, span and current product-specific evidence. No establishment year, certification or approval is inferred from a website copyright line.",
+  certifications: [],
+  certificationsEn: [],
+  productsServicesSummary:
+    "力驰的复材目录由模塑格栅、格栅盖板、拉挤格栅、梁/槽钢/角钢等结构型材，以及拉缠管道、罐体和回转结构组成，并提供平台、走道、护栏等工程配合。格栅和型材询价应明确树脂体系、玻纤形式、表面毡、颜色、阻燃/导电/食品接触等用途要求、截面或网格、板厚、跨距、集中/均布载荷、挠度、支承与连接方式、切割封边和安装环境。拉缠产品还需给出介质、浓度、温压、直径、壁厚、接口、设计规范、内衬和检验方案。官网通用品类不能替代工程计算、图纸、牌号 TDS、批次文件和与实际工况对应的测试报告。",
+  productsServicesSummaryEn:
+    "Endura's composites offer is organized around molded grating, molded grating cover panels, pultruded grating, structural beams, channels and angles, plus pipe, tank and rotational structures made through the supplier's published pultrusion-and-winding process. Platform, walkway and guardrail detailing can be discussed as an engineered assembly rather than assumed from an isolated catalog shape. A grating RFQ should define molded or pultruded construction, resin chemistry, glass-reinforcement form, surface veil, mesh and panel dimensions, panel thickness, color, top surface, slip-resistance treatment, cutouts, bearing-bar direction, support spacing, concentrated and distributed loads, allowable deflection, fastening clips, edge sealing and installation environment. Where fire, smoke, electrical conductivity, food contact or another regulated duty matters, the buyer should state the exact test method, specimen construction and acceptance level. A structural-profile inquiry should include section drawing and tolerances, fiber architecture, resin and pigment, member length, holes and machining, inserts, joints, load cases, stability and connection design, finish, first-article inspection and packing support. For chemical or outdoor service, provide every medium and concentration, immersion or splash condition, minimum and maximum temperature, UV exposure, cleaning chemicals, design life and maintenance access; a generic corrosion-resistant label cannot establish suitability. Pultrusion-wound pipe, tank or rotational structures additionally need diameter, length, liner, laminate build, wall thickness, pressure or vacuum, nozzle and flange details, support and lifting points, applicable design code, hydrostatic or other pressure test, dimensional and visual inspection, spark or holiday test where relevant, and site assembly responsibility. Buyers should request the current grade and construction datasheet, resin identification, reinforcement description, drawing, calculation basis, traceable batch and inspection records, test reports matching the offered construction, installation instructions and repair limits. Samples or a first article should reproduce the intended material and process. The official service pages support project and installation coordination, but quotation scope should separate design, field measurement, cutting, preassembly, hardware, installation supervision, freight and site labor. The published website does not establish a verified company start date, certified management system, code stamp or third-party product approval, so those fields remain empty until current entity-, site- and product-matched documents are reviewed.",
+  ecatalogs: [
+    { title: "力驰官方网站", titleEn: "Official Endura Website", description: "企业、产品与服务入口。", descriptionEn: "Official company, product and service entry.", url: "https://www.enduragrid.com/", format: "Official website" },
+    { title: "力驰产品与服务", titleEn: "Endura Products and Services", description: "模塑、拉挤和拉缠产品总览。", descriptionEn: "Official molded, pultruded and pultrusion-wound overview.", url: "https://www.enduragrid.com/products-services", format: "Product directory" },
+    { title: "拉挤产品", titleEn: "Pultruded Products", description: "拉挤格栅和结构型材依据。", descriptionEn: "Official pultruded grating and structural-product source.", url: "https://www.enduragrid.com/product/pultruded-products", format: "Product category" },
+    { title: "拉缠产品", titleEn: "Pultrusion-Wound Products", description: "管道、罐体和回转结构依据。", descriptionEn: "Official pipe, tank and rotational-structure source.", url: "https://www.enduragrid.com/product/filament-wound-products", format: "Product category" },
+    { title: "模塑产品", titleEn: "Molded Products", description: "模塑格栅及应用依据。", descriptionEn: "Official molded-grating and application source.", url: "https://www.enduragrid.com/product/molded-products", format: "Product category" },
+    { title: "力驰公司简介", titleEn: "About Endura", description: "企业主体与业务范围。", descriptionEn: "Official entity and business-scope page.", url: "https://www.enduragrid.com/about-us", format: "Company page" },
+    { title: "力驰联系方式", titleEn: "Endura Contact", description: "南通地址、电话和邮箱。", descriptionEn: "Official Nantong address, telephone and email.", url: "https://www.enduragrid.com/contact-us", format: "Contact page" },
+    { title: "深圳国际复材展 N 字母页", titleEn: "China Composites Expo Shenzhen — N Directory", description: "展商主体及格栅、盖板、型材和服务范围。", descriptionEn: "Organizer source for identity and grating, cover, profile and service scope.", url: "https://shenzhen.chinacompositesexpo.com/cn/netshow.php?head=N&kind_id=3", format: "Exhibitor directory" },
+  ],
+  profilePublished: true,
+  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
+  logo: "/supplier-assets/nantong-endura-logo.svg",
+  contactEmail: "sales@enduragrid.com",
+  contactPhone: "4008 066 968",
+  address: "No. 9 Gaoxin Avenue, Zhengyu High-Tech Park, Haimen District, Nantong, Jiangsu, China",
+  website: "https://www.enduragrid.com/",
+  enterpriseId: null,
+  scaleTier: null,
+  brandPriority: 27,
+  viewCount: 0,
+  capabilities: ["molded fiberglass grating", "pultruded fiberglass grating", "pultruded FRP profiles", "FRP beams and channels", "FRP walkway systems", "pultrusion-wound FRP pipe", "FRP tanks", "project engineering support"],
+  standardsSupported: [],
+  moqKg: null,
+  leadTimeDays: null,
+  exportReady: true,
+  createdAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+};

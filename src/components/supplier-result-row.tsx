@@ -85,20 +85,25 @@ export function SupplierLogo({
   }
 
   return (
-    // Supplier logos may include legacy company-managed URLs with unrestricted hosts.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={`${name} logo`}
-      data-supplier-logo="image"
-      loading="lazy"
-      decoding="async"
-      onError={() => setFailed(true)}
+    <div
+      data-supplier-logo="frame"
       className={cn(
-        "shrink-0 rounded-lg border border-border/70 bg-white object-contain p-2",
+        "flex shrink-0 items-center justify-center rounded-lg border border-border/70 bg-white p-2",
         sizeClass,
       )}
-    />
+    >
+      {/* Supplier logos may include legacy company-managed URLs with unrestricted hosts. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={`${name} logo`}
+        data-supplier-logo="image"
+        loading="lazy"
+        decoding="async"
+        onError={() => setFailed(true)}
+        className="h-full w-full object-contain"
+      />
+    </div>
   );
 }
 

@@ -1,9 +1,12 @@
 ---
 title: "中国国际复材展供应商主页研究"
-version: "1.9.0"
+version: "1.10.0"
 last_updated: "2026-08-25"
 sensitivity: "公开"
 changelog:
+  - version: "1.10.0"
+    date: "2026-08-25"
+    changes: "继续核验 CCE L 字母页及深圳展 N 类别页；第十一批新增 5 家可索引供应商，补充玻璃钢格栅/拉挤/拉缠、瑞士品牌/上海制造、被切材料/刀具、铺层材料/投影设备以及试样/试验机边界，并记录 3 个标准浏览器访问失败候选和 1 个官方 Logo 源站失效回退。"
   - version: "1.9.0"
     date: "2026-08-25"
     changes: "继续核验 CCE J/K/L 字母页；第十批新增 5 家可索引供应商，补充绝缘伸缩梯/钓鱼竿、树脂应用/终端型材、集团牌号/珠海法人、关联涂层工厂/兰溪主体以及离型布基材边界，并记录 3 个标准浏览器安全或访问失败候选。"
@@ -42,7 +45,7 @@ changelog:
 ## 研究范围与准入规则
 
 - 展会来源：[2026 中国国际复材展网上展厅](https://www.chinacompositesexpo.com/cn/netshow.php)。
-- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
+- 首批开始时 Git 策展目录为 99 家；第二批开始时为 103 家；第三批开始时为 108 家；第四批开始时为 113 家；第五批开始时为 118 家；第六批开始时为 123 家；第七批开始时为 128 家；第八批开始时为 133 家；第九批开始时为 138 家；第十批开始时为 143 家；第十一批开始时为 148 家。去重同时比较中文主体、英文主体、规范化 slug 和官网域名。
 - 只有能够确认企业自有官网、官网仍可访问、官网产品与展会主体一致、且有足够产品/工艺/联系方式证据的企业才发布。
 - 只找到 B2B 店铺、黄页、社交账号、新闻稿或工商聚合页的企业不视为“有官网”。
 - 展会或企业自述的认证、产能和荣誉，若无法核对主体、地址、范围、编号及有效期，不写成 GetFRP 已核实事实。
@@ -147,21 +150,34 @@ changelog:
 | 兰溪庄原玻璃纤维有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [官网](https://www.hzglass.com/cn/) | 玻纤布、硅胶涂覆布、铝箔复合布、防火/车辆/焊接毯、防火袋及焊接安全隔间；fiberglass cloth 限定为实际织物 | 已发布、可索引；2001 经营起点与当前法人年份未统一，关联涂层工厂/江西公司不自动归入兰溪主体 |
 | 科建高分子材料（上海）股份有限公司 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K)、[CCE K 类别页](https://www.chinacompositesexpo.com/cn/netshow.php?_MULTI_PAGE_START=150&kind_id=19) | [官网](https://www.kejian-china.com/)、[公司简介](https://www.kejian-china.com/about.html)、[航天航空目录](https://www.kejian-china.com/products/1/6.html)、[KJ-662B](https://www.kejian-china.com/proInfo/183.html)、[PTFE 离型布](https://www.kejian-china.com/proInfo/170.html) | 高温密封带、工装橡胶、离型布/PTFE 离型布、丁基/硅胶/改性 PU/聚烯烃/PUR/丙烯酸/环氧胶粘剂 | 已发布、可索引；未确认基布前不把离型布写成玻纤布，真空袋类别不等于真空导入成品 |
 
+## 2026-08-25 第十一批发布
+
+| 企业 | 展会证据 | 官网证据 | 本轮主页范围 | 发布结果 |
+| --- | --- | --- | --- | --- |
+| 南通力驰复合材料有限公司 | [深圳国际复材展 N 类别页](https://shenzhen.chinacompositesexpo.com/cn/netshow.php?head=N&kind_id=3) | [官网](https://www.enduragrid.com/)、[产品与服务](https://www.enduragrid.com/products-services)、[拉挤产品](https://www.enduragrid.com/product/pultruded-products)、[拉缠产品](https://www.enduragrid.com/product/filament-wound-products)、[模塑产品](https://www.enduragrid.com/product/molded-products)、[联系页](https://www.enduragrid.com/contact-us) | 模塑/拉挤玻璃钢格栅、盖板、梁/槽钢/角钢等结构型材、平台走道与护栏构件，以及拉挤缠绕一体化管道、罐体和回转结构 | 已发布、可索引；只植入官网产品支持的 grating、pultruded profiles 和 fiberglass-reinforced pipe 词，不从版权年份推断成立年份 |
+| 莱丹塑料焊接技术（上海）有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [中国官网](https://www.leisterchina.com/)、[公司简介](https://www.leisterchina.com/gywm/)、[塑料焊接](https://www.leisterchina.com/PlasticWelding/)、[工业加热](https://www.leisterchina.com/ProcessHeat/)、[激光焊接](https://www.leisterchina.com/LaserPlasticWelding/)、[联系页](https://www.leisterchina.com/lxfs/) | 手持热风、自动焊接、挤出焊接、工业空气加热、鼓风及激光塑料焊接设备 | 已发布、可索引；Leister 品牌瑞士生产与 WELDY 上海组装/制造分开，不把集团产能或被焊接复材归给上海法人 |
+| 乐客精密工具（太仓）有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [中国官网](https://www.leuco.com/ZH/CN/home)、[复合材料加工方案](https://www.leuco.com/ZH/CN/solutions/applications/composite-processing)、[公司简介](https://www.leuco.com/ZH/CN/ueber_leuco/unternehmen)、[资料下载](https://www.leuco.com/ZH/CN/Services/medien-downloads) | CFRP/GFRP/AFRP 铣刀、钻头、沉头钻、锯片、PCD/DP 和涂层刀具、p-System、夹持及定制几何 | 已发布、可索引；碳/玻/芳纶复材是被加工件而非自产产品；官网地址版本有差异，交易前确认现行地址 |
+| 镭尔谱激光应用技术（上海）有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [中国官网](https://www.lap-laser.com.cn/)、[复材方案](https://www.lap-laser.com.cn/industries2/composites)、[复材铺层](https://www.lap-laser.com.cn/industries/composite-layup)、[风电叶片](https://www.lap-laser.com.cn/industries4/rotor-blade-manufacturing)、[法律联系页](https://www.lap-laser.com.cn/companyaddress/imprint/) | CAD-PRO Xpert/CAD-PRO 投影仪、PRO-SOFT、INSPECT-PRO、DTEC-PRO、复材和风电叶片铺层定位系统 | 已发布、可索引；投影和检查辅助不等于制造预浸料、纤维、层合板或叶片 |
+| 力试（上海）科学仪器有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | [官网](https://www.lishi-test.com/)、[产品中心](https://www.lishi-test.com/product/7/) | 电子/液压万能、伺服与结构疲劳、冲击、扭转、蠕变、热变形/Vicat、环境模拟、夹具、引伸计、控制和数据采集 | 已发布、可索引；试样材料不是设备商自产产品；官方 Logo CDN 返回 567 且浏览器破图，使用文字回退 |
+
 ## 去重结论
 
-首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中均不存在以下任一重复信号：
+首批四家企业在 99 家 Git 策展目录中、第二批五家企业在 103 家 Git 策展目录中、第三批五家企业在 108 家 Git 策展目录中、第四批五家企业在 113 家 Git 策展目录中、第五批五家企业在 118 家 Git 策展目录中、第六批五家企业在 123 家 Git 策展目录中、第七批五家企业在 128 家 Git 策展目录中、第八批五家企业在 133 家 Git 策展目录中、第九批五家企业在 138 家 Git 策展目录中、第十批五家企业在 143 家 Git 策展目录中、第十一批五家企业在 148 家 Git 策展目录中均不存在以下任一重复信号：
 
 - 完全相同或明显别名化的中文法人名；
 - 完全相同的英文法人名；
 - 相同官网主域名；
 - 相同规范化 supplier slug。
 
-仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家。
+仓库静态演示数据曾包含“光威复材股份有限公司”简略样例，但该记录没有英文名和 slug，不进入公开供应商查询；首批 Git 策展档案是第一条达到公开主页和索引门槛的光威记录。第二批上线后 Git 策展目录为 108 家；第三批完成后为 113 家；第四批完成后为 118 家；第五批完成后为 123 家；第六批完成后为 128 家；第七批完成后为 133 家；第八批完成后为 138 家；第九批完成后为 143 家；第十批完成后为 148 家；第十一批完成后为 153 家。
 
 ## 本轮跳过与延后
 
 | 候选企业 | 展会线索 | 核验结果 | 处理 |
 | --- | --- | --- | --- |
+| 天津昂林贸烽科技有限公司 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 可定位 `onlytoptech.com`，但标准浏览器返回 `ERR_CERT_AUTHORITY_INVALID`，无法建立受信任官网证据链 | 延后，待证书链修复 |
+| 淄博朗达复合材料候选企业 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 可定位 `langdicfrp.com`，但标准浏览器返回 `ERR_TUNNEL_CONNECTION_FAILED`，无法稳定核验产品、联系和 Logo | 延后，待官网恢复 |
+| 南通明康复合材料候选企业 | [深圳国际复材展 N 类别页](https://shenzhen.chinacompositesexpo.com/cn/netshow.php?head=N&kind_id=3) | 可定位 `mincomgrating.com`，但标准浏览器返回 `ERR_CONNECTION_CLOSED`，无法完成当前官网证据链 | 延后，待官网恢复 |
 | 开封鹏远玻璃纤维制品候选企业 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | 可定位 `pybx.com`，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，HTTP 入口也不能形成安全可用证据链 | 延后，待证书域名修复 |
 | 科纺勒（太仓）相关展商 | [CCE K 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=K) | Chomarat 官方企业页在干净浏览器触发 NinjaFirewall 403，复材子域返回 HTTP 429，无法稳定核对中国法人、目录和 Logo | 延后，待官网允许正常浏览 |
 | 莱州市华泰绝缘材料候选企业 | [CCE L 字母页](https://www.chinacompositesexpo.com/cn/netshow.php?head=L) | 可定位候选官网，但标准浏览器返回 `ERR_CERT_COMMON_NAME_INVALID`，不满足安全官网准入 | 延后，待 TLS 修复 |
@@ -219,6 +235,10 @@ changelog:
 
 ## 证据边界与复核提醒
 
+- 力驰官网明确支持玻璃钢格栅、拉挤结构和拉缠管/罐，关键词只从这些产品字段触发；官网版权起始年份不能直接当作法人成立年份。
+- 莱丹页面区分 Leister 瑞士生产与 WELDY 上海组装/制造；具体询价必须确认品牌、型号、原产地、销售和售后主体。
+- 乐客、LAP 和力试页面出现的 CFRP、GFRP、AFRP、预浸料、干纤维、层合板、叶片或试样均是刀具、投影和试验设备的应用对象，不是三家公司的自产复材产品。
+- 力试官方 Logo 使用的外部 CDN 在核验时返回 HTTP 567 且浏览器自然尺寸为 0，按规则保留文字回退，不从第三方网站复制替代图。
 - 光威和上海石化官网能通过浏览器与搜索抓取访问，但本机 `curl` 的系统信任链报告自签证书链元素。主页保留官网链接，同时提醒采购方在交换受控文件或付款前复核 TLS、域名和联系人。
 - 光威产品跨多个子公司与业务板块；每个 RFQ 必须确认签约法人和实际生产场地。
 - Exel 2022 年关闭并出售南京一个旧厂址，同时将中国生产整合到南京地区另一个制造点。当前官网和 2024/2025 官方披露仍提到南京制造；主页不复制可能已失效的旧地址。
