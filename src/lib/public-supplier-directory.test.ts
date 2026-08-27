@@ -272,7 +272,7 @@ test("adds every published Git-backed profile when the database is empty", async
   const aoc = directory.find(({ id }) => id === AOC_SUPPLIER_PROFILE.id);
   assert.equal(aoc?.slug, "aoc");
   assert.equal(aoc?.location, "Nanjing, Jiangsu, China");
-  assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-white.svg");
+  assert.equal(aoc?.logo, "/supplier-assets/aoc-logo-card.png");
   assert.match(aoc?.description ?? "", /Jinling AOC Formulations/i);
   const anjie = directory.find(
     ({ id }) => id === ANJIE_SUPPLIER_PROFILE.id,
@@ -491,7 +491,7 @@ test("adds every published Git-backed profile when the database is empty", async
   assert.equal(newtechGroup?.category, "fiber");
   assert.equal(
     newtechGroup?.logo,
-    "/supplier-assets/newtech-group-logo.png",
+    "/supplier-assets/newtech-group-logo-light.png",
   );
   assert.match(newtechGroup?.description ?? "", /18,000 tonnes/i);
   const xiamenLft = directory.find(
