@@ -6,9 +6,13 @@ export const AOC_LEGAL_NAME_EN = "Jinling AOC Formulations Co., Ltd.";
 
 // Curated from AOC's official Asia-Pacific English product, processing and
 // China-location pages. Company-published claims remain separate from GetFRP
-// verification. The official logo was downloaded from the supplier's current
-// website asset at:
+// verification. AOC's current official site continues to publish its white
+// logo and tagline asset at:
 // https://static.aocformulations.com/img/footer/aoc_white-1581420507.svg
+// The supplier card uses the complete blue AOC wordmark and red underline
+// supplied for this profile on 2026-08-27. Only surplus white page canvas and
+// an unrelated bottom page border were cropped; the mark was not redrawn,
+// stretched or recolored.
 export const AOC_SUPPLIER_PROFILE: SupplierListing = {
   id: AOC_SUPPLIER_ID,
   name: "AOC 力联思",
@@ -112,8 +116,8 @@ export const AOC_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-05T00:00:00.000Z"),
-  logo: "/supplier-assets/aoc-logo-white.svg",
+  profileReviewedAt: new Date("2026-08-27T00:00:00.000Z"),
+  logo: "/supplier-assets/aoc-logo-card.png",
   contactEmail: "china@aocformulations.com",
   contactPhone: "+86 25 8549 3888",
   address:
@@ -140,7 +144,7 @@ export const AOC_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: false,
   createdAt: new Date("2026-08-05T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-05T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-27T00:00:00.000Z"),
 };
 
 export const AOC_PRODUCT_RELATION = {
