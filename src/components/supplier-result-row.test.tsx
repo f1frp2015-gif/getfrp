@@ -14,3 +14,15 @@ test("renders every supplier logo completely inside a fixed contain frame", () =
   assert.match(html, /class="h-full w-full object-contain"/);
   assert.doesNotMatch(html, /object-cover/);
 });
+
+test("gives official light wordmarks a dark contrast frame", () => {
+  const html = renderToStaticMarkup(
+    <SupplierLogo
+      src="/supplier-assets/newtech-group-logo-light.png"
+      name="Newtech Group"
+    />,
+  );
+
+  assert.match(html, /data-supplier-logo-contrast="dark"/);
+  assert.match(html, /bg-slate-950/);
+});

@@ -5,10 +5,8 @@ export const BEIJING_BAIRUIDING_SUPPLIER_SLUG =
   "beijing-bairuiding-3d-braiding";
 
 // Curated from Beijing Bairuiding's current official website and its 2026
-// China Composites Expo entry. The current official header references this logo
-// asset, but the supplier CDN returned 403/567 during the 2026-08-25 review, so
-// the profile intentionally uses GetFRP's text fallback instead of copying an
-// unavailable or third-party image:
+// China Composites Expo entry. The complete official header logo was downloaded
+// on 2026-08-26 from the current supplier CDN asset referenced by the page:
 // https://img601.yun300.cn/repository/image/3739fe95-93c5-496d-a8b9-84225277855a.png?tenantId=229674&viewType=1&k=1780378551000
 export const BEIJING_BAIRUIDING_SUPPLIER_PROFILE: SupplierListing = {
   id: BEIJING_BAIRUIDING_SUPPLIER_ID,
@@ -60,9 +58,9 @@ export const BEIJING_BAIRUIDING_SUPPLIER_PROFILE: SupplierListing = {
   certifications: [],
   certificationsEn: [],
   productsServicesSummary:
-    "柏瑞鼎的官网展示说明其供货边界既可能是干态或预成型的三维编织预制体，也可能延伸到浸渍成型后的复合材料部件、编织设备或工程服务；采购方必须在 RFQ 中把交付物定义清楚。预制体项目应明确纤维种类与牌号、丝束、上浆剂、纱线张力、编织角、轴向/偏轴纱比例、截面和壁厚、长度、局部增厚、孔洞/分叉/法兰/接头几何、纤维体积分数目标、尺寸公差、搬运定型与包装。若交付复材成品，还应增加树脂体系、浸渍路线、固化制度、孔隙率、纤维体积分数、表面与机加工、无损检测、静强度、疲劳、冲击和环境老化验收。若采购三维编织机或整线，则需约定载纱器数量、可编截面、编织速度、张力控制、换纱和断纱处理、控制系统、数据接口、工装、样件试制、FAT/SAT、培训、备件和软件图纸交付。官网提供仿真与测试服务入口，但没有公开足以替代项目级模型假设、材料输入、边界条件、网格收敛和试验方法的完整技术包，双方应在合同中约定模型和试验报告格式。当前官网 HTTPS 证书与域名不匹配，HTTP 页面也会被部分浏览器安全策略拦截；官网页眉引用的官方 Logo CDN 在核验时返回拒绝访问，因此本页使用文字回退。交换受控图纸、登录信息或付款指令前应独立核对域名、联系人和安全通道。官网亦未提供可同时核对主体、地址、范围、编号和有效期的完整现行证书包，本页不列已核实认证。",
+    "柏瑞鼎的官网展示说明其供货边界既可能是干态或预成型的三维编织预制体，也可能延伸到浸渍成型后的复合材料部件、编织设备或工程服务；采购方必须在 RFQ 中把交付物定义清楚。预制体项目应明确纤维种类与牌号、丝束、上浆剂、纱线张力、编织角、轴向/偏轴纱比例、截面和壁厚、长度、局部增厚、孔洞/分叉/法兰/接头几何、纤维体积分数目标、尺寸公差、搬运定型与包装。若交付复材成品，还应增加树脂体系、浸渍路线、固化制度、孔隙率、纤维体积分数、表面与机加工、无损检测、静强度、疲劳、冲击和环境老化验收。若采购三维编织机或整线，则需约定载纱器数量、可编截面、编织速度、张力控制、换纱和断纱处理、控制系统、数据接口、工装、样件试制、FAT/SAT、培训、备件和软件图纸交付。官网提供仿真与测试服务入口，但没有公开足以替代项目级模型假设、材料输入、边界条件、网格收敛和试验方法的完整技术包，双方应在合同中约定模型和试验报告格式。当前官网 HTTPS 证书与域名不匹配，HTTP 页面也会被部分浏览器安全策略拦截；官网页眉引用的完整官方 Logo 已于 2026-08-26 从同一 CDN 资源下载，裁除透明画布后存储在 GetFRP 本地。交换受控图纸、登录信息或付款指令前应独立核对域名、联系人和安全通道。官网亦未提供可同时核对主体、地址、范围、编号和有效期的完整现行证书包，本页不列已核实认证。",
   productsServicesSummaryEn:
-    "Bairuiding's website indicates that the commercial boundary may be a dry or stabilized 3D braided preform, an impregnated and cured composite part, a braiding machine, or an engineering service; the RFQ must define the deliverable explicitly. A preform specification should state fiber type and grade, tow size, sizing, yarn tension, braiding angle, axial-to-bias yarn ratio, section and wall thickness, length, local reinforcement, hole, branch, flange or joint geometry, target fiber volume, dimensional tolerance, handling stabilization and packaging. If the deliverable is a finished composite, add the resin system, impregnation route, cure cycle, void and fiber-volume criteria, surface and machining requirements, NDT, static strength, fatigue, impact and environmental-aging acceptance. For a 3D braiding machine or line, contract for carrier count, achievable cross-sections, braiding rate, tension control, bobbin change and broken-yarn handling, control hardware, data interfaces, tooling, customer-part trials, FAT and SAT, training, spares, and software or drawing deliverables. The site offers simulation and testing, but its public pages do not provide a complete technical package that could replace project-specific model assumptions, material inputs, boundary conditions, mesh convergence or test methods; define the model and test-report format contractually. The current HTTPS certificate does not match the domain, and some browser security policies block the HTTP site. The official header's logo CDN denied access during review, so the page deliberately uses a text fallback. Independently verify the domain, contact and secure exchange channel before sharing controlled drawings, credentials or payment instructions. The site also does not expose a complete current certificate set sufficient to verify entity, site, scope, number and validity, so no certification is recorded as independently verified.",
+    "Bairuiding's website indicates that the commercial boundary may be a dry or stabilized 3D braided preform, an impregnated and cured composite part, a braiding machine, or an engineering service; the RFQ must define the deliverable explicitly. A preform specification should state fiber type and grade, tow size, sizing, yarn tension, braiding angle, axial-to-bias yarn ratio, section and wall thickness, length, local reinforcement, hole, branch, flange or joint geometry, target fiber volume, dimensional tolerance, handling stabilization and packaging. If the deliverable is a finished composite, add the resin system, impregnation route, cure cycle, void and fiber-volume criteria, surface and machining requirements, NDT, static strength, fatigue, impact and environmental-aging acceptance. For a 3D braiding machine or line, contract for carrier count, achievable cross-sections, braiding rate, tension control, bobbin change and broken-yarn handling, control hardware, data interfaces, tooling, customer-part trials, FAT and SAT, training, spares, and software or drawing deliverables. The site offers simulation and testing, but its public pages do not provide a complete technical package that could replace project-specific model assumptions, material inputs, boundary conditions, mesh convergence or test methods; define the model and test-report format contractually. The current HTTPS certificate does not match the domain, and some browser security policies block the HTTP site. The complete official header logo was downloaded on 2026-08-26 from the exact CDN resource referenced by the page, trimmed only to remove transparent canvas, and stored locally by GetFRP. Independently verify the domain, contact and secure exchange channel before sharing controlled drawings, credentials or payment instructions. The site also does not expose a complete current certificate set sufficient to verify entity, site, scope, number and validity, so no certification is recorded as independently verified.",
   ecatalogs: [
     {
       title: "柏瑞鼎三维编织官网",
@@ -93,8 +91,8 @@ export const BEIJING_BAIRUIDING_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/beijing-bairuiding-logo.png",
   contactEmail: null,
   contactPhone: null,
   address: "Beijing, China",
@@ -118,5 +116,5 @@ export const BEIJING_BAIRUIDING_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: false,
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

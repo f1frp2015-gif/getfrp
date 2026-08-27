@@ -29,7 +29,10 @@ test("publishes Changzhou Tiansheng Composite as a curated core supplier", () =>
     CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE.category,
     "manufacturer",
   );
-  assert.equal(CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/changzhou-tiansheng-logo.png",
+  );
   assert.equal(
     CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE.website,
     "http://www.tschina.com/articleinfo/42",
@@ -73,6 +76,6 @@ test("deduplicates Tiansheng by exact entity and keeps Changzhou suppliers order
   );
   assert.equal(
     orderedNames[tianshengIndex + 1],
-    "Changzhou Utek Composite Co., Ltd.",
+    "Changzhou Tongchuang Composite Materials Co., Ltd.",
   );
 });

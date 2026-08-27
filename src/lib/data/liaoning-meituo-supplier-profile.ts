@@ -4,9 +4,9 @@ export const LIAONING_MEITUO_SUPPLIER_ID = "sup-liaoning-meituo";
 export const LIAONING_MEITUO_SUPPLIER_SLUG = "liaoning-meituo-composite-cylinders";
 
 // Curated from Meituo's current official company, product-category and contact
-// pages plus the China Composites Expo L directory. Both official logo CDN
-// resources returned HTTP 567 and rendered as a broken placeholder on
-// 2026-08-25, so the profile deliberately uses the complete text fallback.
+// pages plus the China Composites Expo L directory. The complete current header
+// logo was downloaded on 2026-08-26 from:
+// https://omo-oss-image.thefastimg.com/portal-saas/pg2025062317363374781/cms/image/571a8959-e243-4906-85b5-71d68f6208d2.png
 export const LIAONING_MEITUO_SUPPLIER_PROFILE: SupplierListing = {
   id: LIAONING_MEITUO_SUPPLIER_ID,
   name: "辽宁美托科技股份有限公司",
@@ -38,8 +38,8 @@ export const LIAONING_MEITUO_SUPPLIER_PROFILE: SupplierListing = {
     { title: "中国国际复材展 L 字母页", titleEn: "China Composites Expo — L Directory", description: "辽宁美托展商主体线索。", descriptionEn: "Organizer directory source for the Liaoning Meituo exhibitor trail.", url: "https://www.chinacompositesexpo.com/cn/netshow.php?head=L", format: "Exhibitor directory" },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/liaoning-meituo-logo.png",
   contactEmail: "rexliu@symtcl.com",
   contactPhone: "+86 24 56598671",
   address: "No. 7 Zhongxing Avenue (B1b Area), Shenfu Demonstration Zone, Liaoning 113122, China",
@@ -54,5 +54,5 @@ export const LIAONING_MEITUO_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

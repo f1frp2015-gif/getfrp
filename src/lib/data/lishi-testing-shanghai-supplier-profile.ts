@@ -4,8 +4,9 @@ export const LISHI_TESTING_SHANGHAI_SUPPLIER_ID = "sup-lishi-testing-shanghai";
 export const LISHI_TESTING_SHANGHAI_SUPPLIER_SLUG = "lishi-testing-shanghai";
 
 // Curated from Lishi's current official product pages and contact footer plus
-// the CCE directory. The official-site logo asset returned an origin error and
-// did not render during the 2026-08-25 review, so this profile uses text fallback.
+// the CCE directory. The complete official header logo was downloaded on
+// 2026-08-26 from:
+// https://omo-oss-image.thefastimg.com/portal-saas/pg2025062210365598584/cms/image/ed48f293-d7b5-442c-824f-077b72b485de.png
 export const LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE: SupplierListing = {
   id: LISHI_TESTING_SHANGHAI_SUPPLIER_ID,
   name: "力试（上海）科学仪器有限公司",
@@ -37,8 +38,8 @@ export const LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE: SupplierListing = {
     { title: "中国国际复材展 L 字母页", titleEn: "China Composites Expo — L Directory", description: "上海主体与静态、动态及环境力学测试范围。", descriptionEn: "Organizer source for the Shanghai entity and static, dynamic and environmental mechanical-testing scope.", url: "https://www.chinacompositesexpo.com/cn/netshow.php?head=L", format: "Exhibitor directory" },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-25T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/lishi-testing-shanghai-logo.png",
   contactEmail: "LSl@lishi-test.com",
   contactPhone: "+86 21 3719 9700",
   address: "No. 199 Jinliu Road, Jinshan District, Shanghai, China",
@@ -53,5 +54,5 @@ export const LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-25T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

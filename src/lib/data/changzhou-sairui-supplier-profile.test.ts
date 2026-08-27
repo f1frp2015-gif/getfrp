@@ -17,7 +17,7 @@ test("publishes Changzhou Sairui as a curated equipment supplier", () => {
     getCuratedSupplierSlugs().includes(CHANGZHOU_SAIRUI_SUPPLIER_SLUG),
   );
   assert.equal(profile?.category, "equipment");
-  assert.equal(profile?.logo, null);
+  assert.equal(profile?.logo, "/supplier-assets/changzhou-sairui-logo.png");
   assert.equal(profile?.website, "http://www.orit.cn/product/orit.aspx");
   assert.equal(profile?.contactPhone, "+86 10 8586 1032");
   assert.match(profile?.descriptionEn ?? "", /established in 2009/i);

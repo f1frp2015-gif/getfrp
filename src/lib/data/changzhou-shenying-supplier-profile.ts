@@ -12,7 +12,7 @@ export const CHANGZHOU_SHENYING_SUPPLIER_SLUG =
 // from GetFRP's Zhongfu Shenying Carbon Fiber Co., Ltd. profile. Scale,
 // equipment, exports, applications and installed-capability statements remain
 // company-, organizer- or filing-published and have not been independently
-// verified by GetFRP. Reviewed 2026-08-13: the standalone domain published on
+// verified by GetFRP. Rechecked 2026-08-26: the standalone domain published on
 // the contact page, tskplastic.com.cn, no longer responds, but the hosted
 // official profile is active and identifies the exact company. It renders the
 // company name as text and exposes only FRPAPP platform graphics, not a current
@@ -145,7 +145,7 @@ export const CHANGZHOU_SHENYING_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
   logo: null,
   contactEmail: null,
   contactPhone: "+86 519 8655 3039",
@@ -177,5 +177,5 @@ export const CHANGZHOU_SHENYING_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-13T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

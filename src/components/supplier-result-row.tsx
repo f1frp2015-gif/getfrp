@@ -43,6 +43,11 @@ export type SupplierResultEntry = {
   sponsored?: boolean;
 };
 
+const DARK_SUPPLIER_LOGO_FRAMES = new Set([
+  "/supplier-assets/newtech-group-logo-light.png",
+  "/supplier-assets/jiangsu-changhai-logo-light.png",
+]);
+
 function companyInitials(name: string): string {
   const clean = name.trim();
   if (!clean) return "FRP";
@@ -84,11 +89,15 @@ export function SupplierLogo({
     );
   }
 
+  const usesDarkFrame = DARK_SUPPLIER_LOGO_FRAMES.has(src);
+
   return (
     <div
       data-supplier-logo="frame"
+      data-supplier-logo-contrast={usesDarkFrame ? "dark" : "light"}
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-lg border border-border/70 bg-white p-2",
+        "flex shrink-0 items-center justify-center rounded-lg border border-border/70 p-2",
+        usesDarkFrame ? "bg-slate-950" : "bg-white",
         sizeClass,
       )}
     >

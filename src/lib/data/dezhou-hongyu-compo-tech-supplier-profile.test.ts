@@ -52,7 +52,7 @@ test("uses the official Dezhou identity and conservative evidence controls", () 
   assert.equal(profile.established, 2018);
   assert.equal(profile.exportReady, false);
   assert.equal(profile.website, "https://www.hyfhclkj.cn/");
-  assert.equal(profile.logo, null);
+  assert.equal(profile.logo, "/supplier-assets/dezhou-hongyu-logo.png");
   assert.equal(profile.contactEmail, "851765049@qq.com");
   assert.equal(profile.contactPhone, "+86 534 275 2023");
   assert.deepEqual(profile.standardsSupported, []);
@@ -60,7 +60,7 @@ test("uses the official Dezhou identity and conservative evidence controls", () 
   assert.match(profile.descriptionEn ?? "", /3 million square metres/i);
   assert.match(profile.productsServicesSummaryEn ?? "", /cancelled in August 2023/i);
   assert.match(profile.productsServicesSummaryEn ?? "", /GR202537005644/i);
-  assert.match(profile.productsServicesSummaryEn ?? "", /text fallback/i);
+  assert.match(profile.productsServicesSummaryEn ?? "", /stored locally/i);
 });
 
 test("keeps Dezhou Hongyu in reviewed exhibitor source order", () => {
@@ -72,7 +72,7 @@ test("keeps Dezhou Hongyu in reviewed exhibitor source order", () => {
   assert.ok(index > 0);
   assert.equal(
     names[index - 1],
-    "Deqing Guotai Fireproof Material Factory",
+    "Dezhou Hailida Molding Co., Ltd.",
   );
   assert.equal(
     names[index + 1],

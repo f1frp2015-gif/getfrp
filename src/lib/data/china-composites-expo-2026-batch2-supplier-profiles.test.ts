@@ -125,10 +125,13 @@ test("keeps the batch unclaimed, source-backed and indexable", () => {
   }
 
   assert.equal(BEIJING_BAIRUIDING_SUPPLIER_PROFILE.exportReady, false);
-  assert.equal(BEIJING_BAIRUIDING_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    BEIJING_BAIRUIDING_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/beijing-bairuiding-logo.png",
+  );
   assert.match(
     BEIJING_BAIRUIDING_SUPPLIER_PROFILE.productsServicesSummaryEn ?? "",
-    /text fallback/i,
+    /stored locally/i,
   );
 });
 

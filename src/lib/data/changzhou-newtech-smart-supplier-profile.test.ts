@@ -43,7 +43,10 @@ test("keeps Newtech Smart distinct from its parent group profile", () => {
     NEWTECH_GROUP_SUPPLIER_ID,
   );
   assert.equal(CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE.category, "equipment");
-  assert.equal(CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/newtech-group-logo-light.png",
+  );
   assert.equal(CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE.established, 2013);
   assert.deepEqual(
     CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE.standardsSupported,
