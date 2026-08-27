@@ -8,11 +8,13 @@ export const CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_SLUG =
 // Curated from the exact mainland-China company's dedicated pages on parent
 // Newtech Group's current official website and its standalone China Composites
 // Expo profile. Newtech Aviation is a separate legal supplier from Newtech
-// Group and Newtech Smart. The dedicated pages use only the parent group logo
-// and expose no current subsidiary-specific logo, so the profile deliberately
-// uses the supplier-name text fallback. AS9100, project, facility, customer and
-// equipment statements are company- or organizer-published and remain subject
-// to documentary and on-site verification.
+// Group and Newtech Smart. The dedicated pages use the complete parent-group
+// header wordmark and expose no subsidiary-specific logo. The card therefore
+// uses that exact official page identity, downloaded on 2026-08-26 from
+// https://en.newtechgroupcn.com/uploadfiles/211.149.255.8/webid1830/logo/202304/64360df19d215.png;
+// it must not be interpreted as a separately registered subsidiary mark.
+// AS9100, project, facility, customer and equipment statements are company- or
+// organizer-published and remain subject to documentary and on-site verification.
 export const CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE: SupplierListing = {
   id: CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_ID,
   name: "常州新创航空科技有限公司",
@@ -121,8 +123,8 @@ export const CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/newtech-group-logo-light.png",
   contactEmail: null,
   contactPhone: null,
   address: null,
@@ -149,5 +151,5 @@ export const CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-13T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

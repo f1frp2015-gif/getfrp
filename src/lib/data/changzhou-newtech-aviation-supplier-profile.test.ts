@@ -32,7 +32,10 @@ test("publishes Newtech Aviation as one mainland-China legal entity", () => {
     CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE.category,
     "manufacturer",
   );
-  assert.equal(CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/newtech-group-logo-light.png",
+  );
   assert.equal(CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE.established, 2017);
   assert.deepEqual(
     CHANGZHOU_NEWTECH_AVIATION_SUPPLIER_PROFILE.standardsSupported,

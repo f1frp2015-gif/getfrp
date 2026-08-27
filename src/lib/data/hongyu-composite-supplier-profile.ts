@@ -8,8 +8,8 @@ export const HONGYU_COMPOSITE_SUPPLIER_SLUG =
 // Performance, application and localization claims remain company-published
 // and have not been independently verified by GetFRP. The official site uses
 // the text brand "弘誉复材" in its header and has its logo-image option disabled;
-// no current official logo file was available on 2026-08-12, so this profile
-// intentionally uses the supplier-page text fallback instead of an image.
+// no current official logo file was available when rechecked on 2026-08-26, so
+// this profile intentionally uses the supplier-page text fallback instead.
 export const HONGYU_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   id: HONGYU_COMPOSITE_SUPPLIER_ID,
   name: "弘誉复合材料技术（嘉兴）有限公司",
@@ -103,7 +103,7 @@ export const HONGYU_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-12T00:00:00.000Z"),
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
   logo: null,
   contactEmail: null,
   contactPhone: null,
@@ -131,5 +131,5 @@ export const HONGYU_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: false,
   createdAt: new Date("2026-08-12T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-12T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

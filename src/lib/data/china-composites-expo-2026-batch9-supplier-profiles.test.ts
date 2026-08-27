@@ -124,8 +124,14 @@ test("keeps batch nine unclaimed, source-backed and indexable", () => {
     assert.ok(profile.logo?.startsWith("/supplier-assets/"));
     assert.equal(existsSync(`public${profile.logo}`), true);
   }
-  assert.equal(JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE.logo, null);
-  assert.equal(JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    JIANGSU_AULLAND_FRP_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/jiangsu-aulland-logo.png",
+  );
+  assert.equal(
+    JIANGSU_CHANGHAI_FIBERGLASS_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/jiangsu-changhai-logo-light.png",
+  );
 });
 
 test("preserves legal-entity, subsidiary, material and history boundaries", () => {

@@ -11,9 +11,11 @@ export const CHANGZHOU_SAIRUI_SUPPLIER_SLUG =
 // product models and parent-company relationship align with the expo profile.
 // Installed-line, award and performance statements remain company- or
 // organizer-published and have not been independently verified by GetFRP.
-// Reviewed 2026-08-13: the current Sairui page exposes only the Beijing ORIT
-// operator's header logo, not a standalone current Sairui logo, so this profile
-// deliberately uses the supplier-page text fallback instead of that logo.
+// Reviewed 2026-08-26: the current Sairui page uses the Beijing ORIT operator's
+// complete header wordmark and exposes no separate Sairui mark. The card uses
+// that exact official page identity downloaded from
+// http://www.orit.cn/media/1140/oritcnlogo.png; it must not be interpreted as a
+// separately registered Sairui logo.
 export const CHANGZHOU_SAIRUI_SUPPLIER_PROFILE: SupplierListing = {
   id: CHANGZHOU_SAIRUI_SUPPLIER_ID,
   name: "常州赛瑞工程技术有限公司",
@@ -131,8 +133,8 @@ export const CHANGZHOU_SAIRUI_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/changzhou-sairui-logo.png",
   contactEmail: "xin.ren@orit.cn",
   // The official page publishes extension 11; keep the clickable field to the
   // switchboard number so the page's tel: sanitizer cannot append the extension
@@ -164,5 +166,5 @@ export const CHANGZHOU_SAIRUI_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-13T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

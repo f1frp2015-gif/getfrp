@@ -6,9 +6,9 @@ export const NEWTECH_GROUP_PRODUCT_ID = "fiber-glass";
 
 // Curated from Newtech Group's official English and Chinese company, product,
 // pultrusion, testing and contact pages plus its company-published carbon-fiber
-// and prepreg brochures. The locally stored logo is the current official site
-// icon served from:
-// https://en.newtechgroupcn.com/uploadfiles/211.149.255.8/webid1830/logo/202211/637354fa8db94.png
+// and prepreg brochures. The complete English header wordmark was downloaded
+// on 2026-08-26 from the current official site asset:
+// https://en.newtechgroupcn.com/uploadfiles/211.149.255.8/webid1830/logo/202304/64360df19d215.png
 // Capacity, product-performance, accreditation and experience statements are
 // company-published and remain unverified by GetFRP. The legal establishment
 // year was cross-checked against public enterprise-record summaries.
@@ -113,8 +113,8 @@ export const NEWTECH_GROUP_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-12T00:00:00.000Z"),
-  logo: "/supplier-assets/newtech-group-logo.png",
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/newtech-group-logo-light.png",
   contactEmail: "info@newtechgroupcn.com",
   contactPhone: "+86 519 8565 1887",
   address:
@@ -143,7 +143,7 @@ export const NEWTECH_GROUP_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-12T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-12T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };
 
 export const NEWTECH_GROUP_PRODUCT_RELATION = {

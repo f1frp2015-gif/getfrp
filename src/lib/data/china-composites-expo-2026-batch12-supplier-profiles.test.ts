@@ -84,7 +84,10 @@ test("keeps batch twelve unclaimed, source-backed and indexable", () => {
     assert.deepEqual(profile.certificationsEn, []);
     assert.deepEqual(profile.standardsSupported, []);
   }
-  assert.equal(LIAONING_MEITUO_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    LIAONING_MEITUO_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/liaoning-meituo-logo.png",
+  );
   assert.match(LIAONING_MEITUO_SUPPLIER_PROFILE.descriptionEn ?? "", /Carbon fiber is the reinforcement/i);
 });
 

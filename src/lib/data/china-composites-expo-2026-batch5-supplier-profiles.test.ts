@@ -127,11 +127,14 @@ test("keeps batch five unclaimed, source-backed and indexable", () => {
     assert.equal(existsSync(`public${profile.logo}`), true);
   }
 
-  assert.equal(DONGGUAN_JULI_COMPOSITE_TECHNOLOGY_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    DONGGUAN_JULI_COMPOSITE_TECHNOLOGY_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/dongguan-juli-logo.png",
+  );
   assert.match(
     DONGGUAN_JULI_COMPOSITE_TECHNOLOGY_SUPPLIER_PROFILE.productsServicesSummaryEn ??
       "",
-    /HTTP 567.*text fallback/i,
+    /stored locally/i,
   );
 });
 

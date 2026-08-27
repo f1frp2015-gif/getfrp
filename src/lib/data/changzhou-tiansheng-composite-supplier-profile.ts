@@ -10,10 +10,11 @@ export const CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_SLUG =
 // The parent site identifies "Tiansheng Composite" in its group structure and
 // assigns structural-foam production and processing to the subsidiary. The
 // parent-owned domain and its group logo must not be mistaken for a separate
-// subsidiary website or logo. No independently branded current subsidiary logo
-// was available on the official pages reviewed on 2026-08-13, so the profile
-// deliberately uses the text fallback. The site is currently HTTP-only; HTTPS
-// returns an SSL protocol error.
+// subsidiary website or logo. No independently branded subsidiary mark was
+// available on the official pages reviewed on 2026-08-26, so the card uses the
+// complete group header identity published on the exact subsidiary page and
+// downloaded from http://www.tschina.com/static/index/zm001/img/logo2.png. The
+// site is currently HTTP-only; HTTPS returns an SSL protocol error.
 export const CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   id: CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_ID,
   name: "常州天晟复合材料有限公司",
@@ -139,8 +140,8 @@ export const CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/changzhou-tiansheng-logo.png",
   contactEmail: null,
   contactPhone: null,
   address: null,
@@ -163,5 +164,5 @@ export const CHANGZHOU_TIANSHENG_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-13T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };

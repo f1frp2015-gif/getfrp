@@ -84,7 +84,10 @@ test("keeps batch eleven unclaimed, source-backed and indexable with reviewed br
     assert.deepEqual(profile.certificationsEn, []);
     assert.deepEqual(profile.standardsSupported, []);
   }
-  assert.equal(LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE.logo, null);
+  assert.equal(
+    LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE.logo,
+    "/supplier-assets/lishi-testing-shanghai-logo.png",
+  );
   assert.match(LISHI_TESTING_SHANGHAI_SUPPLIER_PROFILE.descriptionEn ?? "", /Composite material is one class of test specimen/i);
 });
 

@@ -12,9 +12,11 @@ export const CHANGZHOU_NEWTECH_SMART_SUPPLIER_SLUG =
 // complements rather than duplicates the group's material-supply profile.
 // Capacity, performance, patent, award and project claims remain company- or
 // organizer-published and have not been independently verified by GetFRP.
-// Reviewed 2026-08-13: the dedicated company page uses only the parent Newtech
-// Group header logo and provides no standalone current Newtech Smart logo, so
-// this profile deliberately uses the supplier-page text fallback.
+// Reviewed 2026-08-26: the dedicated company page uses the complete parent
+// Newtech Group header wordmark and provides no standalone Newtech Smart logo.
+// The card uses the exact official page identity downloaded from
+// https://en.newtechgroupcn.com/uploadfiles/211.149.255.8/webid1830/logo/202304/64360df19d215.png;
+// it must not be interpreted as a separately registered subsidiary mark.
 export const CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE: SupplierListing = {
   id: CHANGZHOU_NEWTECH_SMART_SUPPLIER_ID,
   name: "常州市新创智能科技有限公司",
@@ -133,8 +135,8 @@ export const CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-13T00:00:00.000Z"),
-  logo: null,
+  profileReviewedAt: new Date("2026-08-26T00:00:00.000Z"),
+  logo: "/supplier-assets/newtech-group-logo-light.png",
   contactEmail: "info@newtryglobal.com",
   contactPhone: "+86 519 8565 1859",
   address:
@@ -166,5 +168,5 @@ export const CHANGZHOU_NEWTECH_SMART_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-13T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-13T00:00:00.000Z"),
+  updatedAt: new Date("2026-08-26T00:00:00.000Z"),
 };
