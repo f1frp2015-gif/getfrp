@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
+import { rfqHref } from "@/lib/rfq-links";
 
 // Brand-neutral, in-code SVG figures for FRP product families. No photography,
 // no brand marks, no fabricated claims — just clean cross-section / profile
@@ -185,9 +186,7 @@ export function ProductFamilyGallery() {
       {PRODUCT_FAMILIES.map((p) => (
         <Link
           key={p.name}
-          href={
-            `/rfq?product=${encodeURIComponent(p.name)}` as never
-          }
+          href={rfqHref({ product: p.name }) as never}
           className="group flex items-start gap-4 border border-border/70 bg-background p-4 transition-colors hover:border-foreground"
         >
           <FrpSectionFigure

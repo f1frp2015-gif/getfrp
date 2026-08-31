@@ -10,6 +10,7 @@ import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { loadApprovedSupplierProduct } from "@/lib/products/ugc-queries";
+import { rfqHref } from "@/lib/rfq-links";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 
@@ -94,7 +95,7 @@ export default async function SupplierProductPage({ params }: Props) {
                 <Row label="Export markets" value={product.exportMarkets.join(", ")} />
                 {product.priceRange ? <Row label="Price range" value={product.priceRange} /> : null}
               </dl>
-              <Link href={`/rfq?product=${encodeURIComponent(product.name)}&supplier=${encodeURIComponent(product.supplier.name)}` as never} className={`${buttonVariants({ size: "lg" })} mt-7`}>Request a quote <ArrowRight size={15} /></Link>
+              <Link href={rfqHref({ product: product.name, supplier: product.supplier.id }) as never} className={`${buttonVariants({ size: "lg" })} mt-7`}>Request a quote <ArrowRight size={15} /></Link>
             </div>
           </div>
         </div>
