@@ -9,6 +9,7 @@ import { PageBreadcrumbs } from "@/components/page-breadcrumbs";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { TestimonialsBlock } from "@/components/testimonials-block";
 import { alternates, og } from "@/lib/seo";
+import { rfqHref } from "@/lib/rfq-links";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import {
   findSourcingTopic,
@@ -308,9 +309,7 @@ export default async function SourcingTopicPage({
           </Link>
         )}
         <Link
-          href={
-            (`/rfq?topic=${encodeURIComponent(t.slug)}`) as never
-          }
+          href={rfqHref({ topic: t.slug }) as never}
           className="group flex items-center justify-between gap-4 border border-border/70 bg-foreground p-5 text-background transition-colors hover:bg-foreground/95"
         >
           <div>

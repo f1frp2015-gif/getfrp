@@ -30,6 +30,7 @@ import {
 } from "@/lib/data/seo-marketplace-pages";
 import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 import { getProductSearchIntent } from "@/lib/data/product-search-intents";
+import { rfqHref } from "@/lib/rfq-links";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -252,7 +253,7 @@ export default async function ProductDetailPage({
                   Supplier List
                 </a>
                 <Link
-                  href={`/rfq?product=${encodeURIComponent(product.slug)}` as never}
+                  href={rfqHref({ product: product.slug }) as never}
                   className={buttonVariants({ size: "lg", variant: "ghost" })}
                 >
                   Request matched suppliers <ArrowRight size={15} />

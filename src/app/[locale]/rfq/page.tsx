@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { alternates } from "@/lib/seo";
 import { setRequestLocale } from "next-intl/server";
-import { and, eq } from "drizzle-orm";
-import { db } from "@/lib/db";
-import { supplierListings } from "@/lib/db/schema";
+import { firstRfqSearchParam, getRfqInitialProduct } from "@/lib/rfq-links";
+import { resolveRfqTargetSupplier } from "@/lib/rfq-target-supplier";
 import { RfqForm } from "./rfq-form";
 
 export const metadata: Metadata = {
@@ -19,33 +18,21 @@ export default async function RfqPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ supplier?: string; product?: string; category?: string }>;
+  searchParams: Promise<{
+    supplier?: string | string[];
+    product?: string | string[];
+    category?: string | string[];
+    combo?: string | string[];
+    topic?: string | string[];
+  }>;
 }) {
   const { locale } = await params;
-  const {
-    supplier: requestedSupplierId,
-    product: initialProduct,
-    category: initialCategory,
-  } = await searchParams;
+  const query = await searchParams;
   setRequestLocale(locale);
 
-  const [targetSupplier] = requestedSupplierId
-    ? await db
-        .select({
-          id: supplierListings.id,
-          name: supplierListings.nameEn,
-          verified: supplierListings.verified,
-          enterpriseId: supplierListings.enterpriseId,
-        })
-        .from(supplierListings)
-        .where(
-          and(
-            eq(supplierListings.id, requestedSupplierId),
-            eq(supplierListings.profilePublished, true),
-          ),
-        )
-        .limit(1)
-    : [];
+  const targetSupplier = await resolveRfqTargetSupplier(query.supplier);
+  const initialProduct = getRfqInitialProduct(query);
+  const initialCategory = firstRfqSearchParam(query.category, 40);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
@@ -70,7 +57,7 @@ export default async function RfqPage({
       <div className="mt-10">
         <RfqForm
           targetSupplierId={targetSupplier?.id}
-          targetSupplierName={targetSupplier?.name ?? undefined}
+          targetSupplierName={targetSupplier?.name}
           targetSupplierVerified={Boolean(targetSupplier?.verified && targetSupplier?.enterpriseId)}
           initialProduct={initialProduct}
           initialCategory={initialCategory}

@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
+import { rfqHref } from "@/lib/rfq-links";
 import { cn } from "@/lib/utils";
 
 export type SupplierResultSignal = {
@@ -375,7 +376,7 @@ export function SupplierResultRow({
           {showDefaultActions && (
             <>
               <Link
-                href={`/rfq?supplier=${encodeURIComponent(supplierId)}` as never}
+                href={rfqHref({ supplier: supplierId }) as never}
                 className={buttonVariants({ size: "sm", className: "w-full" })}
               >
                 Add to RFQ

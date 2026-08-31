@@ -25,6 +25,7 @@ import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
 import { db } from "@/lib/db";
+import { rfqHref } from "@/lib/rfq-links";
 import {
   enterprises,
   materials as materialsTable,
@@ -539,7 +540,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
               )}
               <div className="mt-7 flex flex-wrap gap-2">
                 <Link
-                  href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never}
+                  href={rfqHref({ supplier: supplier.id }) as never}
                   className={buttonVariants()}
                 >
                   {labels.contactSupplier} <ArrowRight size={15} />
@@ -827,7 +828,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                 </div>
               </div>
               <div className="w-full shrink-0 lg:w-72">
-                <Link href={`/rfq?supplier=${encodeURIComponent(supplier.id)}` as never} className={`${buttonVariants()} w-full`}>
+                <Link href={rfqHref({ supplier: supplier.id }) as never} className={`${buttonVariants()} w-full`}>
                   {labels.contactSupplier} <ArrowRight size={15} />
                 </Link>
                 {!isClaimed && (

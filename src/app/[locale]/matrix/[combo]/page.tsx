@@ -22,6 +22,7 @@ import {
   type Resin,
 } from "@/lib/data/matrix";
 import { alternates, og } from "@/lib/seo";
+import { rfqHref } from "@/lib/rfq-links";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { JsonLd } from "@/components/json-ld";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
@@ -333,7 +334,7 @@ export default async function ComboPage({
         </div>
         <div className="grid gap-3 sm:grid-cols-3">
           <Link
-            href={`/rfq?combo=${encodeURIComponent(combo)}` as never}
+            href={rfqHref({ combo }) as never}
             className="group flex items-center justify-between gap-3 rounded-md border bg-foreground p-4 text-sm font-semibold text-background transition-colors hover:bg-foreground/90"
           >
             {t("ctaRfqTitle")}
