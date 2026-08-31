@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { issueSession } from "@/lib/auth/set-session";
 import { verifyPassword } from "@/lib/auth/password";
+import { authServiceUnavailable } from "@/lib/auth/service-unavailable";
 
 // Email+password login for getfrp.com (en). Generic error on any failure so it
 // never leaks whether an email is registered.
@@ -35,7 +36,6 @@ export async function POST(req: NextRequest) {
     await issueSession(res, user.id);
     return res;
   } catch (e) {
-    console.error("[email-password/login] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "Service temporarily unavailable, please retry" }, { status: 500 });
+    return authServiceUnavailable("login", e);
   }
 }

@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { issueSession } from "@/lib/auth/set-session";
 import { hashPassword, isValidPassword } from "@/lib/auth/password";
+import { authServiceUnavailable } from "@/lib/auth/service-unavailable";
 
 // Direct email+password registration for getfrp.com (en). No email verification
 // (see decision: low-friction lead capture); password is the login factor.
@@ -64,7 +65,6 @@ export async function POST(req: NextRequest) {
     await issueSession(res, uid);
     return res;
   } catch (e) {
-    console.error("[email-password/register] failed:", e instanceof Error ? e.message : e);
-    return NextResponse.json({ error: "Service temporarily unavailable, please retry" }, { status: 500 });
+    return authServiceUnavailable("register", e);
   }
 }
