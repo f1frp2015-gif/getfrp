@@ -11,15 +11,21 @@ import {
   PRODUCT_LINKS,
   SOURCING_GUIDE_LINKS,
   STANDARD_LINKS,
+  SUPPLIER_LINKS,
   TOOL_LINKS,
 } from "@/lib/site-navigation";
 
 const columns = [
   { heading: "Products", root: "/products", links: PRODUCT_LINKS },
+  { heading: "Suppliers", root: "/suppliers", links: SUPPLIER_LINKS },
   { heading: "Processes", root: "/manufacturing", links: PROCESS_LINKS },
   { heading: "Applications", root: "/applications", links: APPLICATION_LINKS },
   { heading: "Standards", root: "/standards", links: STANDARD_LINKS },
-  { heading: "Sourcing Guide", root: "/source-from-china", links: SOURCING_GUIDE_LINKS },
+  {
+    heading: "Sourcing Guide",
+    root: "/source-from-china",
+    links: SOURCING_GUIDE_LINKS.slice(1),
+  },
   { heading: "Tools & Help", root: "/tools", links: [...TOOL_LINKS, ...HELP_LINKS] },
 ] as const;
 
@@ -50,7 +56,7 @@ export function Footer() {
           </summary>
 
           <nav
-            className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-[#d9dfe8] pb-3 pt-6 sm:grid-cols-3 xl:grid-cols-6"
+            className="grid grid-cols-2 gap-x-6 gap-y-8 border-t border-[#d9dfe8] pb-3 pt-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7"
             aria-label="Complete marketplace directory"
           >
             {columns.map((column) => (
@@ -81,7 +87,7 @@ export function Footer() {
             <Link href="/rfq" className="font-semibold text-[#123f8c] hover:text-[#0a1f44]">Post RFQ →</Link>
             <Link href="/about" className="hover:text-foreground">About</Link>
             <Link href="/contact" className="hover:text-foreground">Contact</Link>
-            <Link href="/services/china-export-growth" className="font-semibold text-[#123f8c] hover:text-[#0a1f44]">China Export Services</Link>
+            <Link href="/services/china-export-growth" className="font-semibold text-[#123f8c] hover:text-[#0a1f44]">For Chinese suppliers</Link>
             <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
             <Link href="/sitemap" className="hover:text-foreground">Sitemap</Link>

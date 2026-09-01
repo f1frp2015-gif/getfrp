@@ -4,9 +4,44 @@ export type NavigationLink = {
   description?: string;
 };
 
-export type NavigationGroup = NavigationLink & {
+export type NavigationSection = {
+  label: string;
   items: readonly NavigationLink[];
 };
+
+export type NavigationGroup = NavigationLink & {
+  activePrefixes: readonly string[];
+  ctaLabel: string;
+  description: string;
+  items: readonly NavigationLink[];
+  sections: readonly NavigationSection[];
+};
+
+function normalizeNavigationSearch(search: string) {
+  const params = new URLSearchParams(search);
+  params.sort();
+  return params.toString();
+}
+
+export function navigationHrefMatchesLocation(
+  pathname: string,
+  currentSearch: string | null,
+  href: string,
+) {
+  const hashlessHref = href.split("#", 1)[0];
+  const queryStart = hashlessHref.indexOf("?");
+  const hrefPath =
+    queryStart === -1 ? hashlessHref : hashlessHref.slice(0, queryStart);
+  const hrefSearch =
+    queryStart === -1 ? "" : hashlessHref.slice(queryStart + 1);
+
+  return (
+    currentSearch !== null &&
+    pathname === hrefPath &&
+    normalizeNavigationSearch(currentSearch) ===
+      normalizeNavigationSearch(hrefSearch)
+  );
+}
 
 export const PRODUCT_LINKS = [
   { label: "FRP grating", href: "/products/frp-grating" },
@@ -51,7 +86,7 @@ export const STANDARD_LINKS = [
 ] as const satisfies readonly NavigationLink[];
 
 export const SOURCING_GUIDE_LINKS = [
-  { label: "CN Services", href: "/services/china-export-growth" },
+  { label: "For Chinese suppliers", href: "/services/china-export-growth" },
   { label: "Verify a China supplier", href: "/source-from-china/verify-supplier" },
   { label: "Source FRP grating", href: "/sourcing/frp-grating" },
   { label: "Pultruded vs molded grating", href: "/source-from-china/frp-grating-vs-molded-grating" },
@@ -65,8 +100,8 @@ export const TOOL_LINKS = [
 ] as const satisfies readonly NavigationLink[];
 
 export const SUPPLIER_LINKS = [
-  { label: "All suppliers", href: "/suppliers" },
-  { label: "Verified factories", href: "/suppliers/certified" },
+  { label: "Search suppliers", href: "/suppliers/search" },
+  { label: "Verified suppliers", href: "/suppliers/search?profile=verified" },
   { label: "ISO 9001 suppliers", href: "/suppliers/search?certification=ISO%209001" },
   { label: "Jiangsu suppliers", href: "/suppliers/jiangsu" },
   { label: "Zhejiang suppliers", href: "/suppliers/zhejiang" },
@@ -81,14 +116,132 @@ export const HELP_LINKS = [
   { label: "How to compare suppliers", href: "/help/how-to-compare-suppliers" },
 ] as const satisfies readonly NavigationLink[];
 
+const STRUCTURAL_PRODUCT_LINKS = [
+  PRODUCT_LINKS[0],
+  PRODUCT_LINKS[1],
+  PRODUCT_LINKS[2],
+  PRODUCT_LINKS[3],
+  PRODUCT_LINKS[6],
+] as const;
+
+const MATERIAL_PRODUCT_LINKS = [
+  PRODUCT_LINKS[4],
+  PRODUCT_LINKS[13],
+  PRODUCT_LINKS[14],
+  PRODUCT_LINKS[15],
+] as const;
+
+const FEATURED_SUPPLIER_LINKS = [
+  SUPPLIER_LINKS[0],
+  SUPPLIER_LINKS[1],
+  SUPPLIER_LINKS[2],
+] as const;
+
+const RESOURCE_HUB_LINKS = [
+  { label: "Manufacturing processes", href: "/manufacturing" },
+  { label: "Applications", href: "/applications" },
+  { label: "Standards", href: "/standards" },
+  { label: "Engineering tools", href: "/tools" },
+  { label: "Industry insights", href: "/insights" },
+  { label: "Review methodology", href: "/methodology" },
+] as const satisfies readonly NavigationLink[];
+
+const BUYER_SOURCING_LINKS = [
+  SOURCING_GUIDE_LINKS[1],
+  SOURCING_GUIDE_LINKS[2],
+  SOURCING_GUIDE_LINKS[3],
+  SOURCING_GUIDE_LINKS[4],
+  SOURCING_GUIDE_LINKS[5],
+] as const;
+
 export const PRIMARY_NAVIGATION = [
-  { label: "Products", href: "/products", items: PRODUCT_LINKS },
-  { label: "Suppliers", href: "/suppliers", items: SUPPLIER_LINKS },
-  { label: "Processes", href: "/manufacturing", items: PROCESS_LINKS },
-  { label: "Applications", href: "/applications", items: APPLICATION_LINKS },
-  { label: "Standards", href: "/standards", items: STANDARD_LINKS },
-  { label: "Sourcing Guide", href: "/source-from-china", items: SOURCING_GUIDE_LINKS },
-  { label: "Tools", href: "/tools", items: TOOL_LINKS },
+  {
+    label: "Products",
+    href: "/products",
+    description: "Browse FRP materials, components and finished systems.",
+    ctaLabel: "View all products",
+    activePrefixes: ["/products", "/fibers"],
+    items: [...STRUCTURAL_PRODUCT_LINKS, ...MATERIAL_PRODUCT_LINKS],
+    sections: [
+      {
+        label: "Structures & infrastructure",
+        items: STRUCTURAL_PRODUCT_LINKS,
+      },
+      {
+        label: "Materials & molding",
+        items: MATERIAL_PRODUCT_LINKS,
+      },
+    ],
+  },
+  {
+    label: "Suppliers",
+    href: "/suppliers",
+    description: "Find reviewed manufacturers by evidence, capability and region.",
+    ctaLabel: "View all suppliers",
+    activePrefixes: ["/suppliers"],
+    items: FEATURED_SUPPLIER_LINKS,
+    sections: [
+      {
+        label: "Find suppliers",
+        items: FEATURED_SUPPLIER_LINKS,
+      },
+    ],
+  },
+  {
+    label: "Resources",
+    href: "/guides",
+    description: "Understand processes, applications, standards and engineering tools.",
+    ctaLabel: "Browse buyer guides",
+    activePrefixes: [
+      "/guides",
+      "/manufacturing",
+      "/processes",
+      "/applications",
+      "/standards",
+      "/tools",
+      "/technical",
+      "/insights",
+      "/methodology",
+    ],
+    items: RESOURCE_HUB_LINKS,
+    sections: [
+      {
+        label: "Explore",
+        items: [RESOURCE_HUB_LINKS[0], RESOURCE_HUB_LINKS[1]],
+      },
+      {
+        label: "Evaluate",
+        items: [RESOURCE_HUB_LINKS[2], RESOURCE_HUB_LINKS[3]],
+      },
+      {
+        label: "Learn",
+        items: [RESOURCE_HUB_LINKS[4], RESOURCE_HUB_LINKS[5]],
+      },
+    ],
+  },
+  {
+    label: "Sourcing",
+    href: "/source-from-china",
+    description: "Plan supplier checks, comparisons and China-side execution.",
+    ctaLabel: "Start with China sourcing",
+    activePrefixes: ["/source-from-china", "/sourcing", "/services"],
+    items: BUYER_SOURCING_LINKS,
+    sections: [
+      {
+        label: "Supplier checks",
+        items: [BUYER_SOURCING_LINKS[0]],
+      },
+      {
+        label: "Product playbooks",
+        items: [
+          BUYER_SOURCING_LINKS[1],
+          BUYER_SOURCING_LINKS[2],
+          BUYER_SOURCING_LINKS[3],
+          BUYER_SOURCING_LINKS[4],
+        ],
+      },
+    ],
+  },
 ] as const satisfies readonly NavigationGroup[];
 
 export const SEARCH_SUGGESTIONS = [
