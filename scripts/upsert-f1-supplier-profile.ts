@@ -1,4 +1,4 @@
-// Idempotently restore F1 Composite's verified, claimed and sponsored GetFRP
+// Idempotently restore F1 Composites' verified, claimed and sponsored GetFRP
 // profile. The inserts make this safe for a newly provisioned GetFRP database;
 // existing records are updated in place.
 //

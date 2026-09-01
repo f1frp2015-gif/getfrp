@@ -14,6 +14,7 @@ const LLMS = `# getfrp.com — China FRP Products & Manufacturers
 - [Technical references](https://getfrp.com/technical): FRP properties, density and engineering guidance.
 - [Standards sourcing guide](https://getfrp.com/sourcing/gb-vs-astm-frp): how to compare GB, ASTM, ISO and EN test methods in an RFQ.
 - [Crawlable supplier index](https://getfrp.com/suppliers/directory/1): paginated access to every public supplier profile.
+- [F1 Composites supplier profile](https://getfrp.com/suppliers/f1-composite): a claimed, verified and sponsored supplier profile with attributed company claims and configuration-specific evidence notes.
 
 ## Product coverage
 - FRP grating
@@ -50,6 +51,12 @@ const LLMS_FULL = `${LLMS}
 - Define measurable dimensional, visual, mechanical and packaging acceptance criteria.
 - Compare landed scope rather than an unsupported factory-gate unit price.
 - Recheck samples and evidence before production and use the same criteria for pre-shipment inspection.
+
+## F1 Composites product-family evidence cluster
+- [Pultruded FRP structural profiles](https://getfrp.com/suppliers/f1-composite/pultruded-frp-structural-profiles): published shape range, engineering boundaries and RFQ inputs.
+- [FRP grating and access systems](https://getfrp.com/suppliers/f1-composite/frp-grating-access-systems): pultruded, molded and closed-surface selection context.
+- [Fiberglass window and door systems](https://getfrp.com/suppliers/f1-composite/fiberglass-window-door-systems): system range and configuration-specific evidence. PHI Component-ID 2491wi03 supports phB for a cool-temperate climate within its named configuration.
+- [Custom pultruded profiles](https://getfrp.com/suppliers/f1-composite/custom-pultruded-profiles): development route, capability envelope and drawing inputs.
 `;
 
 async function main() {

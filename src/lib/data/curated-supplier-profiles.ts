@@ -404,13 +404,19 @@ export function enrichSupplierWithCuratedProfile(
   const isF1Composite = databaseProfile.id === F1_COMPOSITE_SUPPLIER_ID;
 
   // Once a supplier has claimed and linked the profile, its database-managed
-  // content becomes authoritative. F1 Composite is the deliberate exception:
+  // content becomes authoritative. F1 Composites is the deliberate exception:
   // its verified sponsored identity and public presentation are also reviewed
   // in Git so a broken enterprise join cannot remove the logo or trust state.
   if (databaseProfile.enterpriseId && !isF1Composite) return databaseProfile;
 
   return {
     ...databaseProfile,
+    // F1's public subject and canonical route are explicitly reviewed in Git.
+    // Do not let a stale database display name or legacy slug split that entity
+    // across directory cards, metadata and sitemap URLs.
+    name: isF1Composite ? curatedProfile.name : databaseProfile.name,
+    nameEn: isF1Composite ? curatedProfile.nameEn : databaseProfile.nameEn,
+    slug: isF1Composite ? curatedProfile.slug : databaseProfile.slug,
     // The Git-backed profile is the page content source, so its published
     // state must also drive directory filtering and ranking. Otherwise an old
     // database seed can have a live profile page but still rank as unpublished.

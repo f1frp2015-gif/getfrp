@@ -10,6 +10,10 @@ import { SUPPLIER_REGION_PAGES } from "@/lib/data/supplier-region-pages";
 import { SEO_REFERENCE_PAGES } from "@/lib/data/seo-reference-pages";
 import { PROCESS_PAGES } from "@/lib/data/process-pages";
 import {
+  F1_COMPOSITES_COMPANY_SEO,
+  F1_COMPOSITES_PRODUCT_FAMILIES,
+} from "@/lib/data/f1-composite-microsite";
+import {
   CORE_SITEMAP_ROUTES,
   DATA_SITEMAP_ROUTES,
   TOOL_SITEMAP_ROUTES,
@@ -39,7 +43,7 @@ const CORE_LABELS: Record<string, string> = {
 };
 
 const TOOL_LABELS: Record<string, string> = {
-  "/tools": "F1 Composite external engineering tools",
+  "/tools": "F1 Composites external engineering tools",
   "/tech": "Composite process knowledge base",
 };
 
@@ -217,6 +221,24 @@ export default async function HtmlSitemapPage({
               href: `/suppliers/${region.slug}`,
               label: `${region.name} FRP manufacturers`,
             }))}
+          />
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold">F1 Composites supplier pages</h2>
+          <LinkGrid
+            links={[
+              {
+                href: F1_COMPOSITES_COMPANY_SEO.path,
+                label: "F1 Composites company profile",
+                note: "Claimed, verified and sponsored supplier profile",
+              },
+              ...F1_COMPOSITES_PRODUCT_FAMILIES.map((family) => ({
+                href: family.path,
+                label: family.title,
+                note: "Supplier product family",
+              })),
+            ]}
           />
         </section>
 
