@@ -170,7 +170,7 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ local
               FRP calculators and standards tools
             </h1>
             <p className="mt-5 max-w-3xl text-[16px] leading-8 text-[#d9dfe8]">
-              Use GetFRP&apos;s weight and standards tools for procurement screening, then open the deeper F1 Composite engineering references when structural calculations are required.
+              Use GetFRP&apos;s weight and standards tools for procurement screening, then open the deeper F1 Composites engineering references when structural calculations are required.
             </p>
           </div>
         </div>
@@ -199,7 +199,7 @@ export default async function ToolsHubPage({ params }: { params: Promise<{ local
               <ToolCardContents
                 tool={tool}
                 index={getfrpTools.length + index}
-                cta="Open on F1 Composite"
+                cta="Open on F1 Composites"
               />
             </a>
           ))}

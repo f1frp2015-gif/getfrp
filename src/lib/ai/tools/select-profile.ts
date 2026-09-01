@@ -80,7 +80,7 @@ export function makeSelectProfileTool() {
         (best?.weightSource === "published"
           ? "初步选型筛查:米重为 f1 厂商发布值,但截面特性(Ix/Wx)、应力与挠度为引擎按标准截面计算的初步筛查值,未含 FRP 剪切变形、蠕变、温度、局部屈曲与连接。"
           : "初步选型筛查:截面特性与米重均为引擎按标准截面计算的示例值(非厂商发布),未含 FRP 剪切变形、蠕变、温度、局部屈曲与连接。") +
-        "正式选型须按 EN 13706 / ASCE / GB/T 31539 取安全系数复核，并以厂商规格表为准；可通过 /tools 打开 F1 Composite 工程计算工具复核具体截面。";
+        "正式选型须按 EN 13706 / ASCE / GB/T 31539 取安全系数复核，并以厂商规格表为准；可通过 /tools 打开 F1 Composites 工程计算工具复核具体截面。";
 
       return {
         query: { material: matKey, span_mm: a.span, load: a.load, loadType, deflLimit, shapes: a.shapes ?? "all" },

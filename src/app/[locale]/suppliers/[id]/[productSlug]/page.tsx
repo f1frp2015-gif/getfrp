@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
+import { F1CompositesProductFamilyPage } from "@/components/f1-composite-microsite";
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { loadApprovedSupplierProduct } from "@/lib/products/ugc-queries";
+import {
+  F1_COMPOSITES_PRODUCT_FAMILIES,
+  F1_COMPOSITES_SUPPLIER_SLUG,
+  getF1CompositesProductFamily,
+} from "@/lib/data/f1-composite-microsite";
+import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
 import { rfqHref } from "@/lib/rfq-links";
 import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
@@ -18,8 +25,32 @@ export const revalidate = 3600;
 
 type Props = { params: Promise<{ locale: string; id: string; productSlug: string }> };
 
+export function generateStaticParams() {
+  return F1_COMPOSITES_PRODUCT_FAMILIES.map((family) => ({
+    id: F1_COMPOSITES_SUPPLIER_SLUG,
+    productSlug: family.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, productSlug } = await params;
+  const family =
+    id === F1_COMPOSITES_SUPPLIER_SLUG || id === F1_COMPOSITE_SUPPLIER_ID
+      ? getF1CompositesProductFamily(productSlug)
+      : undefined;
+  if (family) {
+    return {
+      title: { absolute: family.metaTitle },
+      description: family.metaDescription,
+      keywords: [...family.keywords],
+      alternates: alternates(family.path),
+      openGraph: og(family.path, {
+        title: family.metaTitle,
+        description: family.metaDescription,
+      }),
+      robots: { index: true, follow: true },
+    };
+  }
   const product = await loadApprovedSupplierProduct(id, productSlug);
   if (!product) return { robots: { index: false, follow: true } };
   const path = `/suppliers/${product.supplier.slug}/${product.slug}`;
@@ -36,6 +67,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SupplierProductPage({ params }: Props) {
   const { locale, id, productSlug } = await params;
   setRequestLocale(locale);
+  const family =
+    id === F1_COMPOSITES_SUPPLIER_SLUG || id === F1_COMPOSITE_SUPPLIER_ID
+      ? getF1CompositesProductFamily(productSlug)
+      : undefined;
+  if (family) {
+    if (id !== F1_COMPOSITES_SUPPLIER_SLUG) {
+      permanentRedirect(family.path);
+    }
+    return <F1CompositesProductFamilyPage family={family} />;
+  }
   const product = await loadApprovedSupplierProduct(id, productSlug);
   if (!product) notFound();
   const path = `/suppliers/${product.supplier.slug}/${product.slug}`;

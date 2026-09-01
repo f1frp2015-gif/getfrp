@@ -4,20 +4,18 @@ export const F1_COMPOSITE_SUPPLIER_ID = "sup-yaoyi";
 export const F1_COMPOSITE_SUPPLIER_SLUG = "f1-composite";
 export const F1_COMPOSITE_ENTERPRISE_ID =
   "0ef991ac-03b8-46bd-a5e9-6346ea43939e";
-export const F1_COMPOSITE_LEGAL_NAME_EN =
-  "Chongqing Yaoyi New Material Technology Co., Ltd.";
 export const F1_COMPOSITE_PINNED_BRAND_PRIORITY = 1000;
 
-// This is GetFRP's verified, claimed and sponsored F1 Composite profile. The
+// This is GetFRP's verified, claimed and sponsored F1 Composites profile. The
 // public content is kept in Git so the official identity, local logo and pinned
 // trust state remain available if the supplier/enterprise database join is
 // temporarily unavailable. The logo was copied on 2026-08-09 from the current
 // official asset at https://www.f1composite.com/brand/f1-logo.png and matches
-// the source asset in the canonical F1 Composite repository.
+// the source asset in the canonical F1 Composites repository.
 export const F1_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   id: F1_COMPOSITE_SUPPLIER_ID,
-  name: "重庆曜一新材料科技有限公司",
-  nameEn: "F1 Composite",
+  name: "F1 Composites",
+  nameEn: "F1 Composites",
   slug: F1_COMPOSITE_SUPPLIER_SLUG,
   location: "重庆",
   locationEn: "Chongqing, China",
@@ -52,18 +50,18 @@ export const F1_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   established: 2024,
   verified: true,
   description:
-    "F1 Composite 是重庆曜一新材料科技有限公司面向国际市场的复合材料品牌，为海外项目提供拉挤 FRP 型材、格栅、玻璃钢门窗系统和定制拉挤产品，并负责英文工程支持、合同、质量文件、出口单据与国际交付。",
+    "F1 Composites 是风渡新材料面向国际市场的出口公司，为海外项目提供拉挤 FRP 型材、格栅、玻璃钢门窗系统和定制拉挤产品，并负责英文工程支持、质量文件、出口协调与国际交付。",
   descriptionEn:
-    "F1 Composite is the international composites brand of Chongqing Yaoyi New Material Technology Co., Ltd. It supplies pultruded FRP profiles, gratings, fiberglass window and door systems, and custom pultrusions for overseas projects, with English-language engineering, contracting, quality documentation, export paperwork and international delivery support.",
+    "According to its official website, F1 Composites is FengDu New Material's international export company. It supplies pultruded FRP profiles, gratings, fiberglass window and door systems, and custom pultrusions for overseas projects, with English-language engineering, quality documentation, export coordination and international delivery support.",
   certifications: [
-    "PHI 被动房组件证书 2491wi03（90 系列玻璃钢门窗）",
-    "三星级绿色建材产品认证 CABR-01(02)-(2025)-CGP-035（有效期至 2030-06-04）",
-    "Intertek AS 2047 / AS/NZS 4420.1 门窗检测报告 240821010SHF-001 与 240821010SHF-002",
+    "PHI 组件证书 2491wi03（Fengdu Passive GFRP 90 系列，phB / 温和气候，有效期至 2026-12-31）",
+    "三星级绿色建材文件英文非官方摘要（监管用途须核对中文原证）",
+    "Intertek AS 2047 / AS/NZS 4420.1 送检样品报告 240821010SHF-001 与 240821010SHF-002",
   ],
   certificationsEn: [
-    "PHI Component Certificate 2491wi03 — 90-Series GFRP window",
-    "3-Star Green Building Material Certificate CABR-01(02)-(2025)-CGP-035 — valid through 2030-06-04",
-    "Intertek AS 2047 / AS/NZS 4420.1 window and door reports 240821010SHF-001 and 240821010SHF-002",
+    "PHI Component Certificate 2491wi03 — Fengdu Passive GFRP 90 Series, phB / cool-temperate, valid through 2026-12-31",
+    "3-Star Green Building Material document — unofficial English summary; original Chinese certificate required",
+    "Intertek 240821010SHF-001 and -002 — configuration-specific window and door sample reports",
   ],
   productsServicesSummary:
     "供应拉挤玻璃钢结构型材、格栅与平台系统、门窗型材及成品系统、定制拉挤件、管材与板材；配套提供图纸与选型评审、定制模具和打样、批次质量文件、出口包装、集货与国际物流支持。采购方应按具体产品和项目核对证书覆盖范围、检测样品、材料体系、尺寸公差、批次追溯和交付文件。",
@@ -71,8 +69,8 @@ export const F1_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
     "Supplies pultruded fiberglass structural profiles, gratings and platform systems, fenestration profiles and finished window/door systems, custom pultrusions, pipe and panels. Services include drawing and profile-selection review, custom tooling and prototyping, batch quality records, export packing, consolidation and international logistics support. Buyers should confirm certificate scope, tested specimen, material system, dimensional tolerance, batch traceability and delivery documents for the quoted product and project.",
   ecatalogs: [
     {
-      title: "F1 Composite FRP 型材设计手册（2026）",
-      titleEn: "F1 Composite FRP Profile Design Manual — 2026",
+      title: "F1 Composites FRP 型材设计手册（2026）",
+      titleEn: "F1 Composites FRP Profile Design Manual — 2026",
       description: "结构型材、材料性能、设计基础与选型数据。",
       descriptionEn:
         "Structural profiles, material properties, design basis and selection data.",
@@ -117,7 +115,7 @@ export const F1_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
     },
   ],
   profilePublished: true,
-  profileReviewedAt: new Date("2026-08-09T00:00:00.000Z"),
+  profileReviewedAt: new Date("2026-09-01T00:00:00.000Z"),
   logo: "/supplier-assets/f1-composite-logo.png",
   contactEmail: "inquiry@f1composite.com",
   contactPhone: "+86 138 8333 8993",
@@ -139,5 +137,5 @@ export const F1_COMPOSITE_SUPPLIER_PROFILE: SupplierListing = {
   leadTimeDays: null,
   exportReady: true,
   createdAt: new Date("2026-08-09T00:00:00.000Z"),
-  updatedAt: new Date("2026-08-09T00:00:00.000Z"),
+  updatedAt: new Date("2026-09-01T00:00:00.000Z"),
 };

@@ -488,7 +488,7 @@ export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
       },
     ],
     related: [
-      { label: "Open F1 Composite engineering tools", href: "/tools" },
+      { label: "Open F1 Composites engineering tools", href: "/tools" },
       { label: "FRP vs aluminum", href: "/compare/frp-vs-aluminum" },
       { label: "FRP properties", href: "/technical/frp-properties" },
     ],
