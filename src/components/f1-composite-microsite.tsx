@@ -209,7 +209,7 @@ export function F1CompositesCompanyProfile() {
                   Sponsored
                 </Badge>
               </div>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-7 flex flex-col gap-3 pr-20 sm:flex-row sm:flex-wrap sm:pr-0">
                 <Link
                   href={rfqHref({ supplier: F1_COMPOSITES_SUPPLIER_SLUG }) as never}
                   className={`${buttonVariants({ size: "lg", variant: "signal" })} w-full sm:w-auto`}
@@ -446,7 +446,7 @@ export function F1CompositesProductFamilyPage({
               <p className="mt-5 max-w-4xl text-[16px] leading-8 text-brand-cool-gray">
                 {family.answer}
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <div className="mt-7 flex flex-col gap-3 pr-20 sm:flex-row sm:flex-wrap sm:pr-0">
                 <Link
                   href={rfqHref({
                     supplier: F1_COMPOSITES_SUPPLIER_SLUG,
