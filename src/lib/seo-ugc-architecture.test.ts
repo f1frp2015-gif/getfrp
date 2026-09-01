@@ -28,12 +28,12 @@ import {
 import {
   HELP_LINKS,
   HOT_SEARCHES,
+  navigationHrefMatchesLocation,
   PRIMARY_NAVIGATION,
   PRODUCT_LINKS,
   SEARCH_RELATED_LINKS,
   SEARCH_SUGGESTIONS,
   SOURCING_GUIDE_LINKS,
-  STATIC_L2_LINKS,
 } from "./site-navigation";
 
 function exactPhraseCount(text: string, phrase: string): number {
@@ -212,10 +212,60 @@ test("marketplace copy avoids mechanical keyword repetition and stock AI phrasin
 });
 
 test("global navigation and search meet the crawlable discovery contract", () => {
-  assert.equal(PRIMARY_NAVIGATION.length, 7);
+  assert.equal(PRIMARY_NAVIGATION.length, 4);
   assert.deepEqual(
     PRIMARY_NAVIGATION.map((item) => item.label),
-    ["Products", "Suppliers", "Processes", "Applications", "Standards", "Sourcing Guide", "Tools"],
+    ["Products", "Suppliers", "Resources", "Sourcing"],
+  );
+  for (const group of PRIMARY_NAVIGATION) {
+    assert.ok(group.activePrefixes.length > 0, `${group.label} needs active route prefixes`);
+    const sectionHrefs = group.sections.flatMap((section) =>
+      section.items.map((item) => item.href),
+    );
+    assert.equal(
+      sectionHrefs.length,
+      new Set(sectionHrefs).size,
+      `${group.label} sections must not repeat links`,
+    );
+    assert.deepEqual(
+      [...new Set(sectionHrefs)].sort(),
+      [...new Set(group.items.map((item) => item.href))].sort(),
+      `${group.label} sections must cover each dropdown link exactly once`,
+    );
+    for (const item of group.items) {
+      const itemPath = item.href.split(/[?#]/, 1)[0];
+      assert.ok(
+        group.activePrefixes.some(
+          (prefix) => itemPath === prefix || itemPath.startsWith(`${prefix}/`),
+        ),
+        `${group.label} active prefixes do not cover ${item.href}`,
+      );
+    }
+  }
+  const sourcingGroup = PRIMARY_NAVIGATION.find((item) => item.label === "Sourcing");
+  assert.ok(sourcingGroup?.activePrefixes.includes("/sourcing"));
+  assert.ok(sourcingGroup?.activePrefixes.includes("/services"));
+  const primaryHrefs = new Set<string>(
+    PRIMARY_NAVIGATION.flatMap((group) => [
+      group.href,
+      ...group.items.map((item) => item.href),
+    ]),
+  );
+  for (const path of [
+    "/products",
+    "/suppliers",
+    "/suppliers/search",
+    "/manufacturing",
+    "/applications",
+    "/standards",
+    "/tools",
+    "/source-from-china",
+  ]) {
+    assert.ok(primaryHrefs.has(path), `missing primary task or hub entry for ${path}`);
+  }
+  assert.ok(
+    PRIMARY_NAVIGATION.every((group) => group.items.length <= 9),
+    "primary menus should stay scannable; long-tail links belong in hubs and the footer",
   );
   assert.ok(SEARCH_SUGGESTIONS.length >= 5);
   assert.ok(HOT_SEARCHES.length >= 6);
@@ -227,15 +277,44 @@ test("global navigation and search meet the crawlable discovery contract", () =>
   assert.ok(SOURCING_GUIDE_LINKS.some((item) => item.href === "/sourcing/frp-grating"));
   assert.ok(SOURCING_GUIDE_LINKS.some((item) => item.href === "/sourcing/frp-piping"));
   assert.equal(SOURCING_GUIDE_LINKS.some((item) => item.href.includes("how-to-source-frp-")), false);
-  for (const link of STATIC_L2_LINKS) {
-    const isInPrimaryDropdown = PRIMARY_NAVIGATION.some((group) =>
-      group.items.some((item) => item.href === link.href),
-    );
-    assert.ok(isInPrimaryDropdown || HELP_LINKS.some((item) => item.href === link.href), `missing navigation entry for ${link.href}`);
-  }
 });
 
-test("the header is English-only and search appears only in the homepage body", () => {
+test("navigation current state distinguishes filtered supplier searches", () => {
+  assert.equal(
+    navigationHrefMatchesLocation(
+      "/suppliers/search",
+      "profile=verified",
+      "/suppliers/search",
+    ),
+    false,
+  );
+  assert.equal(
+    navigationHrefMatchesLocation(
+      "/suppliers/search",
+      "profile=verified",
+      "/suppliers/search?profile=verified",
+    ),
+    true,
+  );
+  assert.equal(
+    navigationHrefMatchesLocation(
+      "/suppliers/search",
+      "sort=recent&certification=ISO+9001",
+      "/suppliers/search?certification=ISO%209001&sort=recent",
+    ),
+    true,
+  );
+  assert.equal(
+    navigationHrefMatchesLocation(
+      "/suppliers/search",
+      null,
+      "/suppliers/search",
+    ),
+    false,
+  );
+});
+
+test("the header keeps navigation and account actions focused", () => {
   const header = readFileSync(
     new URL("../components/layout/header.tsx", import.meta.url),
     "utf8",
@@ -244,8 +323,16 @@ test("the header is English-only and search appears only in the homepage body", 
     new URL("../app/[locale]/home-english.tsx", import.meta.url),
     "utf8",
   );
-  assert.match(header, />EN</);
+  const footer = readFileSync(
+    new URL("../components/layout/footer.tsx", import.meta.url),
+    "utf8",
+  );
   assert.match(header, /data-navigation-layout="single-row"/);
+  assert.match(header, /<Accordion/);
+  assert.match(header, /<SheetTitle/);
+  assert.doesNotMatch(header, /openOnHover/);
+  assert.doesNotMatch(header, />EN</);
+  assert.doesNotMatch(header, /Join Free/);
   for (const locale of ["ES", "DE", "PT"]) {
     assert.doesNotMatch(header, new RegExp(`>${locale}<`));
   }
@@ -255,6 +342,8 @@ test("the header is English-only and search appears only in the homepage body", 
     false,
   );
   assert.match(homepage, /<HomeMarketplaceSearch \/>/);
+  assert.match(footer, /heading: "Suppliers"/);
+  assert.match(footer, /aria-label="Complete marketplace directory"/);
 });
 
 test("the manufacturing hub retains the animated process card directory", () => {
