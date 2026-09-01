@@ -15,6 +15,14 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
 import { PRODUCT_SEARCH_INTENTS } from "../src/lib/data/product-search-intents";
 import { SUPPLIER_CATEGORY_PAGES } from "../src/lib/data/supplier-category-pages";
+import {
+  F1_COMPOSITES_BRAND_NAME,
+  F1_COMPOSITES_COMPANY_PROFILE,
+  F1_COMPOSITES_COMPANY_SEO,
+  F1_COMPOSITES_PRODUCT_FAMILIES,
+  F1_COMPOSITES_PRODUCT_FAMILY_SLUGS,
+} from "../src/lib/data/f1-composite-microsite";
+import type { F1CompositesEvidenceItem } from "../src/lib/data/f1-composite-microsite";
 
 type Severity = "error" | "warn";
 
@@ -423,6 +431,264 @@ function checkIndexCleanup(): Violation[] {
   return out;
 }
 
+const EXPECTED_F1_PRODUCT_SLUGS = [
+  "pultruded-frp-structural-profiles",
+  "frp-grating-access-systems",
+  "fiberglass-window-door-systems",
+  "custom-pultruded-profiles",
+] as const;
+const EXPECTED_F1_COMPANY_PATH = "/suppliers/f1-composite";
+const EXPECTED_F1_PRODUCT_PATHS = EXPECTED_F1_PRODUCT_SLUGS.map(
+  (slug) => `${EXPECTED_F1_COMPANY_PATH}/${slug}`,
+);
+
+function checkF1CompositesMicrositeSeo(): Violation[] {
+  const out: Violation[] = [];
+  const page = "F1 Composites microsite";
+  const productPaths = F1_COMPOSITES_PRODUCT_FAMILIES.map(
+    (family) => family.path,
+  );
+  const allPaths = [F1_COMPOSITES_COMPANY_SEO.path, ...productPaths];
+  const metadataPages = [
+    {
+      path: F1_COMPOSITES_COMPANY_SEO.path,
+      title: F1_COMPOSITES_COMPANY_SEO.title,
+      description: F1_COMPOSITES_COMPANY_SEO.description,
+    },
+    ...F1_COMPOSITES_PRODUCT_FAMILIES.map((family) => ({
+      path: family.path,
+      title: family.metaTitle,
+      description: family.metaDescription,
+    })),
+  ];
+
+  if (F1_COMPOSITES_BRAND_NAME !== "F1 Composites") {
+    out.push({
+      page,
+      field: "brand",
+      severity: "error",
+      message: "public brand must be exactly F1 Composites",
+      actual: F1_COMPOSITES_BRAND_NAME,
+    });
+  }
+
+  if (F1_COMPOSITES_COMPANY_SEO.path !== EXPECTED_F1_COMPANY_PATH) {
+    out.push({
+      page,
+      field: "company-path",
+      severity: "error",
+      message: "company path must remain /suppliers/f1-composite",
+      actual: F1_COMPOSITES_COMPANY_SEO.path,
+    });
+  }
+
+  if (
+    F1_COMPOSITES_PRODUCT_FAMILIES.length !== 4 ||
+    JSON.stringify(F1_COMPOSITES_PRODUCT_FAMILY_SLUGS) !==
+      JSON.stringify(EXPECTED_F1_PRODUCT_SLUGS)
+  ) {
+    out.push({
+      page,
+      field: "product-family-slugs",
+      severity: "error",
+      message: "must publish exactly the four approved product-family slugs",
+      actual: F1_COMPOSITES_PRODUCT_FAMILY_SLUGS.join(", "),
+    });
+  }
+
+  if (
+    JSON.stringify(productPaths) !== JSON.stringify(EXPECTED_F1_PRODUCT_PATHS) ||
+    new Set(allPaths).size !== allPaths.length
+  ) {
+    out.push({
+      page,
+      field: "paths",
+      severity: "error",
+      message: "company and four product-family paths must be fixed and unique",
+      actual: allPaths.join(", "),
+    });
+  }
+
+  for (const metadata of metadataPages) {
+    for (const [field, value, min, max] of [
+      ["metaTitle", metadata.title, TITLE_MIN, TITLE_MAX],
+      ["metaDescription", metadata.description, DESC_MIN, DESC_MAX],
+    ] as const) {
+      if (value.length < min || value.length > max) {
+        out.push({
+          page: metadata.path,
+          field,
+          severity: "error",
+          message: `length ${value.length} is outside ${min}-${max}`,
+          actual: value,
+        });
+      }
+      if (!value.includes(F1_COMPOSITES_BRAND_NAME)) {
+        out.push({
+          page: metadata.path,
+          field,
+          severity: "error",
+          message: "must use the exact F1 Composites brand",
+          actual: value,
+        });
+      }
+    }
+  }
+
+  const sourceSets = [
+    {
+      path: F1_COMPOSITES_COMPANY_SEO.path,
+      sources: F1_COMPOSITES_COMPANY_PROFILE.sources,
+    },
+    ...F1_COMPOSITES_PRODUCT_FAMILIES.map((family) => ({
+      path: family.path,
+      sources: family.sources,
+    })),
+  ];
+  for (const sourceSet of sourceSets) {
+    if (sourceSet.sources.length === 0) {
+      out.push({
+        page: sourceSet.path,
+        field: "sources",
+        severity: "error",
+        message: "requires at least one official source",
+      });
+    }
+    for (const source of sourceSet.sources) {
+      try {
+        const url = new URL(source.href);
+        if (
+          url.protocol !== "https:" ||
+          url.hostname.replace(/^www\./, "") !== "f1composite.com"
+        ) {
+          throw new Error("not an official HTTPS f1composite.com URL");
+        }
+      } catch {
+        out.push({
+          page: sourceSet.path,
+          field: "source-url",
+          severity: "error",
+          message: "sources must use HTTPS on the official f1composite.com domain",
+          actual: source.href,
+        });
+      }
+    }
+  }
+
+  const evidence: F1CompositesEvidenceItem[] = [
+    ...F1_COMPOSITES_COMPANY_PROFILE.evidence,
+    ...F1_COMPOSITES_COMPANY_PROFILE.projects,
+  ];
+  for (const family of F1_COMPOSITES_PRODUCT_FAMILIES) {
+    evidence.push(...family.evidenceBoundaries);
+  }
+  const phiEvidence = evidence.filter((item) =>
+    /\bPHI\b|Component-ID/i.test(`${item.title} ${item.body}`),
+  );
+  if (phiEvidence.length === 0) {
+    out.push({
+      page,
+      field: "phi-evidence",
+      severity: "error",
+      message: "requires a configuration-specific PHI evidence record",
+    });
+  }
+  for (const item of phiEvidence) {
+    const claim = `${item.title} ${item.body}`;
+    if (!/\bphB\b/.test(claim) || !/\bcool-temperate\b/i.test(claim)) {
+      out.push({
+        page,
+        field: "phi-class",
+        severity: "error",
+        message: "PHI evidence must state phB for cool-temperate conditions",
+        actual: claim,
+      });
+    }
+  }
+
+  const corpus = JSON.stringify({
+    brand: F1_COMPOSITES_BRAND_NAME,
+    company: F1_COMPOSITES_COMPANY_PROFILE,
+    metadata: metadataPages,
+    families: F1_COMPOSITES_PRODUCT_FAMILIES,
+  });
+  for (const [field, pattern, message] of [
+    ["forbidden-phi", /\bphA\b|arctic/i, "must not publish phA or arctic PHI wording"],
+    ["stale-entity", /\bYaoyi\b/i, "must not publish the retired Yaoyi entity wording"],
+    ["singular-brand", /\bF1 Composite(?!s)\b/, "must not publish the singular F1 Composite brand"],
+  ] as const) {
+    if (pattern.test(corpus)) {
+      out.push({ page, field, severity: "error", message });
+    }
+  }
+
+  const sitemapSource = readFileSync(resolve("src/lib/sitemap-data.ts"), "utf8");
+  const htmlSitemapSource = readFileSync(
+    resolve("src/app/[locale]/sitemap/page.tsx"),
+    "utf8",
+  );
+  if (
+    !sitemapSource.includes("F1_COMPOSITES_PRODUCT_FAMILIES") ||
+    !sitemapSource.includes("curatedMicrositeEntries") ||
+    !htmlSitemapSource.includes("F1_COMPOSITES_PRODUCT_FAMILIES") ||
+    !htmlSitemapSource.includes("F1_COMPOSITES_COMPANY_SEO")
+  ) {
+    out.push({
+      page: "/sitemap.xml",
+      field: "f1-registration",
+      severity: "error",
+      message: "public XML and HTML sitemaps must register the F1 Composites cluster",
+    });
+  }
+
+  const llmsRegistrations = [
+    {
+      file: "scripts/build-llms-txt.ts",
+      paths: allPaths,
+    },
+    {
+      file: "public/llms.txt",
+      paths: [F1_COMPOSITES_COMPANY_SEO.path],
+    },
+    {
+      file: "public/llms-full.txt",
+      paths: allPaths,
+    },
+  ];
+  for (const registration of llmsRegistrations) {
+    const source = readFileSync(resolve(registration.file), "utf8");
+    for (const path of registration.paths) {
+      if (!source.includes(`https://getfrp.com${path}`)) {
+        out.push({
+          page: registration.file,
+          field: "f1-registration",
+          severity: "error",
+          message: "public llms output must register its F1 Composites pages",
+          actual: path,
+        });
+      }
+    }
+  }
+
+  const componentSource = readFileSync(
+    resolve("src/components/f1-composite-microsite.tsx"),
+    "utf8",
+  );
+  for (const forbidden of ["Offer", "InStock", "FAQPage"] as const) {
+    const pattern = new RegExp(`\\b${forbidden}\\b`);
+    if (pattern.test(componentSource)) {
+      out.push({
+        page,
+        field: "structured-data",
+        severity: "error",
+        message: `dedicated component must not emit ${forbidden}`,
+      });
+    }
+  }
+
+  return out;
+}
+
 function main() {
   const strict = process.argv.includes("--strict");
   const en = JSON.parse(
@@ -491,6 +757,7 @@ function main() {
   violations.push(...checkStandaloneGetfrpSeo());
   violations.push(...checkCoreProductOnPageSeo());
   violations.push(...checkIndexCleanup());
+  violations.push(...checkF1CompositesMicrositeSeo());
 
   const errors = violations.filter((v) => v.severity === "error");
   const warns = violations.filter((v) => v.severity === "warn");

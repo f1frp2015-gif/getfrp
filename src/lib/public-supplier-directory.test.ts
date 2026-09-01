@@ -654,13 +654,16 @@ test("keeps Git-backed profiles in aggregate consumers when the database is part
   );
 });
 
-test("restores F1 Composite trust presentation from Git when the database row is degraded", async () => {
+test("restores F1 Composites trust presentation from Git when the database row is degraded", async () => {
   const { mergePublicSupplierDirectory } = await loadDirectory();
   const directory = mergePublicSupplierDirectory(
     [
       {
         supplier: {
           ...F1_COMPOSITE_SUPPLIER_PROFILE,
+          name: "Stale database display name",
+          nameEn: "Stale database display name",
+          slug: "legacy-f1-record",
           verified: false,
           profilePublished: false,
           logo: null,
@@ -682,6 +685,8 @@ test("restores F1 Composite trust presentation from Git when the database row is
   assert.equal(f1Composite?.verified, true);
   assert.equal(f1Composite?.profilePublished, true);
   assert.equal(f1Composite?.sponsored, true);
+  assert.equal(f1Composite?.name, "F1 Composites");
+  assert.equal(f1Composite?.slug, "f1-composite");
   assert.equal(
     f1Composite?.logo,
     "/supplier-assets/f1-composite-logo.png",

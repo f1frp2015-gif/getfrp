@@ -11,6 +11,7 @@
 - [Technical references](https://getfrp.com/technical): FRP properties, density and engineering guidance.
 - [Standards sourcing guide](https://getfrp.com/sourcing/gb-vs-astm-frp): how to compare GB, ASTM, ISO and EN test methods in an RFQ.
 - [Crawlable supplier index](https://getfrp.com/suppliers/directory/1): paginated access to every public supplier profile.
+- [F1 Composites supplier profile](https://getfrp.com/suppliers/f1-composite): a claimed, verified and sponsored supplier profile with attributed company claims and configuration-specific evidence notes.
 
 ## Product coverage
 - FRP grating

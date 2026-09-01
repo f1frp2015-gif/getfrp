@@ -24,6 +24,7 @@ import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { FaqGrid } from "@/components/faq-grid";
 import { JsonLd } from "@/components/json-ld";
 import { SupplierList } from "@/components/supplier-list";
+import { F1CompositesCompanyProfile } from "@/components/f1-composite-microsite";
 import { db } from "@/lib/db";
 import { rfqHref } from "@/lib/rfq-links";
 import {
@@ -52,9 +53,12 @@ import {
 } from "@/lib/data/noah-composites-supplier-profile";
 import {
   F1_COMPOSITE_ENTERPRISE_ID,
-  F1_COMPOSITE_LEGAL_NAME_EN,
   F1_COMPOSITE_SUPPLIER_ID,
 } from "@/lib/data/f1-composite-supplier-profile";
+import {
+  F1_COMPOSITES_BRAND_NAME,
+  F1_COMPOSITES_COMPANY_SEO,
+} from "@/lib/data/f1-composite-microsite";
 import {
   CROTTI_LEGAL_NAME_EN,
   CROTTI_SUPPLIER_ID,
@@ -270,6 +274,9 @@ function categoryLabel(category: string | null): string {
 
 async function renderSupplierProfile(profile: SupplierProfile) {
   const { supplier, enterprise } = profile;
+  if (supplier.id === F1_COMPOSITE_SUPPLIER_ID) {
+    return <F1CompositesCompanyProfile />;
+  }
   const seoBrief = buildSupplierSeoBrief(supplier);
   const isSponsored = supplier.id === F1_COMPOSITE_SUPPLIER_ID;
   const hasGitBackedF1Identity = Boolean(
@@ -286,9 +293,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
       ? "NZ"
       : "CN";
   const name = supplier.nameEn ?? "Supplier";
-  const legalName = supplier.id === F1_COMPOSITE_SUPPLIER_ID
-    ? F1_COMPOSITE_LEGAL_NAME_EN
-    : supplier.id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_ID
+  const legalName = supplier.id === ALTA_PERFORMANCE_MATERIALS_SUPPLIER_ID
       ? ALTA_PERFORMANCE_MATERIALS_LEGAL_NAME_EN
       : supplier.id === AOC_SUPPLIER_ID
         ? AOC_LEGAL_NAME_EN
@@ -1036,6 +1041,24 @@ export async function generateMetadata({
     return {
       robots: { index: false, follow: false },
       alternates: alternates(`/suppliers/${id}`),
+    };
+  }
+  if (profile.supplier.id === F1_COMPOSITE_SUPPLIER_ID) {
+    const { title, description, path } = F1_COMPOSITES_COMPANY_SEO;
+    return {
+      title: { absolute: title },
+      description,
+      keywords: [
+        F1_COMPOSITES_BRAND_NAME,
+        "pultruded FRP supplier",
+        "FRP structural profiles",
+        "FRP grating supplier",
+        "fiberglass windows",
+        "custom pultrusion",
+      ],
+      alternates: alternates(path),
+      openGraph: og(path, { title, description }),
+      robots: { index: true, follow: true },
     };
   }
   const seoBrief = buildSupplierSeoBrief(profile.supplier);

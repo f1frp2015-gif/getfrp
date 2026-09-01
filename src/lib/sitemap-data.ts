@@ -23,6 +23,10 @@ import {
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { CURATED_SUPPLIER_PROFILES } from "@/lib/data/curated-supplier-profiles";
 import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
+import {
+  F1_COMPOSITES_PRODUCT_FAMILIES,
+  F1_COMPOSITES_REVIEW_DATE,
+} from "@/lib/data/f1-composite-microsite";
 import { sourcingTopicSlugs } from "@/lib/data/sourcing-topics";
 import { SUPPLIER_REGION_SLUGS } from "@/lib/data/supplier-region-pages";
 import { PRODUCT_SEED_RECORDS } from "@/lib/data/products";
@@ -249,10 +253,23 @@ export async function buildSitemapEntries(
           row.updatedAt,
         ),
       );
+      const curatedMicrositeEntries = F1_COMPOSITES_PRODUCT_FAMILIES.map(
+        (family) => toEntry(family.path, F1_COMPOSITES_REVIEW_DATE),
+      );
       const directoryEntries = allCompanyEntries.length > 0
         ? [toEntry(supplierDirectoryPath(1), CONTENT_REVIEW_DATE)]
         : [];
-      return [...networkEntries, ...directoryEntries, ...allCompanyEntries, ...supplierProductEntries];
+      return Array.from(
+        new Map(
+          [
+            ...networkEntries,
+            ...directoryEntries,
+            ...allCompanyEntries,
+            ...supplierProductEntries,
+            ...curatedMicrositeEntries,
+          ].map((entry) => [entry.url, entry]),
+        ).values(),
+      );
     }
 
     case "sourcing": {
