@@ -14,6 +14,7 @@ import {
   supplierDocuments,
   supplierListings,
 } from "@/lib/db/schema";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 
 import { QualificationsUploader } from "./qualifications-uploader";
 import { QualificationDocumentActions } from "./qualification-document-actions";
@@ -102,7 +103,11 @@ export default async function MyQualificationsPage({
       ) : (
         <div className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
           {t("myQual.needClaim")}{" "}
-          <Link href="/dashboard/claims" className="font-medium underline">
+          <Link
+            href={supplierClaimPath() as never}
+            prefetch={false}
+            className="font-medium underline"
+          >
             {t("myQual.needClaimCta")}
           </Link>
         </div>

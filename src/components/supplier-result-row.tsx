@@ -16,6 +16,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
 import { rfqHref } from "@/lib/rfq-links";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 import { cn } from "@/lib/utils";
 
 export type SupplierResultSignal = {
@@ -37,6 +38,7 @@ export type SupplierResultEntry = {
   standardsSupported?: string[];
   verified?: boolean;
   profilePublished?: boolean;
+  enterpriseId?: string | null;
   website?: string | null;
   logo?: string | null;
   moqKg?: number | null;
@@ -393,18 +395,20 @@ export function SupplierResultRow({
                 {t("viewProfile")}
                 <ArrowRight />
               </Link>
-              <Link
-                href={`/suppliers/claim?supplier=${encodeURIComponent(supplier.slug)}` as never}
-                prefetch={false}
-                className={buttonVariants({
-                  variant: "secondary",
-                  size: "sm",
-                  className: "w-full",
-                })}
-              >
-                <Building2 />
-                {t("claimYourCompany")}
-              </Link>
+              {!supplier.enterpriseId && (
+                <Link
+                  href={supplierClaimPath(supplier.slug || supplier.id) as never}
+                  prefetch={false}
+                  className={buttonVariants({
+                    variant: "secondary",
+                    size: "sm",
+                    className: "w-full",
+                  })}
+                >
+                  <Building2 />
+                  {t("claimYourCompany")}
+                </Link>
+              )}
             </>
           )}
           {primaryActionHref && primaryActionLabel && (

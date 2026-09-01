@@ -92,6 +92,7 @@ import {
   SuppliersClient,
   type SerializedSupplier,
 } from "../suppliers-client";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import { SupplierClaimButton } from "@/components/supplier-claim-button";
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
@@ -578,7 +579,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                       </p>
                       <div className="mt-3">
                         <SupplierClaimButton
-                          supplierId={supplier.id}
+                          supplierId={routeSlug}
                           supplierName={name}
                         />
                       </div>
@@ -835,7 +836,8 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                   <div className="mt-6 border-t border-border/70 pt-5">
                     <p className="text-sm font-semibold">Is this your business?</p>
                     <Link
-                      href={`/sign-up?intent=supplier&redirect_url=${encodeURIComponent(`/suppliers/claim?supplier=${routeSlug}`)}` as never}
+                      href={supplierClaimPath(routeSlug) as never}
+                      prefetch={false}
                       className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                     >
                       Claim your company <ArrowRight size={14} />
@@ -882,6 +884,7 @@ async function renderSupplierProfile(profile: SupplierProfile) {
                     standardsSupported: (englishSupplier.standardsSupported ?? []) as string[],
                     verified: Boolean(englishSupplier.verified),
                     profilePublished: Boolean(englishSupplier.profilePublished),
+                    enterpriseId: englishSupplier.enterpriseId,
                     website: englishSupplier.website,
                     logo: englishSupplier.logo,
                     moqKg: englishSupplier.moqKg,
@@ -1125,7 +1128,7 @@ async function renderRegionPage(region: SupplierRegionPage) {
             <p className="mt-5 max-w-3xl text-[16px] leading-7 text-muted-foreground">
               {region.summary}
             </p>
-            <div className="mt-6 flex flex-wrap gap-3"><Link href="/suppliers/claim" className={buttonVariants({ size: "lg" })}>List your factory <ArrowRight size={15} /></Link><Link href="/suppliers" className={buttonVariants({ size: "lg", variant: "outline" })}>Browse suppliers</Link></div>
+            <div className="mt-6 flex flex-wrap gap-3"><Link href={supplierClaimPath() as never} prefetch={false} className={buttonVariants({ size: "lg" })}>List your factory <ArrowRight size={15} /></Link><Link href="/suppliers" className={buttonVariants({ size: "lg", variant: "outline" })}>Browse suppliers</Link></div>
           </div>
           <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4">
             <div className="rounded-xl border border-border/70 bg-background p-5"><Factory size={18} strokeWidth={1.5} /><div className="mt-4 text-3xl font-semibold">{provinceCount}</div><div className="mt-1 text-xs text-muted-foreground">Public regional records</div></div>

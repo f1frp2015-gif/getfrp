@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { and, desc, eq, ilike, isNull, or } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { ArrowRight, Building2, CheckCircle2, Search, ShieldCheck } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 
@@ -10,11 +10,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/i18n/navigation";
 import { getCurrentUser } from "@/lib/auth/current-user";
-import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
 import { db } from "@/lib/db";
-import { supplierClaims, supplierListings } from "@/lib/db/schema";
+import { supplierClaims } from "@/lib/db/schema";
 import { alternates } from "@/lib/seo";
-import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
+import {
+  supplierClaimPath,
+  supplierClaimSignInHref,
+  supplierClaimSignUpHref,
+} from "@/lib/supplier-claim-links";
+import {
+  loadClaimSupplier,
+  logSupplierClaimDatabaseFailure,
+  searchClaimSuppliers,
+} from "@/lib/supplier-claim-service";
 
 import { ClaimCompanyForm } from "./claim-company-form";
 
@@ -39,6 +47,15 @@ function claimStatusLabel(status: string): string {
   return "Under review";
 }
 
+async function loadClaimUser() {
+  try {
+    return { user: await getCurrentUser(), databaseAvailable: true };
+  } catch (error) {
+    logSupplierClaimDatabaseFailure("load-user", error);
+    return { user: null, databaseAvailable: false };
+  }
+}
+
 export default async function ClaimSupplierPage({
   params,
   searchParams,
@@ -46,51 +63,55 @@ export default async function ClaimSupplierPage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [{ locale }, sp, me] = await Promise.all([
+  const [{ locale }, sp, userResult] = await Promise.all([
     params,
     searchParams,
-    getCurrentUser(),
+    loadClaimUser(),
   ]);
   setRequestLocale(locale);
 
   const query = firstParam(sp.q).trim().slice(0, 100);
   const supplierKey = firstParam(sp.supplier).trim().slice(0, 180);
+  const [supplierResult, searchResult] = await Promise.all([
+    supplierKey
+      ? loadClaimSupplier(supplierKey)
+      : Promise.resolve({
+          supplier: null,
+          databaseAvailable: true,
+          databaseRecordExists: false,
+        }),
+    query
+      ? searchClaimSuppliers(query)
+      : Promise.resolve({ suppliers: [], databaseAvailable: true }),
+  ]);
+  const me = userResult.user;
+  const selectedSupplier = supplierResult.supplier;
+  const displaySearchResults = searchResult.suppliers;
+  let databaseAvailable =
+    userResult.databaseAvailable &&
+    supplierResult.databaseAvailable &&
+    searchResult.databaseAvailable;
+  let latestClaim:
+    | {
+        status: string;
+        reviewNote: string | null;
+        createdAt: Date;
+      }
+    | undefined;
 
-  const [selectedSupplier] = supplierKey
-    ? await db
-        .select()
-        .from(supplierListings)
-        .where(
-          or(
-            eq(supplierListings.id, supplierKey),
-            eq(supplierListings.slug, supplierKey),
-          ),
-        )
-        .limit(1)
-    : [];
-
-  const searchResults = query
-    ? await db
-        .select()
-        .from(supplierListings)
-        .where(
-          and(
-            isNull(supplierListings.enterpriseId),
-            or(
-              ilike(supplierListings.nameEn, `%${query}%`),
-              ilike(supplierListings.locationEn, `%${query}%`),
-              ilike(supplierListings.descriptionEn, `%${query}%`),
-            ),
-          ),
-        )
-        .orderBy(desc(supplierListings.verified), supplierListings.nameEn)
-        .limit(12)
-    : [];
-  const displaySearchResults = searchResults.map(enrichSupplierWithCuratedProfile);
-
-  const [latestClaim] = me && selectedSupplier
-    ? await db
-        .select()
+  if (
+    me &&
+    selectedSupplier &&
+    databaseAvailable &&
+    supplierResult.databaseRecordExists
+  ) {
+    try {
+      [latestClaim] = await db
+        .select({
+          status: supplierClaims.status,
+          reviewNote: supplierClaims.reviewNote,
+          createdAt: supplierClaims.createdAt,
+        })
         .from(supplierClaims)
         .where(
           and(
@@ -99,14 +120,16 @@ export default async function ClaimSupplierPage({
           ),
         )
         .orderBy(desc(supplierClaims.createdAt))
-        .limit(1)
-    : [];
+        .limit(1);
+    } catch (error) {
+      databaseAvailable = false;
+      logSupplierClaimDatabaseFailure("load-latest-claim", error);
+    }
+  }
 
   const selectedSlug = selectedSupplier?.slug ?? selectedSupplier?.id ?? "";
-  const claimPath = selectedSlug
-    ? `/suppliers/claim?supplier=${encodeURIComponent(selectedSlug)}`
-    : "/suppliers/claim";
   const canSubmitClaim =
+    databaseAvailable &&
     Boolean(me && selectedSupplier && !selectedSupplier.enterpriseId) &&
     (!latestClaim || latestClaim.status === "rejected" || latestClaim.status === "withdrawn");
 
@@ -150,13 +173,25 @@ export default async function ClaimSupplierPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        {!databaseAvailable && (
+          <div
+            className="mb-8 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950"
+            role="alert"
+          >
+            <div className="font-semibold">Company claim service is temporarily unavailable.</div>
+            <p className="mt-1 text-amber-900/80">
+              You can still find and review your company below. Account lookup, claim submission
+              and document upload require the database service to recover; please retry shortly.
+            </p>
+          </div>
+        )}
         <div className="grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)]">
           <aside className="h-fit rounded-xl border bg-muted/20 p-5 lg:sticky lg:top-20">
             <h2 className="font-semibold">1. Find your company</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               Search the public directory by English company name, brand or location.
             </p>
-            <form className="mt-5 space-y-3" action="/suppliers/claim">
+            <form className="mt-5 space-y-3" action={supplierClaimPath()}>
               <div className="relative">
                 <Search
                   size={16}
@@ -213,12 +248,13 @@ export default async function ClaimSupplierPage({
                         supplier.certificationsEn ?? supplier.certifications ?? [],
                       standardsSupported: supplier.standardsSupported ?? [],
                       verified: Boolean(supplier.verified),
-                      profilePublished: isSupplierProfileIndexable(supplier),
+                      profilePublished: Boolean(supplier.profilePublished),
+                      enterpriseId: supplier.enterpriseId,
                       website: supplier.website,
                       logo: supplier.logo,
                       moqKg: supplier.moqKg,
                       leadTimeDays: supplier.leadTimeDays,
-                      actionHref: `/suppliers/claim?supplier=${encodeURIComponent(supplier.slug ?? supplier.id)}`,
+                      actionHref: supplierClaimPath(supplier.slug ?? supplier.id),
                       actionLabel: "Select company",
                     }))}
                   />
@@ -233,10 +269,13 @@ export default async function ClaimSupplierPage({
             {!selectedSupplier && !query && (
               <div className="rounded-xl border border-dashed p-12 text-center">
                 <Building2 className="mx-auto text-muted-foreground" size={28} />
-                <h2 className="mt-4 text-xl font-semibold">Start with your company record</h2>
+                <h2 className="mt-4 text-xl font-semibold">
+                  {supplierKey ? "Selected company could not be loaded" : "Start with your company record"}
+                </h2>
                 <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-                  Selecting the existing record prevents duplicate profiles and keeps buyer traffic,
-                  product links and sourcing history attached to the same company.
+                  {supplierKey
+                    ? "Search by the company name or retry this claim link once the company service is available."
+                    : "Selecting the existing record prevents duplicate profiles and keeps buyer traffic, product links and sourcing history attached to the same company."}
                 </p>
               </div>
             )}
@@ -281,13 +320,13 @@ export default async function ClaimSupplierPage({
                           </p>
                           <div className="mt-4 flex flex-wrap gap-3">
                             <Link
-                              href={`/sign-up?intent=supplier&redirect_url=${encodeURIComponent(claimPath)}` as never}
+                              href={supplierClaimSignUpHref(selectedSlug) as never}
                               className={buttonVariants()}
                             >
                               Create supplier account
                             </Link>
                             <Link
-                              href={`/sign-in?intent=supplier&redirect_url=${encodeURIComponent(claimPath)}` as never}
+                              href={supplierClaimSignInHref(selectedSlug) as never}
                               className={buttonVariants({ variant: "outline" })}
                             >
                               Sign in
@@ -334,16 +373,18 @@ export default async function ClaimSupplierPage({
                         />
                       )}
 
-                      <div>
-                        <div className="mb-3">
-                          <h2 className="font-semibold">3. Upload verification documents</h2>
-                          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                            Start with the business license. Product brochures, test reports and certificates
-                            can be uploaded now or from the supplier workspace. Each document is reviewed separately.
-                          </p>
+                      {databaseAvailable && supplierResult.databaseRecordExists && (
+                        <div>
+                          <div className="mb-3">
+                            <h2 className="font-semibold">3. Upload verification documents</h2>
+                            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                              Start with the business license. Product brochures, test reports and certificates
+                              can be uploaded now or from the supplier workspace. Each document is reviewed separately.
+                            </p>
+                          </div>
+                          <QualificationsUploader supplierListingId={selectedSupplier.id} initialKind="license" />
                         </div>
-                        <QualificationsUploader supplierListingId={selectedSupplier.id} initialKind="license" />
-                      </div>
+                      )}
                     </>
                   )}
                 </CardContent>
