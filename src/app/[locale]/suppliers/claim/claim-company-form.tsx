@@ -36,18 +36,22 @@ export function ClaimCompanyForm({
         note: String(formData.get("note") ?? "").trim(),
       };
 
-      const response = await fetch(`/api/suppliers/${supplierId}/claim`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const body = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        setError(body?.error ?? "The claim could not be submitted. Please try again.");
-        return;
+      try {
+        const response = await fetch(`/api/suppliers/${supplierId}/claim`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          setError(body?.error ?? "The claim could not be submitted. Please try again.");
+          return;
+        }
+        setSubmitted(true);
+        router.refresh();
+      } catch {
+        setError("Unable to contact the company claim service. Check your connection and retry.");
       }
-      setSubmitted(true);
-      router.refresh();
     });
   }
 

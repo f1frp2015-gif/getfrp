@@ -25,6 +25,7 @@ import {
   supplierListings,
   supplierProducts,
 } from "@/lib/db/schema";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 
 export const dynamic = "force-dynamic";
 
@@ -86,6 +87,7 @@ export default async function SupplierWorkspacePage({
   const hasLicense = Boolean(enterprise?.businessLicense || licenseDocs.length);
   const activeSupplier = linkedSupplier ?? latestClaim?.supplier ?? null;
   const supplierSlug = activeSupplier?.slug ?? activeSupplier?.id;
+  const claimPath = supplierClaimPath(supplierSlug);
   const companyComplete = Boolean(
     enterprise?.name &&
       enterprise.contactName &&
@@ -121,7 +123,7 @@ export default async function SupplierWorkspacePage({
           ? `Company registration: ${enterprise.status}`
           : "Claim an existing listing or register a new company.",
       done: latestClaim?.claim.status === "approved" || enterprise?.status === "verified",
-      href: latestClaim ? ("/dashboard/claims" as const) : ("/suppliers/claim" as const),
+      href: latestClaim ? "/dashboard/claims" : claimPath,
       action: latestClaim ? "View review status" : "Find or register company",
     },
     {
@@ -254,7 +256,8 @@ export default async function SupplierWorkspacePage({
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.description}</p>
               </div>
               <Link
-                href={step.href}
+                href={step.href as never}
+                prefetch={step.href === claimPath ? false : undefined}
                 className={buttonVariants({ variant: "outline", size: "sm", className: "shrink-0" })}
               >
                 {step.action} <ArrowRight size={13} />

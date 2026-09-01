@@ -2,9 +2,13 @@ import { NextResponse } from "next/server";
 import { and, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { supplierClaims, supplierListings } from "@/lib/db/schema";
+import { supplierClaims } from "@/lib/db/schema";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { containsCjk } from "@/lib/english-only";
+import {
+  logSupplierClaimDatabaseFailure,
+  resolveClaimSupplierRecord,
+} from "@/lib/supplier-claim-service";
 
 export const runtime = "nodejs";
 
@@ -17,47 +21,36 @@ const ClaimRequest = z.object({
   note: z.string().trim().max(3000).optional().default(""),
 }).strict();
 
+function claimServiceUnavailable() {
+  return NextResponse.json(
+    {
+      error: "Company claim service is temporarily unavailable. Please retry shortly.",
+      code: "CLAIM_SERVICE_UNAVAILABLE",
+    },
+    {
+      status: 503,
+      headers: {
+        "Cache-Control": "no-store",
+        "Retry-After": "60",
+      },
+    },
+  );
+}
+
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const me = await getCurrentUser();
+  let me;
+  try {
+    me = await getCurrentUser();
+  } catch (error) {
+    logSupplierClaimDatabaseFailure("submit-load-user", error);
+    return claimServiceUnavailable();
+  }
   if (!me) {
     return NextResponse.json({ error: "Please sign in before claiming a company." }, { status: 401 });
-  }
-
-  const [supplier] = await db
-    .select()
-    .from(supplierListings)
-    .where(eq(supplierListings.id, id))
-    .limit(1);
-  if (!supplier) {
-    return NextResponse.json({ error: "Supplier record not found." }, { status: 404 });
-  }
-  if (supplier.enterpriseId) {
-    return NextResponse.json(
-      { error: "This company already has an approved administrator." },
-      { status: 409 }
-    );
-  }
-
-  const existing = await db
-    .select()
-    .from(supplierClaims)
-    .where(
-      and(
-        eq(supplierClaims.supplierListingId, id),
-        eq(supplierClaims.userId, me.id),
-        inArray(supplierClaims.status, ["pending", "approved"])
-      )
-    )
-    .limit(1);
-  if (existing.length > 0) {
-    return NextResponse.json(
-      { error: "You already have an active claim for this company." },
-      { status: 409 }
-    );
   }
 
   const parsed = ClaimRequest.safeParse(await req.json().catch(() => null));
@@ -75,28 +68,62 @@ export async function POST(
     );
   }
 
-  const [row] = await db
-    .insert(supplierClaims)
-    .values({
-      supplierListingId: id,
-      userId: me.id,
-      contactName,
-      contactTitle: contactTitle || null,
-      contactPhone,
-      contactEmail,
-      businessLicenseUrl: businessLicenseUrl || null,
-      note: note || null,
-    })
-    .returning();
+  try {
+    const supplier = await resolveClaimSupplierRecord(id);
+    if (!supplier) {
+      return NextResponse.json({ error: "Supplier record not found." }, { status: 404 });
+    }
+    if (supplier.enterpriseId) {
+      return NextResponse.json(
+        { error: "This company already has an approved administrator." },
+        { status: 409 },
+      );
+    }
 
-  return NextResponse.json(
-    {
-      data: {
-        id: row.id,
-        status: row.status,
-        message: "Claim submitted. GetFRP will review the relationship and contact you by email or phone if needed.",
+    const existing = await db
+      .select({ id: supplierClaims.id })
+      .from(supplierClaims)
+      .where(
+        and(
+          eq(supplierClaims.supplierListingId, supplier.id),
+          eq(supplierClaims.userId, me.id),
+          inArray(supplierClaims.status, ["pending", "approved"]),
+        ),
+      )
+      .limit(1);
+    if (existing.length > 0) {
+      return NextResponse.json(
+        { error: "You already have an active claim for this company." },
+        { status: 409 },
+      );
+    }
+
+    const [row] = await db
+      .insert(supplierClaims)
+      .values({
+        supplierListingId: supplier.id,
+        userId: me.id,
+        contactName,
+        contactTitle: contactTitle || null,
+        contactPhone,
+        contactEmail,
+        businessLicenseUrl: businessLicenseUrl || null,
+        note: note || null,
+      })
+      .returning({ id: supplierClaims.id, status: supplierClaims.status });
+
+    return NextResponse.json(
+      {
+        data: {
+          id: row.id,
+          status: row.status,
+          message: "Claim submitted. GetFRP will review the relationship and contact you by email or phone if needed.",
+        },
       },
-    },
-    { status: 201 }
-  );
+      { status: 201 },
+    );
+  } catch (error) {
+    logSupplierClaimDatabaseFailure("submit", error);
+    return claimServiceUnavailable();
+  }
 }

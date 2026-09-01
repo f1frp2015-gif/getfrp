@@ -12,10 +12,12 @@ import { setRequestLocale } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { alternates, og } from "@/lib/seo";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 
 const title = "Supplier Resources — Build a Buyer-Ready FRP Profile | getfrp";
 const description =
   "Resources for China FRP manufacturers to claim a company profile, publish product capabilities and prepare verification evidence for international buyers.";
+const claimPath = supplierClaimPath();
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -29,7 +31,7 @@ const steps = [
     icon: Building2,
     title: "Claim the correct company record",
     body: "Connect your account to the existing legal-company profile so buyer traffic, products and sourcing history stay in one place.",
-    href: "/suppliers/claim",
+    href: claimPath,
     cta: "Claim your company",
   },
   {
@@ -71,7 +73,8 @@ export default async function SupplierResourcesPage({
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/suppliers/claim"
+              href={claimPath as never}
+              prefetch={false}
               className={buttonVariants({
                 size: "lg",
                 className: "bg-brand-teal text-brand-navy hover:bg-brand-aqua",
@@ -110,6 +113,7 @@ export default async function SupplierResourcesPage({
               <p className="mt-3 text-sm leading-7 text-brand-graphite/70">{step.body}</p>
               <Link
                 href={step.href as never}
+                prefetch={step.href === claimPath ? false : undefined}
                 className="mt-auto flex items-center gap-2 border-t border-brand-cool-gray pt-5 text-sm font-semibold text-brand-blue transition-colors group-hover:text-brand-navy"
               >
                 {step.cta} <ArrowRight size={14} />

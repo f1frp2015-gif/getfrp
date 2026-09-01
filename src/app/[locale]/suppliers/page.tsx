@@ -23,6 +23,7 @@ import {
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
 import { alternates } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
+import { supplierClaimPath } from "@/lib/supplier-claim-links";
 
 export const revalidate = 3600;
 
@@ -426,7 +427,8 @@ export default async function SuppliersPage({
               Submit an RFQ <ArrowRight size={15} />
             </Link>
             <Link
-              href="/suppliers/claim"
+              href={supplierClaimPath() as never}
+              prefetch={false}
               className="inline-flex h-11 items-center rounded-md border border-white/25 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
               Claim your company
