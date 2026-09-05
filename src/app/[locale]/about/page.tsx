@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Button } from "@/components/ui/button";
+import { UsFrpMarketWall } from "@/components/about/us-frp-market-wall";
 import {
   Card,
   CardContent,
@@ -50,6 +51,7 @@ export default async function AboutPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       {locale === "en" && <EnglishTrustBlock />}
+      {locale === "en" && <UsFrpMarketWall />}
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold">{t("h1")}</h1>
         <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
