@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { gateAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
@@ -13,6 +13,10 @@ import {
 import { ProductReviewInput } from "@/lib/products/ugc-input";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
 import { supplierProductPagesAvailable } from "@/lib/products/ugc-queries";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
+import { fanOutSearchPush } from "@/lib/ingest/search-push";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const runtime = "nodejs";
 
@@ -73,6 +77,13 @@ export async function PATCH(
   revalidatePath(`/suppliers/${supplierSlug}`);
   revalidatePath(`/suppliers/${supplierSlug}/${existing.page.slug}`);
   revalidatePath("/sitemap.xml");
+  revalidatePath("/sitemaps/suppliers.xml");
+  if (approved && isSupplierProfileIndexable(enrichSupplierWithCuratedProfile(existing.supplier))) {
+    after(async () => {
+      const result = await fanOutSearchPush([`${CURRENT_SITE_URL}/suppliers/${supplierSlug}/${existing.page.slug}`, `${CURRENT_SITE_URL}/products/${existing.categorySlug}`]);
+      console.info("[search-discovery] product review", JSON.stringify(result));
+    });
+  }
   return NextResponse.json({ data: { id, status: parsed.data.action } });
 }
 
@@ -97,5 +108,6 @@ export async function DELETE(
   revalidatePath(`/products/${existing.categorySlug}`);
   revalidatePath(`/suppliers/${supplierSlug}`);
   revalidatePath(`/suppliers/${supplierSlug}/${existing.page.slug}`);
+  revalidatePath("/sitemaps/suppliers.xml");
   return NextResponse.json({ ok: true });
 }

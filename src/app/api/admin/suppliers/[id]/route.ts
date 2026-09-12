@@ -1,10 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { gateAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
 import { supplierListings } from "@/lib/db/schema";
+import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-profiles";
+import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
+import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { fanOutSearchPush } from "@/lib/ingest/search-push";
+import { CURRENT_SITE_URL } from "@/lib/sites";
 
 export const runtime = "nodejs";
 
@@ -87,8 +93,19 @@ export async function PATCH(
       updatedAt: now,
     })
     .where(eq(supplierListings.id, id))
-    .returning({ id: supplierListings.id });
+    .returning();
 
   if (!updated) return NextResponse.json({ error: "Supplier record not found." }, { status: 404 });
-  return NextResponse.json({ data: updated });
+  const profile = enrichSupplierWithCuratedProfile(updated);
+  const slug = supplierRouteSlug(profile);
+  revalidatePath(`/suppliers/${slug}`);
+  revalidatePath("/suppliers");
+  revalidatePath("/sitemaps/suppliers.xml");
+  if (isSupplierProfileIndexable(profile)) {
+    after(async () => {
+      const result = await fanOutSearchPush([`${CURRENT_SITE_URL}/suppliers/${slug}`]);
+      console.info("[search-discovery] supplier update", JSON.stringify(result));
+    });
+  }
+  return NextResponse.json({ data: { id: updated.id } });
 }

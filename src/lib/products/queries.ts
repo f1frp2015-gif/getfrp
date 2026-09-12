@@ -17,6 +17,8 @@ import { enrichSupplierWithCuratedProfile } from "@/lib/data/curated-supplier-pr
 import { F1_COMPOSITE_SUPPLIER_ID } from "@/lib/data/f1-composite-supplier-profile";
 import { isSupplierProfileIndexable } from "@/lib/supplier-indexability";
 import { supplierRouteSlug } from "@/lib/supplier-slugs";
+import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
+import { matchingCatalogProducts } from "./catalog-match";
 
 export type CatalogProduct = {
   id: string;
@@ -72,7 +74,27 @@ export type ProductSupplier = {
   moq: number | null;
   moqUnit: string | null;
   leadTimeDays: number | null;
+  evidenceBasis?: "product-relationship" | "company-catalog";
+  reviewedAt?: string | null;
 };
+
+async function catalogCandidates(product: CatalogProduct): Promise<ProductSupplier[]> {
+  if (!["frp-grating", "pultruded-profiles", "frp-pipe"].includes(product.slug)) return [];
+  const directory = await getPublicSupplierDirectory("en");
+  return directory.filter((supplier) => supplier.profilePublished &&
+    matchingCatalogProducts(product.slug, supplier.products).length > 0).map((supplier) => ({
+      ...supplier,
+      evidenceBasis: "company-catalog",
+      relationshipType: "Catalog candidate",
+      supplierProductName: matchingCatalogProducts(product.slug, supplier.products).slice(0, 3).join("; "),
+      customAvailable: false,
+      // Company-level commercial terms cannot be carried into a product offer.
+      moq: null,
+      moqUnit: null,
+      moqKg: null,
+      leadTimeDays: null,
+    }));
+}
 
 function seedProduct(slug: string): CatalogProduct | null {
   const record = PRODUCT_SEED_RECORDS.find((product) => product.slug === slug);
@@ -174,7 +196,7 @@ export async function loadSuppliersForProduct(
         desc(supplierListings.brandPriority),
         asc(supplierListings.nameEn),
       );
-    return rows.flatMap(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
+    const linked: ProductSupplier[] = rows.flatMap(({ supplier, relation, enterpriseLogo, enterpriseWebsite, employeeCount, annualRevenue }) => {
       const displayedSupplier = enrichSupplierWithCuratedProfile(supplier);
       if (!isSupplierProfileIndexable(displayedSupplier)) return [];
       return [{
@@ -198,7 +220,7 @@ export async function loadSuppliersForProduct(
         annualRevenue: annualRevenue ?? null,
         capabilities: displayedSupplier.capabilities ?? [],
         standardsSupported: displayedSupplier.standardsSupported ?? [],
-        moqKg: relation.moqUnit === "kg" ? relation.moq : displayedSupplier.moqKg,
+        moqKg: relation.moqUnit === "kg" ? relation.moq : null,
         exportReady: displayedSupplier.exportReady,
         sponsored: displayedSupplier.id === F1_COMPOSITE_SUPPLIER_ID,
         relationshipType: relation.relationshipType,
@@ -206,10 +228,17 @@ export async function loadSuppliersForProduct(
         customAvailable: relation.customAvailable,
         moq: relation.moq,
         moqUnit: relation.moqUnit,
-        leadTimeDays: relation.leadTimeDays ?? displayedSupplier.leadTimeDays,
+        leadTimeDays: relation.leadTimeDays,
+        evidenceBasis: "product-relationship" as const,
+        reviewedAt: displayedSupplier.profileReviewedAt?.toISOString().slice(0, 10) ?? null,
       }];
     });
+    const linkedIds = new Set(linked.map((supplier) => supplier.id));
+    const candidates = await catalogCandidates(product);
+    return [...linked, ...candidates.filter((supplier) => !linkedIds.has(supplier.id))];
   } catch {
+    const candidates = await catalogCandidates(product);
+    if (candidates.length) return candidates;
     const page = getSupplierCategoryPage(product.slug);
     if (!page) return [];
     try {
@@ -255,18 +284,16 @@ export async function loadSuppliersForProduct(
             annualRevenue: annualRevenue ?? null,
             capabilities: displayedSupplier.capabilities ?? [],
             standardsSupported: displayedSupplier.standardsSupported ?? [],
-            moqKg: displayedSupplier.moqKg ?? null,
+            moqKg: null,
             exportReady: displayedSupplier.exportReady,
             sponsored: displayedSupplier.id === F1_COMPOSITE_SUPPLIER_ID,
-            relationshipType:
-              displayedSupplier.category === "resin" || displayedSupplier.category === "fiber"
-                ? "supplier"
-                : "manufacturer",
-            supplierProductName: product.shortName,
-            customAvailable: displayedSupplier.category === "manufacturer",
-            moq: displayedSupplier.moqKg,
-            moqUnit: displayedSupplier.moqKg == null ? null : "kg",
-            leadTimeDays: displayedSupplier.leadTimeDays,
+            relationshipType: "Catalog candidate",
+            evidenceBasis: "company-catalog" as const,
+            supplierProductName: null,
+            customAvailable: false,
+            moq: null,
+            moqUnit: null,
+            leadTimeDays: null,
           };
         });
     } catch {

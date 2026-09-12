@@ -44,6 +44,8 @@ import {
   STANDARD_PAGES,
 } from "@/lib/data/seo-marketplace-pages";
 import { INSIGHT_PAGES, SOURCE_FROM_CHINA_PAGES } from "@/lib/data/longform-pages";
+import { BUYER_REFERENCE_UPDATED } from "@/lib/data/buyer-reference-content";
+import { PROCUREMENT_BRIEFS, PROCUREMENT_UPDATED } from "@/lib/data/procurement-briefs";
 import { HELP_PAGES } from "@/lib/data/help-pages";
 import { loadApprovedProductSitemapRows } from "@/lib/products/ugc-queries";
 
@@ -89,16 +91,15 @@ export const CORE_SITEMAP_ROUTES: StaticRoute[] = [
   { path: "/", lastModified: CONTENT_REVIEW_DATE },
   { path: "/products", lastModified: CONTENT_REVIEW_DATE },
   { path: "/suppliers", lastModified: CONTENT_REVIEW_DATE },
-  { path: "/rfq", lastModified: CONTENT_REVIEW_DATE },
   { path: "/manufacturing", lastModified: CONTENT_REVIEW_DATE },
   { path: "/applications", lastModified: CONTENT_REVIEW_DATE },
   { path: "/standards", lastModified: CONTENT_REVIEW_DATE },
   { path: "/insights", lastModified: CONTENT_REVIEW_DATE },
   { path: "/services/frp-engineering-qa", lastModified: CONTENT_REVIEW_DATE },
   { path: "/services/china-export-growth", lastModified: "2026-08-24" },
-  { path: "/methodology", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/methodology", lastModified: BUYER_REFERENCE_UPDATED },
   { path: "/ai", lastModified: "2026-08-04" },
-  { path: "/about", lastModified: CONTENT_REVIEW_DATE },
+  { path: "/about", lastModified: BUYER_REFERENCE_UPDATED },
   { path: "/contact", lastModified: CONTENT_REVIEW_DATE },
   { path: "/source-from-china", lastModified: "2026-08-04" },
   { path: "/sitemap", lastModified: CONTENT_REVIEW_DATE },
@@ -181,7 +182,7 @@ export async function buildSitemapEntries(
         const path = `/products/${row.slug}`;
         return RETIRED_INDEX_PATHS.has(path)
           ? []
-          : [toEntry(path, row.updatedAt)];
+          : [toEntry(path, PROCUREMENT_BRIEFS[row.slug] ? PROCUREMENT_UPDATED : row.updatedAt)];
       });
       const programmaticEntries = [
         ...ADDITIONAL_PRODUCT_PAGES,
@@ -283,7 +284,7 @@ export async function buildSitemapEntries(
           const path = `/source-from-china/${page.slug}`;
           return RETIRED_INDEX_PATHS.has(path)
             ? []
-            : [toEntry(path, CONTENT_REVIEW_DATE)];
+            : [toEntry(path, BUYER_REFERENCE_UPDATED)];
         }),
       ];
     }
@@ -291,7 +292,7 @@ export async function buildSitemapEntries(
     case "resources": {
       if (!isEn) return [];
       return RESOURCE_SITEMAP_PATHS.map((path) => ({
-        ...toEntry(path, "2026-08-04"),
+        ...toEntry(path, path.startsWith("/insights/") ? BUYER_REFERENCE_UPDATED : "2026-08-04"),
       }));
     }
 

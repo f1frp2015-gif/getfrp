@@ -13,7 +13,7 @@ import {
 } from "./data/seo-marketplace-pages";
 import {
   INSIGHT_PAGES,
-  longformSections,
+  buyerReference,
   SOURCE_FROM_CHINA_PAGES,
 } from "./data/longform-pages";
 import { HELP_PAGES } from "./data/help-pages";
@@ -142,12 +142,26 @@ test("eight core product pages enforce one primary on-page keyword", () => {
   }
 });
 
-test("long-form source and insight pages exceed 800 rendered words", () => {
-  assert.equal(SOURCE_FROM_CHINA_PAGES.length, 5);
+test("buyer references answer distinct questions with complete comparison tables and sources", () => {
+  assert.equal(SOURCE_FROM_CHINA_PAGES.length, 3);
   assert.equal(INSIGHT_PAGES.length, 4);
+  const bodies = new Set<string>();
+  const questions = new Set<string>();
   for (const page of [...SOURCE_FROM_CHINA_PAGES, ...INSIGHT_PAGES]) {
-    const text = [page.h1, page.description, ...longformSections(page).flatMap((section) => [section.heading, section.body])].join(" ");
-    assert.ok(text.split(/\s+/).length >= 800, `${page.slug} is below 800 words`);
+    const reference = buyerReference(page);
+    assert.ok(reference.answer.length > 100, `${page.slug} needs a direct answer`);
+    assert.ok(reference.sources.length > 0, `${page.slug} needs sources`);
+    assert.ok(reference.table.rows.length >= 3);
+    for (const row of reference.table.rows) assert.equal(row.length, reference.table.headers.length);
+    for (const source of reference.sources) assert.equal(new URL(source.url).protocol, "https:");
+    for (const section of reference.sections) {
+      assert.ok(!bodies.has(section.body), `${page.slug} repeats another article body`);
+      bodies.add(section.body);
+    }
+    for (const faq of reference.faqs) {
+      assert.ok(!questions.has(faq.question), `${page.slug} repeats another article FAQ`);
+      questions.add(faq.question);
+    }
   }
   assert.equal(HELP_PAGES.length, 3);
 });

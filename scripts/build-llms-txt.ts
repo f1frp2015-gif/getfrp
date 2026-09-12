@@ -1,5 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { INSIGHT_PAGES, SOURCE_FROM_CHINA_PAGES, buyerReference } from "../src/lib/data/longform-pages";
+import { BUYER_REFERENCE_UPDATED } from "../src/lib/data/buyer-reference-content";
 
 const LLMS = `# getfrp.com — China FRP Products & Manufacturers
 
@@ -12,6 +14,7 @@ const LLMS = `# getfrp.com — China FRP Products & Manufacturers
 - [Source from China](https://getfrp.com/source-from-china): RFQ, sampling, QA, payment, export and logistics playbook.
 - [RFQ](https://getfrp.com/rfq): one controlled request for supplier matching and evidence review.
 - [Technical references](https://getfrp.com/technical): FRP properties, density and engineering guidance.
+- [Editorial methodology](https://getfrp.com/methodology): evidence states, source attribution, corrections and sponsorship policy.
 - [Standards sourcing guide](https://getfrp.com/sourcing/gb-vs-astm-frp): how to compare GB, ASTM, ISO and EN test methods in an RFQ.
 - [Crawlable supplier index](https://getfrp.com/suppliers/directory/1): paginated access to every public supplier profile.
 - [F1 Composites supplier profile](https://getfrp.com/suppliers/f1-composite): a claimed, verified and sponsored supplier profile with attributed company claims and configuration-specific evidence notes.
@@ -36,7 +39,15 @@ canonical site: https://getfrp.com
 - [Submit an RFQ or contact the sourcing desk](https://getfrp.com/rfq)
 `;
 
+const REFERENCES = [...SOURCE_FROM_CHINA_PAGES, ...INSIGHT_PAGES].map((page) => {
+  const reference = buyerReference(page);
+  return `### ${page.h1}\nCanonical: https://getfrp.com/${page.group}/${page.slug}\nUpdated: ${BUYER_REFERENCE_UPDATED}\n${reference.answer}\nSources: ${reference.sources.map((source) => source.url).join(", ")}`;
+}).join("\n\n");
+
 const LLMS_FULL = `${LLMS}
+
+## Source-linked buyer references
+${REFERENCES}
 
 ## Buyer questions GetFRP is designed to answer
 - Which Chinese manufacturers make a specified FRP product using the required process?

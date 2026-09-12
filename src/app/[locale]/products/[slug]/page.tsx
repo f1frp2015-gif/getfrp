@@ -31,6 +31,8 @@ import {
 import { loadApprovedSupplierProducts } from "@/lib/products/ugc-queries";
 import { getProductSearchIntent } from "@/lib/data/product-search-intents";
 import { rfqHref } from "@/lib/rfq-links";
+import { ProductEvidenceTable } from "@/components/marketplace/product-evidence-table";
+import { PROCUREMENT_BRIEFS, PROCUREMENT_UPDATED } from "@/lib/data/procurement-briefs";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -143,6 +145,7 @@ export default async function ProductDetailPage({
   });
   const pageUrl = `${CURRENT_SITE_URL}/products/${product.slug}`;
   const sourcingGuideHref = SOURCING_GUIDE_BY_PRODUCT[product.slug];
+  const procurement = PROCUREMENT_BRIEFS[product.slug];
   const relatedProducts = (RELATED_PRODUCT_SLUGS[product.slug] ?? [])
     .map((relatedSlug) =>
       PRODUCT_SEED_RECORDS.find((record) => record.slug === relatedSlug),
@@ -163,7 +166,7 @@ export default async function ProductDetailPage({
           name: product.nameEn,
           description: product.summary,
           inLanguage: "en",
-          dateModified: "2026-08-25",
+          dateModified: procurement ? PROCUREMENT_UPDATED : "2026-08-25",
           mainEntity: {
             "@type": "DefinedTerm",
             "@id": `${pageUrl}#product-family`,
@@ -246,8 +249,8 @@ export default async function ProductDetailPage({
                 </div>
               )}
               <div className="mt-7 flex flex-wrap gap-3">
-                <a href="#products" className={buttonVariants({ size: "lg" })}>
-                  Product List
+                <a href={supplierProductPages.length ? "#products" : suppliers.length ? "#supplier-evidence" : "#suppliers"} className={buttonVariants({ size: "lg" })}>
+                  {supplierProductPages.length ? "Product List" : "Compare sourcing evidence"}
                 </a>
                 <a href="#suppliers" className={buttonVariants({ size: "lg", variant: "outline" })}>
                   Supplier List
@@ -284,11 +287,20 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      <section id="products" className="scroll-mt-20 border-b border-border/80 bg-muted/15">
+      <ProductEvidenceTable suppliers={suppliers} productName={product.shortName ?? product.nameEn} />
+
+      {procurement && <section id="procurement-brief" className="border-y bg-muted/15"><div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+        <h2 className="text-2xl font-semibold">Prepare a {procurement.label} RFQ</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">Send the same drawing revision, quantity and destination to each shortlisted supplier. Ask for an evidence reference and any deviation against every requirement.</p>
+        <ul className="mt-6 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3">{procurement.fields.map((field) => <li key={field} className="rounded-lg border bg-background p-4">{field}</li>)}</ul>
+        <div className="mt-6 flex flex-wrap gap-4"><a href={`/buyer-resources/${product.slug}-rfq.csv`} download className={buttonVariants({ variant: "outline" })}>Download blank RFQ worksheet (CSV)</a><Link href={procurement.guide as never} className={buttonVariants({ variant: "ghost" })}>Read the buying guide</Link></div>
+      </div></section>}
+
+      {supplierProductPages.length > 0 && <section id="products" className="scroll-mt-20 border-b border-border/80 bg-muted/15">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">APPROVED UGC PRODUCTS</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">SUPPLIER PRODUCTS</div>
           <h2 className="mt-2 text-3xl font-semibold">Supplier-uploaded {product.shortName ?? product.nameEn} products</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">Only reviewed and approved supplier submissions are listed. Pending, rejected and demo records remain private and are excluded from sitemap output.</p>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">Review the offered model and its supporting documents before requesting a quotation.</p>
           {supplierProductPages.length ? (
             <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {supplierProductPages.map((item) => (
@@ -302,7 +314,7 @@ export default async function ProductDetailPage({
             <div className="mt-7 rounded-xl border border-dashed bg-background p-8 text-center"><h3 className="font-semibold">No approved supplier products yet</h3><p className="mt-2 text-sm text-muted-foreground">Browse the real supplier relationships below or submit an RFQ. GetFRP does not fill this section with synthetic products.</p></div>
           )}
         </div>
-      </section>
+      </section>}
 
       <section className="border-b border-border/80 bg-[#f4f6f9]">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_360px]">
@@ -311,7 +323,7 @@ export default async function ProductDetailPage({
               Evidence and review method
             </div>
             <h2 className="mt-2 text-2xl font-semibold">
-              A product-family brief, not a purchasable SKU
+              Product-family scope and evidence
             </h2>
             <p className="mt-4 max-w-3xl text-[14px] leading-7 text-muted-foreground">
               GetFRP separates generally used engineering ranges from a
@@ -332,7 +344,7 @@ export default async function ProductDetailPage({
           <dl className="rounded-xl border border-border/70 bg-white p-6 text-sm">
             <div className="flex justify-between gap-5 border-b border-border/70 pb-3">
               <dt className="text-muted-foreground">Last editorial review</dt>
-              <dd className="font-medium">25 August 2026</dd>
+              <dd className="font-medium">{procurement ? "12 September 2026" : "25 August 2026"}</dd>
             </div>
             <div className="flex justify-between gap-5 border-b border-border/70 py-3">
               <dt className="text-muted-foreground">Supplier records linked</dt>
@@ -461,9 +473,9 @@ export default async function ProductDetailPage({
               Suppliers connected to {product.shortName ?? product.nameEn}
             </h2>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
-              Every row is an explicit supplier-product relationship. Verification
-              applies to the recorded capability and evidence state, not a blanket
-              certification of every specification.
+              Review the evidence table above to distinguish product-linked records
+              from company-catalog candidates. Company verification does not certify
+              every offered specification. Request current product-level documents.
             </p>
           </div>
           <form method="get" className="mt-6 flex flex-wrap gap-2 text-xs">
