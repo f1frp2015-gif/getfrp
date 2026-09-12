@@ -9,6 +9,7 @@
 - [Source from China](https://getfrp.com/source-from-china): RFQ, sampling, QA, payment, export and logistics playbook.
 - [RFQ](https://getfrp.com/rfq): one controlled request for supplier matching and evidence review.
 - [Technical references](https://getfrp.com/technical): FRP properties, density and engineering guidance.
+- [Editorial methodology](https://getfrp.com/methodology): evidence states, source attribution, corrections and sponsorship policy.
 - [Standards sourcing guide](https://getfrp.com/sourcing/gb-vs-astm-frp): how to compare GB, ASTM, ISO and EN test methods in an RFQ.
 - [Crawlable supplier index](https://getfrp.com/suppliers/directory/1): paginated access to every public supplier profile.
 - [F1 Composites supplier profile](https://getfrp.com/suppliers/f1-composite): a claimed, verified and sponsored supplier profile with attributed company claims and configuration-specific evidence notes.
@@ -32,6 +33,49 @@ canonical site: https://getfrp.com
 ## Contact
 - [Submit an RFQ or contact the sourcing desk](https://getfrp.com/rfq)
 
+
+## Source-linked buyer references
+### How to Verify a China FRP Supplier
+Canonical: https://getfrp.com/source-from-china/verify-supplier
+Updated: 2026-09-12
+Verify a China FRP supplier by reconciling the legal seller, production site, manufacturing responsibility and product evidence. Keep company identity, management-system certification and approval for your specific order as separate decisions. A directory badge can help discovery but does not close those checks.
+Sources: https://www.iso.org/standards/popular/iso-9000-family
+
+### Pultruded vs Molded FRP Grating
+Canonical: https://getfrp.com/source-from-china/frp-grating-vs-molded-grating
+Updated: 2026-09-12
+Both molded and pultruded grating are FRP products. Molded mesh and assembled pultruded bearing bars have different load paths and cutting constraints. Select from construction-specific load tables for the actual span, openings and exposure; the process name alone cannot establish capacity, fire performance or installed cost.
+Sources: https://www.strongwell.com/products/grating/
+
+### FRP Grating Price in China: Cost Factors & RFQ
+Canonical: https://getfrp.com/source-from-china/frp-grating-price-china
+Updated: 2026-09-12
+A useful China FRP grating price needs a defined panel, resin, surface, quantity and delivery scope. GetFRP does not currently publish a verified transaction-price series. Use this cost guide and the RFQ worksheet to obtain comparable supplier quotations rather than treating an unscoped price per square metre as a market benchmark.
+Sources: https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/, https://www.strongwell.com/products/grating/
+
+### Carbon Fiber vs Fiberglass
+Canonical: https://getfrp.com/insights/carbon-fiber-vs-fiberglass
+Updated: 2026-09-12
+Choose carbon fiber or fiberglass against the finished component's requirements, not a generic fiber-strength ranking. Grade, reinforcement direction, resin, manufacturing route and joint design determine what a supplier can substantiate. Compare the proposed laminates or profiles under the same test conditions before approving a substitution.
+Sources: https://www.toraycma.com/products/carbon-fiber/
+
+### FRP vs Steel Grating
+Canonical: https://getfrp.com/insights/frp-vs-steel-grating
+Updated: 2026-09-12
+Compare FRP and steel grating as installed access systems. The decision includes support layout, load and deflection, corrosion exposure, fire requirements, handling and maintenance. Neither a panel's mass nor its purchase price alone establishes the better option for a specific walkway.
+Sources: https://www.strongwell.com/products/grating/
+
+### Composite Materials Market Size: Sources & Scope
+Canonical: https://getfrp.com/insights/composite-materials-market-size
+Updated: 2026-09-12
+Composite market estimates are comparable only when geography, material coverage, year and measurement basis match. AVK's March 2025 report gives European composites production of 2.416 million tonnes for 2024, down 5.6%. This is a scoped historical production figure, not a current global revenue estimate or a measure of GetFRP's supplier network.
+Sources: https://eucia.eu/wp-content/uploads/2025/09/AVK_MarktReport_2025.pdf
+
+### Epoxy vs Vinyl Ester Resin
+Canonical: https://getfrp.com/insights/epoxy-vs-vinyl-ester-resin
+Updated: 2026-09-12
+Choose a specific epoxy or vinyl ester system against exposure, temperature, processing and qualification requirements. A resin family name cannot establish chemical resistance or finished-laminate performance. Request the grade's technical data and a written recommendation covering the medium, concentration, temperature and proposed construction.
+Sources: https://www.ineos.com/globalassets/ineos-group/businesses/ineos-composites/markets/corrosion/derakane-resin-selection-guide.pdf
 
 ## Buyer questions GetFRP is designed to answer
 - Which Chinese manufacturers make a specified FRP product using the required process?

@@ -61,7 +61,7 @@ export default async function MethodologyPage({
           name: title,
           description,
           inLanguage: "en",
-          dateModified: "2026-08-09",
+          dateModified: "2026-09-12",
           reviewedBy: { "@id": `${CURRENT_SITE_URL}/#organization` },
         }}
       />
@@ -86,7 +86,7 @@ export default async function MethodologyPage({
             when it was reviewed and what still requires project-level proof.
           </p>
           <p className="mt-5 font-mono text-[11px] text-[#7be4e1]">
-            Policy last reviewed: 9 August 2026 · Owner: GetFRP research desk
+            Policy updated: 12 September 2026 · Owner: GetFRP team
           </p>
         </div>
       </section>
@@ -160,6 +160,14 @@ export default async function MethodologyPage({
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+        <h2 className="text-2xl font-semibold" id="editorial-responsibility">Editorial responsibility and commercial independence</h2>
+        <p className="mt-4 text-[15px] leading-8 text-muted-foreground">GetFRP team is responsible for the buyer references on this site. Each updated reference identifies its sources and publication scope. Source summaries, our purchasing recommendations and supplier claims are distinguished in the text. We do not imply an independent laboratory or named engineer has reviewed an article unless that review is documented.</p>
+        <p className="mt-4 text-[15px] leading-8 text-muted-foreground">Sponsored suppliers are labeled. Placement does not establish product compliance. A company-catalog match is a discovery lead; a product-linked record carries a more specific relationship, but still requires evidence for the actual order. Company-wide MOQ and delivery indications must not be presented as quotations for a particular product.</p>
+        <h2 className="mt-10 text-2xl font-semibold">Prices, market observations and project examples</h2>
+        <p className="mt-4 text-[15px] leading-8 text-muted-foreground">Price observations require a date, product specification, quantity, unit, currency, trade term and source record. Market figures retain the source year, geography and measurement basis. Blank worksheets are procurement aids, not quotations. A worked example must be labeled as illustrative; a customer case requires permission and supporting project records.</p>
+        <h2 className="mt-10 text-2xl font-semibold">Corrections and reuse</h2>
+        <p className="mt-4 text-[15px] leading-8 text-muted-foreground">Send the page URL, disputed statement and supporting document through our contact route. Material editorial updates change the page date; they do not refresh the underlying supplier test or certificate. When citing GetFRP, include the page title, canonical URL, update date and the limitations relevant to the cited statement. Follow source links for original manufacturer or association data.</p>
+        <div className="my-8"><Link href="/about" className="underline">About the GetFRP team and service scope</Link></div>
         <h2 className="text-2xl font-semibold">What this policy does not mean</h2>
         <p className="mt-4 text-[15px] leading-8 text-muted-foreground">
           Inclusion is not an endorsement, and a public profile is not a product

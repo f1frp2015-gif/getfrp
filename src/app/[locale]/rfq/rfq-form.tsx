@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { trackBuyerEvent } from "@/lib/buyer-analytics";
 
 const CATEGORY_OPTIONS = [
   { value: "raw", label: "Raw materials (fibers, resins, prepregs, cores)" },
@@ -82,8 +83,13 @@ export function RfqForm({
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const started = useRef(false);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
+    if (!started.current) {
+      trackBuyerEvent("rfq_start");
+      started.current = true;
+    }
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -116,7 +122,9 @@ export function RfqForm({
         throw new Error(body.error ?? "Submission failed");
       }
       setSubmitted(true);
+      trackBuyerEvent("generate_lead");
     } catch (err) {
+      trackBuyerEvent("rfq_error");
       setError(err instanceof Error ? err.message : "Submission failed");
     } finally {
       setLoading(false);

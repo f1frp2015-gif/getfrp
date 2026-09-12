@@ -50,6 +50,12 @@ export default async function AboutPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       {locale === "en" && <EnglishTrustBlock />}
+      <section className="mb-10 rounded-xl border p-6" id="editorial-responsibility">
+        <h2 className="text-2xl font-semibold">Who is responsible for the information?</h2>
+        <p className="mt-4 leading-7 text-muted-foreground">The GetFRP team maintains the directory and buyer references. Company statements link to their published sources; sourcing checklists are our recommendations. Sponsored listings are identified, and project-specific technical or inspection services require an agreed scope. The public directory does not establish a supplier as the operator of GetFRP.</p>
+        <p className="mt-4 leading-7 text-muted-foreground">For a correction, send the page URL and supporting evidence through our contact route. Before a paid engagement, request the named contracting party, responsibilities and deliverables in writing.</p>
+        <Link href="/methodology#editorial-responsibility" className="mt-4 inline-block underline">Read the editorial and evidence policy</Link>
+      </section>
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold">{t("h1")}</h1>
         <p className="mt-3 text-lg text-muted-foreground leading-relaxed">

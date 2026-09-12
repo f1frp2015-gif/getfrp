@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BuyerJourneyAnalytics } from "@/components/buyer-journey-analytics";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -214,6 +215,7 @@ export default async function LocaleLayout({
           measurementId={shouldLoadGA4 ? GA4_MEASUREMENT_ID : undefined}
         />
         <ConsentedAhrefsAnalytics />
+        <BuyerJourneyAnalytics />
       </body>
     </html>
   );

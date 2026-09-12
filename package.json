@@ -25,6 +25,8 @@
     "db:dedupe": "tsx --env-file=.env.local scripts/dedupe.ts",
     "db:dedupe-apply": "tsx --env-file=.env.local scripts/dedupe.ts --apply",
     "seo:check": "tsx scripts/seo-check.ts",
+    "seo:audit": "tsx scripts/audit-search-readiness.ts",
+    "seo:discover": "tsx scripts/submit-search-discovery.ts",
     "seo:check:strict": "tsx scripts/seo-check.ts --strict"
   },
   "dependencies": {

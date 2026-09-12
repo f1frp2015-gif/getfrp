@@ -2,11 +2,13 @@
 // Bing/Yandex/etc. fetch this URL to verify we own the key we're submitting with.
 // Configure INDEXNOW_KEY in env; keyLocation in search-push.ts points here.
 
+import { GETFRP_INDEXNOW_KEY } from "@/lib/indexnow-config";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export function GET() {
-  const key = process.env.INDEXNOW_KEY ?? "";
+  const key = process.env.INDEXNOW_KEY || GETFRP_INDEXNOW_KEY;
   if (!key) {
     return new Response("INDEXNOW_KEY not configured", {
       status: 404,

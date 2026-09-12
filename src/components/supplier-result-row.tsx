@@ -209,6 +209,7 @@ export function SupplierResultRow({
             <div className="min-w-0 flex-1">
               <Link
                 href={`/suppliers/${supplier.slug}` as never}
+                data-buyer-event="supplier_profile_open"
                 className="group inline-flex max-w-full items-start gap-1.5 font-semibold leading-5 hover:text-primary"
               >
                 <span className="line-clamp-2">{supplier.name}</span>
@@ -386,6 +387,7 @@ export function SupplierResultRow({
               </Link>
               <Link
                 href={`/suppliers/${supplier.slug}` as never}
+                data-buyer-event="supplier_profile_open"
                 className={buttonVariants({
                   variant: "ghost",
                   size: "sm",
