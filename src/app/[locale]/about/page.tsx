@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CONTACT } from "@/lib/contact";
-import { alternates } from "@/lib/seo";
+import { alternates, og } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -27,10 +27,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "About" });
+  const title = t("metaTitle");
+  const description = t("metaDescription");
   return {
-    title: t("metaTitle"),
-    description: t("metaDescription"),
+    title: { absolute: title },
+    description,
     alternates: alternates("/about"),
+    openGraph: og("/about", { title, description }),
   };
 }
 

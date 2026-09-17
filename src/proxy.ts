@@ -39,6 +39,7 @@ export default async function proxy(request: NextRequest) {
   const { pathname } = new URL(request.url);
 
   if (pathname.startsWith("/api/")) return;
+  if (pathname.includes("opengraph-image")) return;
 
   if (isRemovedPublicPath(pathname)) {
     return new Response("This content section has been permanently removed.", {
@@ -66,7 +67,7 @@ export default async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next|_vercel|indexnow-key|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|txt|xml)).*)",
+    "/((?!_next|_vercel|indexnow-key|.*opengraph-image|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|txt|xml)).*)",
     "/(api|trpc)(.*)",
   ],
 };
