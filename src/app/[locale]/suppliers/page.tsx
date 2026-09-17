@@ -21,7 +21,7 @@ import {
   SUPPLIER_SOURCING_CATALOGS,
 } from "@/lib/data/supplier-sourcing-catalogs";
 import { getPublicSupplierDirectory } from "@/lib/public-supplier-directory";
-import { alternates } from "@/lib/seo";
+import { alternates, og } from "@/lib/seo";
 import { CURRENT_SITE_URL } from "@/lib/sites";
 import { supplierClaimPath } from "@/lib/supplier-claim-links";
 
@@ -58,13 +58,14 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Suppliers" });
   if (locale === "en") {
+    const title = "China FRP Suppliers & Manufacturers Directory | GetFRP";
+    const description =
+      "Search reviewed FRP manufacturers, fiberglass suppliers and composite factories in China by product, material, process, evidence and export capability.";
     return {
-      title: {
-        absolute: "FRP Manufacturers & Fiberglass Suppliers in China | getfrp",
-      },
-      description:
-        "Search reviewed FRP manufacturers, fiberglass suppliers and composite factories in China by product, material, process, evidence and export capability.",
+      title: { absolute: title },
+      description,
       alternates: alternates("/suppliers"),
+      openGraph: og("/suppliers", { title, description }),
     };
   }
   return {

@@ -27,7 +27,7 @@ import {
 
 export const revalidate = 3600;
 
-const title = "Composite Products from China | FRP Materials & Suppliers";
+const title = "China Composite Products & FRP Materials | GetFRP";
 const description =
   "Source composite materials and FRP products from China across 13 buyer categories, with product specifications, manufacturing routes and reviewed supplier evidence.";
 

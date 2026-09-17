@@ -94,7 +94,7 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
     name: "Pultruded FRP Profiles",
     shortName: "Pultruded Profiles",
     summary:
-      "Source standard and custom pultruded FRP structural profiles from Chinese manufacturers with published resin, reinforcement, tolerance and EN 13706 capability evidence.",
+      "Source standard and custom pultruded FRP structural profiles from Chinese manufacturers with resin, reinforcement, tolerance and EN 13706 capability evidence.",
     overview: [
       "China’s pultrusion network supplies angles, channels, I-beams, square and round tubes, rods, flat strips, ladders, cable-tray components, window profiles and custom constant-section shapes. Standard catalogue profiles can reduce tooling time, but structural procurement still requires a section drawing, laminate description and design basis. Two profiles with the same outside dimensions can have materially different stiffness, strength and durability because glass architecture, veil, resin system, fibre fraction and wall build-up are different.",
       "EN 13706 is a useful reference for European structural profiles, especially its designation, test methods and E17 or E23 property classes, but it does not replace project engineering. North American projects may instead call up ASTM test methods and project-specific allowable values. Buyers should request longitudinal and transverse properties, coupon orientation, conditioning, batch traceability and the exact report behind any published table. Dimensional tolerance and straightness also deserve a separate acceptance table, particularly for long lengths and assemblies.",

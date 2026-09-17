@@ -51,6 +51,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow,
     })),
     sitemap: `${CURRENT_SITE_URL}/sitemap.xml`,
-    host: CURRENT_SITE_URL,
+    host: new URL(CURRENT_SITE_URL).host,
   };
 }
