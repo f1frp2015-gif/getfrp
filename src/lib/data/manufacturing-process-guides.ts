@@ -343,9 +343,9 @@ export const MANUFACTURING_PROCESS_GUIDES: readonly ManufacturingProcessGuide[] 
   {
     slug: "rtm",
     shortName: "Resin transfer molding",
-    seoTitle: "RTM Composite Process & Manufacturers in China | GetFRP",
+    seoTitle: "Resin Transfer Molding (RTM) Process in China | GetFRP",
     metaDescription: "Understand resin transfer molding (RTM), dry preforms, injection and cure controls, common defects and evidence to request from composite manufacturers.",
-    primaryKeyword: "RTM composite manufacturers in China",
+    primaryKeyword: "resin transfer molding",
     keywords: ["resin transfer molding process", "RTM composite parts manufacturer", "closed mold composites", "RTM process control", "China RTM supplier"],
     answer: "Resin transfer molding (RTM) places a dry fiber preform inside a rigid two-sided mold, closes and clamps the tool, then injects low-viscosity resin before curing. It is used for repeatable complex parts requiring controlled thickness and finished surfaces on both sides.",
     principle: "The mold cavity fixes geometry while the matched permeability of the preform, vent layout and injection strategy determines whether resin reaches every region before gel.",

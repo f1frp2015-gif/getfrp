@@ -1,3 +1,4 @@
+import { INDUSTRY_APPLICATION_PAGES } from "./industry-application-pages";
 import { getProductSearchIntent } from "./product-search-intents";
 
 export type MarketplacePage = {
@@ -72,15 +73,15 @@ function faqSet(subject: string, dimension: string) {
   ];
 }
 
-function page(input: Omit<MarketplacePage, "faqs"> & { faqDimension: string }): MarketplacePage {
-  const { faqDimension, ...rest } = input;
+function page(input: Omit<MarketplacePage, "faqs"> & { faqDimension: string; faqs?: Array<{ question: string; answer: string }> }): MarketplacePage {
+  const { faqDimension, faqs, ...rest } = input;
   const faqSubject = rest.process
     ?? (rest.application ? `${rest.application} FRP` : undefined)
     ?? rest.h1
       .replace(/^China\s+/i, "")
       .replace(/\s+(?:manufacturers|suppliers)(?:\s+in\s+China)?$/i, "")
       .toLowerCase();
-  return { ...rest, faqs: faqSet(faqSubject, faqDimension) };
+  return { ...rest, faqs: faqs ?? faqSet(faqSubject, faqDimension) };
 }
 
 const PRODUCT_ROUTE_CONTEXT: Record<
@@ -139,7 +140,7 @@ const PRODUCT_ROUTE_CONTEXT: Record<
   "composite-core-materials": {
     process: { label: "Vacuum infusion", href: "/manufacturing/vacuum-infusion", note: "Review resin flow and core integration." },
     application: { label: "Marine applications", href: "/applications/marine", note: "Define density, shear and water exposure." },
-    evidence: { label: "Fiberglass panels", href: "/products/fiberglass-panel", note: "Compare finished sandwich systems." },
+    evidence: { label: "PVC foam board", href: "/products/pvc-foam-board", note: "Compare structural PVC foam core grades." },
   },
   "frp-enclosure": {
     process: { label: "SMC molding", href: "/manufacturing/smc-molding", note: "Review compound and repeat molding controls." },
@@ -151,54 +152,192 @@ const PRODUCT_ROUTE_CONTEXT: Record<
     application: { label: "Composite 3D printing", href: "/manufacturing/composite-3d-printing", note: "Compare a recovered-material conversion route." },
     evidence: { label: "Fiberglass suppliers", href: "/products/fiber-glass", note: "Compare virgin reinforcement formats." },
   },
+  "aramid-fiber": {
+    process: { label: "Prepreg & autoclave", href: "/manufacturing/prepreg-autoclave", note: "Review autoclave and compression molding for ballistic composites." },
+    application: { label: "Defence & ballistics", href: "/applications/defence-security-ballistics", note: "Compare impact and ballistic armor requirements." },
+    evidence: { label: "Fiberglass materials", href: "/products/fiber-glass", note: "Compare standard glass and aramid reinforcement." },
+  },
+  "thermoset-resins": {
+    process: { label: "Resin transfer molding", href: "/manufacturing/rtm", note: "Compare resin viscosity and mold injection kinetics." },
+    application: { label: "Chemical processing", href: "/applications/chemical-processing", note: "Select corrosion-grade vinyl ester and epoxy resins." },
+    evidence: { label: "Gelcoat & composite resins", href: "/products/resin-gelcoat", note: "Compare formulated gelcoats and core resins." },
+  },
+  "pvc-foam-board": {
+    process: { label: "Vacuum infusion", href: "/manufacturing/vacuum-infusion", note: "Evaluate scored, grooved, and perforated foam sheet flow." },
+    application: { label: "Marine shipbuilding", href: "/applications/marine", note: "Review closed-cell water absorption and Lloyd's approval." },
+    evidence: { label: "Composite core materials", href: "/products/composite-core-materials", note: "Compare PVC with PET, balsa, and honeycomb cores." },
+  },
+  "fiberglass-tape": {
+    process: { label: "Hand lay-up", href: "/manufacturing/hand-layup", note: "Review wet-out and overlap techniques for joint taping." },
+    application: { label: "Electrical applications", href: "/applications/electrical", note: "Review dielectric woven tape for motor and coil banding." },
+    evidence: { label: "Fiberglass materials", href: "/products/fiber-glass", note: "Compare tape with roving, chopped strand mat, and fabrics." },
+  },
 };
 
-export const ADDITIONAL_PRODUCT_PAGES: MarketplacePage[] = [
-  ["carbon-fiber", "Carbon Fiber", "carbon fiber products", "carbon fiber", "PAN-based carbon fiber, woven fabrics, prepreg and pultruded carbon profiles for lightweight structural, industrial and sporting applications."],
-  ["carbon-fiber-prepreg", "Carbon Fiber Prepreg", "carbon fiber prepreg materials", "carbon fiber prepreg", "Carbon-fiber prepreg systems compared by fiber grade, resin content, areal weight, tack, cure cycle, storage life and qualification evidence."],
-  ["frp-cable-tray", "FRP Cable Tray", "FRP cable tray", "cable tray", "Pultruded and molded cable-management systems for corrosive, electrical, rail, marine and process-plant installations."],
-  ["frp-tank", "FRP Tank", "FRP tanks", "tank", "Filament-wound and contact-molded storage and process tanks specified around chemical service, temperature, laminate design and nozzle loads."],
-  ["frp-corrosion-equipment", "FRP Corrosion Equipment", "FRP corrosion equipment", "scrubber", "Corrosion-resistant FRP ducts, scrubbers, stacks and process vessels specified around media, temperature, resin system, laminate design and inspection code."],
-  ["frp-manhole-cover", "FRP Manhole Cover", "FRP manhole covers", "manhole cover", "Compression-molded composite covers and frames for municipal, utility and industrial access points with controlled load class and surface finish."],
-  ["frp-handrail", "FRP Handrail", "FRP handrail systems", "handrail", "Modular pultruded FRP rails, posts, kick plates and fittings for corrosion-resistant access platforms and industrial walkways."],
-  ["frp-ladder", "FRP Ladder", "FRP ladders", "ladder", "Fixed, cage, step and access ladders made from pultruded FRP profiles for electrical insulation and corrosive environments."],
-  ["frp-sheet", "FRP Sheet", "FRP sheets", "frp sheet", "Glass-fiber-reinforced sheet and laminate products for corrosion barriers, electrical insulation, fabrication and structural panels."],
-  ["fiberglass-panel", "Fiberglass Panel", "fiberglass panels", "panel", "Continuous-laminated, pultruded, molded and sandwich fiberglass panels for corrosion, insulation, architectural and enclosure uses."],
-  ["composite-core-materials", "Composite Core Materials", "composite core materials", "structural foam", "Structural foam, balsa and honeycomb core materials for lightweight sandwich laminates, compared by density, shear, compression, resin uptake and forming limits."],
-  ["frp-enclosure", "FRP Enclosure", "FRP enclosures", "fiberglass enclosure", "Electrical, utility and industrial FRP enclosures specified around dielectric behavior, fire class, weathering, ingress rating, hardware and dimensional interfaces."],
-  ["recycled-composites", "Recycled Composite Materials", "recycled composite materials", "recycled carbon fiber", "Recovered carbon and glass fiber materials compared by feedstock, recovery route, contamination control, retained properties, lot consistency and lifecycle evidence."],
-].map(([slug, name, subject, keyword, summary]) => {
-  const searchIntent = getProductSearchIntent(slug);
-  const context = PRODUCT_ROUTE_CONTEXT[slug] ?? {
-    process: { label: `${name} by manufacturing process`, href: "/manufacturing/pultrusion", note: "Compare process fit and controls." },
-    application: { label: `${name} for wastewater treatment`, href: "/applications/wastewater-treatment", note: "Review corrosion and access requirements." },
-    evidence: { label: `${name} standards`, href: "/standards/iso-9001", note: "Separate QMS and product evidence." },
+type AdditionalProductConfig = {
+  slug: string;
+  name: string;
+  subject: string;
+  keyword: string;
+  summary: string;
+  customTitle?: string;
+  customH1?: string;
+  supplierTerms?: string[];
+  paragraphs?: string[];
+  related?: Array<{ label: string; href: string }>;
+};
+
+const ADDITIONAL_PRODUCT_DEFINITIONS: AdditionalProductConfig[] = [
+  { slug: "carbon-fiber", name: "Carbon Fiber", subject: "carbon fiber products", keyword: "carbon fiber", summary: "PAN-based carbon fiber, woven fabrics, prepreg and pultruded carbon profiles for lightweight structural, industrial and sporting applications." },
+  { slug: "carbon-fiber-prepreg", name: "Carbon Fiber Prepreg", subject: "carbon fiber prepreg materials", keyword: "carbon fiber prepreg", summary: "Carbon-fiber prepreg systems compared by fiber grade, resin content, areal weight, tack, cure cycle, storage life and qualification evidence." },
+  { slug: "frp-cable-tray", name: "FRP Cable Tray", subject: "FRP cable tray", keyword: "cable tray", summary: "Pultruded and molded cable-management systems for corrosive, electrical, rail, marine and process-plant installations." },
+  { slug: "frp-tank", name: "FRP Tank", subject: "FRP tanks", keyword: "tank", summary: "Filament-wound and contact-molded storage and process tanks specified around chemical service, temperature, laminate design and nozzle loads." },
+  { slug: "frp-corrosion-equipment", name: "FRP Corrosion Equipment", subject: "FRP corrosion equipment", keyword: "scrubber", summary: "Corrosion-resistant FRP ducts, scrubbers, stacks and process vessels specified around media, temperature, resin system, laminate design and inspection code." },
+  { slug: "frp-manhole-cover", name: "FRP Manhole Cover", subject: "FRP manhole covers", keyword: "manhole cover", summary: "Compression-molded composite covers and frames for municipal, utility and industrial access points with controlled load class and surface finish." },
+  { slug: "frp-handrail", name: "FRP Handrail", subject: "FRP handrail systems", keyword: "handrail", summary: "Modular pultruded FRP rails, posts, kick plates and fittings for corrosion-resistant access platforms and industrial walkways." },
+  { slug: "frp-ladder", name: "FRP Ladder", subject: "FRP ladders", keyword: "ladder", summary: "Fixed, cage, step and access ladders made from pultruded FRP profiles for electrical insulation and corrosive environments." },
+  { slug: "frp-sheet", name: "FRP Sheet", subject: "FRP sheets", keyword: "frp sheet", summary: "Glass-fiber-reinforced sheet and laminate products for corrosion barriers, electrical insulation, fabrication and structural panels." },
+  { slug: "fiberglass-panel", name: "Fiberglass Panel", subject: "fiberglass panels", keyword: "panel", summary: "Continuous-laminated, pultruded, molded and sandwich fiberglass panels for corrosion, insulation, architectural and enclosure uses." },
+  {
+    slug: "composite-core-materials",
+    name: "Composite Core Materials",
+    subject: "composite core materials",
+    keyword: "structural foam",
+    summary: "Structural foam, balsa and honeycomb core materials for lightweight sandwich laminates, compared by density, shear, compression, resin uptake and forming limits.",
+    related: [
+      { label: "PVC foam board", href: "/products/pvc-foam-board" },
+      { label: "Fiberglass panels", href: "/products/fiberglass-panel" },
+      { label: "Vacuum infusion process", href: "/manufacturing/vacuum-infusion" },
+      { label: "Marine FRP applications", href: "/applications/marine" },
+    ],
+  },
+  { slug: "frp-enclosure", name: "FRP Enclosure", subject: "FRP enclosures", keyword: "fiberglass enclosure", summary: "Electrical, utility and industrial FRP enclosures specified around dielectric behavior, fire class, weathering, ingress rating, hardware and dimensional interfaces." },
+  { slug: "recycled-composites", name: "Recycled Composite Materials", subject: "recycled composite materials", keyword: "recycled carbon fiber", summary: "Recovered carbon and glass fiber materials compared by feedstock, recovery route, contamination control, retained properties, lot consistency and lifecycle evidence." },
+  {
+    slug: "aramid-fiber",
+    name: "Aramid Fiber",
+    subject: "aramid fiber reinforcements",
+    keyword: "aramid fiber",
+    summary: "Compare aramid fiber (Kevlar/Twaron) fabrics, roving, and yarn from Chinese suppliers with ASTM test data, ballistic specs, and RFQ procurement checklists.",
+    customTitle: "Aramid Fiber Reinforcements & Technical Specs | GetFRP",
+    customH1: "Aramid Fiber Reinforcements & Technical Specifications",
+    supplierTerms: [],
+    paragraphs: [
+      "Aramid fiber reinforcements provide exceptional tensile strength-to-weight ratios, extreme impact toughness, vibration damping, and thermal stability for demanding composite structures. In ballistic armor, cut-resistant industrial fabrics, aerospace fairings, and high-pressure composite overwrapped pressure vessels (COPV), aramid fibers deliver energy dissipation capabilities that glass and carbon fibers cannot match.",
+      "When sourcing aramid reinforcements from Chinese manufacturers, technical buyers must distinguish between para-aramid (such as Kevlar and Twaron equivalents used for high-tensile structural and ballistic applications) and meta-aramid (such as Nomex equivalents engineered primarily for flame and thermal barrier applications). Verify yarn filament denier, linear density, twist level, moisture regain, and specialized sizing designed for epoxy or phenolic matrix compatibility.",
+      "GetFRP aggregates verified Chinese composite material suppliers and export-ready technical textile manufacturers. At present, because zero approved direct aramid fiber suppliers meet our directory criteria, this page intentionally displays our standard empty state without synthetic factory cards. Procurement teams can issue a controlled RFQ or browse related fiberglass and carbon reinforcement catalogs below.",
+    ],
+    related: [
+      { label: "Fiberglass reinforcements", href: "/products/fiber-glass" },
+      { label: "Carbon fiber products", href: "/products/carbon-fiber" },
+      { label: "Prepreg & autoclave process", href: "/manufacturing/prepreg-autoclave" },
+      { label: "Defence & ballistics FRP", href: "/applications/defence-security-ballistics" },
+      { label: "FRP properties reference", href: "/technical/frp-properties" },
+      { label: "GRP terminology guide", href: "/technical/grp-terminology" },
+    ],
+  },
+  {
+    slug: "thermoset-resins",
+    name: "Thermoset Resins",
+    subject: "thermoset composite resins",
+    keyword: "thermoset resin",
+    summary: "Source thermoset resins for composite manufacturing. Compare orthophthalic, isophthalic, vinyl ester, epoxy, and phenolic resin systems with China suppliers.",
+    customTitle: "Thermoset Resins for Composite Manufacturing | GetFRP",
+    customH1: "Thermoset Resins — Composite Chemistry & Cure Systems",
+    supplierTerms: ["thermoset resin", "unsaturated polyester resin", "vinyl ester", "epoxy resin", "resin"],
+    paragraphs: [
+      "Thermoset resins form the polymer matrix that binds composite reinforcements, transfers mechanical loads, and shields fibers from harsh chemical, thermal, and environmental degradation. Chinese chemical manufacturers formulate a broad spectrum of thermosetting systems including orthophthalic polyester, isophthalic polyester, vinyl ester, epoxy, and phenolic resins for open and closed-mold processing.",
+      "Selecting the correct thermoset matrix requires balancing viscosity windows, reactivity, peak exotherm temperatures, cure kinetics, and heat distortion temperatures (HDT) against the downstream production process—whether pultrusion, filament winding, vacuum infusion, or resin transfer molding (RTM). Overseas buyers must verify Certificates of Analysis (CoA) per batch, checking styrene monomer content, promoter systems, shelf life, and dangerous goods transport classifications.",
+      "GetFRP indexes reviewed Chinese composite resin manufacturers and formulation specialists. Compare declared chemical bases, viscosity curves, barcol hardness development, and international fire-retardant certifications. If fewer than three direct matches are available, standard fallback categories are provided without synthetic supplier profiles.",
+    ],
+    related: [
+      { label: "Gelcoat & composite resins", href: "/products/resin-gelcoat" },
+      { label: "Resin transfer molding (RTM)", href: "/manufacturing/rtm" },
+      { label: "Filament winding process", href: "/manufacturing/filament-winding" },
+      { label: "Chemical processing FRP", href: "/applications/chemical-processing" },
+      { label: "FRP properties reference", href: "/technical/frp-properties" },
+      { label: "Compare FRP standards", href: "/tools/standard-comparison" },
+    ],
+  },
+  {
+    slug: "pvc-foam-board",
+    name: "PVC Foam Board",
+    subject: "PVC structural foam core materials",
+    keyword: "pvc foam board",
+    summary: "Cross-linked structural PVC foam boards for composite sandwich panels. Review closed-cell density grades, mechanical properties, and China supplier sources.",
+    customTitle: "PVC Foam Board for Composite Core Sandwiching | GetFRP",
+    customH1: "PVC Foam Board — Structural Composite Core Materials",
+    supplierTerms: ["pvc foam", "foam core", "structural foam", "core materials"],
+    paragraphs: [
+      "Cross-linked structural PVC foam board is a premier core material for lightweight composite sandwich constructions, delivering high specific stiffness, compressive strength, fatigue endurance, and minimal moisture absorption. Widely deployed across marine hulls, wind turbine nacelles, rail transit body panels, and refrigerated truck bodies, PVC core materials provide structural spacing between composite skins.",
+      "When evaluating Chinese PVC foam core manufacturers, buyers should specify nominal density grades (typically ranging from 45 kg/m³ to 250 kg/m³) alongside sheet finishing options. Finishing specifications—such as plain sheets, grid-scored contourable foam with scrim backing, double-cut grooving, or pin-perforated patterns—directly dictate resin flow kinetics, bondline strength, and vacuum-assisted resin infusion (VARI) quality.",
+      "GetFRP connects international buyers with reviewed Chinese composite core producers. Inspect third-party mechanical test reports (such as ASTM C273 shear, ASTM C365 compression, and ASTM C393 sandwich flexure) and marine classification approvals (e.g., DNV, Lloyd's Register) before issuing production purchase orders.",
+    ],
+    related: [
+      { label: "Composite core materials", href: "/products/composite-core-materials" },
+      { label: "Vacuum infusion process", href: "/manufacturing/vacuum-infusion" },
+      { label: "Marine FRP applications", href: "/applications/marine" },
+      { label: "Wind turbine composites", href: "/applications/wind-renewable-energy" },
+      { label: "Fiberglass sandwich panels", href: "/products/fiberglass-panel" },
+      { label: "Compare FRP standards", href: "/tools/standard-comparison" },
+    ],
+  },
+  {
+    slug: "fiberglass-tape",
+    name: "Fiberglass Tape",
+    subject: "woven fiberglass reinforcement tape",
+    keyword: "fiberglass tape",
+    summary: "Source woven fiberglass tape, unidirectional banding, and biaxial edge-reinforcement strips. Compare weave types, resin compatibility, and China suppliers.",
+    customTitle: "Fiberglass Tape — Composite Specs & China Supply | GetFRP",
+    customH1: "Fiberglass Tape — Plain Weave & Unidirectional Strips",
+    supplierTerms: ["fiberglass tape", "woven tape", "glass fiber", "fiberglass"],
+    paragraphs: [
+      "Fiberglass tape is an engineered narrow fabric featuring woven selvedged edges that prevent fraying, unraveling, and loose glass filaments during handling. Manufactured from continuous filament E-glass yarns in plain weave, twill weave, or unidirectional banding constructions, fiberglass tape provides targeted localized reinforcement for composite seams, pipe bell-and-spigot joints, electrical coil wrapping, and structural repairs.",
+      "Procurement specifications for fiberglass tape must specify fabric areal weight (typically 100 g/m² to 600 g/m²), nominal width (from 25 mm up to 300 mm), edge finish, and chemical sizing chemistry. Sizing compatibility with polyester, vinyl ester, or epoxy matrix systems ensures rapid wet-out and eliminates dry fiber voids during manual wet lay-up or secondary tabbing operations.",
+      "GetFRP compares audited Chinese fiberglass textile weavers and reinforcement converters. Review yarn grade declarations, roll packaging, tensile break strength test reports, and dielectric properties before contract award. Filter verified suppliers or submit an application RFQ below.",
+    ],
+    related: [
+      { label: "Fiberglass reinforcements", href: "/products/fiber-glass" },
+      { label: "Hand lay-up process", href: "/manufacturing/hand-layup" },
+      { label: "FRP pipe systems", href: "/products/frp-pipe" },
+      { label: "Electrical FRP products", href: "/applications/electrical" },
+      { label: "FRP properties reference", href: "/technical/frp-properties" },
+      { label: "GRP terminology guide", href: "/technical/grp-terminology" },
+    ],
+  },
+];
+
+export const ADDITIONAL_PRODUCT_PAGES: MarketplacePage[] = ADDITIONAL_PRODUCT_DEFINITIONS.map((item) => {
+  const searchIntent = getProductSearchIntent(item.slug);
+  const context = PRODUCT_ROUTE_CONTEXT[item.slug] ?? {
+    process: { label: `${item.name} by manufacturing process`, href: "/manufacturing/pultrusion", note: "Compare process fit and controls." },
+    application: { label: `${item.name} for wastewater treatment`, href: "/applications/wastewater-treatment", note: "Review corrosion and access requirements." },
+    evidence: { label: `${item.name} standards`, href: "/standards/iso-9001", note: "Separate QMS and product evidence." },
   };
   return page({
-    slug,
-    path: `/products/${slug}`,
-    title: searchIntent?.title ?? `China ${name} Manufacturers, Suppliers & Wholesale | getfrp`,
-    h1: searchIntent?.h1 ?? `China ${name} Manufacturers & Suppliers`,
+    slug: item.slug,
+    path: `/products/${item.slug}`,
+    title: item.customTitle ?? searchIntent?.title ?? `China ${item.name} Manufacturers, Suppliers & Wholesale | getfrp`,
+    h1: item.customH1 ?? searchIntent?.h1 ?? `China ${item.name} Manufacturers & Suppliers`,
     eyebrow: "PRODUCT CATEGORY",
-    summary,
-    category: slug,
-    supplierTerms: [keyword, subject, name],
-    paragraphs: [
-      `${name} sourcing begins with the service condition and the manufacturing route, not a generic unit price. Chinese manufacturers may offer several resin systems, reinforcement architectures and finishing levels under the same product name. Buyers should define loads, exposure, dimensions, interfaces, quantity and destination standard before comparing ${subject}.`,
-      `A useful ${name} supplier comparison separates company identity from product evidence. GetFRP aggregates reviewed public factory profiles and approved supplier-uploaded products, then exposes material, process, certification, MOQ and export-readiness signals. Certificate logos alone are not treated as proof; scope, legal entity, product construction and report validity still need to match the offer.`,
-      `For an export order, freeze the drawing revision, inspection method, sampling level, packing and release documents in the RFQ. This makes ${subject} quotations comparable and reduces substitutions after award. If this category has no approved product pages yet, the empty state is intentional: GetFRP does not manufacture placeholder products or companies to fill a directory.`,
+    summary: item.summary,
+    category: item.slug,
+    supplierTerms: item.supplierTerms ?? [item.keyword, item.subject, item.name],
+    paragraphs: item.paragraphs ?? [
+      `${item.name} sourcing begins with the service condition and the manufacturing route, not a generic unit price. Chinese manufacturers may offer several resin systems, reinforcement architectures and finishing levels under the same product name. Buyers should define loads, exposure, dimensions, interfaces, quantity and destination standard before comparing ${item.subject}.`,
+      `A useful ${item.name} supplier comparison separates company identity from product evidence. GetFRP aggregates reviewed public factory profiles and approved supplier-uploaded products, then exposes material, process, certification, MOQ and export-readiness signals. Certificate logos alone are not treated as proof; scope, legal entity, product construction and report validity still need to match the offer.`,
+      `For an export order, freeze the drawing revision, inspection method, sampling level, packing and release documents in the RFQ. This makes ${item.subject} quotations comparable and reduces substitutions after award. If this category has no approved product pages yet, the empty state is intentional: GetFRP does not manufacture placeholder products or companies to fill a directory.`,
     ],
     subcategories: [context.process, context.application, context.evidence],
-    related: [
+    related: (item.related ?? []).concat([
       { label: "FRP grating manufacturers", href: "/products/frp-grating" },
       { label: "Pultruded FRP profiles", href: "/products/pultruded-profiles" },
       { label: "FRP pipe suppliers", href: "/products/frp-pipe" },
       { label: "FRP rebar manufacturers", href: "/products/frp-rebar" },
       { label: "Fiberglass panels", href: "/products/fiberglass-panel" },
       { label: "FRP tanks", href: "/products/frp-tank" },
-      { label: "Wastewater FRP products", href: "/applications/wastewater-treatment/frp-grating" },
       { label: "China sourcing guide", href: "/source-from-china/verify-supplier" },
-    ],
+    ]),
     guideHref: "/source-from-china/verify-supplier",
     faqDimension: "material, process and project standard",
   });
@@ -209,7 +348,7 @@ const PROCESS_INFO = [
   ["filament-winding", "Filament Winding", "Rotational placement of continuous reinforcement for pipe, tanks, ducts and pressure-bearing cylindrical structures.", "filament winding"],
   ["hand-layup", "Hand Lay-up", "Open-mold laminate production for large, low-volume and geometrically complex FRP components.", "hand lay-up"],
   ["smc-molding", "SMC Molding", "Matched-tool compression molding for repeat composite covers, enclosures and engineered parts.", "compression molding"],
-  ["rtm", "RTM", "Closed-mold resin transfer molding for controlled surfaces, repeatable laminate thickness and medium-volume components.", "resin transfer molding"],
+  ["rtm", "Resin Transfer Molding (RTM)", "Closed-mold resin transfer molding for controlled surfaces, repeatable laminate thickness and medium-volume components.", "resin transfer molding"],
   ["spray-up", "Spray-up", "Chopper-gun deposition of resin and short reinforcement for economical open-mold shells, covers and large low-volume parts.", "spray-up"],
   ["vacuum-bagging", "Vacuum Bagging", "Flexible-bag consolidation of wet lay-up or prepreg laminates to improve compaction, air removal and surface consistency.", "vacuum bagging"],
   ["vacuum-infusion", "Vacuum Infusion", "Vacuum-driven resin flow through dry reinforcement for large panels, marine structures, blades and controlled closed laminates.", "vacuum infusion"],
@@ -257,7 +396,7 @@ const APPLICATION_INFO = [
   ["electrical", "Electrical", "Insulating FRP ladders, cable trays, profiles, enclosures and laminates with controlled electrical and fire properties."],
 ] as const;
 
-export const APPLICATION_PAGES = APPLICATION_INFO.map(([slug, name, summary]) => page({
+const BASE_APPLICATION_PAGES = APPLICATION_INFO.map(([slug, name, summary]) => page({
   slug,
   path: `/applications/${slug}`,
   title: `${name} FRP Products & Manufacturers in China | getfrp`,
@@ -284,6 +423,43 @@ export const APPLICATION_PAGES = APPLICATION_INFO.map(([slug, name, summary]) =>
   guideHref: "/source-from-china/verify-supplier",
   faqDimension: "service environment and acceptance evidence",
 }));
+
+const INDUSTRY_PAGES: MarketplacePage[] = INDUSTRY_APPLICATION_PAGES.map((ind) =>
+  page({
+    slug: ind.slug,
+    path: `/applications/${ind.slug}`,
+    title: ind.title,
+    h1: ind.h1,
+    eyebrow: ind.eyebrow,
+    summary: ind.metaDescription,
+    application: ind.industryName,
+    supplierTerms: ind.supplierTerms,
+    paragraphs: [
+      `${ind.industryName} composite procurement requires aligning component geometry, structural loads, resin selection, and environmental resistance with international test standards. Buyers should not rely on generic material claims when procuring critical composite parts from Chinese manufacturers.`,
+      `GetFRP evaluates verified Chinese composite manufacturers that supply the ${ind.industryName.toLowerCase()} sector. Technical buyers can inspect declared resin formulations, fiber reinforcement types, autoclave or closed-mold capabilities, and certified test reports.`,
+      `Shortlist candidates by requesting material batch certificates, third-party test reports (such as ASTM or EN compliance), and fabrication inspection plans. If fewer than three verified suppliers are found, fallback composite categories are provided without synthetic results.`,
+    ],
+    subcategories: ind.componentFamilies.slice(0, 3).map((comp) => ({
+      label: comp.name,
+      href: comp.productHref,
+      note: comp.description,
+    })),
+    related: ind.relatedSearches.concat([
+      { label: "Compare FRP standards", href: "/tools/standard-comparison" },
+      { label: "Verify a China supplier", href: "/source-from-china/verify-supplier" },
+      { label: "FRP product categories", href: "/products" },
+      { label: "Submit an RFQ", href: "/rfq" },
+    ]),
+    guideHref: "/source-from-china/verify-supplier",
+    faqDimension: "industry requirements and quality compliance",
+    faqs: ind.faqs,
+  }),
+);
+
+export const APPLICATION_PAGES: MarketplacePage[] = [
+  ...BASE_APPLICATION_PAGES,
+  ...INDUSTRY_PAGES,
+];
 
 const STANDARD_INFO = [
   ["en-13706", "EN 13706", "European requirements for pultruded FRP profiles, used with grade, property and test-method details."],

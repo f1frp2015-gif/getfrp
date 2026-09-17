@@ -80,7 +80,7 @@ test("required L2 and L3 marketplace routes are present and unique", () => {
   assert.equal(new Set(paths).size, paths.length);
   for (const path of required) assert.ok(paths.includes(path), `missing ${path}`);
   assert.equal(MANUFACTURING_PAGES.length, 14);
-  assert.equal(APPLICATION_PAGES.length, 5);
+  assert.equal(APPLICATION_PAGES.length, 20);
   assert.equal(STANDARD_PAGES.length, 4);
 });
 

@@ -36,8 +36,8 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
     summary:
       "Compare Chinese manufacturers of molded and pultruded FRP grating by resin system, panel geometry, fire performance, public company profile and production cluster.",
     overview: [
-      "China’s FRP grating supply base covers molded panels, pultruded load-bearing panels, stair treads, trench covers and custom-cut assemblies. The first sourcing decision is not factory size but service condition: orthophthalic polyester is common for general industrial walkways, isophthalic systems improve chemical resistance, vinyl ester is selected for aggressive process environments, and phenolic systems are considered when smoke and flame performance dominate. A useful RFQ therefore names the resin family, load case, support span, surface treatment and destination standard instead of asking only for a panel price.",
-      "Export-ready factories differ most in their control of glass content, cure, bar geometry, dimensional tolerance and traceability. For molded grating, buyers should confirm mesh pattern, overall depth, load-bar thickness and whether the quoted size is the nominal mold size or the finished cut panel. For pultruded grating, confirm bearing-bar pitch, cross-rod construction and the test basis for published load tables. CE documents, ISO 9001 certificates and test reports should always be checked for the legal entity, product scope and validity date rather than accepted as logo files.",
+      "China’s composite grating supply base covers molded panels, pultruded load-bearing panels, stair treads, trench covers and custom-cut assemblies. The first sourcing decision is not factory size but service condition: orthophthalic polyester is common for general industrial walkways, isophthalic systems improve chemical resistance, vinyl ester is selected for aggressive process environments, and phenolic systems are considered when smoke and flame performance dominate. A useful RFQ therefore names the resin family, load case, support span, surface treatment and destination standard instead of asking only for a panel price.",
+      "Export-ready factories differ most in their control of glass content, cure, bar geometry, dimensional tolerance and traceability. For molded grating, buyers should confirm mesh pattern, overall depth, load-bar thickness and whether the quoted size is the nominal mold size or the finished cut panel. For pultruded grating, confirm bearing-bar pitch, cross-rod construction and the test basis for published load tables. Australian mining installations frequently require AS 1657 walkway design compliance, AS 4663 slip resistance, and heavy Class D wheel load evidence. For marine and offshore splash zones, salt spray durability tested under ISO 9227 or ASTM B117 protects structural integrity over long immersion cycles. CE documents, ISO 9001 certificates and test reports should always be checked for the legal entity, product scope and validity date rather than accepted as logo files.",
       "GetFRP exposes public company profiles and capability evidence for first-pass comparison. A procurement team can compare documented process, relevant certifications, production region, scale tier and the ability to supply the requested resin and surface before contacting a factory. Once the specification is stable, the sourcing desk can request matched samples, confirm current test evidence and arrange pre-shipment inspection against the same acceptance criteria used in the RFQ.",
     ],
     match: {
@@ -50,11 +50,13 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
       { field: "Mesh", typicalRange: "38 × 38 mm and micro-mesh options", sourcingNote: "State clear opening and accessibility requirement." },
       { field: "Resin", typicalRange: "Ortho / iso / vinyl ester / phenolic", sourcingNote: "Match the resin to chemical and fire exposure." },
       { field: "Surface", typicalRange: "Concave / grit / covered / conductive", sourcingNote: "Specify slip, cleaning and static-control needs." },
+      { field: "Mining & marine standards", typicalRange: "AS 1657, AS 3996, ASTM B117, ISO 9227", sourcingNote: "Australian mining walkways require AS 1657 compliance and verified wheel/point load proof." },
       { field: "Evidence", typicalRange: "Load table, fire report, resin certificate, MTC", sourcingNote: "Require report numbers and scope before approval." },
     ],
     buyingChecks: [
       "Recalculate the design load on the actual support span; do not select a panel from an unsupported catalogue headline.",
       "Check whether the fire report covers the offered resin, construction, thickness and surface rather than a related product family.",
+      "Verify Australian mining standards including AS 1657 walkway clearances, AS/NZS 4586 slip ratings, and ISO 9227 salt spray resistance for marine applications.",
       "Freeze the cut plan, sealed edges, clips and panel orientation before final pricing because fabrication changes yield and packing.",
       "Use an approved colour and grit sample, then define acceptable exposed fibre, resin-rich area, chip and surface-repair limits.",
       "Inspect packing height, corner protection and moisture barrier so nested panels do not abrade or distort during ocean transit.",
@@ -397,7 +399,7 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
       "Compare Chinese polyester, vinyl ester, epoxy resin and gelcoat suppliers by chemistry, application, documentation, packaging and export capability.",
     overview: [
       "China’s composite-resin supply chain covers unsaturated polyester, vinyl ester, epoxy, polyurethane and application-specific gelcoats for pultrusion, winding, infusion, hand lay-up, RTM, SMC/BMC and coating. Grade names alone are not portable between producers. A sourcing specification should define process viscosity window, gel time or cure schedule, mechanical target, chemical exposure, flame requirement, colour and storage conditions.",
-      "For export procurement, consistency and documentation matter as much as the first laboratory result. Buyers should request a current technical datasheet, safety data sheet, certificate of analysis format, shelf life, storage temperature, inhibitor or promoter condition, dangerous-goods classification and packaging. Gelcoat RFQs should also define application method, target wet-film thickness, UV and water exposure, colour tolerance, gloss and whether the system is mould-side or post-applied.",
+      "For export procurement, consistency and documentation matter as much as the first laboratory result. Buyers should request a current technical datasheet, safety data sheet, certificate of analysis format, shelf life, storage temperature, inhibitor or promoter condition, dangerous-goods classification and packaging. Surface barrier coat RFQs should also define application method, target wet-film thickness, UV and water exposure, colour tolerance, gloss and whether the system is mould-side or post-applied.",
       "GetFRP compares public manufacturer and formulation-capable supplier profiles by chemistry, process, end use, capacity tier, export packaging and available evidence. Buyers can visit the company profile or official website before requesting a quote. Before a production order, the recommended route is a controlled lab sample followed by a plant trial using the buyer’s reinforcement, catalyst package, ambient condition and equipment, with acceptance criteria recorded before scale-up.",
     ],
     match: {
@@ -454,7 +456,7 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
     name: "Composite Fiber & Glass",
     shortName: "Fiber & Glass",
     summary:
-      "Source glass, carbon, basalt and aramid reinforcement from China suppliers by fibre type, sizing, product form, application and traceable evidence.",
+      "Source glass, carbon, basalt and quartz reinforcement from China suppliers by fibre type, sizing, product form, application and traceable evidence.",
     overview: [
       "China is a major production base for glass-fibre rovings, chopped strand, mats and fabrics, as well as carbon, basalt and other high-performance reinforcements. A generic fibre designation is insufficient for composite processing. The sizing must be compatible with the resin and process, while tex, filament diameter, tow size, areal weight, weave, moisture and package format affect handling and laminate quality.",
       "Pultrusion, winding, spray-up, SMC, thermoplastic compounding and infusion need different product forms and sizing behaviour. Buyers should provide the resin, process, line speed or flow need, target properties and existing reference grade. For carbon fibre, define tow size, strength and modulus class, surface treatment and test basis. For fabrics and mats, include areal-weight tolerance, width, roll length, splice policy and packaging.",
@@ -462,10 +464,10 @@ export const SUPPLIER_CATEGORY_PAGES: SupplierCategoryPage[] = [
     ],
     match: {
       businessTypes: ["fiber"],
-      keywords: ["glass fiber", "glass fibre", "carbon fiber", "carbon fibre", "basalt", "aramid", "roving", "fabric", "mat"],
+      keywords: ["glass fiber", "glass fibre", "carbon fiber", "carbon fibre", "basalt", "quartz", "roving", "fabric", "mat"],
     },
     specifications: [
-      { field: "Fibre", typicalRange: "E / ECR / S glass, carbon, basalt, aramid", sourcingNote: "State performance class and chemistry." },
+      { field: "Fibre", typicalRange: "E / ECR / S glass, carbon, basalt, quartz", sourcingNote: "State performance class and chemistry. For aramid (Kevlar) reinforcements, consult the dedicated aramid catalog." },
       { field: "Form", typicalRange: "Roving / chopped / mat / fabric / veil / prepreg", sourcingNote: "Match the downstream process." },
       { field: "Sizing", typicalRange: "Process- and resin-compatible systems", sourcingNote: "Request compatibility and reference applications." },
       { field: "Key controls", typicalRange: "Tex / tow / filament / areal weight / moisture", sourcingNote: "Define tolerance and sampling." },
