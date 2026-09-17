@@ -17,15 +17,15 @@ export type ProductSearchIntent = {
  */
 export const PRODUCT_SEARCH_INTENTS: Record<string, ProductSearchIntent> = {
   "frp-grating": {
-    title: "FRP Grating Manufacturer Directory in China | GetFRP",
-    h1: "Compare FRP Grating Manufacturer Capabilities in China",
-    primaryKeyword: "FRP grating manufacturer",
-    primaryTerms: ["FRP grating manufacturer", "fiberglass grating", "GRP grating"],
+    title: "FRP Grating — China Supplier Specs & Load Ratings | GetFRP",
+    h1: "FRP Grating Specifications & Load Evidence in China",
+    primaryKeyword: "FRP grating",
+    primaryTerms: ["FRP grating", "fiberglass grating", "GRP grating"],
     audienceNote: "Industrial flooring, walkways, trench covers and access systems",
     openingParagraph:
-      "Use this FRP grating manufacturer directory to compare Chinese factories for molded and pultruded panels, stair treads, trench covers and custom-cut access systems. Filter the shortlist by resin system, load evidence, fire performance, production capability and export readiness before sending one controlled RFQ.",
+      "Use this FRP grating directory to compare Chinese factories for molded and pultruded panels, stair treads, trench covers and custom-cut access systems. Filter the shortlist by resin system, load evidence, fire performance, production capability and export readiness before sending one controlled RFQ.",
     selectionParagraph:
-      "When evaluating an FRP grating manufacturer, tie every load table and fire report to the offered construction, depth, resin, surface and support span. Then freeze cut plans, edge sealing, clips, inspection criteria and export packing before comparing landed quotations.",
+      "When evaluating FRP grating suppliers, tie every load table and fire report to the offered construction, depth, resin, surface and support span. Then freeze cut plans, edge sealing, clips, inspection criteria and export packing before comparing landed quotations.",
   },
   "pultruded-profiles": {
     title: "Pultruded FRP Profile Manufacturer in China | GetFRP",
@@ -83,26 +83,26 @@ export const PRODUCT_SEARCH_INTENTS: Record<string, ProductSearchIntent> = {
       "When shortlisting an SMC BMC manufacturer, connect every material property and certificate to the approved formulation, fibre content, part thickness, moulding cycle and production site. Define tool ownership, first-article approval, cosmetic limits, inserts, lot sampling and change control before launch.",
   },
   "resin-gelcoat": {
-    title: "Composite Resin Manufacturer Directory in China | GetFRP",
-    h1: "Compare Composite Resin Manufacturer Capabilities in China",
-    primaryKeyword: "composite resin manufacturer",
-    primaryTerms: ["composite resin manufacturer", "vinyl ester resin", "FRP gelcoat"],
-    audienceNote: "Composite-grade resin systems, gelcoats and formulation evidence",
+    title: "Gelcoat & Composite Resin Suppliers in China | GetFRP",
+    h1: "Gelcoat & Composite Resin Capabilities in China",
+    primaryKeyword: "gelcoat",
+    primaryTerms: ["gelcoat", "composite resin", "vinyl ester resin", "in-mold coating"],
+    audienceNote: "Composite-grade resin systems, surface protection and formulation evidence",
     openingParagraph:
-      "Use this composite resin manufacturer directory to compare Chinese suppliers of polyester, vinyl ester, epoxy and gelcoat systems for FRP production. Screen chemistry, viscosity and cure window, reinforcement compatibility, batch controls, regulatory documents and application support before plant trials.",
+      "Use this gelcoat and composite resin directory to compare Chinese suppliers of polyester, vinyl ester, epoxy and surface coating systems for FRP production. Screen chemistry, viscosity and cure window, reinforcement compatibility, batch controls, regulatory documents and application support before plant trials.",
     selectionParagraph:
-      "When evaluating a composite resin manufacturer, identify the exact grade, manufacturing site, shelf life, storage conditions and test method behind every published value. Approve the complete catalyst, accelerator, pigment and filler package on the buyer's actual reinforcement and process before scale-up.",
+      "When evaluating gelcoat systems, identify the exact grade, manufacturing site, shelf life, storage conditions and test method behind every published value. Approve the complete catalyst, accelerator, pigment and filler package on the buyer's actual reinforcement and process before scale-up.",
   },
   "fiber-glass": {
-    title: "Fiberglass Manufacturer Directory in China | GetFRP",
-    h1: "Compare Fiberglass Manufacturer Capabilities in China",
-    primaryKeyword: "fiberglass manufacturer",
-    primaryTerms: ["fiberglass manufacturer", "fiberglass roving", "fiberglass mat"],
-    audienceNote: "Industrial reinforcement formats with sizing and batch traceability",
+    title: "Fiberglass Reinforcements & Materials in China | GetFRP",
+    h1: "Fiberglass Reinforcement Capabilities in China",
+    primaryKeyword: "fiberglass",
+    primaryTerms: ["fiberglass", "glass fiber roving", "woven roving"],
+    audienceNote: "Reinforcements, rovings, chopped strands and fabrics for composites",
     openingParagraph:
-      "Use this fiberglass manufacturer directory to compare Chinese producers of roving, chopped strand mat, woven and stitched fabrics, veil and other reinforcement formats. Match glass type, sizing, tex or areal weight, process compatibility, batch evidence and export packaging to the laminate specification.",
+      "Use this fiberglass directory to compare Chinese producers of rovings, chopped strands, fabrics, basalt and quartz reinforcements. Review sizing compatibility, package format, mechanical properties, capacity and export credentials before placing orders.",
     selectionParagraph:
-      "When shortlisting a fiberglass manufacturer, verify the product code, sizing chemistry, resin and process compatibility, moisture limits and test basis for each format. Control roll or package construction, splice limits, lot identity, storage, shelf life and container protection before approving supply.",
+      "When shortlisting a fiberglass supplier, align the sizing with your exact resin chemistry and process route. Check package format, filament diameter, tex tolerance, roll width and batch consistency records before approving production shipments.",
   },
   "carbon-fiber": {
     title: "Carbon Fiber Manufacturers in China | Tow, Fabric & Profiles",

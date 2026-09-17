@@ -87,6 +87,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Aircraft wing above the clouds representing aerospace and space composite applications",
     imagePosition: "center 78%",
     searchQuery: "aerospace carbon fiber composite wing radome structures",
+    detailPath: "/applications/aerospace-space",
     credit: {
       title: "Aircraft wing",
       creator: "Victor Freitas",
@@ -115,6 +116,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Robotic automotive production line representing composite vehicle applications",
     imagePosition: "center 54%",
     searchQuery: "automotive composite body panel battery enclosure leaf spring",
+    detailPath: "/applications/automotive-road-transportation",
     credit: {
       title: "Robots assembling a car in a modern factory",
       creator: "Hyundai Motor Group",
@@ -143,6 +145,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Busy rail station representing lightweight composite rail and mass-transit applications",
     imagePosition: "center 62%",
     searchQuery: "FRP rail transit interior panels platform decking",
+    detailPath: "/applications/rail-mass-transit",
     credit: {
       title: "Train station",
       creator: "Kaique Rocha",
@@ -200,6 +203,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Military armoured vehicle representing defence, security and ballistic composite applications",
     imagePosition: "center 58%",
     searchQuery: "ballistic composite armor panel military radome FRP",
+    detailPath: "/applications/defence-security-ballistics",
     credit: {
       title: "Military armoured vehicle",
       creator: "Etkin Celep",
@@ -228,7 +232,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Bridge deck under construction representing FRP infrastructure and civil-engineering applications",
     imagePosition: "center 58%",
     searchQuery: "FRP rebar bridge deck structural profiles sheet pile",
-    detailPath: "/applications/construction",
+    detailPath: "/applications/infrastructure-civil-engineering",
     credit: {
       title: "Bridge under construction",
       creator: "Aleksey Vinogradov",
@@ -257,6 +261,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Modern geometric building facade representing architectural composite applications",
     imagePosition: "center 48%",
     searchQuery: "architectural FRP facade panel roofing pultruded profile",
+    detailPath: "/applications/building-architecture",
     credit: {
       title: "Modern building with geometric architecture",
       creator: "Laura Tancredi",
@@ -314,6 +319,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Rows of server racks representing FRP telecom and data-center infrastructure applications",
     imagePosition: "center 52%",
     searchQuery: "FRP telecom radome pole cable tray data center",
+    detailPath: "/applications/telecom-data-centers",
     credit: {
       title: "Server racks in a data center",
       creator: "Brett Sayles",
@@ -342,6 +348,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Swimming pool and water slides representing FRP bath, pool and recreational-vehicle applications",
     imagePosition: "center 46%",
     searchQuery: "FRP swimming pool water slide RV composite panel bathroom",
+    detailPath: "/applications/bath-pools-recreational-vehicles",
     credit: {
       title: "Swimming pool with slides",
       creator: "Pixabay",
@@ -370,6 +377,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Close view of wind turbine blades representing wind and renewable-energy composite applications",
     imagePosition: "center 48%",
     searchQuery: "wind turbine blade fiberglass carbon fiber composites spar cap",
+    detailPath: "/applications/wind-renewable-energy",
     credit: {
       title: "Wind turbine from below",
       creator: "Vadym Alyekseyenko",
@@ -427,6 +435,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Industrial storage tanks representing composite hydrogen, CNG and pressure-vessel applications",
     imagePosition: "center 58%",
     searchQuery: "composite hydrogen CNG type IV pressure vessel cylinder",
+    detailPath: "/applications/hydrogen-cng-pressure-vessels",
     credit: {
       title: "Industrial storage tanks at sunset in Rotterdam",
       creator: "Igor Passchier",
@@ -484,6 +493,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Open-pit industrial mine representing FRP mining and mineral-processing applications",
     imagePosition: "center 52%",
     searchQuery: "FRP mining grating slurry pipe rock bolt mineral processing",
+    detailPath: "/applications/mining-mineral-processing",
     credit: {
       title: "Industrial open-pit mining site",
       creator: "Xiang Qi",
@@ -512,6 +522,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Industrial robot arm representing FRP industrial equipment and machinery applications",
     imagePosition: "center 50%",
     searchQuery: "industrial composite robot arm roller drive shaft machinery",
+    detailPath: "/applications/industrial-equipment-machinery",
     credit: {
       title: "Industrial robot arm in a manufacturing facility",
       creator: "Freek Wolsink",
@@ -540,6 +551,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Person with a prosthetic leg in rehabilitation representing medical composite applications",
     imagePosition: "center 44%",
     searchQuery: "carbon fiber prosthetic medical imaging table composite",
+    detailPath: "/applications/healthcare-medical-prosthetics",
     credit: {
       title: "Man with prosthetic leg undergoing rehabilitation",
       creator: "Kampus Production",
@@ -568,6 +580,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Road bicycle race representing high-performance composite sports equipment applications",
     imagePosition: "center 56%",
     searchQuery: "carbon fiber bicycle racket golf shaft sports equipment",
+    detailPath: "/applications/sports-leisure-recreation",
     credit: {
       title: "Road bicycle race",
       creator: "Leyla Helvaci",
@@ -624,6 +637,7 @@ export const FRP_APPLICATIONS: readonly FrpApplication[] = [
       "Aerial view of circular fish-farm nets representing FRP agriculture, aquaculture and food-processing applications",
     imagePosition: "center 50%",
     searchQuery: "FRP aquaculture cage greenhouse profile food processing",
+    detailPath: "/applications/agriculture-aquaculture-food-processing",
     credit: {
       title: "Aerial view of a fish farm with circular nets",
       creator: "Esra Bürçün Erşahin",

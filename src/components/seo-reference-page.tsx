@@ -151,9 +151,23 @@ export function SeoReferencePageView({ page }: { page: SeoReferencePage }) {
 
       <section className="border-b border-border/80">
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
-          <div className="space-y-12">
-            {page.sections.map((section) => (
-              <article key={section.heading}>
+            {page.sections.some((s) => s.id) && (
+              <div className="flex flex-wrap items-center gap-2 pb-6 border-b border-border/60">
+                <span className="text-xs font-medium text-muted-foreground mr-1">Quick Jump:</span>
+                {page.sections.filter((s) => s.id).map((section) => (
+                  <a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    className="inline-flex items-center rounded-full border border-border/80 bg-muted/30 px-3 py-1 text-xs font-medium text-foreground hover:border-[#123f8c] hover:text-[#123f8c] transition-colors"
+                  >
+                    #{section.id}
+                  </a>
+                ))}
+              </div>
+            )}
+            <div className="space-y-12">
+              {page.sections.map((section) => (
+                <article key={section.heading} id={section.id} className="scroll-mt-24">
                 <h2 className="text-2xl font-semibold tracking-tight">
                   {section.heading}
                 </h2>

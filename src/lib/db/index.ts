@@ -2,7 +2,9 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
-const sql = neon(process.env.DATABASE_URL!);
+const connectionString =
+  process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy";
+const sql = neon(connectionString);
 
 // --- Build-time resilience -------------------------------------------------
 // Many ISR / prerendered pages query the DB during `next build` (static

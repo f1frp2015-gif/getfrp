@@ -17,6 +17,7 @@ export type SeoReferencePage = {
     rows: string[][];
   };
   sections: Array<{
+    id?: string;
     heading: string;
     paragraphs: string[];
     bullets?: string[];
@@ -73,6 +74,16 @@ const BEDFORD_PROPERTIES = {
 const ALUMINUM_DATA = {
   label: "Aluminum Association standards and material data",
   href: "https://www.aluminum.org/standards",
+};
+
+const ISO_COMPOSITES = {
+  label: "ISO Technical Committee 61/SC 13 - Composites and reinforcement fibres",
+  href: "https://www.iso.org/committee/49386.html",
+};
+
+const ACMA_STANDARDS = {
+  label: "American Composites Manufacturers Association (ACMA) standards",
+  href: "https://acmanet.org/",
 };
 
 export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
@@ -329,6 +340,144 @@ export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
       { label: "China FRP sourcing playbook", href: "/source-from-china" },
     ],
     sources: [STRONGWELL_MANUAL, BEDFORD_GUIDE, ASTM_COMPOSITES, ALUMINUM_DATA],
+  },
+  {
+    group: "technical",
+    slug: "grp-terminology",
+    shortTitle: "GRP terminology",
+    title: "GRP Terminology — FRP, GFRP and CFRP Regional Standards",
+    metaTitle: "GRP vs FRP, GFRP & CFRP Terminology Guide | GetFRP",
+    metaDescription:
+      "Clarify GRP, FRP, GFRP, and CFRP naming conventions, global regional standards (ASTM, EN, GB), resin matrix systems, and commercial procurement specifications.",
+    eyebrow: "COMPOSITE TERMINOLOGY & ACRONYMS",
+    intro:
+      "Global procurement teams frequently encounter conflicting composite acronyms across regional engineering drawings, test certificates, and commercial proposals. In the United Kingdom, Europe, and the Middle East, 'GRP' (Glass Reinforced Plastic) remains the dominant commercial designation. In North America and standard international engineering codes, 'FRP' (Fiber Reinforced Polymer) serves as the primary umbrella term, while 'GFRP' specifically denotes glass-fiber composites to distinguish them from carbon (CFRP) or aramid (AFRP). Understanding these technical distinctions ensures engineering specifications translate accurately into production purchase orders.",
+    reviewedDate: "2026-08-18",
+    highlights: [
+      { label: "GRP definition", value: "Glass Reinforced Plastic (UK / Europe / Commonwealth)" },
+      { label: "FRP umbrella", value: "Fiber-Reinforced Polymer (Global standard umbrella)" },
+      { label: "GFRP definition", value: "Glass Fiber-Reinforced Polymer (Precise ASTM / ISO term)" },
+      { label: "CFRP definition", value: "Carbon Fiber-Reinforced Polymer (High-modulus structural)" },
+    ],
+    table: {
+      caption:
+        "Comparison of composite terminology, reinforcement chemistry, mechanical performance, relative cost, and governing regional standards.",
+      headers: ["Term / Acronym", "Full Definition", "Primary Reinforcement", "Tensile Modulus (Typical)", "Relative Cost", "Dominant Regional Usage"],
+      rows: [
+        ["GRP", "Glass Reinforced Plastic", "E-Glass / E-CR Glass", "15 - 28 GPa", "Baseline (1.0x)", "UK, Europe, Middle East, Australia"],
+        ["GFRP", "Glass Fiber Reinforced Polymer", "E-Glass / S-2 Glass", "17 - 45 GPa", "1.0x - 1.3x", "North America, ISO & engineering literature"],
+        ["FRP", "Fiber Reinforced Polymer / Plastic", "Glass, Carbon, Basalt, Aramid", "15 - 250+ GPa", "Varies by fiber", "Global umbrella term & North American industry"],
+        ["CFRP", "Carbon Fiber Reinforced Polymer", "PAN / Pitch Carbon Fiber", "70 - 350+ GPa", "4.0x - 12.0x", "Worldwide aerospace, automotive & civil retrofits"],
+        ["AFRP", "Aramid Fiber Reinforced Polymer", "Para-aramid (Kevlar / Twaron)", "60 - 120 GPa", "3.5x - 7.0x", "Worldwide ballistics, pressure vessels & marine cables"],
+      ],
+    },
+    sections: [
+      {
+        id: "grp",
+        heading: "GRP: Glass Reinforced Plastic in European and Commonwealth Markets",
+        paragraphs: [
+          "The acronym GRP historically originated in the United Kingdom and Western Europe to describe composite laminates formed by embedding glass fibers inside a polyester resin matrix. British Standards (such as BS 4994 for process vessels and BS 5480 for water pipes) popularized GRP throughout Commonwealth nations, the European Union, and the Middle East.",
+          "In commercial trade, GRP remains the standard designation for architectural mouldings, water storage tanks, marine hulls, and industrial access systems. When European specifications reference GRP, engineers must ensure the resin matrix (isophthalic, orthophthalic, or vinyl ester) and fiber architecture (chopped strand mat, continuous filament, or woven roving) are explicitly defined, as 'GRP' alone does not specify chemical or load limits.",
+        ],
+        bullets: [
+          "Standard commercial usage across the UK, Europe, Australia, and Middle East",
+          "Governed by European standards such as EN 13121, EN 14364, and EN 13706",
+          "Commonly applied to molded grating, water vessels, building panels, and utility pipe",
+          "Requires explicit resin and glass specification to avoid generic polyester substitution",
+        ],
+      },
+      {
+        id: "gfrp",
+        heading: "GFRP: The Unambiguous Engineering Standard for Glass Composites",
+        paragraphs: [
+          "Engineering standards organizations—including ASTM International, the American Concrete Institute (ACI), the American Society of Civil Engineers (ASCE), and ISO—recommend 'GFRP' (Glass Fiber Reinforced Polymer) when technical precision is required. Because 'FRP' is an umbrella category that also covers carbon, basalt, and aramid, standardizing on GFRP eliminates any ambiguity regarding the constituent reinforcement.",
+          "For example, civil infrastructure specifications for concrete reinforcement mandate GFRP bars under ASTM D7957, AASHTO LRFD, and ACI 440.11R. Similarly, pultruded structural shapes evaluated under ASCE 74 and ASTM D8069 are formally cataloged as GFRP profiles. Specifying GFRP communicates to manufacturers that the structural fiber must be continuous electrical/chemical-resistant glass (such as E-CR glass or S-2 glass) rather than mixed fiber blends.",
+        ],
+        bullets: [
+          "Precise scientific and engineering terminology used across ASTM, ACI, and ISO codes",
+          "Distinguishes glass reinforcement from carbon (CFRP), aramid (AFRP), and basalt (BFRP)",
+          "Standard nomenclature for structural rebar, bridge decks, and high-spec pultrusions",
+          "Ensures accurate reporting of fiber volume fraction (Vf) and tensile strength",
+        ],
+      },
+      {
+        id: "cfrp",
+        heading: "CFRP vs GRP/GFRP: Mechanical Strength, Stiffness and Cost Trade-offs",
+        paragraphs: [
+          "CFRP (Carbon Fiber Reinforced Polymer) utilizes polyacrylonitrile (PAN) or pitch-based carbon fibers rather than glass fibers. This substitution delivers an elastic modulus 4 to 8 times higher than GFRP (typically 70 GPa to over 300 GPa compared to 17–28 GPa for glass) while decreasing laminate density by approximately 20% (1.5–1.6 g/cm³ versus 1.8–2.0 g/cm³ for GFRP).",
+          "However, CFRP carries a significant raw material cost multiplier (4x to 12x that of GFRP) and exhibits electrical conductivity. The electrical conductivity of carbon creates galvanic corrosion hazards when bonded to steel or aluminum structural fasteners unless non-conductive GFRP isolation plies are integrated into the joint design. CFRP is selected where deflection limits, dynamic fatigue, or extreme mass reduction justify the premium.",
+        ],
+        bullets: [
+          "Tensile modulus up to 300+ GPa for high-modulus grades vs 17-28 GPa for standard GRP",
+          "Density of 1.5-1.6 g/cm³ provides superior specific stiffness for mass-sensitive designs",
+          "Electrically conductive laminate requires galvanic isolation when bolted to metals",
+          "Applied in aerospace structures, automotive monocoques, high-speed rollers, and structural strengthening",
+        ],
+      },
+      {
+        heading: "Regional Standards Crosswalk: ASTM (US), EN/ISO (Europe), and GB (China)",
+        paragraphs: [
+          "When sourcing composite components globally, international buyers must navigate how different national standardization bodies document fiber-reinforced polymer products. Chinese manufacturers operate under Chinese National Standards (GB/T codes), which traditionally use 'Boligang' (glass steel) colloquially and 'Fiber Reinforced Plastics' formally.",
+          "For example, a structural profile specified to EN 13706 (Europe) or ASTM D8069 (US) maps closely to GB/T 31539 in China. Similarly, filament-wound chemical pipe specified to ASTM D2996 or EN 14364 correlates with GB/T 21238. Procurement documents should cite both the buyer's home standard and the corresponding Chinese test method to prevent misinterpretation of acceptance criteria.",
+        ],
+        bullets: [
+          "US standards (ASTM, ACI, ACMA) use FRP as the general category and GFRP/CFRP for specific fiber types",
+          "European standards (EN, ISO, BS) use both GRP and FRP interchangeably depending on the product sector",
+          "Chinese national standards (GB/T) categorize composites under fiber-reinforced plastics (FRP) with strict grade designations",
+          "Cross-reference specimen conditioning and test orientation in the inspection contract",
+        ],
+      },
+      {
+        heading: "Procurement Guide: Specifying Composites in International RFQs",
+        paragraphs: [
+          "To avoid disputes over terminology and grade substitutions, procurement teams should never issue an RFQ with only the word 'GRP' or 'FRP' in the line item. A complete composite purchase specification defines reinforcement type, resin formulation, processing route, and required quality evidence.",
+          "Request mill test reports that confirm fiber content via ignition loss (ASTM D2584 / ISO 1172), resin matrix type via infrared spectroscopy (FTIR) or differential scanning calorimetry (DSC), and barcol hardness (ASTM D2583). Verifying these material parameters protects against low-grade filler additions and ensures long-term field durability.",
+        ],
+        bullets: [
+          "State fiber reinforcement grade (e.g., E-CR glass, S-glass, or T700 carbon)",
+          "Specify the exact resin chemistry (orthophthalic, isophthalic, vinyl ester, or epoxy)",
+          "Mandate third-party test reports from ISO 17025 accredited testing laboratories",
+          "Define inspection witness points and mechanical test coupon sampling frequencies",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is there any physical difference between GRP and GFRP?",
+        answer:
+          "No. GRP (Glass Reinforced Plastic) and GFRP (Glass Fiber Reinforced Polymer) refer to the exact same composite material composed of glass fibers embedded in a polymer resin matrix. GRP is the historical commercial term standard in the United Kingdom, Europe, and Middle East, while GFRP is the precise engineering acronym used by ASTM, ACI, and international scientific literature.",
+      },
+      {
+        question: "Why do North American specifications prefer FRP over GRP?",
+        answer:
+          "In North America, standard organizations like ASTM, the American Composites Manufacturers Association (ACMA), and the American Society of Civil Engineers (ASCE) adopted 'FRP' (Fiber Reinforced Polymer) as the comprehensive industry classification. While FRP technically encompasses carbon, basalt, and aramid, in commercial construction it customarily refers to glass-reinforced polymer unless another fiber is named.",
+      },
+      {
+        question: "Can CFRP and GFRP parts be assembled together without galvanic risk?",
+        answer:
+          "Carbon fiber is electrically conductive and has a noble galvanic potential. When CFRP components contact aluminum or steel, galvanic corrosion of the metal can occur. However, GFRP is electrically non-conductive and acts as an excellent dielectric barrier. Engineers frequently place GFRP isolation plies or washers between CFRP and metallic fasteners to prevent galvanic corrosion.",
+      },
+      {
+        question: "How is GRP translated in Chinese composite factory documentation?",
+        answer:
+          "In China, GRP is traditionally called 'Boligang' (literally 'glass steel') in trade conversation. In formal Chinese national standards (GB and GB/T), it is classified under 'Fiber Reinforced Plastics'. Sourcing contracts should state exact GB/T or ASTM numbers rather than colloquial names to eliminate specification ambiguities.",
+      },
+      {
+        question: "What laboratory test confirms whether a supplied part is structural GFRP?",
+        answer:
+          "Specify ASTM D2584 or ISO 1172 ignition loss (burn-off) tests to measure actual glass fiber content by weight, combined with ASTM D792 density testing and Barcol hardness (ASTM D2583). These confirm that the composite possesses the required structural fiber volume and does not rely on excessive calcium carbonate or low-grade mineral fillers.",
+      },
+    ],
+    related: [
+      { label: "FRP technical properties & test data", href: "/technical/frp-properties" },
+      { label: "FRP density & weight calculations", href: "/technical/frp-density" },
+      { label: "FRP vs structural steel comparison", href: "/compare/frp-vs-steel" },
+      { label: "Fiberglass reinforcement materials", href: "/products/fiber-glass" },
+      { label: "Carbon fiber products & supply", href: "/products/carbon-fiber" },
+      { label: "Aramid fiber reinforcements", href: "/products/aramid-fiber" },
+      { label: "International standards comparison tool", href: "/tools/standard-comparison" },
+    ],
+    sources: [ASTM_COMPOSITES, ISO_COMPOSITES, ACMA_STANDARDS, STRONGWELL_MANUAL],
   },
   {
     group: "technical",

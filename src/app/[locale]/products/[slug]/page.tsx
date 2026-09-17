@@ -446,6 +446,22 @@ export default async function ProductDetailPage({
               {searchIntent?.selectionParagraph && <p>{searchIntent.selectionParagraph}</p>}
               {product.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
+            {product.slug === "resin-gelcoat" && (
+              <div className="mt-10 rounded-xl border border-border/70 bg-muted/10 p-6">
+                <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#123f8c]">
+                  Surface Technology
+                </div>
+                <h2 className="mt-2 text-2xl font-semibold">Gelcoat selection, weathering performance and mold preparation</h2>
+                <div className="mt-4 space-y-3 text-[14px] leading-7 text-muted-foreground">
+                  <p>
+                    Gelcoat formulations serve as the primary protective barrier shielding structural composite laminates against ultraviolet degradation, chemical attack, moisture ingress and cosmetic chalking. For marine, architectural and sanitary moldings, isophthalic and neopentyl glycol (ISO/NPG) chemistries provide superior hydrolytic stability and osmotic blister resistance compared with standard orthophthalic grades.
+                  </p>
+                  <p>
+                    When specifying colored or clear surface systems, procurement briefs must define application parameters (airless spray, HVLP or brush), wet-film thickness targets (typically 0.4 to 0.6 mm), thixotropic index, sag resistance on vertical tooling, and post-cure windows. Tool preparation, compatible vinyl ester barrier coats, release waxes and catalyst metering directly govern surface porosity, demolding release and long-term gloss retention.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           <aside className="h-fit rounded-xl border border-border/70 bg-muted/20 p-6">
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
