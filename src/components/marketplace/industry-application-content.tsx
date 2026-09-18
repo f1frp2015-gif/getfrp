@@ -316,7 +316,13 @@ export function IndustryApplicationContent({
           </div>
 
           {suppliers.length > 0 ? (
-            <SupplierList suppliers={suppliers} className="mt-8" />
+            <SupplierList
+              suppliers={suppliers.map((s) => ({
+                ...s,
+                signals: [{ label: `${data.industryName} scope` }],
+              }))}
+              className="mt-8"
+            />
           ) : (
             <div className="mt-8 rounded-xl border border-dashed border-border/80 bg-background p-10 text-center">
               <PackageSearch className="mx-auto text-muted-foreground" size={28} />

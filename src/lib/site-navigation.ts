@@ -60,11 +60,17 @@ export const PRODUCT_LINKS = [
   { label: "SMC / BMC", href: "/products/smc-bmc" },
   { label: "Resin & gelcoat", href: "/products/resin-gelcoat" },
   { label: "Glass fiber", href: "/products/fiber-glass" },
+  { label: "FRP duct", href: "/products/frp-duct" },
+  { label: "Fiberglass molds", href: "/products/fiberglass-molds" },
+  { label: "Chopper gun", href: "/products/chopper-gun" },
+  { label: "Gelcoat spray gun", href: "/products/gelcoat-spray-gun" },
+  { label: "Curing oven", href: "/products/curing-oven" },
 ] as const satisfies readonly NavigationLink[];
 
 export const PROCESS_LINKS = [
   { label: "Pultrusion", href: "/manufacturing/pultrusion" },
   { label: "Filament winding", href: "/manufacturing/filament-winding" },
+  { label: "Compression molding", href: "/manufacturing/compression-molding" },
   { label: "SMC molding", href: "/manufacturing/smc-molding" },
   { label: "RTM", href: "/manufacturing/rtm" },
   { label: "Hand lay-up", href: "/manufacturing/hand-layup" },
@@ -142,6 +148,7 @@ const RESOURCE_HUB_LINKS = [
   { label: "Applications", href: "/applications" },
   { label: "Standards", href: "/standards" },
   { label: "Engineering tools", href: "/tools" },
+  { label: "Material comparisons", href: "/compare" },
   { label: "Industry insights", href: "/insights" },
   { label: "Review methodology", href: "/methodology" },
 ] as const satisfies readonly NavigationLink[];
@@ -199,6 +206,7 @@ export const PRIMARY_NAVIGATION = [
       "/applications",
       "/standards",
       "/tools",
+      "/compare",
       "/technical",
       "/insights",
       "/methodology",
@@ -211,11 +219,15 @@ export const PRIMARY_NAVIGATION = [
       },
       {
         label: "Evaluate",
-        items: [RESOURCE_HUB_LINKS[2], RESOURCE_HUB_LINKS[3]],
+        items: [
+          RESOURCE_HUB_LINKS[2],
+          RESOURCE_HUB_LINKS[3],
+          RESOURCE_HUB_LINKS[4],
+        ],
       },
       {
         label: "Learn",
-        items: [RESOURCE_HUB_LINKS[4], RESOURCE_HUB_LINKS[5]],
+        items: [RESOURCE_HUB_LINKS[5], RESOURCE_HUB_LINKS[6]],
       },
     ],
   },

@@ -133,7 +133,17 @@ export async function MarketplaceAggregationPage({
       <section className="border-b border-border/80 bg-muted/15"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><h2 className="text-2xl font-semibold">Browse subcategories</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{page.subcategories.map((item) => <Link key={item.href} href={item.href as never} className="rounded-xl border bg-background p-5 transition-colors hover:border-foreground/40"><div className="flex items-center justify-between gap-3 font-semibold">{item.label}<ArrowRight size={15} /></div><p className="mt-2 text-sm leading-6 text-muted-foreground">{item.note}</p></Link>)}</div></div></section></>}
 
       <section className="border-b border-border/80" id="suppliers"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><div className="flex flex-wrap items-end justify-between gap-4"><div><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">REAL REVIEWED DATA</div><h2 className="mt-2 text-2xl font-semibold">Approved supplier matches</h2></div><form method="get" className="flex flex-wrap gap-2 text-xs"><Filter name="verified" label="Factory verified" checked={filters.verified} /><Filter name="export" label="Export ready" checked={filters.exportReady} /><Filter name="moq" label="MOQ declared" checked={filters.moq} /><Filter name="iso" label="ISO 9001" checked={filters.iso} /><button className="rounded-md bg-foreground px-3 py-2 text-background">Apply filters</button></form></div>
-        {suppliers.length ? <SupplierList suppliers={suppliers} className="mt-7" /> : <EmptyState related={related} />}
+        {suppliers.length ? (
+          <SupplierList
+            suppliers={suppliers.map((s) => ({
+              ...s,
+              signals: [{ label: `${page.category || page.process || page.application || "FRP"} verified` }],
+            }))}
+            className="mt-7"
+          />
+        ) : (
+          <EmptyState related={related} />
+        )}
       </div></section>
 
       <section className="border-b border-border/80 bg-muted/15" id="products"><div className="mx-auto max-w-7xl px-4 py-14 sm:px-6"><div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">APPROVED UGC PRODUCTS</div><h2 className="mt-2 text-2xl font-semibold">Supplier-uploaded products</h2><p className="mt-3 max-w-3xl text-sm text-muted-foreground">Only approved supplier submissions appear here. Pending, rejected and demo rows are excluded from public queries and sitemap output.</p>{products.length ? <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{products.map((product) => <Link key={product.id} href={`/suppliers/${product.supplier.slug}/${product.slug}` as never} className="overflow-hidden rounded-xl border bg-background"><div className="relative aspect-[4/3] bg-muted"><Image src={product.images[0]} alt={product.name} fill sizes="(max-width: 1023px) 50vw, 33vw" className="object-cover" /></div><div className="p-5"><h3 className="font-semibold">{product.name}</h3><p className="mt-2 text-xs text-muted-foreground">{product.supplier.name} · {product.material}</p></div></Link>)}</div> : <div className="mt-7 rounded-xl border border-dashed bg-background p-8 text-center"><PackageSearch className="mx-auto" /><h3 className="mt-3 font-semibold">No approved supplier products in this combination yet</h3><p className="mt-2 text-sm text-muted-foreground">Browse the reviewed supplier profiles above or submit an RFQ. GetFRP does not fill empty categories with synthetic products.</p></div>}</div></section>

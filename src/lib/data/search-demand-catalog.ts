@@ -242,13 +242,16 @@ export const PROCESS_SEARCH_CLUSTERS: readonly ProcessSearchCluster[] = [
   {
     id: "compression-molding",
     title: "Compression molding · SMC/BMC",
-    href: "/manufacturing/smc-molding",
-    buyerLanguage: "SMC compound · sheet molding compound · BMC parts",
+    href: "/manufacturing/compression-molding",
+    buyerLanguage: "compression molding · SMC compound · BMC parts",
     summary: "Matched-tool molding for repeat components with integrated ribs, inserts, color and surface finish.",
     controls: ["Compound batch", "Charge pattern", "Temperature, pressure and cure"],
     relatedProductHref: "/products/smc-bmc",
     relatedProductLabel: "SMC & BMC compounds and parts",
-    routes: [{ label: "SMC/BMC molding", href: "/manufacturing/smc-molding" }],
+    routes: [
+      { label: "Compression molding", href: "/manufacturing/compression-molding" },
+      { label: "SMC/BMC molding", href: "/manufacturing/smc-molding" },
+    ],
   },
   {
     id: "rtm",

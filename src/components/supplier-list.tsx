@@ -44,6 +44,7 @@ export function SupplierList({
               <SupplierResultRow
                 supplier={supplier}
                 signals={signals}
+                showSave={true}
                 showDefaultActions={!supplier.actionHref}
                 primaryActionHref={supplier.actionHref}
                 primaryActionLabel={supplier.actionLabel}
