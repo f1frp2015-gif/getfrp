@@ -342,6 +342,100 @@ export const SEO_REFERENCE_PAGES: SeoReferencePage[] = [
     sources: [STRONGWELL_MANUAL, BEDFORD_GUIDE, ASTM_COMPOSITES, ALUMINUM_DATA],
   },
   {
+    group: "compare",
+    slug: "vinyl-ester-vs-epoxy-resin",
+    shortTitle: "Vinyl ester vs epoxy resin",
+    title: "Vinyl Ester vs Epoxy Resin: Chemical, Mechanical & Processing Comparison",
+    metaTitle: "Vinyl Ester vs Epoxy Resin — Matrix Selection Guide | GetFRP",
+    metaDescription:
+      "Compare vinyl ester and epoxy resins for industrial composites: chemical resistance, tensile modulus, elongation, cure kinetics, heat distortion, and cost.",
+    eyebrow: "RESIN MATRIX COMPARISON",
+    intro:
+      "Selecting between vinyl ester and epoxy resin is a primary engineering trade-off in composite design. Vinyl ester delivers high resistance to inorganic acids, chlorine, and oxidizing media at competitive cost with rapid peroxide curing. Epoxy offers superior interlaminar shear strength, cyclic fatigue endurance, lower cure shrinkage, and compatibility with carbon and aramid fibers.",
+    reviewedDate: "2026-09-01",
+    highlights: [
+      { label: "Vinyl ester edge", value: "Acid & chlorine resistance" },
+      { label: "Epoxy edge", value: "Bonding & fatigue endurance" },
+      { label: "Volumetric shrinkage", value: "VE 5-8% vs Epoxy 1-2%" },
+      { label: "Cure mechanism", value: "Peroxide (VE) vs Amine (Epoxy)" },
+    ],
+    table: {
+      caption:
+        "Typical unreinforced neat cast resin properties after post-cure per ASTM D638, ASTM D790, and ASTM D648. Reinforcement architecture modifies composite properties.",
+      headers: ["Engineering Property", "Vinyl Ester Resin (Bis-A / Novolac)", "Epoxy Resin (Bis-A / Novolac + Amine)", "Buyer & Design Implication"],
+      rows: [
+        ["Chemical resistance", "Outstanding against inorganic acids, chlorine, bleach, and oxidizing agents", "Superior against caustic alkalis, organic solvents, and seawater; attacked by strong nitric/chromic acids", "Select vinyl ester for chemical scrubbers and pickling tanks; specify epoxy for fuel tanks and alkaline baths"],
+        ["Tensile strength (neat)", "75 to 85 MPa", "80 to 110 MPa", "Epoxy yields marginally higher matrix tensile strength; fiber orientation governs finished laminate strength"],
+        ["Tensile elongation at break", "3.0% to 5.5%", "4.0% to 8.0%", "Higher elongation in epoxy yields better microcracking resistance and cyclic fatigue life under dynamic vibration"],
+        ["Heat Distortion Temp (HDT)", "105 to 135 deg C (standard); up to 160 deg C (novolac)", "110 to 180 deg C+ depending on hardener and thermal post-cure", "Novolac chemistries in either family unlock higher continuous operating temperatures"],
+        ["Volumetric cure shrinkage", "5.0% to 8.5% (styrene cross-linking)", "1.0% to 2.5% (addition polymerization)", "Vinyl ester exhibits higher print-through and residual tooling stress; epoxy provides tight dimensional tolerances"],
+        ["Interlaminar shear strength", "45 to 65 MPa", "65 to 90 MPa", "Epoxy provides superior wet-out and adhesion to carbon fiber, aramid tows, and structural core materials"],
+        ["Cure chemistry & shelf life", "Free-radical MEKP/cobalt promoter; 3-6 month liquid shelf life", "Stoichiometric addition; 12-24 month shelf life before mixing", "Vinyl ester cures rapidly at ambient temperature; epoxy requires strict mixing ratios and post-cure heating"],
+        ["Relative raw material cost", "Baseline index: 1.0x (moderate)", "Baseline index: 1.8x to 2.8x (higher)", "Vinyl ester provides high corrosion resistance at lower total procurement cost for large tanks and ductwork"],
+      ],
+    },
+    sections: [
+      {
+        heading: "Chemical exposure: acids vs alkalis and solvents",
+        paragraphs: [
+          "Vinyl ester resins are synthesized by esterifying epoxy backbones with methacrylic or acrylic acid, resulting in unsaturated terminal vinyl double bonds. Because ester linkages exist only at chain ends and are shielded by pendant methyl groups, vinyl ester resists acid hydrolysis and chlorine oxidation far better than general-purpose polyesters or standard epoxies.",
+          "Epoxy matrices cure through addition reaction with amines or anhydrides without generating ester groups susceptible to saponification. Epoxies perform exceptionally well in alkaline service (high pH caustic solutions) and aromatic solvents where vinyl ester resins swell or soften. Always request ASTM C581 coupon immersion test data for the specific chemical concentration and temperature.",
+        ],
+      },
+      {
+        heading: "Mechanical performance, fatigue, and fiber adhesion",
+        paragraphs: [
+          "In high-stress structural applications such as aerospace fairings, wind turbine spar caps, and pressure vessels, epoxy resin is standard. Epoxy provides high cross-link density, low void formation, and polar hydroxyl groups that establish exceptional adhesion to carbon and glass sizing.",
+          "Vinyl ester offers higher toughness and elongation than standard polyesters, making it adequate for filament-wound pipe, chemical storage tanks, and pultruded structural profiles. However, under high-amplitude cyclic fatigue, epoxy laminates exhibit superior resistance to microcracking and delamination.",
+        ],
+      },
+      {
+        heading: "Processing, cure kinetics, and dimensional stability",
+        paragraphs: [
+          "Vinyl ester cures via free-radical copolymerization initiated by liquid peroxides (typically MEKP or Cumene Hydroperoxide) with cobalt accelerators. Gel times adjust easily by varying catalyst concentrations (1.0% to 2.5%), enabling room-temperature curing of thick laminates without expensive heating ovens. The major drawback is volumetric shrinkage of 5% to 8% caused by styrene monomer cross-linking, which requires mold draft allowances and careful cooling fixtures.",
+          "Epoxy curing involves stoichiometric addition reactions between epoxy epoxide rings and hardener amine active hydrogens. Mix ratios must remain accurate within plus or minus 1% by weight. Epoxies have low shrinkage (under 2%), zero styrene VOC emissions, and low exotherm in thin sections, but require controlled post-curing cycles (60 to 120 deg C) to develop complete mechanical properties.",
+        ],
+      },
+      {
+        heading: "Procurement and quality assurance checklist",
+        paragraphs: [
+          "When procuring composite components using either resin system from Chinese manufacturers, specify the exact resin supplier, grade, and hardener/promoter batch on the purchase order.",
+        ],
+        bullets: [
+          "Specify the exact resin formulation (e.g., Derakane 411, SWANCOR 901 for vinyl ester; Araldite or Sinopec bisphenol-A epoxy)",
+          "Verify Barcol hardness (ASTM D2583) to confirm complete polymerization before factory release",
+          "Require Differential Scanning Calorimetry (DSC per ASTM E1356) to measure residual uncured matrix and Glass Transition Temperature (Tg)",
+          "Confirm post-cure cycle documentation with datalogger charts showing temperature ramp, dwell time, and cooling profile",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can vinyl ester be used with carbon fiber reinforcement?",
+        answer:
+          "While vinyl ester can wet carbon fiber, epoxy is standard for carbon composites. Epoxy sizing on commercial carbon tows is formulated for amine cross-linking, providing substantially higher interlaminar shear strength and fatigue resistance than vinyl ester.",
+      },
+      {
+        question: "Why is vinyl ester preferred for chemical tanks and scrubbers?",
+        answer:
+          "Vinyl ester combines the chemical corrosion resistance of epoxy backbones with the rapid ambient-temperature peroxide cure kinetics of polyester. Because it resists acid hydrolysis and wet chlorine at a lower raw material cost, it is the primary choice for ASTM D3299 tanks and duct systems.",
+      },
+      {
+        question: "Does epoxy always require elevated-temperature post-curing?",
+        answer:
+          "Ambient-curing amine hardeners achieve handling strength at room temperature, but maximizing glass transition temperature (Tg), chemical resistance, and tensile modulus requires an elevated post-cure schedule (typically 60 to 120 deg C for 4 to 8 hours).",
+      },
+    ],
+    related: [
+      { label: "Resin & gelcoat systems", href: "/products/resin-gelcoat" },
+      { label: "Thermoset resins guide", href: "/products/thermoset-resins" },
+      { label: "FRP chemical tanks", href: "/products/frp-tank" },
+      { label: "FRP industrial ductwork", href: "/products/frp-duct" },
+      { label: "FRP vs traditional materials", href: "/compare/frp-vs-traditional-materials" },
+    ],
+    sources: [ASTM_COMPOSITES, ISO_COMPOSITES, ACMA_STANDARDS],
+  },
+  {
     group: "technical",
     slug: "grp-terminology",
     shortTitle: "GRP terminology",

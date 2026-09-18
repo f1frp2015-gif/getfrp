@@ -140,12 +140,36 @@ function websiteLabel(website: string): string {
   }
 }
 
+const CATEGORY_MAP: Record<string, string> = {
+  manufacturer: "Manufacturer",
+  fiber: "Fiber supplier",
+  resin: "Resin supplier",
+  additive: "Additives supplier",
+  distributor: "Materials distributor",
+  equipment: "Equipment supplier",
+  mold: "Mold maker",
+  tooling: "Tooling / NDT equipment",
+  service: "Testing / certification",
+  pultrusion: "Pultruded profiles",
+  "filament-winding": "Filament-wound composites",
+  "smc-bmc": "SMC / BMC parts",
+  "frp-grating": "FRP grating",
+  "frp-pipe": "FRP piping",
+  "frp-tank": "FRP tanks & vessels",
+};
+
+function categoryLabel(cat: string | null | undefined): string | null {
+  if (!cat) return null;
+  return CATEGORY_MAP[cat] ?? (cat.charAt(0).toUpperCase() + cat.slice(1).replace(/-/g, " "));
+}
+
 function productTags(supplier: SupplierResultEntry, fallback: string): string[] {
   const tags = Array.from(
     new Set((supplier.products ?? []).map((item) => item.trim()).filter(Boolean)),
   ).slice(0, 3);
-  if (tags.length < 3 && supplier.category && !tags.includes(supplier.category)) {
-    tags.push(supplier.category);
+  const catLabel = categoryLabel(supplier.category);
+  if (tags.length < 3 && catLabel && !tags.includes(catLabel)) {
+    tags.push(catLabel);
   }
   while (tags.length < 3) tags.push(fallback);
   return tags;
