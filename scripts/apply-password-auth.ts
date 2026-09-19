@@ -1,18 +1,67 @@
-// Idempotent DDL for getfrp email+password auth: add users.password_hash.
-// Run BEFORE deploying the password-auth code:
+// Guarded, idempotent DDL for GetFRP email+password authentication.
+// Check first:
+//   pnpm tsx --env-file=.env.local scripts/apply-password-auth.ts --check
+// Apply only after confirming MIGRATION_DATABASE_NAME targets GetFRP:
 //   pnpm tsx --env-file=.env.local scripts/apply-password-auth.ts
-// Uses the app HTTP driver (see reference_f1frp_neon_migration).
-import { db } from "@/lib/db";
-import { sql } from "drizzle-orm";
+import { neon } from "@neondatabase/serverless";
 
-async function main() {
-  await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "password_hash" text;`);
-  console.log("✓ users.password_hash applied");
+type DatabaseRow = { name: string };
+type ColumnRow = { column_name: string };
+
+function databaseUrl(): string {
+  const value =
+    process.env.MIGRATION_DATABASE_URL ??
+    process.env.DATABASE_URL_UNPOOLED ??
+    process.env.DATABASE_URL;
+  if (!value) {
+    throw new Error(
+      "MIGRATION_DATABASE_URL, DATABASE_URL_UNPOOLED or DATABASE_URL is required",
+    );
+  }
+  return value;
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+async function main() {
+  const sql = neon(databaseUrl());
+  const [database] = (await sql`
+    select current_database() as name
+  `) as DatabaseRow[];
+  const expectedDatabase = process.env.MIGRATION_DATABASE_NAME ?? "getfrp";
+  if (database?.name !== expectedDatabase) {
+    throw new Error(
+      `Refusing to inspect or migrate database ${String(database?.name ?? "unknown")}; expected ${expectedDatabase}`,
+    );
+  }
+
+  const readColumn = async () =>
+    (await sql`
+      select column_name
+      from information_schema.columns
+      where table_schema = 'public'
+        and table_name = 'users'
+        and column_name = 'password_hash'
+    `) as ColumnRow[];
+
+  const before = await readColumn();
+  if (process.argv.includes("--check")) {
+    console.log(
+      `[check-password-auth] database=${expectedDatabase} password_hash=${before.length === 1 ? "present" : "missing"}`,
+    );
+    if (before.length !== 1) process.exitCode = 2;
+    return;
+  }
+
+  await sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "password_hash" text`;
+  const after = await readColumn();
+  if (after.length !== 1) {
+    throw new Error("Migration verification failed: users.password_hash is missing");
+  }
+  console.log(
+    `[apply-password-auth] database=${expectedDatabase} password_hash=present`,
+  );
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  process.exitCode = 1;
+});

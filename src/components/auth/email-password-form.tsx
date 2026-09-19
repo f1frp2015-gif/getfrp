@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const AUTH_REQUEST_TIMEOUT_MS = 15_000;
 
 type Portal = "buyer" | "supplier" | "admin";
 
@@ -127,22 +128,40 @@ export function EmailPasswordForm({ mode }: { mode: "signIn" | "signUp" }) {
     }
     setLoading(true);
     setError(null);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(
+      () => controller.abort(),
+      AUTH_REQUEST_TIMEOUT_MS,
+    );
     try {
       const res = await fetch(isSignUp ? "/api/auth/email-password/register" : "/api/auth/email-password/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        signal: controller.signal,
       });
-      const data = await res.json().catch(() => ({}));
+      const data = (await res.json().catch(() => null)) as
+        | { error?: string }
+        | null;
       if (!res.ok) {
-        setError(data?.error ?? "Something went wrong, please try again");
+        setError(
+          data?.error ??
+            (res.status >= 500
+              ? "The authentication service is temporarily unavailable. Please retry shortly."
+              : "The server could not process this request. Please try again."),
+        );
         return;
       }
       // Full navigation so the proxy/middleware reads the freshly-set cookie.
       window.location.assign(redirectTo);
-    } catch {
-      setError("Something went wrong, please try again");
+    } catch (requestError) {
+      setError(
+        requestError instanceof DOMException && requestError.name === "AbortError"
+          ? "The server took too long to respond. Please retry."
+          : "Unable to contact the authentication service. Check your connection and retry.",
+      );
     } finally {
+      window.clearTimeout(timeout);
       setLoading(false);
     }
   }

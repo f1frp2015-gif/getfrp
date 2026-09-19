@@ -19,6 +19,7 @@
     "db:seed-large": "tsx --env-file=.env.local scripts/seed-large.ts",
     "db:product-core": "tsx --env-file=.env.local scripts/apply-supplier-product-core.ts",
     "db:supplier-product-pages": "tsx --env-file=.env.local scripts/apply-supplier-product-pages.ts",
+    "db:password-auth": "tsx --env-file=.env.local scripts/apply-password-auth.ts",
     "db:seed:seo-ugc-demo": "tsx --env-file=.env.local scripts/seed-seo-ugc-demo.ts",
     "db:delete:seo-ugc-demo": "tsx --env-file=.env.local scripts/seed-seo-ugc-demo.ts --delete",
     "db:split:getfrp": "tsx scripts/migrate-getfrp-database.ts",
